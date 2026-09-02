@@ -1,88 +1,141 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="20dp">
+    android:background="#F1F8F3">
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="WORKER PRO"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        android:gravity="center"
-        android:layout_marginBottom="20dp" />
+        android:orientation="vertical"
+        android:padding="16dp">
 
-    <Button
-        android:id="@+id/btnSafety"
-        android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:text="SAFETY"
-        android:enabled="true" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:background="#1B5E20"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_marginBottom="18dp">
 
-    <Button
-        android:id="@+id/btnManufacturing"
-        android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:text="MANUFACTURING"
-        android:enabled="true" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="WORKER PRO"
+                android:textColor="#FFFFFF"
+                android:textSize="30sp"
+                android:textStyle="bold" />
 
-    <Button
-        android:id="@+id/btnStamping"
-        android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:text="STAMPING"
-        android:enabled="true" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Professional Worker Assistant"
+                android:textColor="#FFFFFF"
+                android:textSize="15sp"
+                android:layout_marginTop="5dp" />
 
-    <Button
-        android:id="@+id/btnFurnaces"
-        android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:text="FURNACES"
-        android:enabled="true" />
+        </LinearLayout>
 
-    <Button
-        android:id="@+id/btnFire"
-        android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:text="FIRE EXTINGUISHERS"
-        android:enabled="true" />
+        <Button
+            android:id="@+id/btnSafety"
+            android:layout_width="match_parent"
+            android:layout_height="58dp"
+            android:text="SAFETY"
+            android:textSize="17sp"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#2E7D32"
+            android:layout_marginBottom="10dp" />
 
-    <Button
-        android:id="@+id/btnSensors"
-        android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:text="SENSORS"
-        android:enabled="true" />
+        <Button
+            android:id="@+id/btnManufacturing"
+            android:layout_width="match_parent"
+            android:layout_height="58dp"
+            android:text="MANUFACTURING"
+            android:textSize="17sp"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#388E3C"
+            android:layout_marginBottom="10dp" />
 
-    <Button
-        android:id="@+id/btnWelding"
-        android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:text="WELDING"
-        android:enabled="true" />
+        <Button
+            android:id="@+id/btnStamping"
+            android:layout_width="match_parent"
+            android:layout_height="58dp"
+            android:text="STAMPING"
+            android:textSize="17sp"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#43A047"
+            android:layout_marginBottom="10dp" />
 
-    <Button
-        android:id="@+id/btnQuality"
-        android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:text="QUALITY CONTROL"
-        android:enabled="true" />
+        <Button
+            android:id="@+id/btnFurnaces"
+            android:layout_width="match_parent"
+            android:layout_height="58dp"
+            android:text="FURNACES"
+            android:textSize="17sp"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#388E3C"
+            android:layout_marginBottom="10dp" />
 
-    <Button
-        android:id="@+id/btnEnglish"
-        android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:text="ENGLISH FOR WORKERS"
-        android:enabled="true" />
+        <Button
+            android:id="@+id/btnFire"
+            android:layout_width="match_parent"
+            android:layout_height="58dp"
+            android:text="FIRE EXTINGUISHERS"
+            android:textSize="17sp"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#2E7D32"
+            android:layout_marginBottom="10dp" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Developer: Султанов Фарид Рафиг оглы"
-        android:textSize="14sp"
-        android:gravity="center"
-        android:layout_marginTop="20dp" />
+        <Button
+            android:id="@+id/btnSensors"
+            android:layout_width="match_parent"
+            android:layout_height="58dp"
+            android:text="SENSORS"
+            android:textSize="17sp"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#388E3C"
+            android:layout_marginBottom="10dp" />
 
-</LinearLayout>
+        <Button
+            android:id="@+id/btnWelding"
+            android:layout_width="match_parent"
+            android:layout_height="58dp"
+            android:text="WELDING"
+            android:textSize="17sp"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#43A047"
+            android:layout_marginBottom="10dp" />
+
+        <Button
+            android:id="@+id/btnQuality"
+            android:layout_width="match_parent"
+            android:layout_height="58dp"
+            android:text="QUALITY CONTROL"
+            android:textSize="17sp"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#388E3C"
+            android:layout_marginBottom="10dp" />
+
+        <Button
+            android:id="@+id/btnEnglish"
+            android:layout_width="match_parent"
+            android:layout_height="58dp"
+            android:text="ENGLISH FOR WORKERS"
+            android:textSize="17sp"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#2E7D32"
+            android:layout_marginBottom="25dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Developer: Султанов Фарид Рафиг оглы"
+            android:textSize="14sp"
+            android:textColor="#555555"
+            android:gravity="center"
+            android:padding="10dp" />
+
+    </LinearLayout>
+
+</ScrollView>
