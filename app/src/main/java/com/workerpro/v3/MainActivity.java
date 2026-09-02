@@ -19,67 +19,51 @@ public class MainActivity extends Activity {
     String language = "RU";
     LinearLayout content;
 
-    int green = Color.rgb(0, 135, 70);
+    int green = Color.rgb(0, 145, 75);
     int darkGreen = Color.rgb(0, 95, 50);
+    int lightBackground = Color.rgb(246, 249, 247);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (savedInstanceState != null) {
+            language = savedInstanceState.getString("language", "RU");
+        }
+
         showMainScreen();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putString("language", language);
+        super.onSaveInstanceState(outState);
     }
 
     void showMainScreen() {
 
         ScrollView scroll = new ScrollView(this);
+        scroll.setBackgroundColor(lightBackground);
 
         content = new LinearLayout(this);
         content.setOrientation(LinearLayout.VERTICAL);
-        content.setPadding(18, 0, 18, 25);
-        content.setBackgroundColor(Color.rgb(247, 249, 248));
+        content.setPadding(14, 0, 14, 25);
 
         scroll.addView(content);
 
-        createHeader();
+        // ЯЗЫКИ — САМЫЙ ВЕРХ, СЛЕВА
         createLanguageButtons();
+
+        // ЗЕЛЕНАЯ ШАПКА
+        createHeader();
+
+        // РАЗДЕЛЫ
         createSections();
+
+        // РАЗРАБОТЧИК
         createDeveloper();
 
         setContentView(scroll);
-    }
-
-    void createHeader() {
-
-        LinearLayout header = new LinearLayout(this);
-        header.setOrientation(LinearLayout.VERTICAL);
-        header.setGravity(Gravity.CENTER);
-        header.setPadding(20, 28, 20, 25);
-
-        GradientDrawable background = new GradientDrawable(
-                GradientDrawable.Orientation.TOP_BOTTOM,
-                new int[]{green, darkGreen}
-        );
-
-        header.setBackground(background);
-
-        TextView logo = new TextView(this);
-        logo.setText("WORKER PRO");
-        logo.setTextSize(30);
-        logo.setTypeface(null, Typeface.BOLD);
-        logo.setTextColor(Color.WHITE);
-        logo.setGravity(Gravity.CENTER);
-
-        header.addView(logo);
-
-        TextView subtitle = new TextView(this);
-        subtitle.setText(getSubtitle());
-        subtitle.setTextSize(15);
-        subtitle.setTextColor(Color.WHITE);
-        subtitle.setGravity(Gravity.CENTER);
-        subtitle.setPadding(0, 7, 0, 0);
-
-        header.addView(subtitle);
-
-        content.addView(header);
     }
 
     void createLanguageButtons() {
@@ -87,19 +71,11 @@ public class MainActivity extends Activity {
         LinearLayout languages = new LinearLayout(this);
         languages.setOrientation(LinearLayout.HORIZONTAL);
         languages.setGravity(Gravity.LEFT | Gravity.CENTER_VERTICAL);
-        languages.setPadding(0, 12, 0, 8);
+        languages.setPadding(0, 10, 0, 8);
 
-        TextView label = new TextView(this);
-        label.setText("LANG:");
-        label.setTextSize(13);
-        label.setTypeface(null, Typeface.BOLD);
-        label.setTextColor(Color.DKGRAY);
-
-        languages.addView(label);
-
-        Button ru = smallLanguageButton("RU");
-        Button az = smallLanguageButton("AZ");
-        Button en = smallLanguageButton("EN");
+        Button ru = languageButton("RU");
+        Button az = languageButton("AZ");
+        Button en = languageButton("EN");
 
         ru.setOnClickListener(v -> {
             language = "RU";
@@ -123,25 +99,86 @@ public class MainActivity extends Activity {
         content.addView(languages);
     }
 
-    Button smallLanguageButton(String text) {
+    Button languageButton(String text) {
 
         Button button = new Button(this);
+
         button.setText(text);
         button.setTextSize(12);
-        button.setTextColor(green);
+        button.setTypeface(null, Typeface.BOLD);
         button.setAllCaps(false);
-        button.setPadding(8, 0, 8, 0);
+        button.setTextColor(
+                text.equals(language) ? Color.WHITE : green
+        );
+
+        GradientDrawable bg = new GradientDrawable();
+        bg.setCornerRadius(30);
+
+        if (text.equals(language)) {
+            bg.setColor(green);
+        } else {
+            bg.setColor(Color.WHITE);
+            bg.setStroke(2, green);
+        }
+
+        button.setBackground(bg);
+        button.setPadding(5, 0, 5, 0);
 
         LinearLayout.LayoutParams params =
-                new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.WRAP_CONTENT,
-                        45
-                );
+                new LinearLayout.LayoutParams(55, 38);
 
-        params.setMargins(5, 0, 5, 0);
+        params.setMargins(0, 0, 7, 0);
+
         button.setLayoutParams(params);
 
         return button;
+    }
+
+    void createHeader() {
+
+        LinearLayout header = new LinearLayout(this);
+        header.setOrientation(LinearLayout.VERTICAL);
+        header.setGravity(Gravity.CENTER);
+        header.setPadding(15, 24, 15, 25);
+
+        GradientDrawable background = new GradientDrawable(
+                GradientDrawable.Orientation.TOP_BOTTOM,
+                new int[]{green, darkGreen}
+        );
+
+        background.setCornerRadius(28);
+
+        header.setBackground(background);
+
+        LinearLayout.LayoutParams headerParams =
+                new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT
+                );
+
+        headerParams.setMargins(0, 4, 0, 18);
+
+        header.setLayoutParams(headerParams);
+
+        TextView logo = new TextView(this);
+        logo.setText("WORKER PRO");
+        logo.setTextSize(30);
+        logo.setTypeface(null, Typeface.BOLD);
+        logo.setTextColor(Color.WHITE);
+        logo.setGravity(Gravity.CENTER);
+
+        header.addView(logo);
+
+        TextView subtitle = new TextView(this);
+        subtitle.setText(getSubtitle());
+        subtitle.setTextSize(14);
+        subtitle.setTextColor(Color.WHITE);
+        subtitle.setGravity(Gravity.CENTER);
+        subtitle.setPadding(0, 7, 0, 0);
+
+        header.addView(subtitle);
+
+        content.addView(header);
     }
 
     void createSections() {
@@ -162,11 +199,11 @@ public class MainActivity extends Activity {
         LinearLayout card = new LinearLayout(this);
         card.setOrientation(LinearLayout.HORIZONTAL);
         card.setGravity(Gravity.CENTER_VERTICAL);
-        card.setPadding(18, 14, 18, 14);
+        card.setPadding(16, 10, 16, 10);
 
         GradientDrawable background = new GradientDrawable();
         background.setColor(Color.WHITE);
-        background.setCornerRadius(22);
+        background.setCornerRadius(20);
         background.setStroke(2, Color.rgb(220, 230, 224));
 
         card.setBackground(background);
@@ -177,28 +214,55 @@ public class MainActivity extends Activity {
                         78
                 );
 
-        cardParams.setMargins(0, 6, 0, 6);
+        // БОЛЬШОЙ ОТСТУП МЕЖДУ РАЗДЕЛАМИ
+        cardParams.setMargins(0, 8, 0, 8);
+
         card.setLayoutParams(cardParams);
 
         TextView icon = new TextView(this);
         icon.setText(getIcon(number));
-        icon.setTextSize(28);
+        icon.setTextSize(27);
         icon.setGravity(Gravity.CENTER);
-        icon.setLayoutParams(
-                new LinearLayout.LayoutParams(55, 55)
-        );
+
+        GradientDrawable iconBackground = new GradientDrawable();
+        iconBackground.setColor(Color.rgb(232, 246, 238));
+        iconBackground.setCornerRadius(18);
+
+        icon.setBackground(iconBackground);
+
+        LinearLayout.LayoutParams iconParams =
+                new LinearLayout.LayoutParams(58, 58);
+
+        icon.setLayoutParams(iconParams);
 
         card.addView(icon);
 
         TextView name = new TextView(this);
         name.setText(getSectionName(number));
-        name.setTextSize(17);
+        name.setTextSize(16);
         name.setTypeface(null, Typeface.BOLD);
         name.setTextColor(Color.rgb(35, 45, 40));
         name.setGravity(Gravity.CENTER_VERTICAL);
-        name.setPadding(12, 0, 5, 0);
+        name.setPadding(15, 0, 5, 0);
+
+        LinearLayout.LayoutParams nameParams =
+                new LinearLayout.LayoutParams(
+                        0,
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        1
+                );
+
+        name.setLayoutParams(nameParams);
 
         card.addView(name);
+
+        TextView arrow = new TextView(this);
+        arrow.setText("›");
+        arrow.setTextSize(28);
+        arrow.setTextColor(green);
+        arrow.setGravity(Gravity.CENTER);
+
+        card.addView(arrow);
 
         card.setOnClickListener(v -> openSection(number));
 
@@ -276,6 +340,9 @@ public class MainActivity extends Activity {
             Intent intent =
                     new Intent(MainActivity.this, SafetyActivity.class);
 
+            // Передаем выбранный язык в раздел
+            intent.putExtra("language", language);
+
             startActivity(intent);
 
         } else {
@@ -306,14 +373,19 @@ public class MainActivity extends Activity {
         TextView developer = new TextView(this);
 
         if (language.equals("AZ")) {
+
             developer.setText(
                     "Tərtibatçı: Sultanov Farid Rafiq oğlu"
             );
+
         } else if (language.equals("EN")) {
+
             developer.setText(
                     "Developer: Sultanov Farid Rafiq oglu"
             );
+
         } else {
+
             developer.setText(
                     "Разработчик: Султанов Фарид Рафиг оглы"
             );
@@ -322,7 +394,7 @@ public class MainActivity extends Activity {
         developer.setTextSize(13);
         developer.setTextColor(Color.GRAY);
         developer.setGravity(Gravity.CENTER);
-        developer.setPadding(0, 25, 0, 5);
+        developer.setPadding(0, 28, 0, 8);
 
         content.addView(developer);
     }
