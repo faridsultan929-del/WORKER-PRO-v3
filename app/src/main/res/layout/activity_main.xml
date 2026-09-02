@@ -15,49 +15,67 @@
         android:layout_marginBottom="20dp" />
 
     <Button
+        android:id="@+id/btnSafety"
         android:layout_width="match_parent"
         android:layout_height="55dp"
-        android:text="SAFETY" />
+        android:text="SAFETY"
+        android:enabled="true" />
 
     <Button
+        android:id="@+id/btnManufacturing"
         android:layout_width="match_parent"
         android:layout_height="55dp"
-        android:text="MANUFACTURING" />
+        android:text="MANUFACTURING"
+        android:enabled="true" />
 
     <Button
+        android:id="@+id/btnStamping"
         android:layout_width="match_parent"
         android:layout_height="55dp"
-        android:text="STAMPING" />
+        android:text="STAMPING"
+        android:enabled="true" />
 
     <Button
+        android:id="@+id/btnFurnaces"
         android:layout_width="match_parent"
         android:layout_height="55dp"
-        android:text="FURNACES" />
+        android:text="FURNACES"
+        android:enabled="true" />
 
     <Button
+        android:id="@+id/btnFire"
         android:layout_width="match_parent"
         android:layout_height="55dp"
-        android:text="FIRE EXTINGUISHERS" />
+        android:text="FIRE EXTINGUISHERS"
+        android:enabled="true" />
 
     <Button
+        android:id="@+id/btnSensors"
         android:layout_width="match_parent"
         android:layout_height="55dp"
-        android:text="SENSORS" />
+        android:text="SENSORS"
+        android:enabled="true" />
 
     <Button
+        android:id="@+id/btnWelding"
         android:layout_width="match_parent"
         android:layout_height="55dp"
-        android:text="WELDING" />
+        android:text="WELDING"
+        android:enabled="true" />
 
     <Button
+        android:id="@+id/btnQuality"
         android:layout_width="match_parent"
         android:layout_height="55dp"
-        android:text="QUALITY CONTROL" />
+        android:text="QUALITY CONTROL"
+        android:enabled="true" />
 
     <Button
+        android:id="@+id/btnEnglish"
         android:layout_width="match_parent"
         android:layout_height="55dp"
-        android:text="ENGLISH FOR WORKERS" />
+        android:text="ENGLISH FOR WORKERS"
+        android:enabled="true" />
 
     <TextView
         android:layout_width="match_parent"
