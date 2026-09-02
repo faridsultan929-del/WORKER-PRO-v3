@@ -1,78 +1,53 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="20dp">
+package com.example.workerpro;
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="WORKER PRO"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        android:gravity="center"
-        android:layout_marginBottom="20dp" />
+import android.app.Activity;
+import android.os.Bundle;
+import android.widget.Button;
+import android.widget.Toast;
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:text="SAFETY"
-        android:layout_marginBottom="8dp" />
+public class MainActivity extends Activity {
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:text="MANUFACTURING"
-        android:layout_marginBottom="8dp" />
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:text="STAMPING"
-        android:layout_marginBottom="8dp" />
+        setContentView(R.layout.activity_main);
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:text="FURNACES"
-        android:layout_marginBottom="8dp" />
+        Button safety = findViewById(R.id.btnSafety);
+        Button manufacturing = findViewById(R.id.btnManufacturing);
+        Button stamping = findViewById(R.id.btnStamping);
+        Button furnaces = findViewById(R.id.btnFurnaces);
+        Button fire = findViewById(R.id.btnFire);
+        Button sensors = findViewById(R.id.btnSensors);
+        Button welding = findViewById(R.id.btnWelding);
+        Button quality = findViewById(R.id.btnQuality);
+        Button english = findViewById(R.id.btnEnglish);
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:text="FIRE EXTINGUISHERS"
-        android:layout_marginBottom="8dp" />
+        safety.setOnClickListener(v ->
+                Toast.makeText(this, "Safety", Toast.LENGTH_SHORT).show());
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:text="SENSORS"
-        android:layout_marginBottom="8dp" />
+        manufacturing.setOnClickListener(v ->
+                Toast.makeText(this, "Manufacturing", Toast.LENGTH_SHORT).show());
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:text="WELDING"
-        android:layout_marginBottom="8dp" />
+        stamping.setOnClickListener(v ->
+                Toast.makeText(this, "Stamping", Toast.LENGTH_SHORT).show());
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:text="QUALITY CONTROL"
-        android:layout_marginBottom="8dp" />
+        furnaces.setOnClickListener(v ->
+                Toast.makeText(this, "Furnaces", Toast.LENGTH_SHORT).show());
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:text="ENGLISH FOR WORKERS"
-        android:layout_marginBottom="20dp" />
+        fire.setOnClickListener(v ->
+                Toast.makeText(this, "Fire Extinguishers", Toast.LENGTH_SHORT).show());
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Developer: Султанов Фарид Рафиг оглы"
-        android:textSize="14sp"
-        android:gravity="center" />
+        sensors.setOnClickListener(v ->
+                Toast.makeText(this, "Sensors", Toast.LENGTH_SHORT).show());
 
-</LinearLayout>
+        welding.setOnClickListener(v ->
+                Toast.makeText(this, "Welding", Toast.LENGTH_SHORT).show());
+
+        quality.setOnClickListener(v ->
+                Toast.makeText(this, "Quality Control", Toast.LENGTH_SHORT).show());
+
+        english.setOnClickListener(v ->
+                Toast.makeText(this, "English for Workers", Toast.LENGTH_SHORT).show());
+    }
+}
