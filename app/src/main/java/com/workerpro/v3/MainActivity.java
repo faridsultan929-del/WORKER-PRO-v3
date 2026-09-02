@@ -8,219 +8,290 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class MainActivity extends Activity {
 
     LinearLayout main;
-    TextView title;
-    TextView subtitle;
-    TextView developer;
-
-    int green = Color.rgb(0, 130, 70);
-    int dark = Color.rgb(25, 35, 30);
-
     String language = "ru";
+
+    int green = Color.rgb(0, 150, 80);
+    int dark = Color.rgb(20, 28, 24);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        createScreen();
-        setLanguage("ru");
+        showHome();
     }
 
-    private void createScreen() {
+    private TextView text(String value, float size, int color) {
+        TextView t = new TextView(this);
+        t.setText(value);
+        t.setTextSize(size);
+        t.setTextColor(color);
+        t.setGravity(Gravity.CENTER);
+        t.setPadding(15, 15, 15, 15);
+        return t;
+    }
+
+    private Button button(String value) {
+        Button b = new Button(this);
+        b.setText(value);
+        b.setTextSize(17);
+        b.setTextColor(Color.WHITE);
+        b.setTypeface(null, Typeface.BOLD);
+        b.setBackgroundColor(green);
+        return b;
+    }
+
+    private void showHome() {
 
         main = new LinearLayout(this);
         main.setOrientation(LinearLayout.VERTICAL);
-        main.setPadding(20, 20, 20, 15);
+        main.setPadding(18, 18, 18, 10);
         main.setBackgroundColor(dark);
 
-        title = new TextView(this);
-        title.setTextSize(30);
-        title.setTextColor(Color.WHITE);
+        TextView title = text("WORKER PRO", 30, Color.WHITE);
         title.setTypeface(null, Typeface.BOLD);
-        title.setGravity(Gravity.CENTER);
-        title.setPadding(10, 25, 10, 25);
-
+        title.setBackgroundColor(green);
         main.addView(title);
 
-        subtitle = new TextView(this);
-        subtitle.setTextSize(17);
-        subtitle.setTextColor(Color.LTGRAY);
-        subtitle.setGravity(Gravity.CENTER);
-        subtitle.setPadding(10, 5, 10, 15);
-
+        TextView subtitle = text(
+                "Производство и безопасность",
+                17,
+                Color.LTGRAY
+        );
         main.addView(subtitle);
 
         LinearLayout languages = new LinearLayout(this);
-        languages.setOrientation(LinearLayout.HORIZONTAL);
         languages.setGravity(Gravity.CENTER);
 
-        addLanguageButton(languages, "EN", "en");
-        addLanguageButton(languages, "RU", "ru");
-        addLanguageButton(languages, "AZ", "az");
+        Button en = button("🇬🇧 EN");
+        Button ru = button("🇷🇺 RU");
+        Button az = button("🇦🇿 AZ");
+
+        languages.addView(en, new LinearLayout.LayoutParams(0, 60, 1));
+        languages.addView(ru, new LinearLayout.LayoutParams(0, 60, 1));
+        languages.addView(az, new LinearLayout.LayoutParams(0, 60, 1));
 
         main.addView(languages);
 
-        addSection("🦺", "SAFETY", "Безопасность", "Təhlükəsizlik");
-        addSection("🧯", "FIRE EXTINGUISHERS", "Огнетушители", "Yanğınsöndürənlər");
-        addSection("⚙", "STAMPING", "Штамповка", "Ştamplama");
-        addSection("🔧", "CNC", "ЧПУ", "CNC");
-        addSection("⚡", "SENSORS", "Датчики", "Sensorlar");
-        addSection("🔥", "WELDING", "Сварка", "Qaynaq");
-        addSection("✅", "QUALITY CONTROL", "Контроль качества", "Keyfiyyətə nəzarət");
+        en.setOnClickListener(v -> {
+            language = "en";
+            showHome();
+        });
 
-        developer = new TextView(this);
-        developer.setTextColor(Color.LTGRAY);
-        developer.setTextSize(13);
-        developer.setGravity(Gravity.CENTER);
-        developer.setPadding(5, 15, 5, 5);
+        ru.setOnClickListener(v -> {
+            language = "ru";
+            showHome();
+        });
 
-        LinearLayout.LayoutParams devParams =
+        az.setOnClickListener(v -> {
+            language = "az";
+            showHome();
+        });
+
+        addSection("🦺", "SAFETY", "Безопасность", "Təhlükəsizlik",
+                v -> showSafety());
+
+        addSection("🧯", "FIRE EXTINGUISHERS", "Огнетушители",
+                "Yanğınsöndürənlər", v -> showMessage("Fire Extinguishers"));
+
+        addSection("⚙", "STAMPING", "Штамповка",
+                "Ştamplama", v -> showMessage("Stamping"));
+
+        addSection("🔧", "CNC", "ЧПУ",
+                "CNC", v -> showMessage("CNC"));
+
+        addSection("⚡", "SENSORS", "Датчики",
+                "Sensorlar", v -> showMessage("Sensors"));
+
+        addSection("🔥", "WELDING", "Сварка",
+                "Qaynaq", v -> showMessage("Welding"));
+
+        addSection("✅", "QUALITY CONTROL", "Контроль качества",
+                "Keyfiyyətə nəzarət", v -> showMessage("Quality Control"));
+
+        TextView developer = text(
+                language.equals("en")
+                        ? "Developed by\nFarid Sultanov"
+                        : language.equals("az")
+                        ? "Tərtibatçı\nSultanov Farid Rafiq oğlu"
+                        : "Разработчик\nСултанов Фарид Рафиг оглы",
+                13,
+                Color.LTGRAY
+        );
+
+        LinearLayout.LayoutParams dp =
                 new LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.MATCH_PARENT,
                         0,
                         1
                 );
 
-        main.addView(developer, devParams);
+        main.addView(developer, dp);
 
         setContentView(main);
     }
 
-    private void addLanguageButton(
-            LinearLayout parent,
-            String text,
-            String lang) {
-
-        Button button = new Button(this);
-        button.setText(text);
-        button.setTextSize(14);
-        button.setTextColor(Color.WHITE);
-        button.setBackgroundColor(green);
-
-        button.setOnClickListener(v -> setLanguage(lang));
-
-        LinearLayout.LayoutParams params =
-                new LinearLayout.LayoutParams(0, 55, 1);
-
-        params.setMargins(5, 5, 5, 10);
-
-        parent.addView(button, params);
-    }
-
     private void addSection(
             String icon,
-            String english,
-            String russian,
-            String azerbaijani) {
+            String en,
+            String ru,
+            String az,
+            View.OnClickListener listener) {
 
-        Button button = new Button(this);
-
-        String text;
+        String title;
 
         if (language.equals("en")) {
-            text = icon + "  " + english;
+            title = icon + "  " + en;
         } else if (language.equals("az")) {
-            text = icon + "  " + azerbaijani;
+            title = icon + "  " + az;
         } else {
-            text = icon + "  " + russian;
+            title = icon + "  " + ru;
         }
 
-        button.setText(text);
-        button.setTextSize(17);
-        button.setTextColor(Color.WHITE);
-        button.setTypeface(null, Typeface.BOLD);
-        button.setGravity(Gravity.CENTER);
-        button.setBackgroundColor(green);
+        Button b = button(title);
+        b.setOnClickListener(listener);
 
-        button.setOnClickListener(v ->
-                Toast.makeText(
-                        this,
-                        text,
-                        Toast.LENGTH_SHORT
-                ).show()
-        );
-
-        LinearLayout.LayoutParams params =
+        LinearLayout.LayoutParams p =
                 new LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.MATCH_PARENT,
-                        58
+                        62
                 );
 
-        params.setMargins(0, 5, 0, 5);
+        p.setMargins(0, 5, 0, 5);
 
-        main.addView(button, params);
+        main.addView(b, p);
     }
 
-    private void setLanguage(String lang) {
+    private void showSafety() {
 
-        language = lang;
+        LinearLayout layout = new LinearLayout(this);
+        layout.setOrientation(LinearLayout.VERTICAL);
+        layout.setPadding(20, 20, 20, 20);
+        layout.setBackgroundColor(dark);
 
-        if (lang.equals("en")) {
+        String title;
+        String content;
+        String back;
 
-            title.setText("WORKER PRO");
-            subtitle.setText("Manufacturing & Safety Training");
-            developer.setText("Developed by\nFarid Sultanov");
+        if (language.equals("en")) {
 
-        } else if (lang.equals("az")) {
+            title = "🦺 SAFETY";
+            content =
+                    "WORKPLACE SAFETY\n\n" +
+                    "1. Wear the required PPE.\n\n" +
+                    "2. Check the machine before starting work.\n\n" +
+                    "3. Keep hands away from moving parts.\n\n" +
+                    "4. Do not operate damaged equipment.\n\n" +
+                    "5. Know where the emergency stop button is.\n\n" +
+                    "6. Keep the workplace clean and safe.";
 
-            title.setText("WORKER PRO");
-            subtitle.setText("İstehsalat və Əməyin Təhlükəsizliyi");
-            developer.setText("Tərtibatçı\nSultanov Farid Rafiq oğlu");
+            back = "← BACK";
+
+        } else if (language.equals("az")) {
+
+            title = "🦺 TƏHLÜKƏSİZLİK";
+            content =
+                    "İŞ YERİNDƏ TƏHLÜKƏSİZLİK\n\n" +
+                    "1. Lazımi fərdi qoruyucu vasitələrdən istifadə edin.\n\n" +
+                    "2. İşə başlamazdan əvvəl avadanlığı yoxlayın.\n\n" +
+                    "3. Əlləri hərəkət edən hissələrdən uzaq saxlayın.\n\n" +
+                    "4. Nasaz avadanlıqla işləməyin.\n\n" +
+                    "5. Təcili dayandırma düyməsinin yerini bilin.\n\n" +
+                    "6. İş yerini təmiz və təhlükəsiz saxlayın.";
+
+            back = "← GERİ";
 
         } else {
 
-            title.setText("WORKER PRO");
-            subtitle.setText("Производство и безопасность");
-            developer.setText("Разработчик\nСултанов Фарид Рафиг оглы");
+            title = "🦺 БЕЗОПАСНОСТЬ";
+            content =
+                    "БЕЗОПАСНОСТЬ НА РАБОЧЕМ МЕСТЕ\n\n" +
+                    "1. Используйте необходимые СИЗ.\n\n" +
+                    "2. Перед началом работы проверьте оборудование.\n\n" +
+                    "3. Держите руки подальше от движущихся частей.\n\n" +
+                    "4. Не работайте на неисправном оборудовании.\n\n" +
+                    "5. Знайте расположение кнопки аварийной остановки.\n\n" +
+                    "6. Содержите рабочее место в чистоте и безопасности.";
+
+            back = "← НАЗАД";
         }
 
-        refreshSections();
+        TextView header = text(title, 26, Color.WHITE);
+        header.setTypeface(null, Typeface.BOLD);
+        header.setBackgroundColor(green);
+
+        layout.addView(header);
+
+        ScrollView scroll = new ScrollView(this);
+
+        TextView information = text(
+                content,
+                18,
+                Color.WHITE
+        );
+
+        information.setGravity(Gravity.LEFT);
+        scroll.addView(information);
+
+        layout.addView(
+                scroll,
+                new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        0,
+                        1
+                )
+        );
+
+        Button backButton = button(back);
+
+        backButton.setOnClickListener(v -> showHome());
+
+        layout.addView(backButton);
+
+        setContentView(layout);
     }
 
-    private void refreshSections() {
+    private void showMessage(String section) {
 
-        int count = main.getChildCount();
+        LinearLayout layout = new LinearLayout(this);
+        layout.setOrientation(LinearLayout.VERTICAL);
+        layout.setGravity(Gravity.CENTER);
+        layout.setPadding(20, 20, 20, 20);
+        layout.setBackgroundColor(dark);
 
-        if (count > 4) {
+        TextView title = text(section, 26, Color.WHITE);
+        title.setTypeface(null, Typeface.BOLD);
 
-            while (main.getChildCount() > 4) {
-                main.removeViewAt(4);
-            }
+        layout.addView(title);
 
-            addSection("🦺", "SAFETY",
-                    "Безопасность",
-                    "Təhlükəsizlik");
+        TextView info = text(
+                language.equals("ru")
+                        ? "Раздел готовится. Здесь будет учебный материал."
+                        : language.equals("az")
+                        ? "Bu bölmə hazırlanır. Burada təlim materialları olacaq."
+                        : "This section is being prepared. Training material will be added here.",
+                18,
+                Color.LTGRAY
+        );
 
-            addSection("🧯", "FIRE EXTINGUISHERS",
-                    "Огнетушители",
-                    "Yanğınsöndürənlər");
+        layout.addView(info);
 
-            addSection("⚙", "STAMPING",
-                    "Штамповка",
-                    "Ştamplama");
+        Button back = button(
+                language.equals("ru")
+                        ? "← НАЗАД"
+                        : language.equals("az")
+                        ? "← GERİ"
+                        : "← BACK"
+        );
 
-            addSection("🔧", "CNC",
-                    "ЧПУ",
-                    "CNC");
+        back.setOnClickListener(v -> showHome());
 
-            addSection("⚡", "SENSORS",
-                    "Датчики",
-                    "Sensorlar");
+        layout.addView(back);
 
-            addSection("🔥", "WELDING",
-                    "Сварка",
-                    "Qaynaq");
-
-            addSection("✅", "QUALITY CONTROL",
-                    "Контроль качества",
-                    "Keyfiyyətə nəzarət");
-
-            main.addView(developer);
-        }
+        setContentView(layout);
     }
 }
