@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <application
-        android:theme="@style/AppTheme"
-        android:label="WORKER PRO"
         android:allowBackup="true"
-        android:supportsRtl="true">
+        android:label="WORKER PRO"
+        android:theme="@android:style/Theme.Material.Light.NoActionBar">
+
+        <activity
+            android:name=".SafetyActivity"
+            android:exported="false" />
 
         <activity
             android:name=".MainActivity"
