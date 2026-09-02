@@ -4,254 +4,351 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.GradientDrawable;
 import android.view.Gravity;
-import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 public class SafetyActivity extends Activity {
 
-    LinearLayout main;
     String language = "RU";
+
+    int green = Color.rgb(0, 145, 75);
+    int darkGreen = Color.rgb(0, 95, 50);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        showScreen();
+
+        String savedLanguage =
+                getIntent().getStringExtra("language");
+
+        if (savedLanguage != null) {
+            language = savedLanguage;
+        }
+
+        showSafetyScreen();
     }
 
-    void showScreen() {
+    void showSafetyScreen() {
 
-        main = new LinearLayout(this);
-        main.setOrientation(LinearLayout.VERTICAL);
-        main.setPadding(20, 20, 20, 20);
-        main.setBackgroundColor(Color.WHITE);
+        ScrollView scroll = new ScrollView(this);
+
+        LinearLayout root = new LinearLayout(this);
+        root.setOrientation(LinearLayout.VERTICAL);
+        root.setPadding(16, 18, 16, 25);
+        root.setBackgroundColor(Color.rgb(246, 249, 247));
+
+        // ЗЕЛЕНАЯ ШАПКА
+        LinearLayout header = new LinearLayout(this);
+        header.setOrientation(LinearLayout.VERTICAL);
+        header.setGravity(Gravity.CENTER);
+        header.setPadding(15, 22, 15, 22);
+
+        GradientDrawable headerBg =
+                new GradientDrawable(
+                        GradientDrawable.Orientation.TOP_BOTTOM,
+                        new int[]{green, darkGreen}
+                );
+
+        headerBg.setCornerRadius(25);
+        header.setBackground(headerBg);
 
         TextView title = new TextView(this);
         title.setText(getSafetyTitle());
-        title.setTextSize(26);
+        title.setTextSize(25);
         title.setTypeface(null, Typeface.BOLD);
-        title.setTextColor(Color.rgb(0, 120, 60));
+        title.setTextColor(Color.WHITE);
         title.setGravity(Gravity.CENTER);
-        title.setPadding(0, 10, 0, 20);
-        main.addView(title);
 
-        Button ru = new Button(this);
-        ru.setText("Русский");
-        ru.setOnClickListener(v -> {
-            language = "RU";
-            showScreen();
-        });
-        main.addView(ru);
+        header.addView(title);
 
-        Button az = new Button(this);
-        az.setText("Azərbaycan");
-        az.setOnClickListener(v -> {
-            language = "AZ";
-            showScreen();
-        });
-        main.addView(az);
+        root.addView(header);
 
-        Button en = new Button(this);
-        en.setText("English");
-        en.setOnClickListener(v -> {
-            language = "EN";
-            showScreen();
-        });
-        main.addView(en);
+        addSpace(root, 15);
 
-        addTopic(1);
-        addTopic(2);
-        addTopic(3);
-        addTopic(4);
-        addTopic(5);
-        addTopic(6);
-        addTopic(7);
-        addTopic(8);
-        addTopic(9);
-        addTopic(10);
+        // ВВОДНЫЙ ТЕКСТ
+        addText(
+                root,
+                getIntro(),
+                17,
+                Color.rgb(45, 55, 50),
+                false
+        );
 
-        Button back = new Button(this);
-        back.setText(getBack());
-        back.setOnClickListener(v -> finish());
-        main.addView(back);
+        addSpace(root, 12);
 
-        TextView developer = new TextView(this);
-        developer.setText(getDeveloper());
-        developer.setTextSize(14);
-        developer.setGravity(Gravity.CENTER);
-        developer.setTextColor(Color.GRAY);
-        developer.setPadding(0, 20, 0, 10);
-        main.addView(developer);
+        // РАЗДЕЛ 1
+        addBox(
+                root,
+                getSectionTitle(1),
+                getSectionText(1)
+        );
 
-        setContentView(main);
+        // РАЗДЕЛ 2
+        addBox(
+                root,
+                getSectionTitle(2),
+                getSectionText(2)
+        );
+
+        // РАЗДЕЛ 3
+        addBox(
+                root,
+                getSectionTitle(3),
+                getSectionText(3)
+        );
+
+        // РАЗДЕЛ 4
+        addBox(
+                root,
+                getSectionTitle(4),
+                getSectionText(4)
+        );
+
+        // РАЗДЕЛ 5
+        addBox(
+                root,
+                getSectionTitle(5),
+                getSectionText(5)
+        );
+
+        addSpace(root, 15);
+
+        TextView bottom = new TextView(this);
+
+        if (language.equals("AZ")) {
+            bottom.setText(
+                    "Təhlükəsizlik qaydalarına həmişə əməl edin."
+            );
+        } else if (language.equals("EN")) {
+            bottom.setText(
+                    "Always follow workplace safety rules."
+            );
+        } else {
+            bottom.setText(
+                    "Всегда соблюдайте правила безопасности."
+            );
+        }
+
+        bottom.setTextSize(14);
+        bottom.setTextColor(Color.GRAY);
+        bottom.setGravity(Gravity.CENTER);
+        bottom.setPadding(5, 15, 5, 10);
+
+        root.addView(bottom);
+
+        scroll.addView(root);
+
+        setContentView(scroll);
     }
 
-    void addTopic(int number) {
+    void addBox(
+            LinearLayout root,
+            String title,
+            String text
+    ) {
 
-        TextView topic = new TextView(this);
+        LinearLayout box = new LinearLayout(this);
+        box.setOrientation(LinearLayout.VERTICAL);
+        box.setPadding(18, 16, 18, 16);
 
-        topic.setText(getTopic(number));
-        topic.setTextSize(17);
-        topic.setTextColor(Color.DKGRAY);
-        topic.setPadding(15, 15, 15, 15);
+        GradientDrawable bg = new GradientDrawable();
+        bg.setColor(Color.WHITE);
+        bg.setCornerRadius(20);
+        bg.setStroke(2, Color.rgb(220, 230, 224));
 
-        main.addView(topic);
+        box.setBackground(bg);
+
+        LinearLayout.LayoutParams params =
+                new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT
+                );
+
+        params.setMargins(0, 7, 0, 7);
+
+        box.setLayoutParams(params);
+
+        TextView titleView = new TextView(this);
+        titleView.setText(title);
+        titleView.setTextSize(18);
+        titleView.setTypeface(null, Typeface.BOLD);
+        titleView.setTextColor(green);
+
+        box.addView(titleView);
+
+        TextView textView = new TextView(this);
+        textView.setText(text);
+        textView.setTextSize(15);
+        textView.setTextColor(Color.rgb(50, 55, 52));
+        textView.setPadding(0, 9, 0, 0);
+
+        box.addView(textView);
+
+        root.addView(box);
+    }
+
+    void addText(
+            LinearLayout root,
+            String text,
+            int size,
+            int color,
+            boolean bold
+    ) {
+
+        TextView view = new TextView(this);
+
+        view.setText(text);
+        view.setTextSize(size);
+        view.setTextColor(color);
+
+        if (bold) {
+            view.setTypeface(null, Typeface.BOLD);
+        }
+
+        view.setPadding(5, 5, 5, 5);
+
+        root.addView(view);
+    }
+
+    void addSpace(LinearLayout root, int height) {
+
+        TextView space = new TextView(this);
+
+        space.setHeight(height);
+
+        root.addView(space);
     }
 
     String getSafetyTitle() {
 
         if (language.equals("AZ")) {
-            return "İŞ TƏHLÜKƏSİZLİYİ";
+            return "İş təhlükəsizliyi";
         }
 
         if (language.equals("EN")) {
-            return "WORKPLACE SAFETY";
+            return "Workplace Safety";
         }
 
-        return "ОХРАНА ТРУДА";
+        return "Охрана труда";
     }
 
-    String getBack() {
+    String getIntro() {
 
         if (language.equals("AZ")) {
-            return "Geri";
+            return "İş yerində təhlükəsizlik hər bir işçi üçün əsas qaydadır. " +
+                    "İşə başlamazdan əvvəl avadanlığı yoxlayın, " +
+                    "fərdi qoruyucu vasitələrdən istifadə edin və təhlükəli " +
+                    "vəziyyətlər barədə rəhbərliyə məlumat verin.";
         }
 
         if (language.equals("EN")) {
-            return "Back";
+            return "Workplace safety is a basic rule for every worker. " +
+                    "Before starting work, check the equipment, use personal " +
+                    "protective equipment and report dangerous situations.";
         }
 
-        return "Назад";
+        return "İş yerində təhlükəsizlik hər bir işçi üçün əsas qaydadır.";
     }
 
-    String getDeveloper() {
-
-        if (language.equals("AZ")) {
-            return "Tərtibatçı: Sultanov Farid Rafiq oğlu";
-        }
-
-        if (language.equals("EN")) {
-            return "Developer: Sultanov Farid Rafiq oglu";
-        }
-
-        return "Разработчик: Султанов Фарид Рафиг оглы";
-    }
-
-    String getTopic(int n) {
+    String getSectionTitle(int n) {
 
         if (language.equals("AZ")) {
 
             switch (n) {
-
-                case 1:
-                    return "1. FƏRDİ MÜHAFİZƏ VASİTƏLƏRİ\n\nDəbilqə, qoruyucu eynək, əlcək, təhlükəsizlik ayaqqabısı və iş geyimindən istifadə edin.";
-
-                case 2:
-                    return "2. İŞƏ BAŞLAMAZDAN ƏVVƏL\n\nMaşının və avadanlığın vəziyyətini yoxlayın. Qoruyucuların və təhlükəsizlik sistemlərinin işlədiyinə əmin olun.";
-
-                case 3:
-                    return "3. MAŞINLA İŞ\n\nİşləyən maşının hərəkət edən hissələrinə əllə toxunmayın. Qoruyucu qurğuları çıxarmayın.";
-
-                case 4:
-                    return "4. ELEKTRİK TƏHLÜKƏSİZLİYİ\n\nZədələnmiş kabel və elektrik avadanlığından istifadə etməyin. Elektrik nasazlığı zamanı işi dayandırın və məsul şəxsə məlumat verin.";
-
-                case 5:
-                    return "5. YANĞIN TƏHLÜKƏSİZLİYİ\n\nYanğın zamanı sakit olun. Təhlükəsizdirsə, avadanlığı dayandırın, ərazini tərk edin və yanğınsöndürmə vasitələrindən istifadə edin.";
-
-                case 6:
-                    return "6. İSTİ SƏTHLƏR\n\nQızmış metal və avadanlıqlara toxunmayın. İstiyədavamlı əlcək və digər qoruyucu vasitələrdən istifadə edin.";
-
-                case 7:
-                    return "7. KİMYƏVİ MADDƏLƏR\n\nKimyəvi maddələrlə işləyərkən qoruyucu eynək, əlcək və uyğun iş geyimi istifadə edin.";
-
-                case 8:
-                    return "8. QALVANİK PROSESLƏR\n\nKimyəvi məhlullarla işləyərkən təhlükəsizlik qaydalarına riayət edin və maddələrin dəriyə və gözə düşməsinə yol verməyin.";
-
-                case 9:
-                    return "9. QƏZA ZAMANI\n\nBirbaşa təhlükə olduqda, təhlükəsizdirsə, təcili dayandırma düyməsindən istifadə edin. Təhlükəsiz yerə keçin və rəhbərə məlumat verin.";
-
-                case 10:
-                    return "10. ƏSAS QAYDA\n\nTəhlükəsizlik işdən daha vacibdir. Şübhəniz varsa, işi dayandırın və rəhbərdən kömək istəyin.";
-
-                default:
-                    return "";
+                case 1: return "Fərdi qoruyucu vasitələr";
+                case 2: return "Avadanlığın yoxlanılması";
+                case 3: return "İşə başlamazdan əvvəl";
+                case 4: return "Təhlükəli vəziyyət";
+                case 5: return "Əsas qayda";
             }
-        }
 
-        if (language.equals("EN")) {
+        } else if (language.equals("EN")) {
 
             switch (n) {
+                case 1: return "Personal Protective Equipment";
+                case 2: return "Equipment Inspection";
+                case 3: return "Before Starting Work";
+                case 4: return "Dangerous Situation";
+                case 5: return "Main Safety Rule";
+            }
 
-                case 1:
-                    return "1. PERSONAL PROTECTIVE EQUIPMENT\n\nUse a helmet, safety glasses, gloves, safety shoes and suitable work clothing.";
+        } else {
 
-                case 2:
-                    return "2. BEFORE STARTING WORK\n\nCheck the machine and equipment condition. Make sure guards and safety systems are working.";
-
-                case 3:
-                    return "3. MACHINE SAFETY\n\nNever touch moving machine parts. Do not remove protective guards.";
-
-                case 4:
-                    return "4. ELECTRICAL SAFETY\n\nDo not use damaged cables or electrical equipment. Stop work and report electrical problems.";
-
-                case 5:
-                    return "5. FIRE SAFETY\n\nStay calm during a fire. If it is safe, stop the equipment, leave the area and use a fire extinguisher.";
-
-                case 6:
-                    return "6. HOT SURFACES\n\nDo not touch hot metal or equipment. Use heat-resistant gloves and suitable protective equipment.";
-
-                case 7:
-                    return "7. CHEMICAL SAFETY\n\nUse safety glasses, gloves and suitable work clothing when working with chemicals.";
-
-                case 8:
-                    return "8. GALVANIC PROCESSES\n\nFollow safety rules when working with chemical solutions. Prevent contact with skin and eyes.";
-
-                case 9:
-                    return "9. EMERGENCY\n\nIf there is immediate danger, use the emergency stop if it is safe. Move to a safe area and inform your supervisor.";
-
-                case 10:
-                    return "10. MAIN RULE\n\nSafety is more important than work. If you are unsure, stop the work and ask your supervisor for help.";
-
-                default:
-                    return "";
+            switch (n) {
+                case 1: return "Средства защиты";
+                case 2: return "Проверка оборудования";
+                case 3: return "Перед началом работы";
+                case 4: return "Опасная ситуация";
+                case 5: return "Главное правило";
             }
         }
 
-        switch (n) {
+        return "";
+    }
 
-            case 1:
-                return "1. СРЕДСТВА ИНДИВИДУАЛЬНОЙ ЗАЩИТЫ\n\nИспользуйте каску, защитные очки, перчатки, защитную обувь и рабочую одежду.";
+    String getSectionText(int n) {
 
-            case 2:
-                return "2. ПЕРЕД НАЧАЛОМ РАБОТЫ\n\nПроверьте состояние станка и оборудования. Убедитесь, что защитные устройства и системы безопасности работают.";
+        if (language.equals("AZ")) {
 
-            case 3:
-                return "3. БЕЗОПАСНОСТЬ ПРИ РАБОТЕ НА СТАНКЕ\n\nНе прикасайтесь к движущимся частям станка. Не снимайте защитные ограждения.";
+            switch (n) {
+                case 1:
+                    return "Dəbilqə, qoruyucu eynək, əlcək, xüsusi geyim və təhlükəsizlik ayaqqabısından istifadə edin.";
 
-            case 4:
-                return "4. ЭЛЕКТРОБЕЗОПАСНОСТЬ\n\nНе используйте поврежденные кабели и электрооборудование. При неисправности остановите работу и сообщите ответственному лицу.";
+                case 2:
+                    return "İşə başlamazdan əvvəl maşını, alətləri, qoruyucu qurğuları və elektrik kabellərini yoxlayın.";
 
-            case 5:
-                return "5. ПОЖАРНАЯ БЕЗОПАСНОСТЬ\n\nПри пожаре сохраняйте спокойствие. Если это безопасно, остановите оборудование, покиньте опасную зону и используйте огнетушитель.";
+                case 3:
+                    return "İş yerini təmiz saxlayın və avadanlığın normal işlədiyinə əmin olun.";
 
-            case 6:
-                return "6. ГОРЯЧИЕ ПОВЕРХНОСТИ\n\nНе прикасайтесь к горячему металлу и оборудованию. Используйте термостойкие перчатки и подходящие средства защиты.";
+                case 4:
+                    return "Təhlükəli vəziyyət yaranarsa işi dayandırın və dərhal rəhbərliyə məlumat verin.";
 
-            case 7:
-                return "7. ХИМИЧЕСКАЯ БЕЗОПАСНОСТЬ\n\nПри работе с химическими веществами используйте защитные очки, перчатки и подходящую рабочую одежду.";
+                case 5:
+                    return "Heç bir iş təhlükəsizlik qaydasını pozmağa dəyməz.";
+            }
 
-            case 8:
-                return "8. ГАЛЬВАНИЧЕСКИЕ ПРОЦЕССЫ\n\nСоблюдайте правила безопасности при работе с химическими растворами. Не допускайте попадания веществ на кожу и в глаза.";
+        } else if (language.equals("EN")) {
 
-            case 9:
-                return "9. АВАРИЙНАЯ СИТУАЦИЯ\n\nПри непосредственной опасности, если это безопасно, используйте кнопку аварийной остановки. Перейдите в безопасное место и сообщите руководителю.";
+            switch (n) {
+                case 1:
+                    return "Use a helmet, safety glasses, gloves, protective clothing and safety shoes.";
 
-            case 10:
-                return "10. ГЛАВНОЕ ПРАВИЛО\n\nБезопасность важнее работы. Если вы сомневаетесь, остановите работу и обратитесь за помощью к руководителю.";
+                case 2:
+                    return "Before work, inspect the machine, tools, guards and electrical cables.";
 
-            default:
-                return "";
+                case 3:
+                    return "Keep the workplace clean and make sure the equipment works correctly.";
+
+                case 4:
+                    return "If a dangerous situation occurs, stop work and inform your supervisor.";
+
+                case 5:
+                    return "No job is worth breaking a safety rule.";
+            }
+
+        } else {
+
+            switch (n) {
+                case 1:
+                    return "Используйте каску, защитные очки, перчатки, спецодежду и защитную обувь.";
+
+                case 2:
+                    return "Перед работой проверьте станок, инструменты, защитные устройства и электрические кабели.";
+
+                case 3:
+                    return "Держите рабочее место в чистоте и убедитесь, что оборудование работает нормально.";
+
+                case 4:
+                    return "При возникновении опасной ситуации остановите работу и сообщите руководителю.";
+
+                case 5:
+                    return "Ни одна работа не стоит нарушения правил безопасности.";
+            }
         }
+
+        return "";
     }
 }
