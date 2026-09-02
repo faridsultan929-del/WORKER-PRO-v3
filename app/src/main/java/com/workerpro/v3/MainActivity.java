@@ -2,6 +2,7 @@ package com.workerpro.v3;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.content.Intent;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -22,8 +23,10 @@ public class MainActivity extends Activity {
         Button quality = findViewById(R.id.btnQuality);
         Button english = findViewById(R.id.btnEnglish);
 
-        safety.setOnClickListener(v ->
-                Toast.makeText(this, "SAFETY", Toast.LENGTH_SHORT).show());
+        safety.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, SafetyActivity.class);
+            startActivity(intent);
+        });
 
         manufacturing.setOnClickListener(v ->
                 Toast.makeText(this, "MANUFACTURING", Toast.LENGTH_SHORT).show());
