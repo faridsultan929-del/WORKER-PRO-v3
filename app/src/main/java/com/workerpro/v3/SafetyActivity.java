@@ -28,7 +28,7 @@ public class SafetyActivity extends Activity {
         main.setBackgroundColor(Color.WHITE);
 
         TextView title = new TextView(this);
-        title.setText(getTitle());
+        title.setText(getSafetyTitle());
         title.setTextSize(26);
         title.setTypeface(null, Typeface.BOLD);
         title.setTextColor(Color.rgb(0, 120, 60));
@@ -99,7 +99,7 @@ public class SafetyActivity extends Activity {
         main.addView(topic);
     }
 
-    String getTitle() {
+    String getSafetyTitle() {
 
         if (language.equals("AZ")) {
             return "İŞ TƏHLÜKƏSİZLİYİ";
@@ -141,6 +141,7 @@ public class SafetyActivity extends Activity {
     String getTopic(int n) {
 
         if (language.equals("AZ")) {
+
             switch (n) {
 
                 case 1:
@@ -179,6 +180,7 @@ public class SafetyActivity extends Activity {
         }
 
         if (language.equals("EN")) {
+
             switch (n) {
 
                 case 1:
