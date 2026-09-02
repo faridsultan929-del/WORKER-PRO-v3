@@ -7,7 +7,6 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
 import android.view.Gravity;
-import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -17,44 +16,35 @@ import android.widget.Toast;
 public class MainActivity extends Activity {
 
     String language = "RU";
-    LinearLayout content;
+
+    LinearLayout root;
 
     int green = Color.rgb(0, 145, 75);
     int darkGreen = Color.rgb(0, 95, 50);
-    int lightBackground = Color.rgb(246, 249, 247);
+    int background = Color.rgb(245, 248, 246);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (savedInstanceState != null) {
-            language = savedInstanceState.getString("language", "RU");
-        }
-
-        showMainScreen();
+        showMain();
     }
 
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        outState.putString("language", language);
-        super.onSaveInstanceState(outState);
-    }
-
-    void showMainScreen() {
+    void showMain() {
 
         ScrollView scroll = new ScrollView(this);
-        scroll.setBackgroundColor(lightBackground);
+        scroll.setBackgroundColor(background);
 
-        content = new LinearLayout(this);
-        content.setOrientation(LinearLayout.VERTICAL);
-        content.setPadding(14, 0, 14, 25);
+        root = new LinearLayout(this);
+        root.setOrientation(LinearLayout.VERTICAL);
+        root.setPadding(15, 0, 15, 30);
 
-        scroll.addView(content);
+        scroll.addView(root);
 
-        // ЯЗЫКИ — САМЫЙ ВЕРХ, СЛЕВА
-        createLanguageButtons();
+        // ЯЗЫКИ
+        createLanguages();
 
-        // ЗЕЛЕНАЯ ШАПКА
+        // ШАПКА
         createHeader();
 
         // РАЗДЕЛЫ
@@ -66,12 +56,17 @@ public class MainActivity extends Activity {
         setContentView(scroll);
     }
 
-    void createLanguageButtons() {
+    // =========================
+    // ЯЗЫКИ
+    // =========================
+
+    void createLanguages() {
 
         LinearLayout languages = new LinearLayout(this);
+
         languages.setOrientation(LinearLayout.HORIZONTAL);
         languages.setGravity(Gravity.LEFT | Gravity.CENTER_VERTICAL);
-        languages.setPadding(0, 10, 0, 8);
+        languages.setPadding(0, 12, 0, 10);
 
         Button ru = languageButton("RU");
         Button az = languageButton("AZ");
@@ -79,24 +74,24 @@ public class MainActivity extends Activity {
 
         ru.setOnClickListener(v -> {
             language = "RU";
-            showMainScreen();
+            showMain();
         });
 
         az.setOnClickListener(v -> {
             language = "AZ";
-            showMainScreen();
+            showMain();
         });
 
         en.setOnClickListener(v -> {
             language = "EN";
-            showMainScreen();
+            showMain();
         });
 
         languages.addView(ru);
         languages.addView(az);
         languages.addView(en);
 
-        content.addView(languages);
+        root.addView(languages);
     }
 
     Button languageButton(String text) {
@@ -104,51 +99,64 @@ public class MainActivity extends Activity {
         Button button = new Button(this);
 
         button.setText(text);
-        button.setTextSize(12);
+        button.setTextSize(14);
         button.setTypeface(null, Typeface.BOLD);
         button.setAllCaps(false);
-        button.setTextColor(
-                text.equals(language) ? Color.WHITE : green
-        );
-
-        GradientDrawable bg = new GradientDrawable();
-        bg.setCornerRadius(30);
 
         if (text.equals(language)) {
-            bg.setColor(green);
+            button.setTextColor(Color.WHITE);
+
+            GradientDrawable selected = new GradientDrawable();
+            selected.setColor(green);
+            selected.setCornerRadius(40);
+
+            button.setBackground(selected);
+
         } else {
-            bg.setColor(Color.WHITE);
-            bg.setStroke(2, green);
+
+            button.setTextColor(green);
+
+            GradientDrawable normal = new GradientDrawable();
+            normal.setColor(Color.WHITE);
+            normal.setCornerRadius(40);
+            normal.setStroke(2, green);
+
+            button.setBackground(normal);
         }
 
-        button.setBackground(bg);
-        button.setPadding(5, 0, 5, 0);
+        button.setPadding(0, 0, 0, 0);
 
         LinearLayout.LayoutParams params =
-                new LinearLayout.LayoutParams(55, 38);
+                new LinearLayout.LayoutParams(65, 44);
 
-        params.setMargins(0, 0, 7, 0);
+        params.setMargins(0, 0, 8, 0);
 
         button.setLayoutParams(params);
 
         return button;
     }
 
+    // =========================
+    // ШАПКА
+    // =========================
+
     void createHeader() {
 
         LinearLayout header = new LinearLayout(this);
+
         header.setOrientation(LinearLayout.VERTICAL);
         header.setGravity(Gravity.CENTER);
-        header.setPadding(15, 24, 15, 25);
+        header.setPadding(15, 25, 15, 27);
 
-        GradientDrawable background = new GradientDrawable(
-                GradientDrawable.Orientation.TOP_BOTTOM,
-                new int[]{green, darkGreen}
-        );
+        GradientDrawable headerBackground =
+                new GradientDrawable(
+                        GradientDrawable.Orientation.TOP_BOTTOM,
+                        new int[]{green, darkGreen}
+                );
 
-        background.setCornerRadius(28);
+        headerBackground.setCornerRadius(28);
 
-        header.setBackground(background);
+        header.setBackground(headerBackground);
 
         LinearLayout.LayoutParams headerParams =
                 new LinearLayout.LayoutParams(
@@ -156,13 +164,14 @@ public class MainActivity extends Activity {
                         LinearLayout.LayoutParams.WRAP_CONTENT
                 );
 
-        headerParams.setMargins(0, 4, 0, 18);
+        headerParams.setMargins(0, 5, 0, 22);
 
         header.setLayoutParams(headerParams);
 
         TextView logo = new TextView(this);
+
         logo.setText("WORKER PRO");
-        logo.setTextSize(30);
+        logo.setTextSize(31);
         logo.setTypeface(null, Typeface.BOLD);
         logo.setTextColor(Color.WHITE);
         logo.setGravity(Gravity.CENTER);
@@ -170,16 +179,21 @@ public class MainActivity extends Activity {
         header.addView(logo);
 
         TextView subtitle = new TextView(this);
+
         subtitle.setText(getSubtitle());
-        subtitle.setTextSize(14);
+        subtitle.setTextSize(15);
         subtitle.setTextColor(Color.WHITE);
         subtitle.setGravity(Gravity.CENTER);
-        subtitle.setPadding(0, 7, 0, 0);
+        subtitle.setPadding(0, 8, 0, 0);
 
         header.addView(subtitle);
 
-        content.addView(header);
+        root.addView(header);
     }
+
+    // =========================
+    // РАЗДЕЛЫ
+    // =========================
 
     void createSections() {
 
@@ -197,49 +211,64 @@ public class MainActivity extends Activity {
     void addSection(int number) {
 
         LinearLayout card = new LinearLayout(this);
+
         card.setOrientation(LinearLayout.HORIZONTAL);
         card.setGravity(Gravity.CENTER_VERTICAL);
-        card.setPadding(16, 10, 16, 10);
+        card.setPadding(15, 10, 15, 10);
 
-        GradientDrawable background = new GradientDrawable();
-        background.setColor(Color.WHITE);
-        background.setCornerRadius(20);
-        background.setStroke(2, Color.rgb(220, 230, 224));
+        GradientDrawable cardBackground = new GradientDrawable();
 
-        card.setBackground(background);
+        cardBackground.setColor(Color.WHITE);
+        cardBackground.setCornerRadius(22);
+        cardBackground.setStroke(
+                2,
+                Color.rgb(220, 230, 224)
+        );
+
+        card.setBackground(cardBackground);
 
         LinearLayout.LayoutParams cardParams =
                 new LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.MATCH_PARENT,
-                        78
+                        82
                 );
 
-        // БОЛЬШОЙ ОТСТУП МЕЖДУ РАЗДЕЛАМИ
-        cardParams.setMargins(0, 8, 0, 8);
+        // ХОРОШЕЕ РАССТОЯНИЕ МЕЖДУ РАЗДЕЛАМИ
+        cardParams.setMargins(0, 10, 0, 10);
 
         card.setLayoutParams(cardParams);
 
+        // ИКОНКА
+
         TextView icon = new TextView(this);
+
         icon.setText(getIcon(number));
-        icon.setTextSize(27);
+        icon.setTextSize(28);
         icon.setGravity(Gravity.CENTER);
 
         GradientDrawable iconBackground = new GradientDrawable();
-        iconBackground.setColor(Color.rgb(232, 246, 238));
+
+        iconBackground.setColor(
+                Color.rgb(232, 246, 238)
+        );
+
         iconBackground.setCornerRadius(18);
 
         icon.setBackground(iconBackground);
 
         LinearLayout.LayoutParams iconParams =
-                new LinearLayout.LayoutParams(58, 58);
+                new LinearLayout.LayoutParams(60, 60);
 
         icon.setLayoutParams(iconParams);
 
         card.addView(icon);
 
+        // НАЗВАНИЕ
+
         TextView name = new TextView(this);
+
         name.setText(getSectionName(number));
-        name.setTextSize(16);
+        name.setTextSize(17);
         name.setTypeface(null, Typeface.BOLD);
         name.setTextColor(Color.rgb(35, 45, 40));
         name.setGravity(Gravity.CENTER_VERTICAL);
@@ -256,91 +285,184 @@ public class MainActivity extends Activity {
 
         card.addView(name);
 
+        // СТРЕЛКА
+
         TextView arrow = new TextView(this);
+
         arrow.setText("›");
-        arrow.setTextSize(28);
+        arrow.setTextSize(30);
         arrow.setTextColor(green);
         arrow.setGravity(Gravity.CENTER);
 
         card.addView(arrow);
 
+        // НАЖАТИЕ
+
         card.setOnClickListener(v -> openSection(number));
 
-        content.addView(card);
+        root.addView(card);
     }
 
-    String getIcon(int n) {
+    // =========================
+    // ИКОНКИ
+    // =========================
 
-        switch (n) {
-            case 1: return "🦺";
-            case 2: return "⚙";
-            case 3: return "🔨";
-            case 4: return "🔥";
-            case 5: return "🧯";
-            case 6: return "📡";
-            case 7: return "🔧";
-            case 8: return "✓";
-            case 9: return "📚";
-            default: return "•";
+    String getIcon(int number) {
+
+        switch (number) {
+
+            case 1:
+                return "🦺";
+
+            case 2:
+                return "⚙";
+
+            case 3:
+                return "🔨";
+
+            case 4:
+                return "🔥";
+
+            case 5:
+                return "🧯";
+
+            case 6:
+                return "📡";
+
+            case 7:
+                return "🔧";
+
+            case 8:
+                return "✓";
+
+            case 9:
+                return "📚";
+
+            default:
+                return "•";
         }
     }
 
-    String getSectionName(int n) {
+    // =========================
+    // НАЗВАНИЯ
+    // =========================
+
+    String getSectionName(int number) {
 
         if (language.equals("AZ")) {
 
-            switch (n) {
-                case 1: return "İş təhlükəsizliyi";
-                case 2: return "İstehsalat";
-                case 3: return "Ştamplama";
-                case 4: return "Sobalar və qızdırma";
-                case 5: return "Yanğınsöndürənlər";
-                case 6: return "Sensorlar";
-                case 7: return "Qaynaq";
-                case 8: return "Keyfiyyətə nəzarət";
-                case 9: return "İşçilər üçün ingilis dili";
+            switch (number) {
+
+                case 1:
+                    return "İş təhlükəsizliyi";
+
+                case 2:
+                    return "İstehsalat";
+
+                case 3:
+                    return "Ştamplama";
+
+                case 4:
+                    return "Sobalar və qızdırma";
+
+                case 5:
+                    return "Yanğınsöndürənlər";
+
+                case 6:
+                    return "Sensorlar";
+
+                case 7:
+                    return "Qaynaq";
+
+                case 8:
+                    return "Keyfiyyətə nəzarət";
+
+                case 9:
+                    return "İşçilər üçün ingilis dili";
             }
 
         } else if (language.equals("EN")) {
 
-            switch (n) {
-                case 1: return "Workplace Safety";
-                case 2: return "Manufacturing";
-                case 3: return "Stamping";
-                case 4: return "Furnaces & Heating";
-                case 5: return "Fire Extinguishers";
-                case 6: return "Sensors";
-                case 7: return "Welding";
-                case 8: return "Quality Control";
-                case 9: return "English for Workers";
+            switch (number) {
+
+                case 1:
+                    return "Workplace Safety";
+
+                case 2:
+                    return "Manufacturing";
+
+                case 3:
+                    return "Stamping";
+
+                case 4:
+                    return "Furnaces & Heating";
+
+                case 5:
+                    return "Fire Extinguishers";
+
+                case 6:
+                    return "Sensors";
+
+                case 7:
+                    return "Welding";
+
+                case 8:
+                    return "Quality Control";
+
+                case 9:
+                    return "English for Workers";
             }
 
         } else {
 
-            switch (n) {
-                case 1: return "Охрана труда";
-                case 2: return "Производство";
-                case 3: return "Штамповка";
-                case 4: return "Печи и нагрев";
-                case 5: return "Огнетушители";
-                case 6: return "Датчики";
-                case 7: return "Сварка";
-                case 8: return "Контроль качества";
-                case 9: return "Английский для рабочих";
+            switch (number) {
+
+                case 1:
+                    return "Охрана труда";
+
+                case 2:
+                    return "Производство";
+
+                case 3:
+                    return "Штамповка";
+
+                case 4:
+                    return "Печи и нагрев";
+
+                case 5:
+                    return "Огнетушители";
+
+                case 6:
+                    return "Датчики";
+
+                case 7:
+                    return "Сварка";
+
+                case 8:
+                    return "Контроль качества";
+
+                case 9:
+                    return "Английский для рабочих";
             }
         }
 
         return "";
     }
 
+    // =========================
+    // ОТКРЫТИЕ РАЗДЕЛА
+    // =========================
+
     void openSection(int number) {
 
         if (number == 1) {
 
             Intent intent =
-                    new Intent(MainActivity.this, SafetyActivity.class);
+                    new Intent(
+                            MainActivity.this,
+                            SafetyActivity.class
+                    );
 
-            // Передаем выбранный язык в раздел
             intent.putExtra("language", language);
 
             startActivity(intent);
@@ -355,18 +477,29 @@ public class MainActivity extends Activity {
         }
     }
 
+    // =========================
+    // ПОДЗАГОЛОВОК
+    // =========================
+
     String getSubtitle() {
 
         if (language.equals("AZ")) {
+
             return "İşçilər üçün təhlükəsizlik və istehsalat bələdçisi";
-        }
 
-        if (language.equals("EN")) {
+        } else if (language.equals("EN")) {
+
             return "Professional guide for workers and safety";
-        }
 
-        return "Профессиональный справочник для рабочих";
+        } else {
+
+            return "Профессиональный справочник для рабочих";
+        }
     }
+
+    // =========================
+    // РАЗРАБОТЧИК
+    // =========================
 
     void createDeveloper() {
 
@@ -394,8 +527,8 @@ public class MainActivity extends Activity {
         developer.setTextSize(13);
         developer.setTextColor(Color.GRAY);
         developer.setGravity(Gravity.CENTER);
-        developer.setPadding(0, 28, 0, 8);
+        developer.setPadding(0, 30, 0, 10);
 
-        content.addView(developer);
+        root.addView(developer);
     }
 }
