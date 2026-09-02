@@ -21,11 +21,11 @@ public class SafetyActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        String savedLanguage =
+        String selectedLanguage =
                 getIntent().getStringExtra("language");
 
-        if (savedLanguage != null) {
-            language = savedLanguage;
+        if (selectedLanguage != null) {
+            language = selectedLanguage;
         }
 
         showSafetyScreen();
@@ -37,14 +37,14 @@ public class SafetyActivity extends Activity {
 
         LinearLayout root = new LinearLayout(this);
         root.setOrientation(LinearLayout.VERTICAL);
-        root.setPadding(16, 18, 16, 25);
+        root.setPadding(16, 16, 16, 25);
         root.setBackgroundColor(Color.rgb(246, 249, 247));
 
         // ЗЕЛЕНАЯ ШАПКА
         LinearLayout header = new LinearLayout(this);
         header.setOrientation(LinearLayout.VERTICAL);
         header.setGravity(Gravity.CENTER);
-        header.setPadding(15, 22, 15, 22);
+        header.setPadding(15, 24, 15, 24);
 
         GradientDrawable headerBg =
                 new GradientDrawable(
@@ -63,10 +63,9 @@ public class SafetyActivity extends Activity {
         title.setGravity(Gravity.CENTER);
 
         header.addView(title);
-
         root.addView(header);
 
-        addSpace(root, 15);
+        addSpace(root, 18);
 
         // ВВОДНЫЙ ТЕКСТ
         addText(
@@ -79,42 +78,14 @@ public class SafetyActivity extends Activity {
 
         addSpace(root, 12);
 
-        // РАЗДЕЛ 1
-        addBox(
-                root,
-                getSectionTitle(1),
-                getSectionText(1)
-        );
+        // КАРТОЧКИ
+        addBox(root, getSectionTitle(1), getSectionText(1));
+        addBox(root, getSectionTitle(2), getSectionText(2));
+        addBox(root, getSectionTitle(3), getSectionText(3));
+        addBox(root, getSectionTitle(4), getSectionText(4));
+        addBox(root, getSectionTitle(5), getSectionText(5));
 
-        // РАЗДЕЛ 2
-        addBox(
-                root,
-                getSectionTitle(2),
-                getSectionText(2)
-        );
-
-        // РАЗДЕЛ 3
-        addBox(
-                root,
-                getSectionTitle(3),
-                getSectionText(3)
-        );
-
-        // РАЗДЕЛ 4
-        addBox(
-                root,
-                getSectionTitle(4),
-                getSectionText(4)
-        );
-
-        // РАЗДЕЛ 5
-        addBox(
-                root,
-                getSectionTitle(5),
-                getSectionText(5)
-        );
-
-        addSpace(root, 15);
+        addSpace(root, 18);
 
         TextView bottom = new TextView(this);
 
@@ -167,7 +138,8 @@ public class SafetyActivity extends Activity {
                         LinearLayout.LayoutParams.WRAP_CONTENT
                 );
 
-        params.setMargins(0, 7, 0, 7);
+        // БОЛЬШОЙ ОТСТУП МЕЖДУ КАРТОЧКАМИ
+        params.setMargins(0, 10, 0, 10);
 
         box.setLayoutParams(params);
 
@@ -216,7 +188,6 @@ public class SafetyActivity extends Activity {
     void addSpace(LinearLayout root, int height) {
 
         TextView space = new TextView(this);
-
         space.setHeight(height);
 
         root.addView(space);
@@ -238,19 +209,24 @@ public class SafetyActivity extends Activity {
     String getIntro() {
 
         if (language.equals("AZ")) {
-            return "İş yerində təhlükəsizlik hər bir işçi üçün əsas qaydadır. " +
-                    "İşə başlamazdan əvvəl avadanlığı yoxlayın, " +
-                    "fərdi qoruyucu vasitələrdən istifadə edin və təhlükəli " +
-                    "vəziyyətlər barədə rəhbərliyə məlumat verin.";
-        }
 
-        if (language.equals("EN")) {
+            return "İş yerində təhlükəsizlik hər bir işçi üçün əsas qaydadır. " +
+                    "İşə başlamazdan əvvəl avadanlığı yoxlayın, fərdi qoruyucu " +
+                    "vasitələrdən istifadə edin və təhlükəli vəziyyətlər barədə " +
+                    "rəhbərliyə məlumat verin.";
+
+        } else if (language.equals("EN")) {
+
             return "Workplace safety is a basic rule for every worker. " +
                     "Before starting work, check the equipment, use personal " +
                     "protective equipment and report dangerous situations.";
-        }
 
-        return "İş yerində təhlükəsizlik hər bir işçi üçün əsas qaydadır.";
+        } else {
+
+            return "Рабочая безопасность — главное правило для каждого работника. " +
+                    "Перед началом работы проверьте оборудование, используйте " +
+                    "средства индивидуальной защиты и сообщайте об опасных ситуациях.";
+        }
     }
 
     String getSectionTitle(int n) {
@@ -258,31 +234,46 @@ public class SafetyActivity extends Activity {
         if (language.equals("AZ")) {
 
             switch (n) {
-                case 1: return "Fərdi qoruyucu vasitələr";
-                case 2: return "Avadanlığın yoxlanılması";
-                case 3: return "İşə başlamazdan əvvəl";
-                case 4: return "Təhlükəli vəziyyət";
-                case 5: return "Əsas qayda";
+                case 1:
+                    return "Fərdi qoruyucu vasitələr";
+                case 2:
+                    return "Avadanlığın yoxlanılması";
+                case 3:
+                    return "İşə başlamazdan əvvəl";
+                case 4:
+                    return "Təhlükəli vəziyyət";
+                case 5:
+                    return "Əsas təhlükəsizlik qaydası";
             }
 
         } else if (language.equals("EN")) {
 
             switch (n) {
-                case 1: return "Personal Protective Equipment";
-                case 2: return "Equipment Inspection";
-                case 3: return "Before Starting Work";
-                case 4: return "Dangerous Situation";
-                case 5: return "Main Safety Rule";
+                case 1:
+                    return "Personal Protective Equipment";
+                case 2:
+                    return "Equipment Inspection";
+                case 3:
+                    return "Before Starting Work";
+                case 4:
+                    return "Dangerous Situation";
+                case 5:
+                    return "Main Safety Rule";
             }
 
         } else {
 
             switch (n) {
-                case 1: return "Средства защиты";
-                case 2: return "Проверка оборудования";
-                case 3: return "Перед началом работы";
-                case 4: return "Опасная ситуация";
-                case 5: return "Главное правило";
+                case 1:
+                    return "Средства индивидуальной защиты";
+                case 2:
+                    return "Проверка оборудования";
+                case 3:
+                    return "Перед началом работы";
+                case 4:
+                    return "Опасная ситуация";
+                case 5:
+                    return "Главное правило безопасности";
             }
         }
 
