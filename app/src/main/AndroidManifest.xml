@@ -8,6 +8,10 @@
         android:theme="@android:style/Theme.Material.Light.NoActionBar">
 
         <activity
+            android:name=".SensorsActivity"
+            android:exported="false" />
+
+        <activity
             android:name=".FireExtinguisherActivity"
             android:exported="false" />
 
