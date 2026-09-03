@@ -38,7 +38,6 @@ public class MainActivity extends Activity {
         root.setPadding(16, 16, 16, 30);
         root.setBackgroundColor(Color.rgb(246, 249, 247));
 
-        // Языки
         LinearLayout languages = new LinearLayout(this);
         languages.setOrientation(LinearLayout.HORIZONTAL);
         languages.setGravity(Gravity.CENTER_VERTICAL);
@@ -53,7 +52,6 @@ public class MainActivity extends Activity {
 
         root.addView(languages);
 
-        // Заголовок
         LinearLayout header = new LinearLayout(this);
         header.setOrientation(LinearLayout.VERTICAL);
         header.setGravity(Gravity.CENTER);
@@ -80,7 +78,6 @@ public class MainActivity extends Activity {
 
         addSpace(8);
 
-        // Разделы
         addCard(1);
         addCard(2);
         addCard(3);
@@ -93,7 +90,6 @@ public class MainActivity extends Activity {
 
         addSpace(15);
 
-        // Разработчик
         TextView developer = new TextView(this);
         developer.setText("F.S");
         developer.setTextSize(14);
@@ -411,6 +407,16 @@ public class MainActivity extends Activity {
             startActivity(intent);
         }
 
+        else if (number == 5) {
+
+            Intent intent =
+                    new Intent(this, FireExtinguisherActivity.class);
+
+            intent.putExtra("language", language);
+
+            startActivity(intent);
+        }
+
         else {
 
             Toast.makeText(
@@ -426,9 +432,6 @@ public class MainActivity extends Activity {
         if (language.equals("AZ")) {
 
             switch (number) {
-
-                case 5:
-                    return "Yanğınsöndürənlər bölməsi hazırlanır";
 
                 case 6:
                     return "Sensorlar bölməsi hazırlanır";
@@ -448,9 +451,6 @@ public class MainActivity extends Activity {
 
             switch (number) {
 
-                case 5:
-                    return "Fire Extinguishers section is being prepared";
-
                 case 6:
                     return "Sensors section is being prepared";
 
@@ -466,9 +466,6 @@ public class MainActivity extends Activity {
         }
 
         switch (number) {
-
-            case 5:
-                return "Раздел «Огнетушители» готовится";
 
             case 6:
                 return "Раздел «Датчики» готовится";
