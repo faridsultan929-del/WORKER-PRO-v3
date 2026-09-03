@@ -5,18 +5,17 @@ import android.os.Bundle;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.view.Gravity;
-import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class WeldingActivity extends Activity {
 
-    LinearLayout content;
-    int green = Color.rgb(20, 160, 80);
-
     String language = "RU";
+
+    int green = Color.rgb(20, 160, 80);
 
     String[][] titles = {
             {"Виды сварки", "Qaynaq növləri", "Types of Welding"},
@@ -78,7 +77,7 @@ public class WeldingActivity extends Activity {
         buildScreen();
     }
 
-    void buildScreen() {
+    private void buildScreen() {
 
         LinearLayout root = new LinearLayout(this);
         root.setOrientation(LinearLayout.VERTICAL);
@@ -87,19 +86,21 @@ public class WeldingActivity extends Activity {
         LinearLayout header = new LinearLayout(this);
         header.setOrientation(LinearLayout.VERTICAL);
         header.setGravity(Gravity.CENTER);
-        header.setPadding(16, 16, 16, 16);
+        header.setPadding(12, 12, 12, 12);
 
-        GradientDrawable headerBg = new GradientDrawable(
+        GradientDrawable headerBackground = new GradientDrawable(
                 GradientDrawable.Orientation.TL_BR,
                 new int[]{
                         Color.rgb(10, 190, 90),
                         Color.rgb(0, 120, 60)
                 }
         );
-        header.setBackground(headerBg);
+
+        headerBackground.setCornerRadius(24);
+        header.setBackground(headerBackground);
 
         TextView title = new TextView(this);
-        title.setText("🔧  СВАРКА");
+        title.setText("🔧  " + getHeaderTitle());
         title.setTextColor(Color.WHITE);
         title.setTextSize(24);
         title.setGravity(Gravity.CENTER);
@@ -114,15 +115,17 @@ public class WeldingActivity extends Activity {
         String[] langs = {"RU", "AZ", "EN"};
 
         for (String lang : langs) {
+
             Button button = new Button(this);
             button.setText(lang);
             button.setTextSize(12);
 
-            LinearLayout.LayoutParams lp =
+            LinearLayout.LayoutParams buttonParams =
                     new LinearLayout.LayoutParams(65, 45);
-            lp.setMargins(5, 0, 5, 0);
 
-            languages.addView(button, lp);
+            buttonParams.setMargins(5, 0, 5, 0);
+
+            languages.addView(button, buttonParams);
 
             if (lang.equals(language)) {
                 button.setTextColor(Color.WHITE);
@@ -139,22 +142,147 @@ public class WeldingActivity extends Activity {
         }
 
         header.addView(languages);
-        root.addView(header);
+
+        LinearLayout.LayoutParams headerParams =
+                new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT
+                );
+
+        headerParams.setMargins(10, 10, 10, 10);
+
+        root.addView(header, headerParams);
 
         ScrollView scrollView = new ScrollView(this);
 
-        content = new LinearLayout(this);
-        content.setOrientation(LinearLayout.VERTICAL);
-        content.setPadding(16, 16, 16, 25);
+        LinearLayout list = new LinearLayout(this);
+        list.setOrientation(LinearLayout.VERTICAL);
+        list.setPadding(16, 5, 16, 20);
 
         for (int i = 0; i < titles.length; i++) {
 
             final int index = i;
 
             LinearLayout card = new LinearLayout(this);
-            card.setOrientation(LinearLayout.VERTICAL);
+            card.setOrientation(LinearLayout.HORIZONTAL);
+            card.setGravity(Gravity.CENTER_VERTICAL);
             card.setPadding(18, 18, 18, 18);
 
-            GradientDrawable cardBg = new GradientDrawable();
-            cardBg.setColor(Color.WHITE);
-            cardBg.set
+            GradientDrawable cardBackground = new GradientDrawable();
+            cardBackground.setColor(Color.WHITE);
+            cardBackground.setCornerRadius(22);
+            cardBackground.setStroke(2, Color.rgb(220, 230, 224));
+
+            card.setBackground(cardBackground);
+            card.setElevation(5);
+
+            TextView cardTitle = new TextView(this);
+            cardTitle.setText(getTitle(index));
+            cardTitle.setTextColor(Color.rgb(25, 35, 30));
+            cardTitle.setTextSize(18);
+            cardTitle.setTypeface(null, 1);
+
+            LinearLayout.LayoutParams titleParams =
+                    new LinearLayout.LayoutParams(
+                            0,
+                            LinearLayout.LayoutParams.WRAP_CONTENT,
+                            1
+                    );
+
+            card.addView(cardTitle, titleParams);
+
+            TextView arrow = new TextView(this);
+            arrow.setText("›");
+            arrow.setTextColor(green);
+            arrow.setTextSize(32);
+            arrow.setGravity(Gravity.CENTER);
+
+            card.addView(
+                    arrow,
+                    new LinearLayout.LayoutParams(45, 55)
+            );
+
+            card.setOnClickListener(v -> showInfo(index));
+
+            LinearLayout.LayoutParams cardParams =
+                    new LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.MATCH_PARENT,
+                            LinearLayout.LayoutParams.WRAP_CONTENT
+                    );
+
+            cardParams.setMargins(0, 0, 0, 14);
+
+            list.addView(card, cardParams);
+        }
+
+        scrollView.addView(list);
+
+        root.addView(
+                scrollView,
+                new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        0,
+                        1
+                )
+        );
+
+        TextView developer = new TextView(this);
+        developer.setText("F.S");
+        developer.setTextColor(Color.GRAY);
+        developer.setTextSize(12);
+        developer.setGravity(Gravity.CENTER);
+        developer.setPadding(0, 5, 0, 8);
+
+        root.addView(developer);
+
+        setContentView(root);
+    }
+
+    private String getHeaderTitle() {
+
+        if (language.equals("AZ")) {
+            return "QAYNAQ";
+        }
+
+        if (language.equals("EN")) {
+            return "WELDING";
+        }
+
+        return "СВАРКА";
+    }
+
+    private String getTitle(int index) {
+
+        if (language.equals("AZ")) {
+            return titles[index][1];
+        }
+
+        if (language.equals("EN")) {
+            return titles[index][2];
+        }
+
+        return titles[index][0];
+    }
+
+    private String getText(int index) {
+
+        if (language.equals("AZ")) {
+            return texts[index][1];
+        }
+
+        if (language.equals("EN")) {
+            return texts[index][2];
+        }
+
+        return texts[index][0];
+    }
+
+    private void showInfo(int index) {
+
+        Toast.makeText(
+                this,
+                getText(index),
+                Toast.LENGTH_LONG
+        ).show();
+    }
+}
