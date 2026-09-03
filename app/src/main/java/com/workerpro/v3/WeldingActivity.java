@@ -228,7 +228,7 @@ public class WeldingActivity extends Activity {
         header.setBackground(background);
 
         TextView title = new TextView(this);
-        title.setText("🔧  " + getHeaderTitle());
+        title.setText("⚡  " + getHeaderTitle());
         title.setTextColor(Color.WHITE);
         title.setTextSize(24);
         title.setGravity(Gravity.CENTER);
