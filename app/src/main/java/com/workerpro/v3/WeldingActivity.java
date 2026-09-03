@@ -264,7 +264,7 @@ public class WeldingActivity extends Activity {
         return titles[index][0];
     }
 
-    private String getText(int index) {
+    private String getInfoText(int index) {
 
         if (language.equals("AZ")) {
             return texts[index][1];
@@ -281,7 +281,7 @@ public class WeldingActivity extends Activity {
 
         Toast.makeText(
                 this,
-                getText(index),
+                getInfoText(index),
                 Toast.LENGTH_LONG
         ).show();
     }
