@@ -8,10 +8,9 @@ import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.Button;
+import android.widget.TextView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends Activity {
@@ -156,7 +155,10 @@ public class MainActivity extends Activity {
         addCard(4, getTitle(4), "🔥");
         addCard(5, getTitle(5), "🧯");
         addCard(6, getTitle(6), "📡");
-        addCard(7, getTitle(7), "🔧");
+
+        // Сварка — обычная искра
+        addCard(7, getTitle(7), "⚡");
+
         addCard(8, getTitle(8), "✅");
         addCard(9, getTitle(9), "🇬🇧");
     }
