@@ -5,9 +5,9 @@ import android.os.Bundle;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.GradientDrawable;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -27,36 +27,32 @@ private void createMainScreen() {
     LinearLayout root = new LinearLayout(this);
     root.setOrientation(LinearLayout.VERTICAL);
     root.setBackgroundColor(Color.WHITE);
-    root.setPadding(20, 15, 20, 10);
+    root.setPadding(18, 12, 18, 8);
 
     // HEADER
-    LinearLayout header = new LinearLayout(this);
-    header.setOrientation(LinearLayout.VERTICAL);
-    header.setGravity(Gravity.CENTER);
-
     TextView title = new TextView(this);
     title.setText("WORKER PRO");
     title.setTextSize(30);
     title.setTypeface(null, Typeface.BOLD);
     title.setTextColor(Color.rgb(0, 130, 70));
     title.setGravity(Gravity.CENTER);
+    title.setPadding(0, 5, 0, 2);
+
+    root.addView(title);
 
     TextView subtitle = new TextView(this);
     subtitle.setText(getSubtitle());
     subtitle.setTextSize(16);
     subtitle.setTextColor(Color.DKGRAY);
     subtitle.setGravity(Gravity.CENTER);
-    subtitle.setPadding(0, 2, 0, 10);
+    subtitle.setPadding(0, 0, 0, 8);
 
-    header.addView(title);
-    header.addView(subtitle);
-
-    root.addView(header);
+    root.addView(subtitle);
 
     // LANGUAGE BUTTONS
     LinearLayout languages = new LinearLayout(this);
     languages.setOrientation(LinearLayout.HORIZONTAL);
-    languages.setGravity(Gravity.RIGHT | Gravity.CENTER_VERTICAL);
+    languages.setGravity(Gravity.RIGHT);
 
     languages.addView(createLanguageButton("RU"));
     languages.addView(createLanguageButton("AZ"));
@@ -64,79 +60,69 @@ private void createMainScreen() {
 
     root.addView(languages);
 
-    // SCROLLABLE MENU
+    // MENU SCROLL
     ScrollView scrollView = new ScrollView(this);
+    scrollView.setFillViewport(true);
 
     LinearLayout menu = new LinearLayout(this);
     menu.setOrientation(LinearLayout.VERTICAL);
-    menu.setPadding(0, 15, 0, 10);
+    menu.setPadding(0, 12, 0, 12);
 
-    String[] ruTitles = {
-            "🦺 Безопасность",
-            "🏭 Производство",
-            "🔨 Штамповка",
-            "🔥 Печи и нагрев",
-            "🧯 Огнетушители",
-            "📡 Датчики",
-            "⚡ Сварка",
-            "✅ Контроль качества",
-            "🇬🇧 English for Workers"
+    String[] ru = {
+            "🦺  Безопасность",
+            "🏭  Производство",
+            "🔨  Штамповка",
+            "🔥  Печи и нагрев",
+            "🧯  Огнетушители",
+            "📡  Датчики",
+            "⚡  Сварка",
+            "✅  Контроль качества",
+            "🇬🇧  English for Workers"
     };
 
-    String[] azTitles = {
-            "🦺 Təhlükəsizlik",
-            "🏭 İstehsalat",
-            "🔨 Ştamplama",
-            "🔥 Sobalar və qızdırma",
-            "🧯 Yanğınsöndürənlər",
-            "📡 Sensorlar",
-            "⚡ Qaynaq",
-            "✅ Keyfiyyətə nəzarət",
-            "🇬🇧 İşçilər üçün İngilis dili"
+    String[] az = {
+            "🦺  Təhlükəsizlik",
+            "🏭  İstehsalat",
+            "🔨  Ştamplama",
+            "🔥  Sobalar və qızdırma",
+            "🧯  Yanğınsöndürənlər",
+            "📡  Sensorlar",
+            "⚡  Qaynaq",
+            "✅  Keyfiyyətə nəzarət",
+            "🇬🇧  İşçilər üçün İngilis dili"
     };
 
-    String[] enTitles = {
-            "🦺 Safety",
-            "🏭 Production",
-            "🔨 Stamping",
-            "🔥 Furnaces & Heating",
-            "🧯 Fire Extinguishers",
-            "📡 Sensors",
-            "⚡ Welding",
-            "✅ Quality Control",
-            "🇬🇧 English for Workers"
+    String[] en = {
+            "🦺  Safety",
+            "🏭  Production",
+            "🔨  Stamping",
+            "🔥  Furnaces & Heating",
+            "🧯  Fire Extinguishers",
+            "📡  Sensors",
+            "⚡  Welding",
+            "✅  Quality Control",
+            "🇬🇧  English for Workers"
     };
 
     for (int i = 0; i < 9; i++) {
 
         final int section = i + 1;
 
-        Button button = new Button(this);
+        String text;
 
         if (language.equals("AZ")) {
-            button.setText(azTitles[i]);
+            text = az[i];
         } else if (language.equals("EN")) {
-            button.setText(enTitles[i]);
+            text = en[i];
         } else {
-            button.setText(ruTitles[i]);
+            text = ru[i];
         }
 
-        button.setTextSize(18);
-        button.setTextColor(Color.rgb(0, 100, 55));
-        button.setAllCaps(false);
-        button.setGravity(Gravity.CENTER);
+        TextView card = createMenuCard(text);
 
-        LinearLayout.LayoutParams params =
-                new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.MATCH_PARENT,
-                        85
-                );
+        card.setOnClickListener(v -> openSection(section));
 
-        params.setMargins(0, 0, 0, 14);
-
-        menu.addView(button, params);
-
-        button.setOnClickListener(v -> openSection(section));
+        menu.addView(card);
     }
 
     scrollView.addView(menu);
@@ -160,39 +146,65 @@ private void createMainScreen() {
 
     root.addView(developer);
 
-    // FUTURE AD SPACE
-    View adSpace = new View(this);
-
-    root.addView(
-            adSpace,
-            new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT,
-                    40
-            )
-    );
-
     setContentView(root);
 }
 
-private Button createLanguageButton(String text) {
+private TextView createMenuCard(String text) {
 
-    Button button = new Button(this);
+    TextView card = new TextView(this);
+
+    card.setText(text);
+    card.setTextSize(18);
+    card.setTextColor(Color.rgb(0, 105, 60));
+    card.setTypeface(null, Typeface.BOLD);
+    card.setGravity(Gravity.CENTER_VERTICAL);
+    card.setPadding(22, 0, 22, 0);
+
+    GradientDrawable background = new GradientDrawable();
+    background.setColor(Color.rgb(242, 248, 244));
+    background.setCornerRadius(18);
+    background.setStroke(2, Color.rgb(0, 130, 70));
+
+    card.setBackground(background);
+
+    LinearLayout.LayoutParams params =
+            new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    72
+            );
+
+    params.setMargins(0, 0, 0, 12);
+
+    card.setLayoutParams(params);
+
+    return card;
+}
+
+private TextView createLanguageButton(String text) {
+
+    TextView button = new TextView(this);
 
     button.setText(text);
     button.setTextSize(17);
-    button.setAllCaps(false);
-    button.setTextColor(Color.rgb(0, 100, 55));
+    button.setTypeface(null, Typeface.BOLD);
+    button.setTextColor(Color.rgb(0, 105, 60));
     button.setGravity(Gravity.CENTER);
 
-    LinearLayout.LayoutParams params =
-            new LinearLayout.LayoutParams(90, 58);
+    GradientDrawable background = new GradientDrawable();
+    background.setColor(Color.rgb(242, 248, 244));
+    background.setCornerRadius(12);
+    background.setStroke(1, Color.rgb(0, 130, 70));
 
-    params.setMargins(8, 0, 0, 0);
+    button.setBackground(background);
+
+    LinearLayout.LayoutParams params =
+            new LinearLayout.LayoutParams(78, 52);
+
+    params.setMargins(6, 0, 0, 0);
 
     button.setLayoutParams(params);
 
     button.setOnClickListener(v -> {
-
         language = text;
         createMainScreen();
     });
