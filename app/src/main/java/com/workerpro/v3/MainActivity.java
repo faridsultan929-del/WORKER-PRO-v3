@@ -7,7 +7,7 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
 import android.view.Gravity;
-import android.widget.Button;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -17,275 +17,217 @@ public class MainActivity extends Activity {
 
     String language = "RU";
 
-    LinearLayout root;
-
     int green = Color.rgb(0, 145, 75);
     int darkGreen = Color.rgb(0, 95, 50);
-    int background = Color.rgb(245, 248, 246);
+
+    LinearLayout root;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         showMain();
     }
 
     void showMain() {
 
         ScrollView scroll = new ScrollView(this);
-        scroll.setBackgroundColor(background);
 
         root = new LinearLayout(this);
         root.setOrientation(LinearLayout.VERTICAL);
-        root.setPadding(15, 0, 15, 30);
+        root.setPadding(16, 16, 16, 30);
+        root.setBackgroundColor(Color.rgb(246, 249, 247));
 
-        scroll.addView(root);
-
-        createLanguages();
-        createHeader();
-        createSections();
-        createDeveloper();
-
-        setContentView(scroll);
-    }
-
-    void createLanguages() {
-
+        // Языки
         LinearLayout languages = new LinearLayout(this);
-
         languages.setOrientation(LinearLayout.HORIZONTAL);
-        languages.setGravity(
-                Gravity.LEFT | Gravity.CENTER_VERTICAL
-        );
-        languages.setPadding(0, 12, 0, 10);
+        languages.setGravity(Gravity.CENTER_VERTICAL);
 
-        Button ru = languageButton("RU");
-        Button az = languageButton("AZ");
-        Button en = languageButton("EN");
-
-        ru.setOnClickListener(v -> {
-            language = "RU";
-            showMain();
-        });
-
-        az.setOnClickListener(v -> {
-            language = "AZ";
-            showMain();
-        });
-
-        en.setOnClickListener(v -> {
-            language = "EN";
-            showMain();
-        });
+        TextView ru = createLanguageButton("RU");
+        TextView az = createLanguageButton("AZ");
+        TextView en = createLanguageButton("EN");
 
         languages.addView(ru);
         languages.addView(az);
         languages.addView(en);
 
         root.addView(languages);
+
+        // Заголовок
+        LinearLayout header = new LinearLayout(this);
+        header.setOrientation(LinearLayout.VERTICAL);
+        header.setGravity(Gravity.CENTER);
+        header.setPadding(15, 25, 15, 25);
+
+        GradientDrawable headerBg =
+                new GradientDrawable(
+                        GradientDrawable.Orientation.TOP_BOTTOM,
+                        new int[]{green, darkGreen}
+                );
+
+        headerBg.setCornerRadius(25);
+        header.setBackground(headerBg);
+
+        TextView title = new TextView(this);
+        title.setText("WORKER PRO");
+        title.setTextSize(28);
+        title.setTypeface(null, Typeface.BOLD);
+        title.setTextColor(Color.WHITE);
+        title.setGravity(Gravity.CENTER);
+
+        header.addView(title);
+        root.addView(header);
+
+        addSpace(8);
+
+        // Разделы
+        addCard(1);
+        addCard(2);
+        addCard(3);
+        addCard(4);
+        addCard(5);
+        addCard(6);
+        addCard(7);
+        addCard(8);
+        addCard(9);
+
+        addSpace(15);
+
+        // Разработчик
+        TextView developer = new TextView(this);
+        developer.setText("F.S");
+        developer.setTextSize(14);
+        developer.setTextColor(Color.GRAY);
+        developer.setGravity(Gravity.CENTER);
+
+        root.addView(developer);
+
+        scroll.addView(root);
+        setContentView(scroll);
     }
 
-    Button languageButton(String text) {
+    TextView createLanguageButton(String text) {
 
-        Button button = new Button(this);
+        TextView button = new TextView(this);
 
         button.setText(text);
         button.setTextSize(14);
         button.setTypeface(null, Typeface.BOLD);
-        button.setAllCaps(false);
-
-        if (text.equals(language)) {
-
-            button.setTextColor(Color.WHITE);
-
-            GradientDrawable selected =
-                    new GradientDrawable();
-
-            selected.setColor(green);
-            selected.setCornerRadius(40);
-
-            button.setBackground(selected);
-
-        } else {
-
-            button.setTextColor(green);
-
-            GradientDrawable normal =
-                    new GradientDrawable();
-
-            normal.setColor(Color.WHITE);
-            normal.setCornerRadius(40);
-            normal.setStroke(2, green);
-
-            button.setBackground(normal);
-        }
-
-        button.setPadding(0, 0, 0, 0);
+        button.setGravity(Gravity.CENTER);
+        button.setPadding(18, 10, 18, 10);
 
         LinearLayout.LayoutParams params =
-                new LinearLayout.LayoutParams(65, 44);
+                new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.WRAP_CONTENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT
+                );
 
-        params.setMargins(0, 0, 8, 0);
-
+        params.setMargins(0, 0, 8, 8);
         button.setLayoutParams(params);
+
+        updateLanguageButton(button, text);
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                language = text;
+                showMain();
+            }
+        });
 
         return button;
     }
 
-    void createHeader() {
+    void updateLanguageButton(TextView button, String text) {
 
-        LinearLayout header = new LinearLayout(this);
+        GradientDrawable bg = new GradientDrawable();
 
-        header.setOrientation(LinearLayout.VERTICAL);
-        header.setGravity(Gravity.CENTER);
-        header.setPadding(15, 25, 15, 27);
+        bg.setCornerRadius(15);
 
-        GradientDrawable headerBackground =
-                new GradientDrawable(
-                        GradientDrawable.Orientation.TOP_BOTTOM,
-                        new int[]{
-                                green,
-                                darkGreen
-                        }
-                );
+        if (language.equals(text)) {
+            bg.setColor(green);
+            button.setTextColor(Color.WHITE);
+        } else {
+            bg.setColor(Color.WHITE);
+            bg.setStroke(2, green);
+            button.setTextColor(green);
+        }
 
-        headerBackground.setCornerRadius(28);
-
-        header.setBackground(headerBackground);
-
-        LinearLayout.LayoutParams headerParams =
-                new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.MATCH_PARENT,
-                        LinearLayout.LayoutParams.WRAP_CONTENT
-                );
-
-        headerParams.setMargins(0, 5, 0, 22);
-
-        header.setLayoutParams(headerParams);
-
-        TextView logo = new TextView(this);
-
-        logo.setText("WORKER PRO");
-        logo.setTextSize(31);
-        logo.setTypeface(null, Typeface.BOLD);
-        logo.setTextColor(Color.WHITE);
-        logo.setGravity(Gravity.CENTER);
-
-        header.addView(logo);
-
-        TextView subtitle = new TextView(this);
-
-        subtitle.setText(getSubtitle());
-        subtitle.setTextSize(15);
-        subtitle.setTextColor(Color.WHITE);
-        subtitle.setGravity(Gravity.CENTER);
-        subtitle.setPadding(0, 8, 0, 0);
-
-        header.addView(subtitle);
-
-        root.addView(header);
+        button.setBackground(bg);
     }
 
-    void createSections() {
-
-        addSection(1);
-        addSection(2);
-        addSection(3);
-        addSection(4);
-        addSection(5);
-        addSection(6);
-        addSection(7);
-        addSection(8);
-        addSection(9);
-    }
-
-    void addSection(int number) {
+    void addCard(final int number) {
 
         LinearLayout card = new LinearLayout(this);
 
         card.setOrientation(LinearLayout.HORIZONTAL);
         card.setGravity(Gravity.CENTER_VERTICAL);
-        card.setPadding(15, 10, 15, 10);
+        card.setPadding(18, 18, 15, 18);
 
-        GradientDrawable cardBackground =
-                new GradientDrawable();
+        GradientDrawable bg = new GradientDrawable();
+        bg.setColor(Color.WHITE);
+        bg.setCornerRadius(20);
+        bg.setStroke(2, Color.rgb(220, 230, 224));
 
-        cardBackground.setColor(Color.WHITE);
-        cardBackground.setCornerRadius(22);
-        cardBackground.setStroke(
-                2,
-                Color.rgb(220, 230, 224)
-        );
+        card.setBackground(bg);
 
-        card.setBackground(cardBackground);
-
-        LinearLayout.LayoutParams cardParams =
+        LinearLayout.LayoutParams params =
                 new LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.MATCH_PARENT,
-                        82
+                        LinearLayout.LayoutParams.WRAP_CONTENT
                 );
 
-        cardParams.setMargins(0, 10, 0, 10);
-
-        card.setLayoutParams(cardParams);
+        params.setMargins(0, 6, 0, 6);
+        card.setLayoutParams(params);
 
         TextView icon = new TextView(this);
-
         icon.setText(getIcon(number));
-        icon.setTextSize(28);
+        icon.setTextSize(27);
         icon.setGravity(Gravity.CENTER);
 
-        GradientDrawable iconBackground =
-                new GradientDrawable();
-
-        iconBackground.setColor(
-                Color.rgb(232, 246, 238)
-        );
-
-        iconBackground.setCornerRadius(18);
-
-        icon.setBackground(iconBackground);
-
-        LinearLayout.LayoutParams iconParams =
-                new LinearLayout.LayoutParams(60, 60);
-
-        icon.setLayoutParams(iconParams);
-
-        card.addView(icon);
+        card.addView(icon,
+                new LinearLayout.LayoutParams(
+                        55,
+                        55
+                ));
 
         TextView name = new TextView(this);
-
         name.setText(getSectionName(number));
         name.setTextSize(17);
         name.setTypeface(null, Typeface.BOLD);
-        name.setTextColor(
-                Color.rgb(35, 45, 40)
-        );
+        name.setTextColor(Color.rgb(35, 45, 40));
         name.setGravity(Gravity.CENTER_VERTICAL);
-        name.setPadding(15, 0, 5, 0);
 
         LinearLayout.LayoutParams nameParams =
                 new LinearLayout.LayoutParams(
                         0,
-                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT,
                         1
                 );
 
-        name.setLayoutParams(nameParams);
+        nameParams.setMargins(12, 0, 5, 0);
 
-        card.addView(name);
+        card.addView(name, nameParams);
 
         TextView arrow = new TextView(this);
-
         arrow.setText("›");
         arrow.setTextSize(30);
         arrow.setTextColor(green);
         arrow.setGravity(Gravity.CENTER);
 
-        card.addView(arrow);
+        card.addView(arrow,
+                new LinearLayout.LayoutParams(
+                        35,
+                        55
+                ));
 
-        card.setOnClickListener(
-                v -> openSection(number)
-        );
+        card.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openSection(number);
+            }
+        });
 
         root.addView(card);
     }
@@ -313,13 +255,13 @@ public class MainActivity extends Activity {
                 return "📡";
 
             case 7:
-                return "🔧";
+                return "⚡";
 
             case 8:
                 return "✓";
 
             case 9:
-                return "📚";
+                return "A";
 
             default:
                 return "•";
@@ -359,8 +301,9 @@ public class MainActivity extends Activity {
                 case 9:
                     return "İşçilər üçün ingilis dili";
             }
+        }
 
-        } else if (language.equals("EN")) {
+        if (language.equals("EN")) {
 
             switch (number) {
 
@@ -391,38 +334,36 @@ public class MainActivity extends Activity {
                 case 9:
                     return "English for Workers";
             }
+        }
 
-        } else {
+        switch (number) {
 
-            switch (number) {
+            case 1:
+                return "Охрана труда";
 
-                case 1:
-                    return "Охрана труда";
+            case 2:
+                return "Производство";
 
-                case 2:
-                    return "Производство";
+            case 3:
+                return "Штамповка";
 
-                case 3:
-                    return "Штамповка";
+            case 4:
+                return "Печи и нагрев";
 
-                case 4:
-                    return "Печи и нагрев";
+            case 5:
+                return "Огнетушители";
 
-                case 5:
-                    return "Огнетушители";
+            case 6:
+                return "Датчики";
 
-                case 6:
-                    return "Датчики";
+            case 7:
+                return "Сварка";
 
-                case 7:
-                    return "Сварка";
+            case 8:
+                return "Контроль качества";
 
-                case 8:
-                    return "Контроль качества";
-
-                case 9:
-                    return "Английский для рабочих";
-            }
+            case 9:
+                return "Английский для рабочих";
         }
 
         return "";
@@ -433,85 +374,124 @@ public class MainActivity extends Activity {
         if (number == 1) {
 
             Intent intent =
-                    new Intent(
-                            MainActivity.this,
-                            SafetyActivity.class
-                    );
+                    new Intent(this, SafetyActivity.class);
 
-            intent.putExtra(
-                    "language",
-                    language
-            );
+            intent.putExtra("language", language);
 
             startActivity(intent);
+        }
 
-        } else if (number == 2) {
+        else if (number == 2) {
 
             Intent intent =
-                    new Intent(
-                            MainActivity.this,
-                            ProductionActivity.class
-                    );
+                    new Intent(this, ProductionActivity.class);
 
-            intent.putExtra(
-                    "language",
-                    language
-            );
+            intent.putExtra("language", language);
 
             startActivity(intent);
+        }
 
-        } else if (number == 3) {
+        else if (number == 3) {
 
             Intent intent =
-                    new Intent(
-                            MainActivity.this,
-                            StampingActivity.class
-                    );
+                    new Intent(this, StampingActivity.class);
 
-            intent.putExtra(
-                    "language",
-                    language
-            );
+            intent.putExtra("language", language);
 
             startActivity(intent);
+        }
 
-        } else {
+        else if (number == 4) {
+
+            Intent intent =
+                    new Intent(this, FurnaceActivity.class);
+
+            intent.putExtra("language", language);
+
+            startActivity(intent);
+        }
+
+        else {
 
             Toast.makeText(
                     this,
-                    getSectionName(number),
+                    getToastText(number),
                     Toast.LENGTH_SHORT
             ).show();
         }
     }
 
-    String getSubtitle() {
+    String getToastText(int number) {
 
         if (language.equals("AZ")) {
 
-            return "İşçilər üçün təhlükəsizlik və istehsalat bələdçisi";
+            switch (number) {
 
-        } else if (language.equals("EN")) {
+                case 5:
+                    return "Yanğınsöndürənlər bölməsi hazırlanır";
 
-            return "Professional guide for workers and safety";
+                case 6:
+                    return "Sensorlar bölməsi hazırlanır";
 
-        } else {
+                case 7:
+                    return "Qaynaq bölməsi hazırlanır";
 
-            return "Профессиональный справочник для рабочих";
+                case 8:
+                    return "Keyfiyyətə nəzarət bölməsi hazırlanır";
+
+                case 9:
+                    return "İngilis dili bölməsi hazırlanır";
+            }
         }
+
+        if (language.equals("EN")) {
+
+            switch (number) {
+
+                case 5:
+                    return "Fire Extinguishers section is being prepared";
+
+                case 6:
+                    return "Sensors section is being prepared";
+
+                case 7:
+                    return "Welding section is being prepared";
+
+                case 8:
+                    return "Quality Control section is being prepared";
+
+                case 9:
+                    return "English section is being prepared";
+            }
+        }
+
+        switch (number) {
+
+            case 5:
+                return "Раздел «Огнетушители» готовится";
+
+            case 6:
+                return "Раздел «Датчики» готовится";
+
+            case 7:
+                return "Раздел «Сварка» готовится";
+
+            case 8:
+                return "Раздел «Контроль качества» готовится";
+
+            case 9:
+                return "Раздел «Английский» готовится";
+        }
+
+        return "";
     }
 
-    void createDeveloper() {
+    void addSpace(int height) {
 
-        TextView developer = new TextView(this);
+        TextView space = new TextView(this);
 
-        developer.setText("F.S");
+        space.setHeight(height);
 
-        developer.setTextSize(13);
-        developer.setTextColor(Color.GRAY);
-        developer.setGravity(Gravity.CENTER);
-        developer.setPadding(0, 30, 0, 10);
-
-        root.addView(developer);
+        root.addView(space);
     }
 }
