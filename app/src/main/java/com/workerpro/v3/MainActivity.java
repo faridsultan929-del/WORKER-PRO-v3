@@ -417,6 +417,16 @@ public class MainActivity extends Activity {
             startActivity(intent);
         }
 
+        else if (number == 6) {
+
+            Intent intent =
+                    new Intent(this, SensorsActivity.class);
+
+            intent.putExtra("language", language);
+
+            startActivity(intent);
+        }
+
         else {
 
             Toast.makeText(
@@ -433,9 +443,6 @@ public class MainActivity extends Activity {
 
             switch (number) {
 
-                case 6:
-                    return "Sensorlar bölməsi hazırlanır";
-
                 case 7:
                     return "Qaynaq bölməsi hazırlanır";
 
@@ -451,9 +458,6 @@ public class MainActivity extends Activity {
 
             switch (number) {
 
-                case 6:
-                    return "Sensors section is being prepared";
-
                 case 7:
                     return "Welding section is being prepared";
 
@@ -466,9 +470,6 @@ public class MainActivity extends Activity {
         }
 
         switch (number) {
-
-            case 6:
-                return "Раздел «Датчики» готовится";
 
             case 7:
                 return "Раздел «Сварка» готовится";
