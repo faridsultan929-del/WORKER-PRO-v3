@@ -9,6 +9,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 public class MainActivity extends Activity {
@@ -18,7 +19,6 @@ private String language = "RU";
 @Override
 protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-
     createMainScreen();
 }
 
@@ -27,13 +27,12 @@ private void createMainScreen() {
     LinearLayout root = new LinearLayout(this);
     root.setOrientation(LinearLayout.VERTICAL);
     root.setBackgroundColor(Color.WHITE);
-    root.setPadding(20, 20, 20, 20);
+    root.setPadding(20, 15, 20, 10);
 
     // HEADER
     LinearLayout header = new LinearLayout(this);
     header.setOrientation(LinearLayout.VERTICAL);
     header.setGravity(Gravity.CENTER);
-    header.setPadding(0, 10, 0, 15);
 
     TextView title = new TextView(this);
     title.setText("WORKER PRO");
@@ -47,6 +46,7 @@ private void createMainScreen() {
     subtitle.setTextSize(16);
     subtitle.setTextColor(Color.DKGRAY);
     subtitle.setGravity(Gravity.CENTER);
+    subtitle.setPadding(0, 2, 0, 10);
 
     header.addView(title);
     header.addView(subtitle);
@@ -58,20 +58,18 @@ private void createMainScreen() {
     languages.setOrientation(LinearLayout.HORIZONTAL);
     languages.setGravity(Gravity.RIGHT | Gravity.CENTER_VERTICAL);
 
-    Button ru = createLanguageButton("RU");
-    Button az = createLanguageButton("AZ");
-    Button en = createLanguageButton("EN");
-
-    languages.addView(ru);
-    languages.addView(az);
-    languages.addView(en);
+    languages.addView(createLanguageButton("RU"));
+    languages.addView(createLanguageButton("AZ"));
+    languages.addView(createLanguageButton("EN"));
 
     root.addView(languages);
 
-    // MENU
+    // SCROLLABLE MENU
+    ScrollView scrollView = new ScrollView(this);
+
     LinearLayout menu = new LinearLayout(this);
     menu.setOrientation(LinearLayout.VERTICAL);
-    menu.setPadding(0, 20, 0, 0);
+    menu.setPadding(0, 15, 0, 10);
 
     String[] ruTitles = {
             "🦺 Безопасность",
@@ -126,26 +124,31 @@ private void createMainScreen() {
         button.setTextSize(18);
         button.setTextColor(Color.rgb(0, 100, 55));
         button.setAllCaps(false);
+        button.setGravity(Gravity.CENTER);
 
         LinearLayout.LayoutParams params =
                 new LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.MATCH_PARENT,
-                        90
+                        85
                 );
 
-        params.setMargins(0, 0, 0, 20);
+        params.setMargins(0, 0, 0, 14);
 
         menu.addView(button, params);
 
         button.setOnClickListener(v -> openSection(section));
     }
 
-    root.addView(menu,
+    scrollView.addView(menu);
+
+    root.addView(
+            scrollView,
             new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT,
                     0,
                     1
-            ));
+            )
+    );
 
     // DEVELOPER
     TextView developer = new TextView(this);
@@ -153,18 +156,20 @@ private void createMainScreen() {
     developer.setTextSize(16);
     developer.setTextColor(Color.GRAY);
     developer.setGravity(Gravity.CENTER);
-    developer.setPadding(0, 10, 0, 10);
+    developer.setPadding(0, 5, 0, 5);
 
     root.addView(developer);
 
-    // SPACE FOR FUTURE ADVERTISEMENT
+    // FUTURE AD SPACE
     View adSpace = new View(this);
 
-    root.addView(adSpace,
+    root.addView(
+            adSpace,
             new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT,
-                    100
-            ));
+                    40
+            )
+    );
 
     setContentView(root);
 }
@@ -177,6 +182,7 @@ private Button createLanguageButton(String text) {
     button.setTextSize(17);
     button.setAllCaps(false);
     button.setTextColor(Color.rgb(0, 100, 55));
+    button.setGravity(Gravity.CENTER);
 
     LinearLayout.LayoutParams params =
             new LinearLayout.LayoutParams(90, 58);
@@ -188,7 +194,6 @@ private Button createLanguageButton(String text) {
     button.setOnClickListener(v -> {
 
         language = text;
-
         createMainScreen();
     });
 
