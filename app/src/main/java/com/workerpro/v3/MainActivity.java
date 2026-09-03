@@ -49,14 +49,18 @@ public class MainActivity extends Activity {
         setContentView(scroll);
     }
 
+    // =========================
     // ЯЗЫКИ
+    // =========================
 
     void createLanguages() {
 
         LinearLayout languages = new LinearLayout(this);
 
         languages.setOrientation(LinearLayout.HORIZONTAL);
-        languages.setGravity(Gravity.LEFT | Gravity.CENTER_VERTICAL);
+        languages.setGravity(
+                Gravity.LEFT | Gravity.CENTER_VERTICAL
+        );
         languages.setPadding(0, 12, 0, 10);
 
         Button ru = languageButton("RU");
@@ -98,7 +102,9 @@ public class MainActivity extends Activity {
 
             button.setTextColor(Color.WHITE);
 
-            GradientDrawable selected = new GradientDrawable();
+            GradientDrawable selected =
+                    new GradientDrawable();
+
             selected.setColor(green);
             selected.setCornerRadius(40);
 
@@ -108,7 +114,9 @@ public class MainActivity extends Activity {
 
             button.setTextColor(green);
 
-            GradientDrawable normal = new GradientDrawable();
+            GradientDrawable normal =
+                    new GradientDrawable();
+
             normal.setColor(Color.WHITE);
             normal.setCornerRadius(40);
             normal.setStroke(2, green);
@@ -128,7 +136,9 @@ public class MainActivity extends Activity {
         return button;
     }
 
+    // =========================
     // ШАПКА
+    // =========================
 
     void createHeader() {
 
@@ -141,7 +151,10 @@ public class MainActivity extends Activity {
         GradientDrawable headerBackground =
                 new GradientDrawable(
                         GradientDrawable.Orientation.TOP_BOTTOM,
-                        new int[]{green, darkGreen}
+                        new int[]{
+                                green,
+                                darkGreen
+                        }
                 );
 
         headerBackground.setCornerRadius(28);
@@ -181,7 +194,9 @@ public class MainActivity extends Activity {
         root.addView(header);
     }
 
+    // =========================
     // РАЗДЕЛЫ
+    // =========================
 
     void createSections() {
 
@@ -204,7 +219,8 @@ public class MainActivity extends Activity {
         card.setGravity(Gravity.CENTER_VERTICAL);
         card.setPadding(15, 10, 15, 10);
 
-        GradientDrawable cardBackground = new GradientDrawable();
+        GradientDrawable cardBackground =
+                new GradientDrawable();
 
         cardBackground.setColor(Color.WHITE);
         cardBackground.setCornerRadius(22);
@@ -221,8 +237,7 @@ public class MainActivity extends Activity {
                         82
                 );
 
-        // ПРОМЕЖУТОК МЕЖДУ РАЗДЕЛАМИ
-
+        // Расстояние между разделами
         cardParams.setMargins(0, 10, 0, 10);
 
         card.setLayoutParams(cardParams);
@@ -235,7 +250,8 @@ public class MainActivity extends Activity {
         icon.setTextSize(28);
         icon.setGravity(Gravity.CENTER);
 
-        GradientDrawable iconBackground = new GradientDrawable();
+        GradientDrawable iconBackground =
+                new GradientDrawable();
 
         iconBackground.setColor(
                 Color.rgb(232, 246, 238)
@@ -259,7 +275,9 @@ public class MainActivity extends Activity {
         name.setText(getSectionName(number));
         name.setTextSize(17);
         name.setTypeface(null, Typeface.BOLD);
-        name.setTextColor(Color.rgb(35, 45, 40));
+        name.setTextColor(
+                Color.rgb(35, 45, 40)
+        );
         name.setGravity(Gravity.CENTER_VERTICAL);
         name.setPadding(15, 0, 5, 0);
 
@@ -287,12 +305,16 @@ public class MainActivity extends Activity {
 
         // НАЖАТИЕ
 
-        card.setOnClickListener(v -> openSection(number));
+        card.setOnClickListener(
+                v -> openSection(number)
+        );
 
         root.addView(card);
     }
 
+    // =========================
     // ИКОНКИ
+    // =========================
 
     String getIcon(int number) {
 
@@ -330,7 +352,9 @@ public class MainActivity extends Activity {
         }
     }
 
-    // НАЗВАНИЯ РАЗДЕЛОВ
+    // =========================
+    // НАЗВАНИЯ
+    // =========================
 
     String getSectionName(int number) {
 
@@ -434,7 +458,9 @@ public class MainActivity extends Activity {
         return "";
     }
 
-    // ОТКРЫТИЕ РАЗДЕЛА
+    // =========================
+    // ОТКРЫТИЕ РАЗДЕЛОВ
+    // =========================
 
     void openSection(int number) {
 
@@ -446,7 +472,25 @@ public class MainActivity extends Activity {
                             SafetyActivity.class
                     );
 
-            intent.putExtra("language", language);
+            intent.putExtra(
+                    "language",
+                    language
+            );
+
+            startActivity(intent);
+
+        } else if (number == 2) {
+
+            Intent intent =
+                    new Intent(
+                            MainActivity.this,
+                            ProductionActivity.class
+                    );
+
+            intent.putExtra(
+                    "language",
+                    language
+            );
 
             startActivity(intent);
 
@@ -460,7 +504,9 @@ public class MainActivity extends Activity {
         }
     }
 
+    // =========================
     // ПОДЗАГОЛОВОК
+    // =========================
 
     String getSubtitle() {
 
@@ -478,7 +524,9 @@ public class MainActivity extends Activity {
         }
     }
 
+    // =========================
     // РАЗРАБОТЧИК
+    // =========================
 
     void createDeveloper() {
 
