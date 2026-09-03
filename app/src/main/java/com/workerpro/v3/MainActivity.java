@@ -1,204 +1,131 @@
 package com.workerpro.v3;
 
 import android.app.Activity;
+import android.os.Bundle;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.graphics.drawable.GradientDrawable;
-import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 public class MainActivity extends Activity {
 
-    private LinearLayout mainLayout;
-    private String language = "RU";
+private String language = "RU";
 
-    private final int green = Color.rgb(0, 150, 80);
-    private final int darkGreen = Color.rgb(0, 105, 60);
+@Override
+protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        showMainScreen();
-    }
+    createMainScreen();
+}
 
-    private void showMainScreen() {
+private void createMainScreen() {
 
-        ScrollView scrollView = new ScrollView(this);
-        scrollView.setBackgroundColor(Color.rgb(245, 248, 246));
+    LinearLayout root = new LinearLayout(this);
+    root.setOrientation(LinearLayout.VERTICAL);
+    root.setBackgroundColor(Color.WHITE);
+    root.setPadding(20, 20, 20, 20);
 
-        mainLayout = new LinearLayout(this);
-        mainLayout.setOrientation(LinearLayout.VERTICAL);
-        mainLayout.setPadding(16, 16, 16, 20);
+    // HEADER
+    LinearLayout header = new LinearLayout(this);
+    header.setOrientation(LinearLayout.VERTICAL);
+    header.setGravity(Gravity.CENTER);
+    header.setPadding(0, 10, 0, 15);
 
-        scrollView.addView(mainLayout);
+    TextView title = new TextView(this);
+    title.setText("WORKER PRO");
+    title.setTextSize(30);
+    title.setTypeface(null, Typeface.BOLD);
+    title.setTextColor(Color.rgb(0, 130, 70));
+    title.setGravity(Gravity.CENTER);
 
-        createHeader();
-        createLanguageButtons();
-        createCards();
-        createDeveloper();
-        createAdSpace();
+    TextView subtitle = new TextView(this);
+    subtitle.setText(getSubtitle());
+    subtitle.setTextSize(16);
+    subtitle.setTextColor(Color.DKGRAY);
+    subtitle.setGravity(Gravity.CENTER);
 
-        setContentView(scrollView);
-    }
+    header.addView(title);
+    header.addView(subtitle);
 
-    private void createHeader() {
+    root.addView(header);
 
-        LinearLayout header = new LinearLayout(this);
+    // LANGUAGE BUTTONS
+    LinearLayout languages = new LinearLayout(this);
+    languages.setOrientation(LinearLayout.HORIZONTAL);
+    languages.setGravity(Gravity.RIGHT | Gravity.CENTER_VERTICAL);
 
-        header.setOrientation(LinearLayout.VERTICAL);
-        header.setGravity(Gravity.CENTER);
-        header.setPadding(10, 24, 10, 24);
+    Button ru = createLanguageButton("RU");
+    Button az = createLanguageButton("AZ");
+    Button en = createLanguageButton("EN");
 
-        GradientDrawable headerBg = new GradientDrawable(
-                GradientDrawable.Orientation.TOP_BOTTOM,
-                new int[]{green, darkGreen}
-        );
+    languages.addView(ru);
+    languages.addView(az);
+    languages.addView(en);
 
-        headerBg.setCornerRadius(28);
-        header.setBackground(headerBg);
+    root.addView(languages);
 
-        TextView title = new TextView(this);
+    // MENU
+    LinearLayout menu = new LinearLayout(this);
+    menu.setOrientation(LinearLayout.VERTICAL);
+    menu.setPadding(0, 20, 0, 0);
 
-        title.setText("WORKER PRO");
-        title.setTextColor(Color.WHITE);
-        title.setTextSize(30);
-        title.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
-        title.setGravity(Gravity.CENTER);
+    String[] ruTitles = {
+            "🦺 Безопасность",
+            "🏭 Производство",
+            "🔨 Штамповка",
+            "🔥 Печи и нагрев",
+            "🧯 Огнетушители",
+            "📡 Датчики",
+            "⚡ Сварка",
+            "✅ Контроль качества",
+            "🇬🇧 English for Workers"
+    };
 
-        header.addView(title);
+    String[] azTitles = {
+            "🦺 Təhlükəsizlik",
+            "🏭 İstehsalat",
+            "🔨 Ştamplama",
+            "🔥 Sobalar və qızdırma",
+            "🧯 Yanğınsöndürənlər",
+            "📡 Sensorlar",
+            "⚡ Qaynaq",
+            "✅ Keyfiyyətə nəzarət",
+            "🇬🇧 İşçilər üçün İngilis dili"
+    };
 
-        TextView subtitle = new TextView(this);
+    String[] enTitles = {
+            "🦺 Safety",
+            "🏭 Production",
+            "🔨 Stamping",
+            "🔥 Furnaces & Heating",
+            "🧯 Fire Extinguishers",
+            "📡 Sensors",
+            "⚡ Welding",
+            "✅ Quality Control",
+            "🇬🇧 English for Workers"
+    };
+
+    for (int i = 0; i < 9; i++) {
+
+        final int section = i + 1;
+
+        Button button = new Button(this);
 
         if (language.equals("AZ")) {
-            subtitle.setText("İşçilər üçün peşəkar proqram");
+            button.setText(azTitles[i]);
         } else if (language.equals("EN")) {
-            subtitle.setText("Professional app for workers");
+            button.setText(enTitles[i]);
         } else {
-            subtitle.setText("Профессиональное приложение для рабочих");
+            button.setText(ruTitles[i]);
         }
 
-        subtitle.setTextColor(Color.WHITE);
-        subtitle.setTextSize(16);
-        subtitle.setGravity(Gravity.CENTER);
-        subtitle.setPadding(0, 8, 0, 0);
-
-        header.addView(subtitle);
-
-        LinearLayout.LayoutParams params =
-                new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.MATCH_PARENT,
-                        LinearLayout.LayoutParams.WRAP_CONTENT
-                );
-
-        params.setMargins(0, 0, 0, 18);
-
-        mainLayout.addView(header, params);
-    }
-
-    private void createLanguageButtons() {
-
-        LinearLayout languages = new LinearLayout(this);
-
-        languages.setOrientation(LinearLayout.HORIZONTAL);
-        languages.setGravity(Gravity.RIGHT);
-        languages.setPadding(0, 0, 0, 18);
-
-        TextView ru = createLanguageButton("RU");
-        TextView az = createLanguageButton("AZ");
-        TextView en = createLanguageButton("EN");
-
-        languages.addView(ru);
-        languages.addView(az);
-        languages.addView(en);
-
-        mainLayout.addView(languages);
-
-        ru.setOnClickListener(v -> {
-            language = "RU";
-            showMainScreen();
-        });
-
-        az.setOnClickListener(v -> {
-            language = "AZ";
-            showMainScreen();
-        });
-
-        en.setOnClickListener(v -> {
-            language = "EN";
-            showMainScreen();
-        });
-    }
-
-    private TextView createLanguageButton(String text) {
-
-        TextView button = new TextView(this);
-
-        button.setText(text);
-        button.setTextSize(17);
-        button.setTextColor(green);
-        button.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
-        button.setGravity(Gravity.CENTER);
-        button.setIncludeFontPadding(true);
-
-        GradientDrawable bg = new GradientDrawable();
-
-        bg.setColor(Color.WHITE);
-        bg.setCornerRadius(16);
-        bg.setStroke(2, green);
-
-        button.setBackground(bg);
-
-        LinearLayout.LayoutParams params =
-                new LinearLayout.LayoutParams(
-                        90,
-                        58
-                );
-
-        params.setMargins(8, 0, 0, 0);
-
-        button.setLayoutParams(params);
-
-        return button;
-    }
-
-    private void createCards() {
-
-        addCard(1, "🦺");
-        addCard(2, "🏭");
-        addCard(3, "⚙️");
-        addCard(4, "🔥");
-        addCard(5, "🧯");
-        addCard(6, "📡");
-        addCard(7, "⚡");
-        addCard(8, "✅");
-        addCard(9, "🇬🇧");
-    }
-
-    private void addCard(final int number, String icon) {
-
-        TextView card = new TextView(this);
-
-        card.setText(icon + "  " + getTitle(number));
-        card.setTextSize(18);
-        card.setTextColor(darkGreen);
-        card.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
-        card.setGravity(Gravity.CENTER_VERTICAL);
-        card.setPadding(22, 0, 22, 0);
-        card.setClickable(true);
-        card.setIncludeFontPadding(true);
-
-        GradientDrawable cardBg = new GradientDrawable();
-
-        cardBg.setColor(Color.WHITE);
-        cardBg.setCornerRadius(20);
-        cardBg.setStroke(2, green);
-
-        card.setBackground(cardBg);
+        button.setTextSize(18);
+        button.setTextColor(Color.rgb(0, 100, 55));
+        button.setAllCaps(false);
 
         LinearLayout.LayoutParams params =
                 new LinearLayout.LayoutParams(
@@ -208,196 +135,127 @@ public class MainActivity extends Activity {
 
         params.setMargins(0, 0, 0, 20);
 
-        mainLayout.addView(card, params);
+        menu.addView(button, params);
 
-        card.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                openSection(number);
-            }
-        });
+        button.setOnClickListener(v -> openSection(section));
     }
 
-    private String getTitle(int number) {
+    root.addView(menu,
+            new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    0,
+                    1
+            ));
 
-        if (language.equals("AZ")) {
+    // DEVELOPER
+    TextView developer = new TextView(this);
+    developer.setText("F.S");
+    developer.setTextSize(16);
+    developer.setTextColor(Color.GRAY);
+    developer.setGravity(Gravity.CENTER);
+    developer.setPadding(0, 10, 0, 10);
 
-            switch (number) {
+    root.addView(developer);
 
-                case 1:
-                    return "İş təhlükəsizliyi";
+    // SPACE FOR FUTURE ADVERTISEMENT
+    View adSpace = new View(this);
 
-                case 2:
-                    return "İstehsalat";
+    root.addView(adSpace,
+            new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    100
+            ));
 
-                case 3:
-                    return "Ştamplama";
+    setContentView(root);
+}
 
-                case 4:
-                    return "Sobalar və qızdırma";
+private Button createLanguageButton(String text) {
 
-                case 5:
-                    return "Yanğınsöndürənlər";
+    Button button = new Button(this);
 
-                case 6:
-                    return "Sensorlar";
+    button.setText(text);
+    button.setTextSize(17);
+    button.setAllCaps(false);
+    button.setTextColor(Color.rgb(0, 100, 55));
 
-                case 7:
-                    return "Qaynaq";
+    LinearLayout.LayoutParams params =
+            new LinearLayout.LayoutParams(90, 58);
 
-                case 8:
-                    return "Keyfiyyətə nəzarət";
+    params.setMargins(8, 0, 0, 0);
 
-                case 9:
-                    return "İşçilər üçün ingilis dili";
-            }
-        }
+    button.setLayoutParams(params);
 
-        if (language.equals("EN")) {
+    button.setOnClickListener(v -> {
 
-            switch (number) {
+        language = text;
 
-                case 1:
-                    return "Workplace Safety";
+        createMainScreen();
+    });
 
-                case 2:
-                    return "Manufacturing";
+    return button;
+}
 
-                case 3:
-                    return "Stamping";
+private String getSubtitle() {
 
-                case 4:
-                    return "Furnaces & Heating";
-
-                case 5:
-                    return "Fire Extinguishers";
-
-                case 6:
-                    return "Sensors";
-
-                case 7:
-                    return "Welding";
-
-                case 8:
-                    return "Quality Control";
-
-                case 9:
-                    return "English for Workers";
-            }
-        }
-
-        switch (number) {
-
-            case 1:
-                return "Охрана труда";
-
-            case 2:
-                return "Производство";
-
-            case 3:
-                return "Штамповка";
-
-            case 4:
-                return "Печи и нагрев";
-
-            case 5:
-                return "Огнетушители";
-
-            case 6:
-                return "Датчики";
-
-            case 7:
-                return "Сварка";
-
-            case 8:
-                return "Контроль качества";
-
-            case 9:
-                return "Английский для рабочих";
-        }
-
-        return "";
+    if (language.equals("AZ")) {
+        return "İşçilər üçün peşəkar tətbiq";
     }
 
-    private void openSection(int number) {
-
-        Intent intent;
-
-        switch (number) {
-
-            case 1:
-                intent = new Intent(this, SafetyActivity.class);
-                break;
-
-            case 2:
-                intent = new Intent(this, ProductionActivity.class);
-                break;
-
-            case 3:
-                intent = new Intent(this, StampingActivity.class);
-                break;
-
-            case 4:
-                intent = new Intent(this, FurnaceActivity.class);
-                break;
-
-            case 5:
-                intent = new Intent(this, FireExtinguisherActivity.class);
-                break;
-
-            case 6:
-                intent = new Intent(this, SensorsActivity.class);
-                break;
-
-            case 7:
-                intent = new Intent(this, WeldingActivity.class);
-                break;
-
-            case 8:
-                intent = new Intent(this, QualityControlActivity.class);
-                break;
-
-            case 9:
-                return;
-
-            default:
-                return;
-        }
-
-        intent.putExtra("LANGUAGE", language);
-
-        startActivity(intent);
+    if (language.equals("EN")) {
+        return "Professional app for workers";
     }
 
-    private void createDeveloper() {
+    return "Профессиональное приложение для рабочих";
+}
 
-        TextView developer = new TextView(this);
+private void openSection(int section) {
 
-        developer.setText("F.S");
-        developer.setTextSize(13);
-        developer.setTextColor(Color.GRAY);
-        developer.setGravity(Gravity.CENTER);
-        developer.setPadding(0, 10, 0, 10);
+    Intent intent;
 
-        mainLayout.addView(developer);
+    switch (section) {
+
+        case 1:
+            intent = new Intent(this, SafetyActivity.class);
+            break;
+
+        case 2:
+            intent = new Intent(this, ProductionActivity.class);
+            break;
+
+        case 3:
+            intent = new Intent(this, StampingActivity.class);
+            break;
+
+        case 4:
+            intent = new Intent(this, FurnaceActivity.class);
+            break;
+
+        case 5:
+            intent = new Intent(this, FireExtinguisherActivity.class);
+            break;
+
+        case 6:
+            intent = new Intent(this, SensorsActivity.class);
+            break;
+
+        case 7:
+            intent = new Intent(this, WeldingActivity.class);
+            break;
+
+        case 8:
+            intent = new Intent(this, QualityControlActivity.class);
+            break;
+
+        case 9:
+            intent = new Intent(this, EnglishActivity.class);
+            break;
+
+        default:
+            return;
     }
 
-    private void createAdSpace() {
+    intent.putExtra("LANGUAGE", language);
+    startActivity(intent);
+}
 
-        TextView adSpace = new TextView(this);
-
-        adSpace.setText("");
-        adSpace.setGravity(Gravity.CENTER);
-
-        LinearLayout.LayoutParams params =
-                new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.MATCH_PARENT,
-                        100
-                );
-
-        params.setMargins(0, 10, 0, 0);
-
-        mainLayout.addView(adSpace, params);
-    }
 }
