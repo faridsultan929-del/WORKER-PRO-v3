@@ -23,7 +23,6 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         showMainScreen();
     }
 
@@ -42,6 +41,7 @@ public class MainActivity extends Activity {
         createLanguageButtons();
         createCards();
         createDeveloper();
+        createAdSpace();
 
         setContentView(scrollView);
     }
@@ -52,7 +52,7 @@ public class MainActivity extends Activity {
 
         header.setOrientation(LinearLayout.VERTICAL);
         header.setGravity(Gravity.CENTER);
-        header.setPadding(10, 18, 10, 18);
+        header.setPadding(10, 20, 10, 20);
 
         GradientDrawable headerBg = new GradientDrawable(
                 GradientDrawable.Orientation.TOP_BOTTOM,
@@ -85,7 +85,7 @@ public class MainActivity extends Activity {
         subtitle.setTextColor(Color.WHITE);
         subtitle.setTextSize(15);
         subtitle.setGravity(Gravity.CENTER);
-        subtitle.setPadding(0, 5, 0, 0);
+        subtitle.setPadding(0, 6, 0, 0);
 
         header.addView(subtitle);
 
@@ -95,7 +95,7 @@ public class MainActivity extends Activity {
                         LinearLayout.LayoutParams.WRAP_CONTENT
                 );
 
-        params.setMargins(0, 0, 0, 10);
+        params.setMargins(0, 0, 0, 14);
 
         mainLayout.addView(header, params);
     }
@@ -105,8 +105,8 @@ public class MainActivity extends Activity {
         LinearLayout languages = new LinearLayout(this);
 
         languages.setOrientation(LinearLayout.HORIZONTAL);
-        languages.setGravity(Gravity.RIGHT);
-        languages.setPadding(0, 0, 0, 12);
+        languages.setGravity(Gravity.CENTER);
+        languages.setPadding(0, 0, 0, 16);
 
         TextView ru = createLanguageButton("RU");
         TextView az = createLanguageButton("AZ");
@@ -139,27 +139,27 @@ public class MainActivity extends Activity {
         TextView button = new TextView(this);
 
         button.setText(text);
-        button.setTextSize(14);
+        button.setTextSize(15);
         button.setTextColor(green);
         button.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
         button.setGravity(Gravity.CENTER);
+        button.setIncludeFontPadding(true);
 
         GradientDrawable bg = new GradientDrawable();
 
         bg.setColor(Color.WHITE);
-        bg.setCornerRadius(15);
+        bg.setCornerRadius(16);
         bg.setStroke(2, green);
 
         button.setBackground(bg);
-        button.setPadding(12, 6, 12, 6);
 
         LinearLayout.LayoutParams params =
                 new LinearLayout.LayoutParams(
-                        60,
-                        42
+                        72,
+                        46
                 );
 
-        params.setMargins(4, 0, 0, 0);
+        params.setMargins(6, 0, 6, 0);
 
         button.setLayoutParams(params);
 
@@ -190,6 +190,7 @@ public class MainActivity extends Activity {
         card.setGravity(Gravity.CENTER_VERTICAL);
         card.setPadding(20, 0, 20, 0);
         card.setClickable(true);
+        card.setIncludeFontPadding(true);
 
         GradientDrawable cardBg = new GradientDrawable();
 
@@ -202,10 +203,10 @@ public class MainActivity extends Activity {
         LinearLayout.LayoutParams params =
                 new LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.MATCH_PARENT,
-                        62
+                        68
                 );
 
-        params.setMargins(0, 0, 0, 10);
+        params.setMargins(0, 0, 0, 14);
 
         mainLayout.addView(card, params);
 
@@ -358,7 +359,6 @@ public class MainActivity extends Activity {
                 break;
 
             case 9:
-                // Английский для рабочих добавим следующим этапом
                 return;
 
             default:
@@ -378,8 +378,26 @@ public class MainActivity extends Activity {
         developer.setTextSize(13);
         developer.setTextColor(Color.GRAY);
         developer.setGravity(Gravity.CENTER);
-        developer.setPadding(0, 15, 0, 10);
+        developer.setPadding(0, 10, 0, 10);
 
         mainLayout.addView(developer);
+    }
+
+    private void createAdSpace() {
+
+        TextView adSpace = new TextView(this);
+
+        adSpace.setText("");
+        adSpace.setGravity(Gravity.CENTER);
+
+        LinearLayout.LayoutParams params =
+                new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        100
+                );
+
+        params.setMargins(0, 5, 0, 0);
+
+        mainLayout.addView(adSpace, params);
     }
 }
