@@ -41,24 +41,15 @@ public class MainActivity extends Activity {
 
         scroll.addView(root);
 
-        // ЯЗЫКИ
         createLanguages();
-
-        // ШАПКА
         createHeader();
-
-        // РАЗДЕЛЫ
         createSections();
-
-        // РАЗРАБОТЧИК
         createDeveloper();
 
         setContentView(scroll);
     }
 
-    // =========================
     // ЯЗЫКИ
-    // =========================
 
     void createLanguages() {
 
@@ -104,6 +95,7 @@ public class MainActivity extends Activity {
         button.setAllCaps(false);
 
         if (text.equals(language)) {
+
             button.setTextColor(Color.WHITE);
 
             GradientDrawable selected = new GradientDrawable();
@@ -136,9 +128,7 @@ public class MainActivity extends Activity {
         return button;
     }
 
-    // =========================
     // ШАПКА
-    // =========================
 
     void createHeader() {
 
@@ -191,9 +181,7 @@ public class MainActivity extends Activity {
         root.addView(header);
     }
 
-    // =========================
     // РАЗДЕЛЫ
-    // =========================
 
     void createSections() {
 
@@ -233,7 +221,8 @@ public class MainActivity extends Activity {
                         82
                 );
 
-        // ХОРОШЕЕ РАССТОЯНИЕ МЕЖДУ РАЗДЕЛАМИ
+        // ПРОМЕЖУТОК МЕЖДУ РАЗДЕЛАМИ
+
         cardParams.setMargins(0, 10, 0, 10);
 
         card.setLayoutParams(cardParams);
@@ -303,9 +292,7 @@ public class MainActivity extends Activity {
         root.addView(card);
     }
 
-    // =========================
     // ИКОНКИ
-    // =========================
 
     String getIcon(int number) {
 
@@ -343,9 +330,7 @@ public class MainActivity extends Activity {
         }
     }
 
-    // =========================
-    // НАЗВАНИЯ
-    // =========================
+    // НАЗВАНИЯ РАЗДЕЛОВ
 
     String getSectionName(int number) {
 
@@ -449,9 +434,7 @@ public class MainActivity extends Activity {
         return "";
     }
 
-    // =========================
     // ОТКРЫТИЕ РАЗДЕЛА
-    // =========================
 
     void openSection(int number) {
 
@@ -477,9 +460,7 @@ public class MainActivity extends Activity {
         }
     }
 
-    // =========================
     // ПОДЗАГОЛОВОК
-    // =========================
 
     String getSubtitle() {
 
@@ -497,32 +478,13 @@ public class MainActivity extends Activity {
         }
     }
 
-    // =========================
     // РАЗРАБОТЧИК
-    // =========================
 
     void createDeveloper() {
 
         TextView developer = new TextView(this);
 
-        if (language.equals("AZ")) {
-
-            developer.setText(
-                    "Tərtibatçı: Sultanov Farid Rafiq oğlu"
-            );
-
-        } else if (language.equals("EN")) {
-
-            developer.setText(
-                    "Developer: Sultanov Farid Rafiq oglu"
-            );
-
-        } else {
-
-            developer.setText(
-                    "Разработчик: Султанов Фарид Рафиг оглы"
-            );
-        }
+        developer.setText("F.S");
 
         developer.setTextSize(13);
         developer.setTextColor(Color.GRAY);
