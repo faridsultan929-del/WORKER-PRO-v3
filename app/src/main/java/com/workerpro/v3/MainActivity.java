@@ -26,7 +26,6 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         showMain();
     }
 
@@ -48,10 +47,6 @@ public class MainActivity extends Activity {
 
         setContentView(scroll);
     }
-
-    // =========================
-    // ЯЗЫКИ
-    // =========================
 
     void createLanguages() {
 
@@ -136,10 +131,6 @@ public class MainActivity extends Activity {
         return button;
     }
 
-    // =========================
-    // ШАПКА
-    // =========================
-
     void createHeader() {
 
         LinearLayout header = new LinearLayout(this);
@@ -194,10 +185,6 @@ public class MainActivity extends Activity {
         root.addView(header);
     }
 
-    // =========================
-    // РАЗДЕЛЫ
-    // =========================
-
     void createSections() {
 
         addSection(1);
@@ -237,12 +224,9 @@ public class MainActivity extends Activity {
                         82
                 );
 
-        // Расстояние между разделами
         cardParams.setMargins(0, 10, 0, 10);
 
         card.setLayoutParams(cardParams);
-
-        // ИКОНКА
 
         TextView icon = new TextView(this);
 
@@ -268,8 +252,6 @@ public class MainActivity extends Activity {
 
         card.addView(icon);
 
-        // НАЗВАНИЕ
-
         TextView name = new TextView(this);
 
         name.setText(getSectionName(number));
@@ -292,8 +274,6 @@ public class MainActivity extends Activity {
 
         card.addView(name);
 
-        // СТРЕЛКА
-
         TextView arrow = new TextView(this);
 
         arrow.setText("›");
@@ -303,18 +283,12 @@ public class MainActivity extends Activity {
 
         card.addView(arrow);
 
-        // НАЖАТИЕ
-
         card.setOnClickListener(
                 v -> openSection(number)
         );
 
         root.addView(card);
     }
-
-    // =========================
-    // ИКОНКИ
-    // =========================
 
     String getIcon(int number) {
 
@@ -351,10 +325,6 @@ public class MainActivity extends Activity {
                 return "•";
         }
     }
-
-    // =========================
-    // НАЗВАНИЯ
-    // =========================
 
     String getSectionName(int number) {
 
@@ -458,10 +428,6 @@ public class MainActivity extends Activity {
         return "";
     }
 
-    // =========================
-    // ОТКРЫТИЕ РАЗДЕЛОВ
-    // =========================
-
     void openSection(int number) {
 
         if (number == 1) {
@@ -494,6 +460,21 @@ public class MainActivity extends Activity {
 
             startActivity(intent);
 
+        } else if (number == 3) {
+
+            Intent intent =
+                    new Intent(
+                            MainActivity.this,
+                            StampingActivity.class
+                    );
+
+            intent.putExtra(
+                    "language",
+                    language
+            );
+
+            startActivity(intent);
+
         } else {
 
             Toast.makeText(
@@ -503,10 +484,6 @@ public class MainActivity extends Activity {
             ).show();
         }
     }
-
-    // =========================
-    // ПОДЗАГОЛОВОК
-    // =========================
 
     String getSubtitle() {
 
@@ -523,10 +500,6 @@ public class MainActivity extends Activity {
             return "Профессиональный справочник для рабочих";
         }
     }
-
-    // =========================
-    // РАЗРАБОТЧИК
-    // =========================
 
     void createDeveloper() {
 
