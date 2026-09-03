@@ -11,6 +11,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+
       - name: Checkout
         uses: actions/checkout@v4
 
@@ -25,17 +26,18 @@ jobs:
         with:
           gradle-version: '8.9'
 
-      - name: Build WORKER PRO
+      - name: Build WORKER PRO APK
         run: gradle :app:assembleDebug
 
       - name: Check APK
         run: |
-          ls -lh app/build/outputs/apk/debug/
-          file app/build/outputs/apk/debug/app-debug.apk
+          echo "APK files:"
+          find app/build/outputs/apk -type f -name "*.apk" -ls
 
       - name: Upload WORKER PRO APK
         uses: actions/upload-artifact@v4
         with:
           name: WORKER-PRO-debug
-          path: app/build/outputs/apk/debug/app-debug.apk
+          path: app/build/outputs/apk/**/*.apk
           if-no-files-found: error
+          retention-days: 7
