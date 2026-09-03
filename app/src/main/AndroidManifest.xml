@@ -1,54 +1,58 @@
-<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<?xml version="1.0" encoding="utf-8"?><manifest xmlns:android="http://schemas.android.com/apk/res/android"><application
+    android:allowBackup="true"
+    android:label="WORKER PRO"
+    android:supportsRtl="true">
 
-    <application
-        android:allowBackup="true"
-        android:label="WORKER PRO"
-        android:supportsRtl="true">
+    <activity
+        android:name=".EnglishActivity"
+        android:exported="false" />
 
-        <activity
-            android:name=".QualityControlActivity"
-            android:exported="false" />
+    <activity
+        android:name=".QualityControlActivity"
+        android:exported="false" />
 
-        <activity
-            android:name=".WeldingActivity"
-            android:exported="false" />
+    <activity
+        android:name=".WeldingActivity"
+        android:exported="false" />
 
-        <activity
-            android:name=".SensorsActivity"
-            android:exported="false" />
+    <activity
+        android:name=".SensorsActivity"
+        android:exported="false" />
 
-        <activity
-            android:name=".FireExtinguisherActivity"
-            android:exported="false" />
+    <activity
+        android:name=".FireExtinguisherActivity"
+        android:exported="false" />
 
-        <activity
-            android:name=".FurnaceActivity"
-            android:exported="false" />
+    <activity
+        android:name=".FurnaceActivity"
+        android:exported="false" />
 
-        <activity
-            android:name=".StampingActivity"
-            android:exported="false" />
+    <activity
+        android:name=".StampingActivity"
+        android:exported="false" />
 
-        <activity
-            android:name=".ProductionActivity"
-            android:exported="false" />
+    <activity
+        android:name=".ProductionActivity"
+        android:exported="false" />
 
-        <activity
-            android:name=".SafetyActivity"
-            android:exported="false" />
+    <activity
+        android:name=".SafetyActivity"
+        android:exported="false" />
 
-        <activity
-            android:name=".MainActivity"
-            android:exported="true">
+    <activity
+        android:name=".MainActivity"
+        android:exported="true">
 
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+        <intent-filter>
 
-        </activity>
+            <action android:name="android.intent.action.MAIN" />
 
-    </application>
+            <category android:name="android.intent.category.LAUNCHER" />
+
+        </intent-filter>
+
+    </activity>
+
+</application>
 
 </manifest>
