@@ -8,6 +8,10 @@
         android:theme="@android:style/Theme.Material.Light.NoActionBar">
 
         <activity
+            android:name=".StampingActivity"
+            android:exported="false" />
+
+        <activity
             android:name=".ProductionActivity"
             android:exported="false" />
 
