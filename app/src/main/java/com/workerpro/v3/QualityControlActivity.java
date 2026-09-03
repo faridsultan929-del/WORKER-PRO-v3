@@ -54,9 +54,10 @@ public class QualityControlActivity extends Activity {
     private void createHeader() {
 
         LinearLayout header = new LinearLayout(this);
+
         header.setOrientation(LinearLayout.VERTICAL);
         header.setGravity(Gravity.CENTER);
-        header.setPadding(10, 18, 10, 18);
+        header.setPadding(10, 24, 10, 24);
 
         GradientDrawable headerBg = new GradientDrawable(
                 GradientDrawable.Orientation.TOP_BOTTOM,
@@ -70,7 +71,7 @@ public class QualityControlActivity extends Activity {
 
         title.setText("✅  " + getHeaderTitle());
         title.setTextColor(Color.WHITE);
-        title.setTextSize(24);
+        title.setTextSize(26);
         title.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
         title.setGravity(Gravity.CENTER);
 
@@ -82,7 +83,7 @@ public class QualityControlActivity extends Activity {
                         LinearLayout.LayoutParams.WRAP_CONTENT
                 );
 
-        params.setMargins(0, 0, 0, 12);
+        params.setMargins(0, 0, 0, 18);
 
         mainLayout.addView(header, params);
     }
@@ -117,12 +118,13 @@ public class QualityControlActivity extends Activity {
         TextView card = new TextView(this);
 
         card.setText(icon + "  " + getTitle(number));
-        card.setTextSize(17);
+        card.setTextSize(18);
         card.setTextColor(darkGreen);
         card.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
         card.setGravity(Gravity.CENTER_VERTICAL);
-        card.setPadding(20, 0, 20, 0);
+        card.setPadding(22, 0, 22, 0);
         card.setClickable(true);
+        card.setIncludeFontPadding(true);
 
         GradientDrawable cardBg = new GradientDrawable();
 
@@ -135,10 +137,10 @@ public class QualityControlActivity extends Activity {
         LinearLayout.LayoutParams params =
                 new LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.MATCH_PARENT,
-                        62
+                        90
                 );
 
-        params.setMargins(0, 0, 0, 10);
+        params.setMargins(0, 0, 0, 20);
 
         mainLayout.addView(card, params);
 
@@ -250,11 +252,11 @@ public class QualityControlActivity extends Activity {
         TextView title = new TextView(this);
 
         title.setText("✅  " + getTitle(number));
-        title.setTextSize(22);
+        title.setTextSize(24);
         title.setTextColor(Color.WHITE);
         title.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
         title.setGravity(Gravity.CENTER);
-        title.setPadding(15, 20, 15, 20);
+        title.setPadding(20, 24, 20, 24);
 
         GradientDrawable titleBg = new GradientDrawable(
                 GradientDrawable.Orientation.TOP_BOTTOM,
@@ -269,9 +271,10 @@ public class QualityControlActivity extends Activity {
         TextView info = new TextView(this);
 
         info.setText(getInfoText(number));
-        info.setTextSize(17);
+        info.setTextSize(18);
         info.setTextColor(Color.DKGRAY);
-        info.setPadding(20, 25, 20, 25);
+        info.setPadding(22, 28, 22, 28);
+        info.setLineSpacing(4, 1.0f);
 
         GradientDrawable infoBg = new GradientDrawable();
 
@@ -287,7 +290,7 @@ public class QualityControlActivity extends Activity {
                         LinearLayout.LayoutParams.WRAP_CONTENT
                 );
 
-        infoParams.setMargins(0, 15, 0, 15);
+        infoParams.setMargins(0, 20, 0, 20);
 
         mainLayout.addView(info, infoParams);
 
@@ -301,7 +304,7 @@ public class QualityControlActivity extends Activity {
             back.setText("← Назад");
         }
 
-        back.setTextSize(17);
+        back.setTextSize(18);
         back.setTextColor(Color.WHITE);
         back.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
         back.setGravity(Gravity.CENTER);
@@ -317,7 +320,7 @@ public class QualityControlActivity extends Activity {
         LinearLayout.LayoutParams backParams =
                 new LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.MATCH_PARENT,
-                        58
+                        64
                 );
 
         mainLayout.addView(back, backParams);
@@ -433,7 +436,7 @@ public class QualityControlActivity extends Activity {
         developer.setTextSize(13);
         developer.setTextColor(Color.GRAY);
         developer.setGravity(Gravity.CENTER);
-        developer.setPadding(0, 15, 0, 10);
+        developer.setPadding(0, 12, 0, 12);
 
         mainLayout.addView(developer);
     }
@@ -450,7 +453,7 @@ public class QualityControlActivity extends Activity {
             back.setText("← Главное меню");
         }
 
-        back.setTextSize(17);
+        back.setTextSize(18);
         back.setTextColor(Color.WHITE);
         back.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
         back.setGravity(Gravity.CENTER);
@@ -466,10 +469,10 @@ public class QualityControlActivity extends Activity {
         LinearLayout.LayoutParams params =
                 new LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.MATCH_PARENT,
-                        58
+                        64
                 );
 
-        params.setMargins(0, 5, 0, 0);
+        params.setMargins(0, 8, 0, 0);
 
         mainLayout.addView(back, params);
 
