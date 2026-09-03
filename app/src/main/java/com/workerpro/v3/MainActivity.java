@@ -7,7 +7,6 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
 import android.view.Gravity;
-import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -60,7 +59,7 @@ private void createMainScreen() {
 
     root.addView(languages);
 
-    // MENU SCROLL
+    // SCROLLABLE MENU
     ScrollView scrollView = new ScrollView(this);
     scrollView.setFillViewport(true);
 
@@ -170,7 +169,7 @@ private TextView createMenuCard(String text) {
     LinearLayout.LayoutParams params =
             new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT,
-                    72
+                    82
             );
 
     params.setMargins(0, 0, 0, 12);
