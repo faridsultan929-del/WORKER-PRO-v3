@@ -52,7 +52,7 @@ public class MainActivity extends Activity {
 
         header.setOrientation(LinearLayout.VERTICAL);
         header.setGravity(Gravity.CENTER);
-        header.setPadding(10, 20, 10, 20);
+        header.setPadding(10, 24, 10, 24);
 
         GradientDrawable headerBg = new GradientDrawable(
                 GradientDrawable.Orientation.TOP_BOTTOM,
@@ -66,7 +66,7 @@ public class MainActivity extends Activity {
 
         title.setText("WORKER PRO");
         title.setTextColor(Color.WHITE);
-        title.setTextSize(28);
+        title.setTextSize(30);
         title.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
         title.setGravity(Gravity.CENTER);
 
@@ -83,9 +83,9 @@ public class MainActivity extends Activity {
         }
 
         subtitle.setTextColor(Color.WHITE);
-        subtitle.setTextSize(15);
+        subtitle.setTextSize(16);
         subtitle.setGravity(Gravity.CENTER);
-        subtitle.setPadding(0, 6, 0, 0);
+        subtitle.setPadding(0, 8, 0, 0);
 
         header.addView(subtitle);
 
@@ -95,7 +95,7 @@ public class MainActivity extends Activity {
                         LinearLayout.LayoutParams.WRAP_CONTENT
                 );
 
-        params.setMargins(0, 0, 0, 14);
+        params.setMargins(0, 0, 0, 18);
 
         mainLayout.addView(header, params);
     }
@@ -105,8 +105,8 @@ public class MainActivity extends Activity {
         LinearLayout languages = new LinearLayout(this);
 
         languages.setOrientation(LinearLayout.HORIZONTAL);
-        languages.setGravity(Gravity.CENTER);
-        languages.setPadding(0, 0, 0, 16);
+        languages.setGravity(Gravity.RIGHT);
+        languages.setPadding(0, 0, 0, 18);
 
         TextView ru = createLanguageButton("RU");
         TextView az = createLanguageButton("AZ");
@@ -139,7 +139,7 @@ public class MainActivity extends Activity {
         TextView button = new TextView(this);
 
         button.setText(text);
-        button.setTextSize(15);
+        button.setTextSize(17);
         button.setTextColor(green);
         button.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
         button.setGravity(Gravity.CENTER);
@@ -155,11 +155,11 @@ public class MainActivity extends Activity {
 
         LinearLayout.LayoutParams params =
                 new LinearLayout.LayoutParams(
-                        72,
-                        46
+                        90,
+                        58
                 );
 
-        params.setMargins(6, 0, 6, 0);
+        params.setMargins(8, 0, 0, 0);
 
         button.setLayoutParams(params);
 
@@ -184,11 +184,11 @@ public class MainActivity extends Activity {
         TextView card = new TextView(this);
 
         card.setText(icon + "  " + getTitle(number));
-        card.setTextSize(17);
+        card.setTextSize(18);
         card.setTextColor(darkGreen);
         card.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
         card.setGravity(Gravity.CENTER_VERTICAL);
-        card.setPadding(20, 0, 20, 0);
+        card.setPadding(22, 0, 22, 0);
         card.setClickable(true);
         card.setIncludeFontPadding(true);
 
@@ -203,10 +203,10 @@ public class MainActivity extends Activity {
         LinearLayout.LayoutParams params =
                 new LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.MATCH_PARENT,
-                        68
+                        90
                 );
 
-        params.setMargins(0, 0, 0, 14);
+        params.setMargins(0, 0, 0, 20);
 
         mainLayout.addView(card, params);
 
@@ -396,7 +396,7 @@ public class MainActivity extends Activity {
                         100
                 );
 
-        params.setMargins(0, 5, 0, 0);
+        params.setMargins(0, 10, 0, 0);
 
         mainLayout.addView(adSpace, params);
     }
