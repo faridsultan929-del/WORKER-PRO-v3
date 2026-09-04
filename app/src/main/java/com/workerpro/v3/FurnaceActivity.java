@@ -12,112 +12,113 @@ import android.widget.TextView;
 
 public class FurnaceActivity extends Activity {
 
-    String language = "RU";
-
-    int green = Color.rgb(0, 145, 75);
-    int darkGreen = Color.rgb(0, 95, 50);
+    private String language = "RU";
+    private LinearLayout content;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        String selectedLanguage =
-                getIntent().getStringExtra("language");
+        String receivedLanguage = getIntent().getStringExtra("LANGUAGE");
 
-        if (selectedLanguage != null) {
-            language = selectedLanguage;
+        if (receivedLanguage != null) {
+            language = receivedLanguage;
         }
 
-        showFurnaces();
+        createScreen();
     }
 
-    void showFurnaces() {
-
-        ScrollView scroll = new ScrollView(this);
+    private void createScreen() {
 
         LinearLayout root = new LinearLayout(this);
         root.setOrientation(LinearLayout.VERTICAL);
-        root.setPadding(16, 16, 16, 30);
-        root.setBackgroundColor(Color.rgb(246, 249, 247));
-
-        LinearLayout header = new LinearLayout(this);
-        header.setOrientation(LinearLayout.VERTICAL);
-        header.setGravity(Gravity.CENTER);
-        header.setPadding(15, 25, 15, 25);
-
-        GradientDrawable headerBg =
-                new GradientDrawable(
-                        GradientDrawable.Orientation.TOP_BOTTOM,
-                        new int[]{green, darkGreen}
-                );
-
-        headerBg.setCornerRadius(25);
-        header.setBackground(headerBg);
+        root.setBackgroundColor(Color.WHITE);
+        root.setPadding(18, 12, 18, 10);
 
         TextView title = new TextView(this);
-        title.setText(getTitleText());
-        title.setTextSize(25);
+        title.setText("🔥  " + getFurnaceTitle());
+        title.setTextSize(27);
         title.setTypeface(null, Typeface.BOLD);
-        title.setTextColor(Color.WHITE);
+        title.setTextColor(Color.rgb(0, 130, 70));
         title.setGravity(Gravity.CENTER);
+        title.setPadding(0, 8, 0, 15);
 
-        header.addView(title);
-        root.addView(header);
+        root.addView(title);
 
-        addBox(root, 1);
-        addBox(root, 2);
-        addBox(root, 3);
-        addBox(root, 4);
-        addBox(root, 5);
-        addBox(root, 6);
-        addBox(root, 7);
-        addBox(root, 8);
+        ScrollView scrollView = new ScrollView(this);
 
-        scroll.addView(root);
-        setContentView(scroll);
+        content = new LinearLayout(this);
+        content.setOrientation(LinearLayout.VERTICAL);
+        content.setPadding(0, 5, 0, 10);
+
+        String[] cards = getCards();
+
+        for (int i = 0; i < cards.length; i++) {
+
+            final int number = i;
+
+            TextView card = createCard(cards[i]);
+
+            card.setOnClickListener(v -> showInfo(number));
+
+            content.addView(card);
+        }
+
+        scrollView.addView(content);
+
+        root.addView(
+                scrollView,
+                new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        0,
+                        1
+                )
+        );
+
+        TextView developer = new TextView(this);
+        developer.setText("F.S");
+        developer.setTextSize(16);
+        developer.setTextColor(Color.GRAY);
+        developer.setGravity(Gravity.CENTER);
+        developer.setPadding(0, 5, 0, 5);
+
+        root.addView(developer);
+
+        setContentView(root);
     }
 
-    void addBox(LinearLayout root, int number) {
+    private TextView createCard(String text) {
 
-        LinearLayout box = new LinearLayout(this);
-        box.setOrientation(LinearLayout.VERTICAL);
-        box.setPadding(18, 17, 18, 17);
+        TextView card = new TextView(this);
 
-        GradientDrawable bg = new GradientDrawable();
-        bg.setColor(Color.WHITE);
-        bg.setCornerRadius(20);
-        bg.setStroke(2, Color.rgb(220, 230, 224));
+        card.setText(text);
+        card.setTextSize(18);
+        card.setTypeface(null, Typeface.BOLD);
+        card.setTextColor(Color.rgb(0, 105, 60));
+        card.setGravity(Gravity.CENTER_VERTICAL);
+        card.setPadding(22, 0, 22, 0);
 
-        box.setBackground(bg);
+        GradientDrawable background = new GradientDrawable();
+        background.setColor(Color.rgb(242, 248, 244));
+        background.setCornerRadius(18);
+        background.setStroke(2, Color.rgb(0, 130, 70));
+
+        card.setBackground(background);
 
         LinearLayout.LayoutParams params =
                 new LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.MATCH_PARENT,
-                        LinearLayout.LayoutParams.WRAP_CONTENT
+                        82
                 );
 
-        params.setMargins(0, 10, 0, 10);
-        box.setLayoutParams(params);
+        params.setMargins(0, 0, 0, 12);
 
-        TextView boxTitle = new TextView(this);
-        boxTitle.setText(getBoxTitle(number));
-        boxTitle.setTextSize(18);
-        boxTitle.setTypeface(null, Typeface.BOLD);
-        boxTitle.setTextColor(green);
+        card.setLayoutParams(params);
 
-        box.addView(boxTitle);
-
-        TextView text = new TextView(this);
-        text.setText(getBoxText(number));
-        text.setTextSize(15);
-        text.setTextColor(Color.rgb(50, 55, 52));
-        text.setPadding(0, 9, 0, 0);
-
-        box.addView(text);
-        root.addView(box);
+        return card;
     }
 
-    String getTitleText() {
+    private String getFurnaceTitle() {
 
         if (language.equals("AZ")) {
             return "Sobalar və qızdırma";
@@ -130,187 +131,230 @@ public class FurnaceActivity extends Activity {
         return "Печи и нагрев";
     }
 
-    String getBoxTitle(int number) {
+    private String[] getCards() {
 
         if (language.equals("AZ")) {
 
-            switch (number) {
+            return new String[]{
+                    "🔥 İnduksiya sobaları",
+                    "🌡️ Metalın qızdırılması",
+                    "🌡️ Temperatur nəzarəti",
+                    "⚙️ Soba quruluşu",
+                    "🔩 Materialın hazırlanması",
+                    "📋 Prosesə nəzarət",
+                    "⚠️ Əsas təhlükələr",
+                    "🦺 Təhlükəsizlik qaydaları"
+            };
 
-                case 1:
-                    return "İnduksiya sobaları";
+        } else if (language.equals("EN")) {
 
-                case 2:
-                    return "Metalın qızdırılması";
+            return new String[]{
+                    "🔥 Induction Furnaces",
+                    "🌡️ Metal Heating",
+                    "🌡️ Temperature Control",
+                    "⚙️ Furnace Structure",
+                    "🔩 Material Preparation",
+                    "📋 Process Control",
+                    "⚠️ Main Hazards",
+                    "🦺 Safety Rules"
+            };
 
-                case 3:
-                    return "Temperatur nəzarəti";
+        } else {
 
-                case 4:
-                    return "Soba quruluşu";
-
-                case 5:
-                    return "Materialın hazırlanması";
-
-                case 6:
-                    return "İş prosesinə nəzarət";
-
-                case 7:
-                    return "Əsas təhlükələr";
-
-                case 8:
-                    return "Təhlükəsizlik qaydaları";
-            }
+            return new String[]{
+                    "🔥 Индукционные печи",
+                    "🌡️ Нагрев металла",
+                    "🌡️ Контроль температуры",
+                    "⚙️ Устройство печи",
+                    "🔩 Подготовка материала",
+                    "📋 Контроль процесса",
+                    "⚠️ Основные опасности",
+                    "🦺 Правила безопасности"
+            };
         }
-
-        if (language.equals("EN")) {
-
-            switch (number) {
-
-                case 1:
-                    return "Induction Furnaces";
-
-                case 2:
-                    return "Metal Heating";
-
-                case 3:
-                    return "Temperature Control";
-
-                case 4:
-                    return "Furnace Structure";
-
-                case 5:
-                    return "Material Preparation";
-
-                case 6:
-                    return "Process Control";
-
-                case 7:
-                    return "Main Hazards";
-
-                case 8:
-                    return "Safety Rules";
-            }
-        }
-
-        switch (number) {
-
-            case 1:
-                return "Индукционные печи";
-
-            case 2:
-                return "Нагрев металла";
-
-            case 3:
-                return "Контроль температуры";
-
-            case 4:
-                return "Устройство печи";
-
-            case 5:
-                return "Подготовка материала";
-
-            case 6:
-                return "Контроль процесса";
-
-            case 7:
-                return "Основные опасности";
-
-            case 8:
-                return "Правила безопасности";
-        }
-
-        return "";
     }
 
-    String getBoxText(int number) {
+    private void showInfo(int number) {
+
+        content.removeAllViews();
+
+        TextView title = new TextView(this);
+        title.setText(getInfoTitle(number));
+        title.setTextSize(23);
+        title.setTypeface(null, Typeface.BOLD);
+        title.setTextColor(Color.rgb(0, 130, 70));
+        title.setGravity(Gravity.CENTER);
+        title.setPadding(10, 20, 10, 20);
+
+        content.addView(title);
+
+        TextView info = new TextView(this);
+        info.setText(getInfoText(number));
+        info.setTextSize(18);
+        info.setTextColor(Color.DKGRAY);
+        info.setPadding(20, 10, 20, 30);
+
+        content.addView(info);
+
+        TextView back = new TextView(this);
 
         if (language.equals("AZ")) {
+            back.setText("← Geri");
+        } else if (language.equals("EN")) {
+            back.setText("← Back");
+        } else {
+            back.setText("← Назад");
+        }
 
-            switch (number) {
+        back.setTextSize(18);
+        back.setTypeface(null, Typeface.BOLD);
+        back.setTextColor(Color.rgb(0, 130, 70));
+        back.setGravity(Gravity.CENTER);
+        back.setPadding(20, 20, 20, 20);
 
-                case 1:
-                    return "İnduksiya sobasında metal elektromaqnit sahəsinin köməyi ilə qızdırılır. Proses zamanı temperatur və avadanlığın vəziyyəti nəzarətdə saxlanılır.";
+        back.setOnClickListener(v -> createScreen());
 
-                case 2:
-                    return "Metal lazımi texnoloji temperatur qədər qızdırılır. Qızdırma sürəti və temperatur rejimi texnoloji tələblərə uyğun olmalıdır.";
+        content.addView(back);
+    }
 
-                case 3:
-                    return "Temperatur sensorlar və ölçmə cihazları ilə nəzarət edilir. Temperatur göstəricilərinin düzgünlüyü proses üçün vacibdir.";
+    private String getInfoTitle(int number) {
 
-                case 4:
-                    return "Soba əsasən istilik sistemi, induksiya qurğusu, idarəetmə sistemi, temperatur sensorları və qoruyucu elementlərdən ibarət olur.";
+        String[][] titles = {
 
-                case 5:
-                    return "Soba yüklənməzdən əvvəl materialın ölçüsü, vəziyyəti və texniki tələblərə uyğunluğu yoxlanılmalıdır.";
+                {
+                        "Индукционные печи",
+                        "İnduksiya sobaları",
+                        "Induction Furnaces"
+                },
 
-                case 6:
-                    return "İşçi qızdırma prosesini, temperaturu, avadanlığın göstəricilərini və qeyri-normal vəziyyətləri daim nəzarətdə saxlamalıdır.";
+                {
+                        "Нагрев металла",
+                        "Metalın qızdırılması",
+                        "Metal Heating"
+                },
 
-                case 7:
-                    return "Yüksək temperatur, isti metal, elektrik enerjisi, elektromaqnit sahəsi və ərimiş metal əsas təhlükələrdən ola bilər.";
+                {
+                        "Контроль температуры",
+                        "Temperatur nəzarəti",
+                        "Temperature Control"
+                },
 
-                case 8:
-                    return "Qoruyucu vasitələrdən istifadə edin, təhlükəli zonaya yaxınlaşmayın və soba ilə işləyərkən müəssisənin təhlükəsizlik qaydalarına əməl edin.";
-            }
+                {
+                        "Устройство печи",
+                        "Soba quruluşu",
+                        "Furnace Structure"
+                },
+
+                {
+                        "Подготовка материала",
+                        "Materialın hazırlanması",
+                        "Material Preparation"
+                },
+
+                {
+                        "Контроль процесса",
+                        "Prosesə nəzarət",
+                        "Process Control"
+                },
+
+                {
+                        "Основные опасности",
+                        "Əsas təhlükələr",
+                        "Main Hazards"
+                },
+
+                {
+                        "Правила безопасности",
+                        "Təhlükəsizlik qaydaları",
+                        "Safety Rules"
+                }
+        };
+
+        return titles[number][getLanguageIndex()];
+    }
+
+    private String getInfoText(int number) {
+
+        String[][] texts = {
+
+                {
+                        "Индукционная печь нагревает металл с помощью электромагнитного поля. Оператор должен контролировать оборудование, температуру и состояние системы.",
+
+                        "İnduksiya sobası elektromaqnit sahəsindən istifadə edərək metalı qızdırır. Operator avadanlığa, temperatura və sistemin vəziyyətinə nəzarət etməlidir.",
+
+                        "An induction furnace heats metal using an electromagnetic field. The operator must monitor the equipment, temperature and system condition."
+                },
+
+                {
+                        "При нагреве металл достигает высокой температуры. Используйте подходящие СИЗ и соблюдайте безопасную дистанцию от горячего металла.",
+
+                        "Qızdırma zamanı metal yüksək temperatura çatır. Uyğun fərdi mühafizə vasitələrindən istifadə edin və isti metaldan təhlükəsiz məsafə saxlayın.",
+
+                        "During heating, metal reaches a high temperature. Use appropriate PPE and keep a safe distance from hot metal."
+                },
+
+                {
+                        "Температуру необходимо контролировать по показаниям датчиков и приборов. При отклонении параметров остановите процесс согласно инструкции.",
+
+                        "Temperatur sensorların və cihazların göstəricilərinə əsasən nəzarətdə saxlanılmalıdır. Parametrlər normadan kənara çıxarsa, təlimata uyğun olaraq prosesi dayandırın.",
+
+                        "Temperature must be monitored using sensors and instruments. If parameters become abnormal, stop the process according to the instructions."
+                },
+
+                {
+                        "Основные элементы печи включают нагревательную систему, футеровку, датчики, систему управления и защитные устройства.",
+
+                        "Soba əsasən qızdırma sistemi, futerovka, sensorlar, idarəetmə sistemi və qoruyucu qurğulardan ibarətdir.",
+
+                        "The main furnace components include the heating system, lining, sensors, control system and safety devices."
+                },
+
+                {
+                        "Перед загрузкой материала проверьте его состояние, размер и соответствие технологическому заданию. Не загружайте неподходящий материал.",
+
+                        "Materialı sobaya yerləşdirməzdən əvvəl onun vəziyyətini, ölçüsünü və texnoloji tapşırığa uyğunluğunu yoxlayın. Uyğun olmayan materialı yükləməyin.",
+
+                        "Before loading material, check its condition, size and compliance with the process requirements. Do not load unsuitable material."
+                },
+
+                {
+                        "Контролируйте температуру, время нагрева и другие параметры процесса. Все отклонения необходимо своевременно выявлять и сообщать ответственному специалисту.",
+
+                        "Temperaturu, qızdırma müddətini və prosesin digər parametrlərini nəzarətdə saxlayın. Bütün kənarlaşmalar vaxtında aşkar edilməli və məsul şəxsə bildirilməlidir.",
+
+                        "Monitor temperature, heating time and other process parameters. Any deviations must be identified promptly and reported to the responsible person."
+                },
+
+                {
+                        "Основные опасности: высокая температура, горячий металл, электрическая энергия, электромагнитное поле и возможные выбросы горячего материала.",
+
+                        "Əsas təhlükələr: yüksək temperatur, isti metal, elektrik enerjisi, elektromaqnit sahəsi və isti materialın mümkün sıçramalarıdır.",
+
+                        "Main hazards include high temperature, hot metal, electrical energy, electromagnetic fields and possible hot material splashes."
+                },
+
+                {
+                        "Используйте необходимые СИЗ, не приближайтесь к опасной зоне без разрешения и не работайте с неисправной печью. Перед обслуживанием отключите энергию согласно процедуре.",
+
+                        "Lazımi fərdi mühafizə vasitələrindən istifadə edin, icazəsiz təhlükəli zonaya yaxınlaşmayın və nasaz soba ilə işləməyin. Texniki xidmətdən əvvəl prosedura uyğun olaraq enerjini ayırın.",
+
+                        "Use the required PPE, do not enter the danger zone without authorization and do not operate a faulty furnace. Isolate the energy according to the procedure before maintenance."
+                }
+        };
+
+        return texts[number][getLanguageIndex()];
+    }
+
+    private int getLanguageIndex() {
+
+        if (language.equals("AZ")) {
+            return 1;
         }
 
         if (language.equals("EN")) {
-
-            switch (number) {
-
-                case 1:
-                    return "An induction furnace heats metal using an electromagnetic field. Temperature and equipment condition must be monitored.";
-
-                case 2:
-                    return "Metal is heated to the required process temperature. Heating speed and temperature must follow technical requirements.";
-
-                case 3:
-                    return "Temperature is controlled using sensors and measuring instruments. Accurate temperature control is important for the process.";
-
-                case 4:
-                    return "A furnace can include a heating system, induction unit, control system, temperature sensors and protective components.";
-
-                case 5:
-                    return "Before loading the furnace, check the material size, condition and compliance with technical requirements.";
-
-                case 6:
-                    return "The worker must monitor the heating process, temperature, equipment readings and abnormal conditions.";
-
-                case 7:
-                    return "High temperature, hot metal, electricity, electromagnetic fields and molten metal can be major hazards.";
-
-                case 8:
-                    return "Use protective equipment, stay away from dangerous areas and follow workplace safety rules when operating a furnace.";
-            }
+            return 2;
         }
 
-        switch (number) {
-
-            case 1:
-                return "В индукционной печи металл нагревается с помощью электромагнитного поля. Необходимо контролировать температуру и состояние оборудования.";
-
-            case 2:
-                return "Металл нагревают до необходимой технологической температуры. Скорость нагрева и температурный режим должны соответствовать требованиям процесса.";
-
-            case 3:
-                return "Температура контролируется с помощью датчиков и измерительных приборов. Точность температуры важна для правильного процесса.";
-
-            case 4:
-                return "Печь может состоять из нагревательной системы, индукционной установки, системы управления, датчиков температуры и защитных элементов.";
-
-            case 5:
-                return "Перед загрузкой печи необходимо проверить размер, состояние материала и его соответствие техническим требованиям.";
-
-            case 6:
-                return "Рабочий должен контролировать процесс нагрева, температуру, показания оборудования и возможные неисправности.";
-
-            case 7:
-                return "Высокая температура, горячий металл, электричество, электромагнитное поле и расплавленный металл могут быть основными опасностями.";
-
-            case 8:
-                return "Используйте средства защиты, не приближайтесь к опасной зоне и соблюдайте правила безопасности при работе с печью.";
-        }
-
-        return "";
+        return 0;
     }
 }
