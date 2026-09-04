@@ -12,113 +12,113 @@ import android.widget.TextView;
 
 public class SensorsActivity extends Activity {
 
-    String language = "RU";
-
-    int green = Color.rgb(0, 145, 75);
-    int darkGreen = Color.rgb(0, 95, 50);
+    private String language = "RU";
+    private LinearLayout content;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        String selectedLanguage =
-                getIntent().getStringExtra("language");
+        String receivedLanguage = getIntent().getStringExtra("LANGUAGE");
 
-        if (selectedLanguage != null) {
-            language = selectedLanguage;
+        if (receivedLanguage != null) {
+            language = receivedLanguage;
         }
 
-        showSensors();
+        createScreen();
     }
 
-    void showSensors() {
-
-        ScrollView scroll = new ScrollView(this);
+    private void createScreen() {
 
         LinearLayout root = new LinearLayout(this);
         root.setOrientation(LinearLayout.VERTICAL);
-        root.setPadding(16, 16, 16, 30);
-        root.setBackgroundColor(Color.rgb(246, 249, 247));
-
-        LinearLayout header = new LinearLayout(this);
-        header.setOrientation(LinearLayout.VERTICAL);
-        header.setGravity(Gravity.CENTER);
-        header.setPadding(15, 25, 15, 25);
-
-        GradientDrawable headerBg =
-                new GradientDrawable(
-                        GradientDrawable.Orientation.TOP_BOTTOM,
-                        new int[]{green, darkGreen}
-                );
-
-        headerBg.setCornerRadius(25);
-        header.setBackground(headerBg);
+        root.setBackgroundColor(Color.WHITE);
+        root.setPadding(18, 12, 18, 10);
 
         TextView title = new TextView(this);
-        title.setText(getTitleText());
-        title.setTextSize(25);
+        title.setText("📡  " + getSensorsTitle());
+        title.setTextSize(27);
         title.setTypeface(null, Typeface.BOLD);
-        title.setTextColor(Color.WHITE);
+        title.setTextColor(Color.rgb(0, 130, 70));
         title.setGravity(Gravity.CENTER);
+        title.setPadding(0, 8, 0, 15);
 
-        header.addView(title);
-        root.addView(header);
+        root.addView(title);
 
-        addBox(root, 1);
-        addBox(root, 2);
-        addBox(root, 3);
-        addBox(root, 4);
-        addBox(root, 5);
-        addBox(root, 6);
-        addBox(root, 7);
-        addBox(root, 8);
-        addBox(root, 9);
+        ScrollView scrollView = new ScrollView(this);
 
-        scroll.addView(root);
-        setContentView(scroll);
+        content = new LinearLayout(this);
+        content.setOrientation(LinearLayout.VERTICAL);
+        content.setPadding(0, 5, 0, 10);
+
+        String[] cards = getCards();
+
+        for (int i = 0; i < cards.length; i++) {
+
+            final int number = i;
+
+            TextView card = createCard(cards[i]);
+
+            card.setOnClickListener(v -> showInfo(number));
+
+            content.addView(card);
+        }
+
+        scrollView.addView(content);
+
+        root.addView(
+                scrollView,
+                new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        0,
+                        1
+                )
+        );
+
+        TextView developer = new TextView(this);
+        developer.setText("F.S");
+        developer.setTextSize(16);
+        developer.setTextColor(Color.GRAY);
+        developer.setGravity(Gravity.CENTER);
+        developer.setPadding(0, 5, 0, 5);
+
+        root.addView(developer);
+
+        setContentView(root);
     }
 
-    void addBox(LinearLayout root, int number) {
+    private TextView createCard(String text) {
 
-        LinearLayout box = new LinearLayout(this);
-        box.setOrientation(LinearLayout.VERTICAL);
-        box.setPadding(18, 17, 18, 17);
+        TextView card = new TextView(this);
 
-        GradientDrawable bg = new GradientDrawable();
-        bg.setColor(Color.WHITE);
-        bg.setCornerRadius(20);
-        bg.setStroke(2, Color.rgb(220, 230, 224));
+        card.setText(text);
+        card.setTextSize(18);
+        card.setTypeface(null, Typeface.BOLD);
+        card.setTextColor(Color.rgb(0, 105, 60));
+        card.setGravity(Gravity.CENTER_VERTICAL);
+        card.setPadding(22, 0, 22, 0);
 
-        box.setBackground(bg);
+        GradientDrawable background = new GradientDrawable();
+        background.setColor(Color.rgb(242, 248, 244));
+        background.setCornerRadius(18);
+        background.setStroke(2, Color.rgb(0, 130, 70));
+
+        card.setBackground(background);
 
         LinearLayout.LayoutParams params =
                 new LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.MATCH_PARENT,
-                        LinearLayout.LayoutParams.WRAP_CONTENT
+                        82
                 );
 
-        params.setMargins(0, 10, 0, 10);
-        box.setLayoutParams(params);
+        params.setMargins(0, 0, 0, 12);
 
-        TextView boxTitle = new TextView(this);
-        boxTitle.setText(getBoxTitle(number));
-        boxTitle.setTextSize(18);
-        boxTitle.setTypeface(null, Typeface.BOLD);
-        boxTitle.setTextColor(green);
+        card.setLayoutParams(params);
 
-        box.addView(boxTitle);
-
-        TextView text = new TextView(this);
-        text.setText(getBoxText(number));
-        text.setTextSize(15);
-        text.setTextColor(Color.rgb(50, 55, 52));
-        text.setPadding(0, 9, 0, 0);
-
-        box.addView(text);
-        root.addView(box);
+        return card;
     }
 
-    String getTitleText() {
+    private String getSensorsTitle() {
 
         if (language.equals("AZ")) {
             return "Sensorlar";
@@ -131,205 +131,247 @@ public class SensorsActivity extends Activity {
         return "Датчики";
     }
 
-    String getBoxTitle(int number) {
+    private String[] getCards() {
 
         if (language.equals("AZ")) {
 
-            switch (number) {
+            return new String[]{
+                    "🔌 Elektron sensorlar",
+                    "🧲 Maqnit sensorlar",
+                    "🌡️ Temperatur sensorları",
+                    "📍 Mövqe sensorları",
+                    "💧 Hidravlik sensorlar",
+                    " pressure Təzyiq sensorları",
+                    "🔍 Sensorların yoxlanılması",
+                    "⚠️ Sensor nasazlıqları",
+                    "🦺 Təhlükəsizlik"
+            };
 
-                case 1:
-                    return "Elektron sensorlar";
+        } else if (language.equals("EN")) {
 
-                case 2:
-                    return "Maqnit sensorlar";
+            return new String[]{
+                    "🔌 Electronic Sensors",
+                    "🧲 Magnetic Sensors",
+                    "🌡️ Temperature Sensors",
+                    "📍 Position Sensors",
+                    "💧 Hydraulic Sensors",
+                    " pressure Pressure Sensors",
+                    "🔍 Sensor Testing",
+                    "⚠️ Sensor Failures",
+                    "🦺 Safety"
+            };
 
-                case 3:
-                    return "Temperatur sensorları";
+        } else {
 
-                case 4:
-                    return "Mövqe sensorları";
-
-                case 5:
-                    return "Hidravlik sensorlar";
-
-                case 6:
-                    return "Təzyiq sensorları";
-
-                case 7:
-                    return "Sensorların yoxlanılması";
-
-                case 8:
-                    return "Sensor nasazlıqları";
-
-                case 9:
-                    return "Təhlükəsizlik";
-            }
+            return new String[]{
+                    "🔌 Электронные датчики",
+                    "🧲 Магнитные датчики",
+                    "🌡️ Датчики температуры",
+                    "📍 Датчики положения",
+                    "💧 Гидравлические датчики",
+                    " pressure Датчики давления",
+                    "🔍 Проверка датчиков",
+                    "⚠️ Неисправности датчиков",
+                    "🦺 Безопасность"
+            };
         }
-
-        if (language.equals("EN")) {
-
-            switch (number) {
-
-                case 1:
-                    return "Electronic Sensors";
-
-                case 2:
-                    return "Magnetic Sensors";
-
-                case 3:
-                    return "Temperature Sensors";
-
-                case 4:
-                    return "Position Sensors";
-
-                case 5:
-                    return "Hydraulic Sensors";
-
-                case 6:
-                    return "Pressure Sensors";
-
-                case 7:
-                    return "Sensor Testing";
-
-                case 8:
-                    return "Sensor Failures";
-
-                case 9:
-                    return "Safety";
-            }
-        }
-
-        switch (number) {
-
-            case 1:
-                return "Электронные датчики";
-
-            case 2:
-                return "Магнитные датчики";
-
-            case 3:
-                return "Датчики температуры";
-
-            case 4:
-                return "Датчики положения";
-
-            case 5:
-                return "Гидравлические датчики";
-
-            case 6:
-                return "Датчики давления";
-
-            case 7:
-                return "Проверка датчиков";
-
-            case 8:
-                return "Неисправности датчиков";
-
-            case 9:
-                return "Безопасность";
-        }
-
-        return "";
     }
 
-    String getBoxText(int number) {
+    private void showInfo(int number) {
+
+        content.removeAllViews();
+
+        TextView title = new TextView(this);
+        title.setText(getInfoTitle(number));
+        title.setTextSize(23);
+        title.setTypeface(null, Typeface.BOLD);
+        title.setTextColor(Color.rgb(0, 130, 70));
+        title.setGravity(Gravity.CENTER);
+        title.setPadding(10, 20, 10, 20);
+
+        content.addView(title);
+
+        TextView info = new TextView(this);
+        info.setText(getInfoText(number));
+        info.setTextSize(18);
+        info.setTextColor(Color.DKGRAY);
+        info.setPadding(20, 10, 20, 30);
+
+        content.addView(info);
+
+        TextView back = new TextView(this);
 
         if (language.equals("AZ")) {
+            back.setText("← Geri");
+        } else if (language.equals("EN")) {
+            back.setText("← Back");
+        } else {
+            back.setText("← Назад");
+        }
 
-            switch (number) {
+        back.setTextSize(18);
+        back.setTypeface(null, Typeface.BOLD);
+        back.setTextColor(Color.rgb(0, 130, 70));
+        back.setGravity(Gravity.CENTER);
+        back.setPadding(20, 20, 20, 20);
 
-                case 1:
-                    return "Elektron sensorlar temperaturanı, təzyiqi, mövqeni və digər parametrləri elektrik siqnalına çevirərək idarəetmə sisteminə məlumat göndərir.";
+        back.setOnClickListener(v -> createScreen());
 
-                case 2:
-                    return "Maqnit sensorlar maqnit sahəsindəki dəyişiklikləri aşkar edir və avadanlığın mövqeyini və ya hərəkətini müəyyən etmək üçün istifadə oluna bilər.";
+        content.addView(back);
+    }
 
-                case 3:
-                    return "Temperatur sensorları metalın, yağın, suyun və digər mühitlərin temperaturunu ölçmək üçün istifadə olunur.";
+    private String getInfoTitle(int number) {
 
-                case 4:
-                    return "Mövqe sensorları mexanizmin müəyyən vəziyyətdə olub-olmadığını və hərəkət sərhədlərini müəyyən etməyə kömək edir.";
+        String[][] titles = {
 
-                case 5:
-                    return "Hidravlik sensorlar hidravlik sistemlərdə təzyiq, mövqe və digər parametrlərə nəzarət etmək üçün istifadə olunur. Şlanqların və birləşmələrin vəziyyəti də yoxlanılmalıdır.";
+                {
+                        "Электронные датчики",
+                        "Elektron sensorlar",
+                        "Electronic Sensors"
+                },
 
-                case 6:
-                    return "Təzyiq sensorları hidravlik və pnevmatik sistemlərdə təzyiqi ölçür və idarəetmə sisteminə siqnal göndərir.";
+                {
+                        "Магнитные датчики",
+                        "Maqnit sensorlar",
+                        "Magnetic Sensors"
+                },
 
-                case 7:
-                    return "Sensoru yoxlamazdan əvvəl avadanlığı təhlükəsiz vəziyyətə gətirin. Naqilləri, birləşmələri və sensorun göstəricilərini yoxlayın.";
+                {
+                        "Датчики температуры",
+                        "Temperatur sensorları",
+                        "Temperature Sensors"
+                },
 
-                case 8:
-                    return "Sensorun nasazlığı yanlış siqnal, qeyri-sabit iş və ya avadanlığın dayanmasına səbəb ola bilər. Nasazlıq zamanı texniki xidmətə məlumat verin.";
+                {
+                        "Датчики положения",
+                        "Mövqe sensorları",
+                        "Position Sensors"
+                },
 
-                case 9:
-                    return "Sensorlarla işləyərkən elektrik və hidravlik təhlükəsizlik qaydalarına əməl edin. Təzyiq altında olan sistemi icazəsiz açmayın.";
-            }
+                {
+                        "Гидравлические датчики",
+                        "Hidravlik sensorlar",
+                        "Hydraulic Sensors"
+                },
+
+                {
+                        "Датчики давления",
+                        "Təzyiq sensorları",
+                        "Pressure Sensors"
+                },
+
+                {
+                        "Проверка датчиков",
+                        "Sensorların yoxlanılması",
+                        "Sensor Testing"
+                },
+
+                {
+                        "Неисправности датчиков",
+                        "Sensor nasazlıqları",
+                        "Sensor Failures"
+                },
+
+                {
+                        "Безопасность",
+                        "Təhlükəsizlik",
+                        "Safety"
+                }
+        };
+
+        return titles[number][getLanguageIndex()];
+    }
+
+    private String getInfoText(int number) {
+
+        String[][] texts = {
+
+                {
+                        "Электронные датчики преобразуют физические параметры в электрический сигнал. Они применяются для контроля температуры, положения, давления и других параметров оборудования.",
+
+                        "Elektron sensorlar fiziki parametrləri elektrik siqnalına çevirir. Onlar temperatur, mövqe, təzyiq və avadanlığın digər parametrlərinə nəzarət etmək üçün istifadə olunur.",
+
+                        "Electronic sensors convert physical parameters into electrical signals. They are used to monitor temperature, position, pressure and other equipment parameters."
+                },
+
+                {
+                        "Магнитные датчики используют магнитное поле для определения положения, движения или наличия металлического объекта. Они широко применяются в автоматизации.",
+
+                        "Maqnit sensorlar mövqeyi, hərəkəti və ya metal obyektin mövcudluğunu müəyyən etmək üçün maqnit sahəsindən istifadə edir. Onlar avtomatlaşdırmada geniş tətbiq olunur.",
+
+                        "Magnetic sensors use a magnetic field to detect position, movement or the presence of a metal object. They are widely used in automation."
+                },
+
+                {
+                        "Датчики температуры измеряют температуру оборудования, металла или рабочей среды. Показания датчика необходимо регулярно контролировать.",
+
+                        "Temperatur sensorları avadanlığın, metalın və ya iş mühitinin temperaturunu ölçür. Sensor göstəriciləri müntəzəm olaraq yoxlanılmalıdır.",
+
+                        "Temperature sensors measure the temperature of equipment, metal or the working environment. Sensor readings should be monitored regularly."
+                },
+
+                {
+                        "Датчики положения определяют положение или перемещение деталей механизма. Они помогают системе управления контролировать правильность движения оборудования.",
+
+                        "Mövqe sensorları mexanizmin hissələrinin vəziyyətini və ya hərəkətini müəyyən edir. Onlar idarəetmə sisteminə avadanlığın hərəkətini düzgün izləməyə kömək edir.",
+
+                        "Position sensors detect the position or movement of machine components. They help the control system monitor equipment movement."
+                },
+
+                {
+                        "Гидравлические датчики используются для контроля давления, положения и других параметров гидравлической системы. Также проверяйте шланги и соединения.",
+
+                        "Hidravlik sensorlar hidravlik sistemlərdə təzyiq, mövqe və digər parametrlərə nəzarət etmək üçün istifadə olunur. Şlanqların və birləşmələrin vəziyyəti də yoxlanılmalıdır.",
+
+                        "Hydraulic sensors are used to monitor pressure, position and other parameters in hydraulic systems. Check hoses and connections as well."
+                },
+
+                {
+                        "Датчики давления измеряют давление в гидравлических, пневматических и других системах. При необычных показаниях необходимо проверить систему согласно инструкции.",
+
+                        "Təzyiq sensorları hidravlik, pnevmatik və digər sistemlərdə təzyiqi ölçür. Qeyri-adi göstəricilər olduqda sistemi təlimata uyğun yoxlamaq lazımdır.",
+
+                        "Pressure sensors measure pressure in hydraulic, pneumatic and other systems. If readings are abnormal, check the system according to the instructions."
+                },
+
+                {
+                        "При проверке датчика осмотрите его корпус, кабель, разъём и крепление. Сравните показания с нормальными значениями.",
+
+                        "Sensoru yoxlayarkən korpusu, kabeli, konnektoru və bərkidilməsini yoxlayın. Göstəriciləri normal qiymətlərlə müqayisə edin.",
+
+                        "When testing a sensor, inspect its housing, cable, connector and mounting. Compare the readings with normal values."
+                },
+
+                {
+                        "Неисправность датчика может привести к неправильной работе оборудования. Возможные причины: повреждение кабеля, плохой контакт, загрязнение или отказ самого датчика.",
+
+                        "Sensorun nasazlığı avadanlığın düzgün işləməməsinə səbəb ola bilər. Mümkün səbəblər: kabelin zədələnməsi, zəif kontakt, çirklənmə və ya sensorun özünün sıradan çıxması.",
+
+                        "A sensor failure can cause incorrect equipment operation. Possible causes include cable damage, poor contact, contamination or sensor failure."
+                },
+
+                {
+                        "Перед проверкой или заменой датчика соблюдайте правила безопасности. При необходимости отключите энергию и выполняйте работу только в соответствии с инструкцией.",
+
+                        "Sensoru yoxlamadan və ya dəyişdirmədən əvvəl təhlükəsizlik qaydalarına əməl edin. Lazım olduqda enerjini ayırın və işi yalnız təlimata uyğun yerinə yetirin.",
+
+                        "Before checking or replacing a sensor, follow safety rules. Isolate the energy when required and perform the work according to the instructions."
+                }
+        };
+
+        return texts[number][getLanguageIndex()];
+    }
+
+    private int getLanguageIndex() {
+
+        if (language.equals("AZ")) {
+            return 1;
         }
 
         if (language.equals("EN")) {
-
-            switch (number) {
-
-                case 1:
-                    return "Electronic sensors measure temperature, pressure, position and other parameters and send electrical signals to the control system.";
-
-                case 2:
-                    return "Magnetic sensors detect changes in a magnetic field and can be used to detect equipment position or movement.";
-
-                case 3:
-                    return "Temperature sensors are used to measure the temperature of metal, oil, water and other media.";
-
-                case 4:
-                    return "Position sensors help determine the position of a mechanism and its movement limits.";
-
-                case 5:
-                    return "Hydraulic sensors are used to monitor pressure, position and other parameters in hydraulic systems. Check hoses and connections as well.";
-
-                case 6:
-                    return "Pressure sensors measure pressure in hydraulic and pneumatic systems and send a signal to the control system.";
-
-                case 7:
-                    return "Before testing a sensor, put the equipment in a safe condition. Check wires, connections and sensor readings.";
-
-                case 8:
-                    return "A sensor failure can cause an incorrect signal, unstable operation or equipment shutdown. Report faults to maintenance.";
-
-                case 9:
-                    return "Follow electrical and hydraulic safety rules when working with sensors. Do not open a pressurized system without authorization.";
-            }
+            return 2;
         }
 
-        switch (number) {
-
-            case 1:
-                return "Электронные датчики измеряют температуру, давление, положение и другие параметры и передают электрический сигнал в систему управления.";
-
-            case 2:
-                return "Магнитные датчики обнаруживают изменения магнитного поля и могут использоваться для определения положения или движения оборудования.";
-
-            case 3:
-                return "Датчики температуры используются для измерения температуры металла, масла, воды и других сред.";
-
-            case 4:
-                return "Датчики положения помогают определить положение механизма и пределы его перемещения.";
-
-            case 5:
-                return "Гидравлические датчики используются для контроля давления, положения и других параметров гидравлической системы. Также проверяйте шланги и соединения.";
-
-            case 6:
-                return "Датчики давления измеряют давление в гидравлических и пневматических системах и передают сигнал в систему управления.";
-
-            case 7:
-                return "Перед проверкой датчика переведите оборудование в безопасное состояние. Проверьте провода, соединения и показания датчика.";
-
-            case 8:
-                return "Неисправность датчика может вызвать неправильный сигнал, нестабильную работу или остановку оборудования. О неисправности сообщите техническому обслуживанию.";
-
-            case 9:
-                return "При работе с датчиками соблюдайте правила электрической и гидравлической безопасности. Не открывайте систему под давлением без разрешения.";
-        }
-
-        return "";
+        return 0;
     }
 }
