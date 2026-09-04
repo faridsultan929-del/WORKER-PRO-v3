@@ -12,112 +12,113 @@ import android.widget.TextView;
 
 public class FireExtinguisherActivity extends Activity {
 
-    String language = "RU";
-
-    int green = Color.rgb(0, 145, 75);
-    int darkGreen = Color.rgb(0, 95, 50);
+    private String language = "RU";
+    private LinearLayout content;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        String selectedLanguage =
-                getIntent().getStringExtra("language");
+        String receivedLanguage = getIntent().getStringExtra("LANGUAGE");
 
-        if (selectedLanguage != null) {
-            language = selectedLanguage;
+        if (receivedLanguage != null) {
+            language = receivedLanguage;
         }
 
-        showFireExtinguishers();
+        createScreen();
     }
 
-    void showFireExtinguishers() {
-
-        ScrollView scroll = new ScrollView(this);
+    private void createScreen() {
 
         LinearLayout root = new LinearLayout(this);
         root.setOrientation(LinearLayout.VERTICAL);
-        root.setPadding(16, 16, 16, 30);
-        root.setBackgroundColor(Color.rgb(246, 249, 247));
-
-        LinearLayout header = new LinearLayout(this);
-        header.setOrientation(LinearLayout.VERTICAL);
-        header.setGravity(Gravity.CENTER);
-        header.setPadding(15, 25, 15, 25);
-
-        GradientDrawable headerBg =
-                new GradientDrawable(
-                        GradientDrawable.Orientation.TOP_BOTTOM,
-                        new int[]{green, darkGreen}
-                );
-
-        headerBg.setCornerRadius(25);
-        header.setBackground(headerBg);
+        root.setBackgroundColor(Color.WHITE);
+        root.setPadding(18, 12, 18, 10);
 
         TextView title = new TextView(this);
-        title.setText(getTitleText());
-        title.setTextSize(25);
+        title.setText("🧯  " + getFireTitle());
+        title.setTextSize(27);
         title.setTypeface(null, Typeface.BOLD);
-        title.setTextColor(Color.WHITE);
+        title.setTextColor(Color.rgb(0, 130, 70));
         title.setGravity(Gravity.CENTER);
+        title.setPadding(0, 8, 0, 15);
 
-        header.addView(title);
-        root.addView(header);
+        root.addView(title);
 
-        addBox(root, 1);
-        addBox(root, 2);
-        addBox(root, 3);
-        addBox(root, 4);
-        addBox(root, 5);
-        addBox(root, 6);
-        addBox(root, 7);
-        addBox(root, 8);
+        ScrollView scrollView = new ScrollView(this);
 
-        scroll.addView(root);
-        setContentView(scroll);
+        content = new LinearLayout(this);
+        content.setOrientation(LinearLayout.VERTICAL);
+        content.setPadding(0, 5, 0, 10);
+
+        String[] cards = getCards();
+
+        for (int i = 0; i < cards.length; i++) {
+
+            final int number = i;
+
+            TextView card = createCard(cards[i]);
+
+            card.setOnClickListener(v -> showInfo(number));
+
+            content.addView(card);
+        }
+
+        scrollView.addView(content);
+
+        root.addView(
+                scrollView,
+                new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        0,
+                        1
+                )
+        );
+
+        TextView developer = new TextView(this);
+        developer.setText("F.S");
+        developer.setTextSize(16);
+        developer.setTextColor(Color.GRAY);
+        developer.setGravity(Gravity.CENTER);
+        developer.setPadding(0, 5, 0, 5);
+
+        root.addView(developer);
+
+        setContentView(root);
     }
 
-    void addBox(LinearLayout root, int number) {
+    private TextView createCard(String text) {
 
-        LinearLayout box = new LinearLayout(this);
-        box.setOrientation(LinearLayout.VERTICAL);
-        box.setPadding(18, 17, 18, 17);
+        TextView card = new TextView(this);
 
-        GradientDrawable bg = new GradientDrawable();
-        bg.setColor(Color.WHITE);
-        bg.setCornerRadius(20);
-        bg.setStroke(2, Color.rgb(220, 230, 224));
+        card.setText(text);
+        card.setTextSize(18);
+        card.setTypeface(null, Typeface.BOLD);
+        card.setTextColor(Color.rgb(0, 105, 60));
+        card.setGravity(Gravity.CENTER_VERTICAL);
+        card.setPadding(22, 0, 22, 0);
 
-        box.setBackground(bg);
+        GradientDrawable background = new GradientDrawable();
+        background.setColor(Color.rgb(242, 248, 244));
+        background.setCornerRadius(18);
+        background.setStroke(2, Color.rgb(0, 130, 70));
+
+        card.setBackground(background);
 
         LinearLayout.LayoutParams params =
                 new LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.MATCH_PARENT,
-                        LinearLayout.LayoutParams.WRAP_CONTENT
+                        82
                 );
 
-        params.setMargins(0, 10, 0, 10);
-        box.setLayoutParams(params);
+        params.setMargins(0, 0, 0, 12);
 
-        TextView boxTitle = new TextView(this);
-        boxTitle.setText(getBoxTitle(number));
-        boxTitle.setTextSize(18);
-        boxTitle.setTypeface(null, Typeface.BOLD);
-        boxTitle.setTextColor(green);
+        card.setLayoutParams(params);
 
-        box.addView(boxTitle);
-
-        TextView text = new TextView(this);
-        text.setText(getBoxText(number));
-        text.setTextSize(15);
-        text.setTextColor(Color.rgb(50, 55, 52));
-        text.setPadding(0, 9, 0, 0);
-
-        box.addView(text);
-        root.addView(box);
+        return card;
     }
 
-    String getTitleText() {
+    private String getFireTitle() {
 
         if (language.equals("AZ")) {
             return "Yanğınsöndürənlər";
@@ -130,187 +131,230 @@ public class FireExtinguisherActivity extends Activity {
         return "Огнетушители";
     }
 
-    String getBoxTitle(int number) {
+    private String[] getCards() {
 
         if (language.equals("AZ")) {
 
-            switch (number) {
+            return new String[]{
+                    "🧯 Yanğınsöndürən nədir?",
+                    "⬜ Tozlu yanğınsöndürən",
+                    "❄️ Karbon qazlı yanğınsöndürən",
+                    "💧 Su əsaslı yanğınsöndürən",
+                    "🔥 Yanğın sinifləri",
+                    "✅ Düzgün seçim",
+                    "🚨 İstifadə qaydası",
+                    "🦺 Təhlükəsizlik qaydaları"
+            };
 
-                case 1:
-                    return "Yanğınsöndürən nədir?";
+        } else if (language.equals("EN")) {
 
-                case 2:
-                    return "Tozlu yanğınsöndürən";
+            return new String[]{
+                    "🧯 What is a Fire Extinguisher?",
+                    "⬜ Dry Powder Extinguisher",
+                    "❄️ Carbon Dioxide Extinguisher",
+                    "💧 Water-Based Extinguisher",
+                    "🔥 Fire Classes",
+                    "✅ Choosing the Right Extinguisher",
+                    "🚨 How to Use",
+                    "🦺 Safety Rules"
+            };
 
-                case 3:
-                    return "Karbon qazlı yanğınsöndürən";
+        } else {
 
-                case 4:
-                    return "Su əsaslı yanğınsöndürən";
-
-                case 5:
-                    return "Yanğın sinifləri";
-
-                case 6:
-                    return "Düzgün seçim";
-
-                case 7:
-                    return "İstifadə qaydası";
-
-                case 8:
-                    return "Təhlükəsizlik qaydaları";
-            }
+            return new String[]{
+                    "🧯 Что такое огнетушитель?",
+                    "⬜ Порошковый огнетушитель",
+                    "❄️ Углекислотный огнетушитель",
+                    "💧 Водный огнетушитель",
+                    "🔥 Классы пожаров",
+                    "✅ Правильный выбор",
+                    "🚨 Как пользоваться",
+                    "🦺 Правила безопасности"
+            };
         }
-
-        if (language.equals("EN")) {
-
-            switch (number) {
-
-                case 1:
-                    return "What is a Fire Extinguisher?";
-
-                case 2:
-                    return "Dry Powder Extinguisher";
-
-                case 3:
-                    return "Carbon Dioxide Extinguisher";
-
-                case 4:
-                    return "Water-Based Extinguisher";
-
-                case 5:
-                    return "Fire Classes";
-
-                case 6:
-                    return "Choosing the Right Extinguisher";
-
-                case 7:
-                    return "How to Use";
-
-                case 8:
-                    return "Safety Rules";
-            }
-        }
-
-        switch (number) {
-
-            case 1:
-                return "Что такое огнетушитель?";
-
-            case 2:
-                return "Порошковый огнетушитель";
-
-            case 3:
-                return "Углекислотный огнетушитель";
-
-            case 4:
-                return "Водный огнетушитель";
-
-            case 5:
-                return "Классы пожаров";
-
-            case 6:
-                return "Правильный выбор";
-
-            case 7:
-                return "Как пользоваться";
-
-            case 8:
-                return "Правила безопасности";
-        }
-
-        return "";
     }
 
-    String getBoxText(int number) {
+    private void showInfo(int number) {
+
+        content.removeAllViews();
+
+        TextView title = new TextView(this);
+        title.setText(getInfoTitle(number));
+        title.setTextSize(23);
+        title.setTypeface(null, Typeface.BOLD);
+        title.setTextColor(Color.rgb(0, 130, 70));
+        title.setGravity(Gravity.CENTER);
+        title.setPadding(10, 20, 10, 20);
+
+        content.addView(title);
+
+        TextView info = new TextView(this);
+        info.setText(getInfoText(number));
+        info.setTextSize(18);
+        info.setTextColor(Color.DKGRAY);
+        info.setPadding(20, 10, 20, 30);
+
+        content.addView(info);
+
+        TextView back = new TextView(this);
 
         if (language.equals("AZ")) {
+            back.setText("← Geri");
+        } else if (language.equals("EN")) {
+            back.setText("← Back");
+        } else {
+            back.setText("← Назад");
+        }
 
-            switch (number) {
+        back.setTextSize(18);
+        back.setTypeface(null, Typeface.BOLD);
+        back.setTextColor(Color.rgb(0, 130, 70));
+        back.setGravity(Gravity.CENTER);
+        back.setPadding(20, 20, 20, 20);
 
-                case 1:
-                    return "Yanğınsöndürən kiçik yanğınları ilkin mərhələdə söndürmək üçün istifadə olunan portativ avadanlıqdır.";
+        back.setOnClickListener(v -> createScreen());
 
-                case 2:
-                    return "Tozlu yanğınsöndürənlər müxtəlif yanğın növlərində istifadə oluna bilər. İstifadə sahəsi cihazın üzərindəki nişanlara uyğun seçilməlidir.";
+        content.addView(back);
+    }
 
-                case 3:
-                    return "Karbon qazlı yanğınsöndürənlər elektrik avadanlıqları və uyğun yanğınlar üçün istifadə oluna bilər. İstehsalçının təlimatına əməl edin.";
+    private String getInfoTitle(int number) {
 
-                case 4:
-                    return "Su əsaslı yanğınsöndürənlər uyğun bərk material yanğınlarında istifadə olunur. Elektrik avadanlığına tətbiq etməzdən əvvəl uyğunluq yoxlanılmalıdır.";
+        String[][] titles = {
 
-                case 5:
-                    return "Yanğın sinifləri yanan materialın növünə görə müəyyən edilir. İş yerində istifadə olunan standart və nişanlara uyğun seçim edilməlidir.";
+                {
+                        "Что такое огнетушитель?",
+                        "Yanğınsöndürən nədir?",
+                        "What is a Fire Extinguisher?"
+                },
 
-                case 6:
-                    return "Yanğın növünü müəyyən edin və yalnız həmin yanğın üçün uyğun olan yanğınsöndürəndən istifadə edin.";
+                {
+                        "Порошковый огнетушитель",
+                        "Tozlu yanğınsöndürən",
+                        "Dry Powder Extinguisher"
+                },
 
-                case 7:
-                    return "Yanğınsöndürəni təhlükəsiz məsafədən istifadə edin. Cihazın təlimatındakı göstərişlərə əməl edin və yanğın böyüyürsə ərazini tərk edin.";
+                {
+                        "Углекислотный огнетушитель",
+                        "Karbon qazlı yanğınsöndürən",
+                        "Carbon Dioxide Extinguisher"
+                },
 
-                case 8:
-                    return "Yanğın zamanı əvvəlcə insanların təhlükəsizliyini təmin edin. Tüstü və alov təhlükəlidirsə, yanğını özünüz söndürməyə çalışmayın və təcili yardım çağırın.";
-            }
+                {
+                        "Водный огнетушитель",
+                        "Su əsaslı yanğınsöndürən",
+                        "Water-Based Extinguisher"
+                },
+
+                {
+                        "Классы пожаров",
+                        "Yanğın sinifləri",
+                        "Fire Classes"
+                },
+
+                {
+                        "Правильный выбор",
+                        "Düzgün seçim",
+                        "Choosing the Right Extinguisher"
+                },
+
+                {
+                        "Как пользоваться",
+                        "İstifadə qaydası",
+                        "How to Use"
+                },
+
+                {
+                        "Правила безопасности",
+                        "Təhlükəsizlik qaydaları",
+                        "Safety Rules"
+                }
+        };
+
+        return titles[number][getLanguageIndex()];
+    }
+
+    private String getInfoText(int number) {
+
+        String[][] texts = {
+
+                {
+                        "Огнетушитель — переносное или передвижное устройство для тушения небольших очагов пожара. На производстве важно знать расположение огнетушителей и правила их применения.",
+
+                        "Yanğınsöndürən kiçik yanğın ocaqlarını söndürmək üçün istifadə olunan daşınan və ya hərəkətli qurğudur. İstehsalatda yanğınsöndürənlərin yerini və istifadə qaydalarını bilmək vacibdir.",
+
+                        "A fire extinguisher is a portable or mobile device used to put out small fires. At work, it is important to know where extinguishers are located and how to use them."
+                },
+
+                {
+                        "Порошковые огнетушители применяются для различных типов пожаров. Перед использованием проверьте маркировку и убедитесь, что данный огнетушитель подходит для конкретного пожара.",
+
+                        "Tozlu yanğınsöndürənlər müxtəlif yanğın növləri üçün istifadə olunur. İstifadədən əvvəl markalanmanı yoxlayın və yanğınsöndürənin həmin yanğın üçün uyğun olduğuna əmin olun.",
+
+                        "Dry powder extinguishers are used for different types of fires. Check the label before use and make sure the extinguisher is suitable for the specific fire."
+                },
+
+                {
+                        "Углекислотные огнетушители используют CO₂. Они часто применяются для электрооборудования и некоторых других подходящих пожаров. Не прикасайтесь голыми руками к сильно охлаждённым частям при работе.",
+
+                        "Karbon qazlı yanğınsöndürənlər CO₂ istifadə edir. Onlar tez-tez elektrik avadanlıqları və uyğun digər yanğınlar üçün tətbiq olunur. İstifadə zamanı çox soyuyan hissələrə çılpaq əllə toxunmayın.",
+
+                        "Carbon dioxide extinguishers use CO₂. They are often used for electrical equipment and other suitable fires. Do not touch extremely cold parts with bare hands during use."
+                },
+
+                {
+                        "Водные огнетушители применяются только для тех классов пожара, для которых они предназначены. Не используйте воду на электрооборудовании под напряжением.",
+
+                        "Su əsaslı yanğınsöndürənlər yalnız nəzərdə tutulduqları yanğın sinifləri üçün istifadə olunur. Gərginlik altında olan elektrik avadanlığında sudan istifadə etməyin.",
+
+                        "Water-based extinguishers should only be used for the fire classes they are designed for. Do not use water on energized electrical equipment."
+                },
+
+                {
+                        "Класс пожара определяет тип горящего материала. Перед тушением необходимо выбрать огнетушитель, подходящий для данного класса пожара.",
+
+                        "Yanğın sinfi yanan materialın növünü müəyyən edir. Söndürmədən əvvəl həmin yanğın sinfinə uyğun yanğınsöndürən seçilməlidir.",
+
+                        "The fire class identifies the type of burning material. Before fighting a fire, choose an extinguisher suitable for that fire class."
+                },
+
+                {
+                        "Всегда смотрите на маркировку огнетушителя. Выбор зависит от типа пожара, окружающей обстановки и требований предприятия. Если вы сомневаетесь, не рискуйте и покиньте опасную зону.",
+
+                        "Həmişə yanğınsöndürənin markalanmasına baxın. Seçim yanğının növündən, ətraf mühitdən və müəssisənin tələblərindən asılıdır. Əmin deyilsinizsə, risk etməyin və təhlükəli ərazini tərk edin.",
+
+                        "Always check the extinguisher label. The choice depends on the type of fire, the surroundings and workplace requirements. If you are unsure, do not take risks and leave the danger area."
+                },
+
+                {
+                        "Перед применением убедитесь, что вы знаете инструкцию для конкретного огнетушителя. Если это безопасно, держитесь на рекомендованном расстоянии, направляйте средство на основание пламени и следуйте инструкции на корпусе.",
+
+                        "İstifadədən əvvəl konkret yanğınsöndürənin təlimatını bildiyinizə əmin olun. Təhlükəsizdirsə, tövsiyə olunan məsafəni saxlayın, söndürücü maddəni alovun əsasına yönəldin və gövdədəki təlimata əməl edin.",
+
+                        "Before use, make sure you know the instructions for the specific extinguisher. If it is safe, keep the recommended distance, aim at the base of the flames and follow the instructions on the extinguisher."
+                },
+
+                {
+                        "Не приближайтесь к большому или быстро распространяющемуся пожару. Немедленно сообщите об опасности, активируйте пожарную тревогу и покиньте зону по плану эвакуации. Никогда не подвергайте себя опасности.",
+
+                        "Böyük və ya sürətlə yayılan yanğına yaxınlaşmayın. Dərhal təhlükə barədə məlumat verin, yanğın siqnalizasiyasını aktivləşdirin və təxliyə planına uyğun olaraq ərazini tərk edin. Özünüzü heç vaxt təhlükəyə atmayın.",
+
+                        "Do not approach a large or rapidly spreading fire. Report the danger immediately, activate the fire alarm and leave the area according to the evacuation plan. Never put yourself at risk."
+                }
+        };
+
+        return texts[number][getLanguageIndex()];
+    }
+
+    private int getLanguageIndex() {
+
+        if (language.equals("AZ")) {
+            return 1;
         }
 
         if (language.equals("EN")) {
-
-            switch (number) {
-
-                case 1:
-                    return "A fire extinguisher is portable equipment used to control small fires at an early stage.";
-
-                case 2:
-                    return "Dry powder extinguishers can be used for different types of fires. Always check the extinguisher label and instructions.";
-
-                case 3:
-                    return "Carbon dioxide extinguishers can be suitable for electrical equipment and certain fires. Follow the manufacturer's instructions.";
-
-                case 4:
-                    return "Water-based extinguishers are suitable for certain solid-material fires. Check compatibility before using near electrical equipment.";
-
-                case 5:
-                    return "Fire classes are based on the type of burning material. Choose the extinguisher according to workplace standards and labels.";
-
-                case 6:
-                    return "Identify the type of fire and use only an extinguisher suitable for that fire.";
-
-                case 7:
-                    return "Use the extinguisher from a safe position and follow the instructions on the equipment. Leave the area if the fire grows.";
-
-                case 8:
-                    return "Protect people first during a fire. If smoke or flames are dangerous, do not attempt to fight the fire and leave the area safely.";
-            }
+            return 2;
         }
 
-        switch (number) {
-
-            case 1:
-                return "Огнетушитель — переносное оборудование для тушения небольших очагов пожара на начальной стадии.";
-
-            case 2:
-                return "Порошковые огнетушители могут применяться при разных типах пожаров. Всегда проверяйте маркировку и инструкцию на огнетушителе.";
-
-            case 3:
-                return "Углекислотные огнетушители могут применяться для электрооборудования и некоторых других пожаров. Следуйте инструкции производителя.";
-
-            case 4:
-                return "Водные огнетушители применяются для определённых пожаров твёрдых материалов. Перед использованием рядом с электрооборудованием проверьте совместимость.";
-
-            case 5:
-                return "Класс пожара определяется типом горящего материала. Выбирайте огнетушитель согласно маркировке и правилам предприятия.";
-
-            case 6:
-                return "Определите тип пожара и используйте только огнетушитель, предназначенный для данного типа пожара.";
-
-            case 7:
-                return "Используйте огнетушитель с безопасного расстояния и следуйте инструкции на корпусе. Если пожар увеличивается, покиньте опасную зону.";
-
-            case 8:
-                return "При пожаре прежде всего обеспечьте безопасность людей. Если дым или огонь представляют опасность, не пытайтесь тушить пожар самостоятельно и покиньте помещение.";
-        }
-
-        return "";
+        return 0;
     }
 }
