@@ -12,112 +12,113 @@ import android.widget.TextView;
 
 public class StampingActivity extends Activity {
 
-    String language = "RU";
-
-    int green = Color.rgb(0, 145, 75);
-    int darkGreen = Color.rgb(0, 95, 50);
+    private String language = "RU";
+    private LinearLayout content;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        String selectedLanguage =
-                getIntent().getStringExtra("language");
+        String receivedLanguage = getIntent().getStringExtra("LANGUAGE");
 
-        if (selectedLanguage != null) {
-            language = selectedLanguage;
+        if (receivedLanguage != null) {
+            language = receivedLanguage;
         }
 
-        showStamping();
+        createScreen();
     }
 
-    void showStamping() {
-
-        ScrollView scroll = new ScrollView(this);
+    private void createScreen() {
 
         LinearLayout root = new LinearLayout(this);
         root.setOrientation(LinearLayout.VERTICAL);
-        root.setPadding(16, 16, 16, 30);
-        root.setBackgroundColor(Color.rgb(246, 249, 247));
-
-        LinearLayout header = new LinearLayout(this);
-        header.setOrientation(LinearLayout.VERTICAL);
-        header.setGravity(Gravity.CENTER);
-        header.setPadding(15, 25, 15, 25);
-
-        GradientDrawable headerBg =
-                new GradientDrawable(
-                        GradientDrawable.Orientation.TOP_BOTTOM,
-                        new int[]{green, darkGreen}
-                );
-
-        headerBg.setCornerRadius(25);
-        header.setBackground(headerBg);
+        root.setBackgroundColor(Color.WHITE);
+        root.setPadding(18, 12, 18, 10);
 
         TextView title = new TextView(this);
-        title.setText(getTitleText());
-        title.setTextSize(25);
+        title.setText("🔨  " + getStampingTitle());
+        title.setTextSize(27);
         title.setTypeface(null, Typeface.BOLD);
-        title.setTextColor(Color.WHITE);
+        title.setTextColor(Color.rgb(0, 130, 70));
         title.setGravity(Gravity.CENTER);
+        title.setPadding(0, 8, 0, 15);
 
-        header.addView(title);
-        root.addView(header);
+        root.addView(title);
 
-        addBox(root, 1);
-        addBox(root, 2);
-        addBox(root, 3);
-        addBox(root, 4);
-        addBox(root, 5);
-        addBox(root, 6);
-        addBox(root, 7);
-        addBox(root, 8);
+        ScrollView scrollView = new ScrollView(this);
 
-        scroll.addView(root);
-        setContentView(scroll);
+        content = new LinearLayout(this);
+        content.setOrientation(LinearLayout.VERTICAL);
+        content.setPadding(0, 5, 0, 10);
+
+        String[] cards = getCards();
+
+        for (int i = 0; i < cards.length; i++) {
+
+            final int number = i;
+
+            TextView card = createCard(cards[i]);
+
+            card.setOnClickListener(v -> showInfo(number));
+
+            content.addView(card);
+        }
+
+        scrollView.addView(content);
+
+        root.addView(
+                scrollView,
+                new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        0,
+                        1
+                )
+        );
+
+        TextView developer = new TextView(this);
+        developer.setText("F.S");
+        developer.setTextSize(16);
+        developer.setTextColor(Color.GRAY);
+        developer.setGravity(Gravity.CENTER);
+        developer.setPadding(0, 5, 0, 5);
+
+        root.addView(developer);
+
+        setContentView(root);
     }
 
-    void addBox(LinearLayout root, int number) {
+    private TextView createCard(String text) {
 
-        LinearLayout box = new LinearLayout(this);
-        box.setOrientation(LinearLayout.VERTICAL);
-        box.setPadding(18, 17, 18, 17);
+        TextView card = new TextView(this);
 
-        GradientDrawable bg = new GradientDrawable();
-        bg.setColor(Color.WHITE);
-        bg.setCornerRadius(20);
-        bg.setStroke(2, Color.rgb(220, 230, 224));
+        card.setText(text);
+        card.setTextSize(18);
+        card.setTypeface(null, Typeface.BOLD);
+        card.setTextColor(Color.rgb(0, 105, 60));
+        card.setGravity(Gravity.CENTER_VERTICAL);
+        card.setPadding(22, 0, 22, 0);
 
-        box.setBackground(bg);
+        GradientDrawable background = new GradientDrawable();
+        background.setColor(Color.rgb(242, 248, 244));
+        background.setCornerRadius(18);
+        background.setStroke(2, Color.rgb(0, 130, 70));
+
+        card.setBackground(background);
 
         LinearLayout.LayoutParams params =
                 new LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.MATCH_PARENT,
-                        LinearLayout.LayoutParams.WRAP_CONTENT
+                        82
                 );
 
-        params.setMargins(0, 10, 0, 10);
-        box.setLayoutParams(params);
+        params.setMargins(0, 0, 0, 12);
 
-        TextView boxTitle = new TextView(this);
-        boxTitle.setText(getBoxTitle(number));
-        boxTitle.setTextSize(18);
-        boxTitle.setTypeface(null, Typeface.BOLD);
-        boxTitle.setTextColor(green);
+        card.setLayoutParams(params);
 
-        box.addView(boxTitle);
-
-        TextView text = new TextView(this);
-        text.setText(getBoxText(number));
-        text.setTextSize(15);
-        text.setTextColor(Color.rgb(50, 55, 52));
-        text.setPadding(0, 9, 0, 0);
-
-        box.addView(text);
-        root.addView(box);
+        return card;
     }
 
-    String getTitleText() {
+    private String getStampingTitle() {
 
         if (language.equals("AZ")) {
             return "Ştamplama";
@@ -130,187 +131,230 @@ public class StampingActivity extends Activity {
         return "Штамповка";
     }
 
-    String getBoxTitle(int number) {
+    private String[] getCards() {
 
         if (language.equals("AZ")) {
 
-            switch (number) {
+            return new String[]{
+                    "🔨 Ştamplama nədir?",
+                    "❄️ Soyuq ştamplama",
+                    "🔥 İsti ştamplama",
+                    "⚙️ Ştamplama presləri",
+                    "🔧 Ştamplama aləti",
+                    "🔩 Materialın hazırlanması",
+                    "✅ Keyfiyyətə nəzarət",
+                    "🦺 Ştamplama zamanı təhlükəsizlik"
+            };
 
-                case 1:
-                    return "Ştamplama nədir?";
+        } else if (language.equals("EN")) {
 
-                case 2:
-                    return "Soyuq ştamplama";
+            return new String[]{
+                    "🔨 What is Stamping?",
+                    "❄️ Cold Stamping",
+                    "🔥 Hot Stamping",
+                    "⚙️ Stamping Presses",
+                    "🔧 Stamping Tools",
+                    "🔩 Material Preparation",
+                    "✅ Quality Control",
+                    "🦺 Stamping Safety"
+            };
 
-                case 3:
-                    return "İsti ştamplama";
+        } else {
 
-                case 4:
-                    return "Ştamplama presləri";
-
-                case 5:
-                    return "Ştamplama alətləri";
-
-                case 6:
-                    return "Materialın hazırlanması";
-
-                case 7:
-                    return "Keyfiyyətə nəzarət";
-
-                case 8:
-                    return "Ştamplamada təhlükəsizlik";
-            }
+            return new String[]{
+                    "🔨 Что такое штамповка?",
+                    "❄️ Холодная штамповка",
+                    "🔥 Горячая штамповка",
+                    "⚙️ Штамповочные прессы",
+                    "🔧 Штамповочный инструмент",
+                    "🔩 Подготовка материала",
+                    "✅ Контроль качества",
+                    "🦺 Безопасность при штамповке"
+            };
         }
-
-        if (language.equals("EN")) {
-
-            switch (number) {
-
-                case 1:
-                    return "What is Stamping?";
-
-                case 2:
-                    return "Cold Stamping";
-
-                case 3:
-                    return "Hot Stamping";
-
-                case 4:
-                    return "Stamping Presses";
-
-                case 5:
-                    return "Stamping Tools";
-
-                case 6:
-                    return "Material Preparation";
-
-                case 7:
-                    return "Quality Control";
-
-                case 8:
-                    return "Stamping Safety";
-            }
-        }
-
-        switch (number) {
-
-            case 1:
-                return "Что такое штамповка?";
-
-            case 2:
-                return "Холодная штамповка";
-
-            case 3:
-                return "Горячая штамповка";
-
-            case 4:
-                return "Штамповочные прессы";
-
-            case 5:
-                return "Штамповочный инструмент";
-
-            case 6:
-                return "Подготовка материала";
-
-            case 7:
-                return "Контроль качества";
-
-            case 8:
-                return "Безопасность при штамповке";
-        }
-
-        return "";
     }
 
-    String getBoxText(int number) {
+    private void showInfo(int number) {
+
+        content.removeAllViews();
+
+        TextView title = new TextView(this);
+        title.setText(getInfoTitle(number));
+        title.setTextSize(23);
+        title.setTypeface(null, Typeface.BOLD);
+        title.setTextColor(Color.rgb(0, 130, 70));
+        title.setGravity(Gravity.CENTER);
+        title.setPadding(10, 20, 10, 20);
+
+        content.addView(title);
+
+        TextView info = new TextView(this);
+        info.setText(getInfoText(number));
+        info.setTextSize(18);
+        info.setTextColor(Color.DKGRAY);
+        info.setPadding(20, 10, 20, 30);
+
+        content.addView(info);
+
+        TextView back = new TextView(this);
 
         if (language.equals("AZ")) {
+            back.setText("← Geri");
+        } else if (language.equals("EN")) {
+            back.setText("← Back");
+        } else {
+            back.setText("← Назад");
+        }
 
-            switch (number) {
+        back.setTextSize(18);
+        back.setTypeface(null, Typeface.BOLD);
+        back.setTextColor(Color.rgb(0, 130, 70));
+        back.setGravity(Gravity.CENTER);
+        back.setPadding(20, 20, 20, 20);
 
-                case 1:
-                    return "Ştamplama pres və xüsusi alətlər vasitəsilə metalın formasının dəyişdirilməsi prosesidir.";
+        back.setOnClickListener(v -> createScreen());
 
-                case 2:
-                    return "Soyuq ştamplama metalın əvvəlcədən qızdırılmadan presdə formalaşdırılması prosesidir.";
+        content.addView(back);
+    }
 
-                case 3:
-                    return "İsti ştamplamada metal yüksək temperatura qədər qızdırılır və sonra presdə formalaşdırılır.";
+    private String getInfoTitle(int number) {
 
-                case 4:
-                    return "Ştamplama presləri metal detalları müəyyən edilmiş forma və ölçüdə hazırlamaq üçün istifadə olunur.";
+        String[][] titles = {
 
-                case 5:
-                    return "Ştamplama alətlərinə matrisalar, puansonlar və digər xüsusi alətlər daxildir.";
+                {
+                        "Что такое штамповка?",
+                        "Ştamplama nədir?",
+                        "What is Stamping?"
+                },
 
-                case 6:
-                    return "İşə başlamazdan əvvəl materialın ölçüsü, vəziyyəti və texniki tələblərə uyğunluğu yoxlanılmalıdır.";
+                {
+                        "Холодная штамповка",
+                        "Soyuq ştamplama",
+                        "Cold Stamping"
+                },
 
-                case 7:
-                    return "Hazır detalın ölçüləri, forması, səthi və digər keyfiyyət göstəriciləri yoxlanılmalıdır.";
+                {
+                        "Горячая штамповка",
+                        "İsti ştamplama",
+                        "Hot Stamping"
+                },
 
-                case 8:
-                    return "Preslə işləyərkən qoruyucu vasitələrdən istifadə edin və təhlükəsizlik qaydalarına əməl edin.";
-            }
+                {
+                        "Штамповочные прессы",
+                        "Ştamplama presləri",
+                        "Stamping Presses"
+                },
+
+                {
+                        "Штамповочный инструмент",
+                        "Ştamplama aləti",
+                        "Stamping Tools"
+                },
+
+                {
+                        "Подготовка материала",
+                        "Materialın hazırlanması",
+                        "Material Preparation"
+                },
+
+                {
+                        "Контроль качества",
+                        "Keyfiyyətə nəzarət",
+                        "Quality Control"
+                },
+
+                {
+                        "Безопасность при штамповке",
+                        "Ştamplama zamanı təhlükəsizlik",
+                        "Stamping Safety"
+                }
+        };
+
+        return titles[number][getLanguageIndex()];
+    }
+
+    private String getInfoText(int number) {
+
+        String[][] texts = {
+
+                {
+                        "Штамповка — это технологический процесс обработки металла давлением с использованием штампа и пресса. Метод позволяет получать детали нужной формы и размеров.",
+
+                        "Ştamplama metalın ştamp və pres vasitəsilə təzyiq altında emal prosesidir. Bu üsul tələb olunan forma və ölçüdə detallar almağa imkan verir.",
+
+                        "Stamping is a metal forming process that uses a die and press. It allows parts with the required shape and dimensions to be produced."
+                },
+
+                {
+                        "Холодная штамповка выполняется без нагрева заготовки. Она применяется для получения деталей из листового и других металлических материалов.",
+
+                        "Soyuq ştamplama material qızdırılmadan aparılır. Bu üsul təbəqə və digər metal materiallardan detallar hazırlamaq üçün istifadə olunur.",
+
+                        "Cold stamping is performed without heating the workpiece. It is used to produce parts from sheet and other metal materials."
+                },
+
+                {
+                        "Горячая штамповка выполняется при повышенной температуре металла. Нагрев делает металл более пластичным и облегчает формирование детали.",
+
+                        "İsti ştamplama metalın yüksək temperaturda emal edilməsidir. Qızdırma metalı daha plastik edir və detalın formalaşdırılmasını asanlaşdırır.",
+
+                        "Hot stamping is performed at an elevated metal temperature. Heating makes the metal more plastic and easier to form."
+                },
+
+                {
+                        "Штамповочные прессы создают усилие, необходимое для деформации металла. Перед работой оператор должен проверить пресс, инструмент и защитные устройства.",
+
+                        "Ştamplama presləri metalın deformasiyası üçün lazım olan qüvvəni yaradır. İşdən əvvəl operator presi, aləti və qoruyucu qurğuları yoxlamalıdır.",
+
+                        "Stamping presses provide the force needed to form metal. Before operation, the operator must check the press, tool and safety guards."
+                },
+
+                {
+                        "Штамповочный инструмент определяет форму детали. Инструмент должен быть исправным, правильно установленным и соответствовать технологическому процессу.",
+
+                        "Ştamplama aləti detalın formasını müəyyən edir. Alət saz vəziyyətdə olmalı, düzgün quraşdırılmalı və texnoloji prosesə uyğun olmalıdır.",
+
+                        "The stamping tool determines the shape of the part. It must be in good condition, correctly installed and suitable for the process."
+                },
+
+                {
+                        "Перед штамповкой необходимо проверить материал: размер, толщину, состояние поверхности и соответствие заданию.",
+
+                        "Ştamplamadan əvvəl materialın ölçüsü, qalınlığı, səthinin vəziyyəti və tapşırığa uyğunluğu yoxlanılmalıdır.",
+
+                        "Before stamping, check the material size, thickness, surface condition and compliance with the job requirements."
+                },
+
+                {
+                        "Контролируйте размеры, форму и внешний вид детали. При обнаружении дефекта остановите процесс и сообщите ответственному специалисту.",
+
+                        "Detalın ölçülərini, formasını və görünüşünü yoxlayın. Qüsur aşkar edilərsə prosesi dayandırın və məsul şəxsə məlumat verin.",
+
+                        "Check the dimensions, shape and appearance of the part. If a defect is found, stop the process and inform the responsible person."
+                },
+
+                {
+                        "При работе на прессе используйте необходимые СИЗ. Не помещайте руки в опасную зону. Перед обслуживанием оборудования отключите энергию.",
+
+                        "Presdə işləyərkən lazımi fərdi mühafizə vasitələrindən istifadə edin. Əllərinizi təhlükəli zonaya salmayın. Texniki xidmətdən əvvəl enerjini söndürün.",
+
+                        "Use the required PPE when working with a press. Keep your hands out of the danger zone. Isolate the energy before maintenance."
+                }
+        };
+
+        return texts[number][getLanguageIndex()];
+    }
+
+    private int getLanguageIndex() {
+
+        if (language.equals("AZ")) {
+            return 1;
         }
 
         if (language.equals("EN")) {
-
-            switch (number) {
-
-                case 1:
-                    return "Stamping is the process of changing the shape of metal using a press and special tools.";
-
-                case 2:
-                    return "Cold stamping forms metal without heating the material first.";
-
-                case 3:
-                    return "In hot stamping, the metal is heated and then formed in a press.";
-
-                case 4:
-                    return "Stamping presses are used to produce metal parts with a specified shape and size.";
-
-                case 5:
-                    return "Stamping tools include dies, punches and other special tools.";
-
-                case 6:
-                    return "Before work, check the material size, condition and technical requirements.";
-
-                case 7:
-                    return "Check the dimensions, shape, surface and quality of the finished part.";
-
-                case 8:
-                    return "Use protective equipment and follow safety rules when operating a press.";
-            }
+            return 2;
         }
 
-        switch (number) {
-
-            case 1:
-                return "Штамповка — это процесс изменения формы металла с помощью пресса и специального инструмента.";
-
-            case 2:
-                return "Холодная штамповка выполняется без предварительного нагрева металла.";
-
-            case 3:
-                return "При горячей штамповке металл нагревают до высокой температуры, после чего формируют на прессе.";
-
-            case 4:
-                return "Штамповочные прессы используются для изготовления металлических деталей заданной формы и размера.";
-
-            case 5:
-                return "К штамповочному инструменту относятся матрицы, пуансоны и другие специальные инструменты.";
-
-            case 6:
-                return "Перед началом работы необходимо проверить размер, состояние материала и соответствие техническим требованиям.";
-
-            case 7:
-                return "Проверяйте размеры, форму, поверхность и другие показатели качества готовой детали.";
-
-            case 8:
-                return "Используйте средства защиты, не приближайте руки к опасной зоне и соблюдайте правила безопасности при работе на прессе.";
-        }
-
-        return "";
+        return 0;
     }
 }
