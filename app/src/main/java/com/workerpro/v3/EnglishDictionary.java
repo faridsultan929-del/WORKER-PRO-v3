@@ -20,7 +20,10 @@ public class EnglishDictionary {
     public static List<Word> getWords() {
         List<Word> words = new ArrayList<>();
 
-        // ================= A =================
+        // =====================================================
+        // 🏭 ПРОИЗВОДСТВО
+        // =====================================================
+
         words.add(new Word("Abrasion", "Истирание", "Aşınma"));
         words.add(new Word("Accuracy", "Точность", "Dəqiqlik"));
         words.add(new Word("Adjust", "Регулировать", "Tənzimləmək"));
@@ -35,7 +38,6 @@ public class EnglishDictionary {
         words.add(new Word("Automatic", "Автоматический", "Avtomatik"));
         words.add(new Word("Axis", "Ось", "Ox"));
 
-        // ================= B =================
         words.add(new Word("Backlash", "Люфт", "Boşluq"));
         words.add(new Word("Bearing", "Подшипник", "Yastıqça"));
         words.add(new Word("Belt", "Ремень", "Kəmər"));
@@ -51,7 +53,6 @@ public class EnglishDictionary {
         words.add(new Word("Button", "Кнопка", "Düymə"));
         words.add(new Word("Burr", "Заусенец", "Tiliş"));
 
-        // ================= C =================
         words.add(new Word("Cable", "Кабель", "Kabel"));
         words.add(new Word("Caliper", "Штангенциркуль", "Ştangenpərgar"));
         words.add(new Word("Capacity", "Мощность / вместимость", "Tutum"));
@@ -78,7 +79,6 @@ public class EnglishDictionary {
         words.add(new Word("Cutting Tool", "Режущий инструмент", "Kəsici alət"));
         words.add(new Word("Cycle", "Цикл", "Dövr"));
 
-        // ================= D =================
         words.add(new Word("Data", "Данные", "Məlumat"));
         words.add(new Word("Deburring Tool", "Инструмент для снятия заусенцев", "Tiliş təmizləmə aləti"));
         words.add(new Word("Defect", "Дефект", "Qüsur"));
@@ -96,7 +96,6 @@ public class EnglishDictionary {
         words.add(new Word("Drawing", "Чертёж", "Çertyoj"));
         words.add(new Word("Dust Collector", "Пылесборник", "Toz toplayıcı"));
 
-        // ================= E =================
         words.add(new Word("Edge", "Кромка", "Kənar"));
         words.add(new Word("Electricity", "Электричество", "Elektrik"));
         words.add(new Word("Emergency", "Аварийная ситуация", "Fövqəladə vəziyyət"));
@@ -109,7 +108,6 @@ public class EnglishDictionary {
         words.add(new Word("Error", "Ошибка", "Səhv"));
         words.add(new Word("Extension Cord", "Удлинитель", "Uzatma kabeli"));
 
-        // ================= F =================
         words.add(new Word("Face Mill", "Торцевая фреза", "Üz frezi"));
         words.add(new Word("Factory", "Завод", "Zavod"));
         words.add(new Word("Feed", "Подача", "Veriş"));
@@ -126,7 +124,6 @@ public class EnglishDictionary {
         words.add(new Word("Frequency", "Частота", "Tezlik"));
         words.add(new Word("Furnace", "Печь", "Soba"));
 
-        // ================= G =================
         words.add(new Word("Gas", "Газ", "Qaz"));
         words.add(new Word("Gauge", "Калибр", "Kalibr"));
         words.add(new Word("Gear", "Шестерня", "Dişli"));
@@ -138,7 +135,6 @@ public class EnglishDictionary {
         words.add(new Word("Guide", "Направляющая", "İstiqamətləndirici"));
         words.add(new Word("Guard", "Защитное ограждение", "Qoruyucu örtük"));
 
-        // ================= H =================
         words.add(new Word("Hacksaw", "Ножовка", "Mişar"));
         words.add(new Word("Hammer", "Молоток", "Çəkic"));
         words.add(new Word("Hand Drill", "Ручная дрель", "Əl dreli"));
@@ -153,27 +149,23 @@ public class EnglishDictionary {
         words.add(new Word("Hose", "Шланг", "Şlanq"));
         words.add(new Word("Hydraulic", "Гидравлический", "Hidravlik"));
 
-        // ================= I =================
         words.add(new Word("Impact Wrench", "Ударный гайковёрт", "Zərbəli açar"));
         words.add(new Word("Inspection", "Проверка", "Yoxlama"));
         words.add(new Word("Inspection Report", "Отчёт проверки", "Yoxlama hesabatı"));
         words.add(new Word("Insulation", "Изоляция", "İzolyasiya"));
         words.add(new Word("Iron", "Железо", "Dəmir"));
 
-        // ================= J =================
-        words.add(new Word("Jig", "Кондуктор", "Konduktor"));
         words.add(new Word("Jaw", "Губка патрона", "Patron çənəsi"));
         words.add(new Word("Jaw Chuck", "Кулачковый патрон", "Çənəli patron"));
+        words.add(new Word("Jig", "Кондуктор", "Konduktor"));
         words.add(new Word("Job", "Работа / задание", "İş / tapşırıq"));
         words.add(new Word("Joint", "Соединение", "Birləşmə"));
 
-        // ================= K =================
         words.add(new Word("Key", "Шпонка / ключ", "Şponka / açar"));
         words.add(new Word("Keyway", "Шпоночный паз", "Şponka yuvası"));
         words.add(new Word("Knife", "Нож", "Bıçaq"));
         words.add(new Word("Knurling", "Накатка", "Naxışlama"));
 
-        // ================= L =================
         words.add(new Word("Lathe", "Токарный станок", "Torna dəzgahı"));
         words.add(new Word("Lathe Tool", "Токарный инструмент", "Torna aləti"));
         words.add(new Word("Lead Screw", "Ходовой винт", "Gediş vinti"));
@@ -185,7 +177,6 @@ public class EnglishDictionary {
         words.add(new Word("Lubricant", "Смазка", "Sürtkü"));
         words.add(new Word("Lubrication", "Смазка", "Yağlama"));
 
-        // ================= M =================
         words.add(new Word("Machine", "Станок / машина", "Dəzgah / maşın"));
         words.add(new Word("Machine Bed", "Станина станка", "Dəzgah gövdəsi"));
         words.add(new Word("Machine Guard", "Защитное ограждение станка", "Dəzgah qoruyucusu"));
@@ -207,13 +198,11 @@ public class EnglishDictionary {
         words.add(new Word("Morse Taper", "Конус Морзе", "Mors konusu"));
         words.add(new Word("Motor", "Двигатель", "Mühərrik"));
 
-        // ================= N =================
         words.add(new Word("Nipple", "Ниппель", "Nipel"));
         words.add(new Word("Nozzle", "Сопло", "Ucluq"));
         words.add(new Word("Nominal Size", "Номинальный размер", "Nominal ölçü"));
         words.add(new Word("Nut", "Гайка", "Qayka"));
 
-        // ================= O =================
         words.add(new Word("Offset", "Смещение / коррекция", "Ofset"));
         words.add(new Word("Oil", "Масло", "Yağ"));
         words.add(new Word("Oil Filter", "Масляный фильтр", "Yağ filtri"));
@@ -225,7 +214,6 @@ public class EnglishDictionary {
         words.add(new Word("Overheat", "Перегрев", "Həddindən artıq qızma"));
         words.add(new Word("Overload", "Перегрузка", "Həddindən artıq yüklənmə"));
 
-        // ================= P =================
         words.add(new Word("Parallel", "Параллельный", "Paralel"));
         words.add(new Word("Part", "Деталь", "Detal"));
         words.add(new Word("Phillips Screwdriver", "Крестовая отвёртка", "Xaçvari vintaçan"));
@@ -242,11 +230,9 @@ public class EnglishDictionary {
         words.add(new Word("Punch", "Пробойник", "Zərbə aləti"));
         words.add(new Word("Pump", "Насос", "Nasos"));
 
-        // ================= Q =================
         words.add(new Word("Quality", "Качество", "Keyfiyyət"));
         words.add(new Word("Quality Control", "Контроль качества", "Keyfiyyətə nəzarət"));
 
-        // ================= R =================
         words.add(new Word("Raw Material", "Сырьё", "Xammal"));
         words.add(new Word("Reamer", "Развёртка", "Rayber"));
         words.add(new Word("Reference Point", "Исходная точка", "İstinad nöqtəsi"));
@@ -259,7 +245,6 @@ public class EnglishDictionary {
         words.add(new Word("Ruler", "Линейка", "Xətkeş"));
         words.add(new Word("Runout", "Радиальное биение", "Radial qaçma"));
 
-        // ================= S =================
         words.add(new Word("Safety", "Безопасность", "Təhlükəsizlik"));
         words.add(new Word("Sanding Disc", "Шлифовальный диск", "Zımpara diski"));
         words.add(new Word("Saw", "Пила", "Mişar"));
@@ -288,7 +273,6 @@ public class EnglishDictionary {
         words.add(new Word("Switch", "Выключатель / переключатель", "Açar / dəyişdirici"));
         words.add(new Word("System", "Система", "Sistem"));
 
-        // ================= T =================
         words.add(new Word("Tap", "Метчик", "Metçik"));
         words.add(new Word("Tap Wrench", "Вороток для метчика", "Metçik açarı"));
         words.add(new Word("Task", "Задание", "Tapşırıq"));
@@ -311,14 +295,12 @@ public class EnglishDictionary {
         words.add(new Word("Training", "Обучение", "Təlim"));
         words.add(new Word("Turning", "Токарная обработка", "Torna emalı"));
 
-        // ================= U =================
         words.add(new Word("Unclamp", "Разжать", "Sıxmanı açmaq"));
         words.add(new Word("Unclamping", "Разжим", "Sıxmanın açılması"));
         words.add(new Word("Uniformity", "Однородность", "Bircinslilik"));
         words.add(new Word("Unit", "Единица", "Vahid"));
         words.add(new Word("Urgent", "Срочный", "Təcili"));
 
-        // ================= V =================
         words.add(new Word("Valve", "Клапан", "Klapan"));
         words.add(new Word("Vernier Caliper", "Штангенциркуль с нониусом", "Noniuslu ştangenpərgar"));
         words.add(new Word("Vibration", "Вибрация", "Vibrasiya"));
@@ -327,7 +309,6 @@ public class EnglishDictionary {
         words.add(new Word("Vise Jaw", "Губка тисков", "Məngənə çənəsi"));
         words.add(new Word("Voltage", "Напряжение", "Gərginlik"));
 
-        // ================= W =================
         words.add(new Word("Washer", "Шайба", "Şayba"));
         words.add(new Word("Water", "Вода", "Su"));
         words.add(new Word("Wear", "Износ", "Aşınma"));
@@ -348,18 +329,130 @@ public class EnglishDictionary {
         words.add(new Word("Workshop", "Цех / мастерская", "Sex / emalatxana"));
         words.add(new Word("Wrench", "Гаечный ключ", "Açar"));
 
-        // ================= X =================
         words.add(new Word("X-Axis", "Ось X", "X oxu"));
         words.add(new Word("X-Axis Limit", "Ограничитель оси X", "X oxunun məhdudlaşdırıcısı"));
 
-        // ================= Y =================
         words.add(new Word("Y-Axis", "Ось Y", "Y oxu"));
         words.add(new Word("Y-Axis Limit", "Ограничитель оси Y", "Y oxunun məhdudlaşdırıcısı"));
 
-        // ================= Z =================
         words.add(new Word("Z-Axis", "Ось Z", "Z oxu"));
         words.add(new Word("Z-Axis Limit", "Ограничитель оси Z", "Z oxunun məhdudlaşdırıcısı"));
         words.add(new Word("Zero Point", "Нулевая точка", "Sıfır nöqtəsi"));
+
+
+        // =====================================================
+        // 🆕 ДОПОЛНИТЕЛЬНЫЕ СЛОВА 401–500
+        // =====================================================
+
+        // ---------- Производство ----------
+        words.add(new Word("Accident", "Несчастный случай", "Qəza"));
+        words.add(new Word("Batch", "Партия", "Partiya"));
+        words.add(new Word("Batch Number", "Номер партии", "Partiya nömrəsi"));
+        words.add(new Word("Finished Product", "Готовое изделие", "Hazır məhsul"));
+        words.add(new Word("Production Area", "Производственная зона", "İstehsalat sahəsi"));
+        words.add(new Word("Production Plan", "План производства", "İstehsal planı"));
+        words.add(new Word("Production Rate", "Темп производства", "İstehsal tempi"));
+        words.add(new Word("Production Schedule", "График производства", "İstehsal cədvəli"));
+        words.add(new Word("Production Worker", "Производственный рабочий", "İstehsalat işçisi"));
+        words.add(new Word("Workstation", "Рабочая станция", "İş stansiyası"));
+
+        // ---------- Охрана труда ----------
+        words.add(new Word("Accident Report", "Отчёт о несчастном случае", "Qəza hesabatı"));
+        words.add(new Word("Danger", "Опасность", "Təhlükə"));
+        words.add(new Word("Emergency Exit", "Аварийный выход", "Təcili çıxış"));
+        words.add(new Word("First Aid", "Первая помощь", "İlk yardım"));
+        words.add(new Word("First Aid Kit", "Аптечка", "İlk yardım çantası"));
+        words.add(new Word("Hearing Protection", "Защита слуха", "Eşitmə mühafizəsi"));
+        words.add(new Word("Safety Glasses", "Защитные очки", "Qoruyucu eynək"));
+        words.add(new Word("Safety Shoes", "Защитная обувь", "Qoruyucu ayaqqabı"));
+        words.add(new Word("Warning Sign", "Предупреждающий знак", "Xəbərdarlıq nişanı"));
+
+        // ---------- Сварка ----------
+        words.add(new Word("Weld Bead", "Сварной шов", "Qaynaq tikişi"));
+        words.add(new Word("Weld Crack", "Трещина сварного шва", "Qaynaq tikişində çat"));
+        words.add(new Word("Weld Joint", "Сварное соединение", "Qaynaq birləşməsi"));
+        words.add(new Word("Welding Cable", "Сварочный кабель", "Qaynaq kabeli"));
+        words.add(new Word("Welding Current", "Сварочный ток", "Qaynaq cərəyanı"));
+        words.add(new Word("Welding Helmet", "Сварочная маска", "Qaynaq maskası"));
+        words.add(new Word("Welding Machine", "Сварочный аппарат", "Qaynaq aparatı"));
+        words.add(new Word("Welding Rod", "Сварочный пруток", "Qaynaq çubuğu"));
+        words.add(new Word("Welding Torch", "Сварочная горелка", "Qaynaq məşəli"));
+
+        // ---------- CNC ----------
+        words.add(new Word("CNC Control", "Управление ЧПУ", "CNC idarəetməsi"));
+        words.add(new Word("CNC Program", "Программа ЧПУ", "CNC proqramı"));
+        words.add(new Word("CNC Programmer", "Программист ЧПУ", "CNC proqramçısı"));
+        words.add(new Word("Machine Coordinate", "Координата станка", "Dəzgah koordinatı"));
+        words.add(new Word("Machine Cycle Time", "Время цикла станка", "Dəzgah dövrünün vaxtı"));
+        words.add(new Word("Machine Zero", "Ноль станка", "Dəzgah sıfırı"));
+        words.add(new Word("Program Number", "Номер программы", "Proqram nömrəsi"));
+        words.add(new Word("Tool Length", "Длина инструмента", "Alətin uzunluğu"));
+        words.add(new Word("Work Coordinate", "Рабочая координата", "İş koordinatı"));
+
+        // ---------- Штамповка ----------
+        words.add(new Word("Blank", "Заготовка", "Pəstah"));
+        words.add(new Word("Blanking", "Вырубка", "Kəsmə əməliyyatı"));
+        words.add(new Word("Deep Drawing", "Глубокая вытяжка", "Dərin dartma"));
+        words.add(new Word("Die Set", "Штамповый комплект", "Ştamp dəsti"));
+        words.add(new Word("Forming", "Формовка", "Formalaşdırma"));
+        words.add(new Word("Punching", "Пробивка", "Deşmə"));
+        words.add(new Word("Sheet Metal", "Листовой металл", "Sac metal"));
+        words.add(new Word("Stamping Die", "Штамп", "Ştamp"));
+        words.add(new Word("Stamping Machine", "Штамповочный станок", "Ştamplama dəzgahı"));
+        words.add(new Word("Stamping Press", "Штамповочный пресс", "Ştamplama presi"));
+
+        // ---------- Измерения ----------
+        words.add(new Word("Angle Gauge", "Угломер", "Bucaq ölçən"));
+        words.add(new Word("Digital Caliper", "Цифровой штангенциркуль", "Rəqəmsal ştangenpərgar"));
+        words.add(new Word("Dimension", "Размер", "Ölçü"));
+        words.add(new Word("Dimension Tolerance", "Допуск размера", "Ölçü toleransı"));
+        words.add(new Word("Inside Diameter", "Внутренний диаметр", "Daxili diametr"));
+        words.add(new Word("Measurement Accuracy", "Точность измерения", "Ölçmə dəqiqliyi"));
+        words.add(new Word("Measurement Error", "Ошибка измерения", "Ölçmə xətası"));
+        words.add(new Word("Outside Diameter", "Наружный диаметр", "Xarici diametr"));
+        words.add(new Word("Tolerance Range", "Диапазон допуска", "Tolerans diapazonu"));
+        words.add(new Word("Zero Calibration", "Калибровка нуля", "Sıfır kalibrləməsi"));
+
+        // ---------- Контроль качества ----------
+        words.add(new Word("Acceptance Criteria", "Критерии приёмки", "Qəbul meyarları"));
+        words.add(new Word("Inspection Record", "Запись проверки", "Yoxlama qeydi"));
+        words.add(new Word("Quality Check", "Проверка качества", "Keyfiyyət yoxlaması"));
+        words.add(new Word("Quality Inspector", "Контролёр качества", "Keyfiyyət nəzarətçisi"));
+        words.add(new Word("Quality Standard", "Стандарт качества", "Keyfiyyət standartı"));
+        words.add(new Word("Rejected Part", "Забракованная деталь", "Rədd edilmiş detal"));
+        words.add(new Word("Sample", "Образец", "Nümunə"));
+        words.add(new Word("Sampling", "Выборочный контроль", "Seçmə nəzarət"));
+        words.add(new Word("Tolerance", "Допуск", "Tolerans"));
+        words.add(new Word("Visual Check", "Визуальная проверка", "Vizual yoxlama"));
+
+        // ---------- Электрика и датчики ----------
+        words.add(new Word("Circuit", "Электрическая цепь", "Elektrik dövrəsi"));
+        words.add(new Word("Circuit Breaker", "Автоматический выключатель", "Avtomatik açar"));
+        words.add(new Word("Electrical Panel", "Электрический шкаф", "Elektrik paneli"));
+        words.add(new Word("Electrical Safety", "Электробезопасность", "Elektrik təhlükəsizliyi"));
+        words.add(new Word("Magnetic Sensor", "Магнитный датчик", "Maqnit sensoru"));
+        words.add(new Word("Proximity Sensor", "Датчик приближения", "Yaxınlıq sensoru"));
+        words.add(new Word("Relay", "Реле", "Rele"));
+        words.add(new Word("Terminal", "Клемма", "Klemma"));
+        words.add(new Word("Transformer", "Трансформатор", "Transformator"));
+
+        // ---------- Материалы ----------
+        words.add(new Word("Alloy", "Сплав", "Ərinti"));
+        words.add(new Word("Brass", "Латунь", "Latun"));
+        words.add(new Word("Cast Iron", "Чугун", "Çuqun"));
+        words.add(new Word("Hardness", "Твёрдость", "Sərtlik"));
+        words.add(new Word("Stainless Steel", "Нержавеющая сталь", "Paslanmayan polad"));
+        words.add(new Word("Tensile Strength", "Предел прочности при растяжении", "Dartılma möhkəmliyi"));
+        words.add(new Word("Yield Strength", "Предел текучести", "Axma həddi"));
+
+        // ---------- Термообработка ----------
+        words.add(new Word("Cooling Rate", "Скорость охлаждения", "Soyuma sürəti"));
+        words.add(new Word("Furnace Temperature", "Температура печи", "Soba temperaturu"));
+        words.add(new Word("Heating Rate", "Скорость нагрева", "Qızdırma sürəti"));
+        words.add(new Word("Quenching", "Закалка", "Sürətli soyutma"));
+        words.add(new Word("Tempering", "Отпуск", "Tablama"));
+        words.add(new Word("Thermal Expansion", "Тепловое расширение", "İstilik genişlənməsi"));
+        words.add(new Word("Thermocouple", "Термопара", "Termocüt"));
 
         return words;
     }
