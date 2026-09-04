@@ -12,317 +12,349 @@ import android.widget.TextView;
 
 public class ProductionActivity extends Activity {
 
-    String language = "RU";
-
-    int green = Color.rgb(0, 145, 75);
-    int darkGreen = Color.rgb(0, 95, 50);
+    private String language = "RU";
+    private LinearLayout content;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        String selectedLanguage =
-                getIntent().getStringExtra("language");
+        String receivedLanguage = getIntent().getStringExtra("LANGUAGE");
 
-        if (selectedLanguage != null) {
-            language = selectedLanguage;
+        if (receivedLanguage != null) {
+            language = receivedLanguage;
         }
 
-        showProduction();
+        createScreen();
     }
 
-    void showProduction() {
-
-        ScrollView scroll = new ScrollView(this);
+    private void createScreen() {
 
         LinearLayout root = new LinearLayout(this);
         root.setOrientation(LinearLayout.VERTICAL);
-        root.setPadding(16, 16, 16, 30);
-        root.setBackgroundColor(Color.rgb(246, 249, 247));
-
-        LinearLayout header = new LinearLayout(this);
-        header.setOrientation(LinearLayout.VERTICAL);
-        header.setGravity(Gravity.CENTER);
-        header.setPadding(15, 25, 15, 25);
-
-        GradientDrawable headerBg =
-                new GradientDrawable(
-                        GradientDrawable.Orientation.TOP_BOTTOM,
-                        new int[]{green, darkGreen}
-                );
-
-        headerBg.setCornerRadius(25);
-        header.setBackground(headerBg);
+        root.setBackgroundColor(Color.WHITE);
+        root.setPadding(18, 12, 18, 10);
 
         TextView title = new TextView(this);
-        title.setText(getTitleText());
-        title.setTextSize(25);
+        title.setText("🏭  " + getProductionTitle());
+        title.setTextSize(27);
         title.setTypeface(null, Typeface.BOLD);
-        title.setTextColor(Color.WHITE);
+        title.setTextColor(Color.rgb(0, 130, 70));
         title.setGravity(Gravity.CENTER);
+        title.setPadding(0, 8, 0, 15);
 
-        header.addView(title);
-        root.addView(header);
+        root.addView(title);
 
-        addSpace(root, 18);
+        ScrollView scrollView = new ScrollView(this);
 
-        addBox(root, 1);
-        addBox(root, 2);
-        addBox(root, 3);
-        addBox(root, 4);
-        addBox(root, 5);
-        addBox(root, 6);
-        addBox(root, 7);
-        addBox(root, 8);
+        content = new LinearLayout(this);
+        content.setOrientation(LinearLayout.VERTICAL);
+        content.setPadding(0, 5, 0, 10);
 
-        scroll.addView(root);
+        String[] cards = getCards();
 
-        setContentView(scroll);
+        for (int i = 0; i < cards.length; i++) {
+
+            final int number = i;
+
+            TextView card = createCard(cards[i]);
+
+            card.setOnClickListener(v -> showInfo(number));
+
+            content.addView(card);
+        }
+
+        scrollView.addView(content);
+
+        root.addView(
+                scrollView,
+                new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        0,
+                        1
+                )
+        );
+
+        TextView developer = new TextView(this);
+        developer.setText("F.S");
+        developer.setTextSize(16);
+        developer.setTextColor(Color.GRAY);
+        developer.setGravity(Gravity.CENTER);
+        developer.setPadding(0, 5, 0, 5);
+
+        root.addView(developer);
+
+        setContentView(root);
     }
 
-    void addBox(LinearLayout root, int number) {
+    private TextView createCard(String text) {
 
-        LinearLayout box = new LinearLayout(this);
-        box.setOrientation(LinearLayout.VERTICAL);
-        box.setPadding(18, 17, 18, 17);
+        TextView card = new TextView(this);
 
-        GradientDrawable bg = new GradientDrawable();
-        bg.setColor(Color.WHITE);
-        bg.setCornerRadius(20);
-        bg.setStroke(2, Color.rgb(220, 230, 224));
+        card.setText(text);
+        card.setTextSize(18);
+        card.setTypeface(null, Typeface.BOLD);
+        card.setTextColor(Color.rgb(0, 105, 60));
+        card.setGravity(Gravity.CENTER_VERTICAL);
+        card.setPadding(22, 0, 22, 0);
 
-        box.setBackground(bg);
+        GradientDrawable background = new GradientDrawable();
+        background.setColor(Color.rgb(242, 248, 244));
+        background.setCornerRadius(18);
+        background.setStroke(2, Color.rgb(0, 130, 70));
+
+        card.setBackground(background);
 
         LinearLayout.LayoutParams params =
                 new LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.MATCH_PARENT,
-                        LinearLayout.LayoutParams.WRAP_CONTENT
+                        82
                 );
 
-        params.setMargins(0, 10, 0, 10);
-        box.setLayoutParams(params);
+        params.setMargins(0, 0, 0, 12);
 
-        TextView title = new TextView(this);
-        title.setText(getBoxTitle(number));
-        title.setTextSize(18);
-        title.setTypeface(null, Typeface.BOLD);
-        title.setTextColor(green);
+        card.setLayoutParams(params);
 
-        box.addView(title);
-
-        TextView text = new TextView(this);
-        text.setText(getBoxText(number));
-        text.setTextSize(15);
-        text.setTextColor(Color.rgb(50, 55, 52));
-        text.setPadding(0, 9, 0, 0);
-
-        box.addView(text);
-
-        root.addView(box);
+        return card;
     }
 
-    String getTitleText() {
+    private String getProductionTitle() {
 
         if (language.equals("AZ")) {
             return "İstehsalat";
         }
 
         if (language.equals("EN")) {
-            return "Manufacturing";
+            return "Production";
         }
 
         return "Производство";
     }
 
-    String getBoxTitle(int n) {
+    private String[] getCards() {
 
         if (language.equals("AZ")) {
 
-            switch (n) {
+            return new String[]{
+                    "🏭 İstehsalatın əsasları",
+                    "⚙️ İstehsalat avadanlığı",
+                    "🔩 Metallar və materiallar",
+                    "🔄 Texnoloji proseslər",
+                    "💻 CNC dəzgahları",
+                    "📄 660 vərəq",
+                    "📋 İş prosesinə nəzarət",
+                    "🦺 İstehsalatda təhlükəsizlik"
+            };
 
-                case 1:
-                    return "İstehsalatın əsasları";
+        } else if (language.equals("EN")) {
 
-                case 2:
-                    return "İstehsalat avadanlığı";
+            return new String[]{
+                    "🏭 Production Basics",
+                    "⚙️ Production Equipment",
+                    "🔩 Metals and Materials",
+                    "🔄 Manufacturing Processes",
+                    "💻 CNC Machines",
+                    "📄 Sheet 660",
+                    "📋 Process Control",
+                    "🦺 Production Safety"
+            };
 
-                case 3:
-                    return "Metallar və materiallar";
+        } else {
 
-                case 4:
-                    return "Texnoloji proseslər";
-
-                case 5:
-                    return "CNC dəzgahları";
-
-                case 6:
-                    return "Vərəq 660";
-
-                case 7:
-                    return "İş prosesinə nəzarət";
-
-                case 8:
-                    return "İstehsalatda təhlükəsizlik";
-            }
+            return new String[]{
+                    "🏭 Основы производства",
+                    "⚙️ Производственное оборудование",
+                    "🔩 Металлы и материалы",
+                    "🔄 Технологические процессы",
+                    "💻 CNC станки",
+                    "📄 Лист 660",
+                    "📋 Контроль рабочего процесса",
+                    "🦺 Безопасность на производстве"
+            };
         }
-
-        if (language.equals("EN")) {
-
-            switch (n) {
-
-                case 1:
-                    return "Production Basics";
-
-                case 2:
-                    return "Production Equipment";
-
-                case 3:
-                    return "Metals and Materials";
-
-                case 4:
-                    return "Technological Processes";
-
-                case 5:
-                    return "CNC Machines";
-
-                case 6:
-                    return "Sheet 660";
-
-                case 7:
-                    return "Work Process Control";
-
-                case 8:
-                    return "Production Safety";
-            }
-        }
-
-        switch (n) {
-
-            case 1:
-                return "Основы производства";
-
-            case 2:
-                return "Производственное оборудование";
-
-            case 3:
-                return "Металлы и материалы";
-
-            case 4:
-                return "Технологические процессы";
-
-            case 5:
-                return "CNC станки";
-
-            case 6:
-                return "Лист 660";
-
-            case 7:
-                return "Контроль рабочего процесса";
-
-            case 8:
-                return "Безопасность на производстве";
-        }
-
-        return "";
     }
 
-    String getBoxText(int n) {
+    private void showInfo(int number) {
+
+        content.removeAllViews();
+
+        TextView title = new TextView(this);
+        title.setText(getInfoTitle(number));
+        title.setTextSize(23);
+        title.setTypeface(null, Typeface.BOLD);
+        title.setTextColor(Color.rgb(0, 130, 70));
+        title.setGravity(Gravity.CENTER);
+        title.setPadding(10, 20, 10, 20);
+
+        content.addView(title);
+
+        TextView info = new TextView(this);
+        info.setText(getInfoText(number));
+        info.setTextSize(18);
+        info.setTextColor(Color.DKGRAY);
+        info.setPadding(20, 10, 20, 30);
+
+        content.addView(info);
+
+        TextView back = new TextView(this);
 
         if (language.equals("AZ")) {
+            back.setText("← Geri");
+        } else if (language.equals("EN")) {
+            back.setText("← Back");
+        } else {
+            back.setText("← Назад");
+        }
 
-            switch (n) {
+        back.setTextSize(18);
+        back.setTypeface(null, Typeface.BOLD);
+        back.setTextColor(Color.rgb(0, 130, 70));
+        back.setGravity(Gravity.CENTER);
+        back.setPadding(20, 20, 20, 20);
 
-                case 1:
-                    return "İstehsalat məhsulun və ya detalın hazırlanması prosesidir.";
+        back.setOnClickListener(v -> createScreen());
 
-                case 2:
-                    return "Dəzgahlar, preslər, sobalar, CNC avadanlığı və digər istehsalat maşınları.";
+        content.addView(back);
+    }
 
-                case 3:
-                    return "İstehsalatda polad, alüminium, mis və digər materiallardan istifadə olunur.";
+    private String getInfoTitle(int number) {
 
-                case 4:
-                    return "Kəsmə, ştamplama, qaynaq, emal, istilik emalı və digər texnoloji proseslər.";
+        String[][] titles = {
 
-                case 5:
-                    return "CNC dəzgahları proqram vasitəsilə dəqiq emal və kəsmə əməliyyatlarını yerinə yetirir.";
+                {
+                        "Основы производства",
+                        "İstehsalatın əsasları",
+                        "Production Basics"
+                },
 
-                case 6:
-                    return "660 vərəq materialı ilə işləyərkən ölçülərə, səthə və texnoloji tələblərə diqqət edilməlidir.";
+                {
+                        "Производственное оборудование",
+                        "İstehsalat avadanlığı",
+                        "Production Equipment"
+                },
 
-                case 7:
-                    return "İşçi prosesin düzgün aparılmasına, ölçülərə və avadanlığın vəziyyətinə nəzarət etməlidir.";
+                {
+                        "Металлы и материалы",
+                        "Metallar və materiallar",
+                        "Metals and Materials"
+                },
 
-                case 8:
-                    return "Qoruyucu vasitələrdən istifadə edin və avadanlıqla işləyərkən təhlükəsizlik qaydalarına əməl edin.";
-            }
+                {
+                        "Технологические процессы",
+                        "Texnoloji proseslər",
+                        "Manufacturing Processes"
+                },
+
+                {
+                        "CNC станки",
+                        "CNC dəzgahları",
+                        "CNC Machines"
+                },
+
+                {
+                        "Лист 660",
+                        "660 vərəq",
+                        "Sheet 660"
+                },
+
+                {
+                        "Контроль рабочего процесса",
+                        "İş prosesinə nəzarət",
+                        "Process Control"
+                },
+
+                {
+                        "Безопасность на производстве",
+                        "İstehsalatda təhlükəsizlik",
+                        "Production Safety"
+                }
+        };
+
+        return titles[number][getLanguageIndex()];
+    }
+
+    private String getInfoText(int number) {
+
+        String[][] texts = {
+
+                {
+                        "Производство включает подготовку материала, работу на оборудовании, контроль процесса и проверку готовой детали.",
+
+                        "İstehsalat materialın hazırlanmasını, avadanlıqda işi, prosesə nəzarəti və hazır detalın yoxlanılmasını əhatə edir.",
+
+                        "Production includes material preparation, equipment operation, process control and inspection of the finished part."
+                },
+
+                {
+                        "Производственное оборудование должно использоваться только по инструкции. Перед началом работы проверьте состояние оборудования и защитных устройств.",
+
+                        "İstehsalat avadanlığından yalnız təlimata uyğun istifadə edilməlidir. İşə başlamazdan əvvəl avadanlığın və qoruyucu qurğuların vəziyyətini yoxlayın.",
+
+                        "Production equipment must be used according to instructions. Before starting work, check the equipment and safety guards."
+                },
+
+                {
+                        "На производстве используются различные металлы и материалы. Важно знать их свойства, маркировку и требования к обработке.",
+
+                        "İstehsalatda müxtəlif metallar və materiallardan istifadə olunur. Onların xüsusiyyətlərini, markalanmasını və emal tələblərini bilmək vacibdir.",
+
+                        "Different metals and materials are used in production. It is important to know their properties, identification and processing requirements."
+                },
+
+                {
+                        "Технологический процесс определяет последовательность операций: подготовка, обработка, контроль и получение готовой детали.",
+
+                        "Texnoloji proses əməliyyatların ardıcıllığını müəyyən edir: hazırlıq, emal, nəzarət və hazır detalın alınması.",
+
+                        "The manufacturing process defines the sequence of operations: preparation, machining, inspection and production of the finished part."
+                },
+
+                {
+                        "CNC станки работают по управляющей программе. Оператор должен проверить программу, инструмент, заготовку и безопасную работу станка.",
+
+                        "CNC dəzgahları idarəetmə proqramı ilə işləyir. Operator proqramı, aləti, materialı və dəzgahın təhlükəsiz işləməsini yoxlamalıdır.",
+
+                        "CNC machines operate using a control program. The operator must check the program, tool, workpiece and safe machine operation."
+                },
+
+                {
+                        "Лист 660 используется как производственный материал. Перед обработкой необходимо проверить его размер, состояние и соответствие заданию.",
+
+                        "660 vərəqi istehsalat materialı kimi istifadə olunur. Emaldan əvvəl onun ölçüsü, vəziyyəti və tapşırığa uyğunluğu yoxlanılmalıdır.",
+
+                        "Sheet 660 is used as a production material. Before processing, check its size, condition and compliance with the job requirements."
+                },
+
+                {
+                        "Контроль рабочего процесса помогает избежать ошибок. Оператор должен следить за параметрами оборудования, качеством детали и соблюдением технологии.",
+
+                        "İş prosesinə nəzarət səhvlərin qarşısını almağa kömək edir. Operator avadanlığın parametrlərinə, detalın keyfiyyətinə və texnologiyaya əməl olunmasına nəzarət etməlidir.",
+
+                        "Process control helps prevent mistakes. The operator should monitor equipment parameters, part quality and compliance with the process."
+                },
+
+                {
+                        "Соблюдайте инструкции, используйте необходимые СИЗ и не работайте на неисправном оборудовании. При опасной ситуации остановите работу и сообщите руководителю.",
+
+                        "Təlimatlara əməl edin, lazımi fərdi mühafizə vasitələrindən istifadə edin və nasaz avadanlıqla işləməyin. Təhlükəli vəziyyətdə işi dayandırın və rəhbərə məlumat verin.",
+
+                        "Follow safety instructions, use the required PPE and never operate faulty equipment. In a dangerous situation, stop work and inform your supervisor."
+                }
+        };
+
+        return texts[number][getLanguageIndex()];
+    }
+
+    private int getLanguageIndex() {
+
+        if (language.equals("AZ")) {
+            return 1;
         }
 
         if (language.equals("EN")) {
-
-            switch (n) {
-
-                case 1:
-                    return "Manufacturing is the process of producing a product or part.";
-
-                case 2:
-                    return "Machines, presses, furnaces, CNC equipment and other production machines.";
-
-                case 3:
-                    return "Steel, aluminium, copper and other materials are used in manufacturing.";
-
-                case 4:
-                    return "Cutting, stamping, welding, machining, heat treatment and other technological processes.";
-
-                case 5:
-                    return "CNC machines perform precise machining and cutting operations using programmed instructions.";
-
-                case 6:
-                    return "When working with Sheet 660, pay attention to dimensions, surface condition and technological requirements.";
-
-                case 7:
-                    return "The worker must control the process, dimensions and condition of the equipment.";
-
-                case 8:
-                    return "Use protective equipment and follow safety rules when working with machinery.";
-            }
+            return 2;
         }
 
-        switch (n) {
-
-            case 1:
-                return "Производство — это процесс изготовления продукции или детали.";
-
-            case 2:
-                return "Станки, прессы, печи, CNC-оборудование и другие производственные машины.";
-
-            case 3:
-                return "В производстве используются сталь, алюминий, медь и другие материалы.";
-
-            case 4:
-                return "Резка, штамповка, сварка, обработка, термообработка и другие технологические процессы.";
-
-            case 5:
-                return "CNC станки выполняют точную обработку и резку по заданной программе.";
-
-            case 6:
-                return "При работе с листом 660 необходимо контролировать размеры, поверхность и технологические требования.";
-
-            case 7:
-                return "Рабочий должен контролировать процесс, размеры деталей и состояние оборудования.";
-
-            case 8:
-                return "Используйте средства защиты и соблюдайте правила безопасности при работе с оборудованием.";
-        }
-
-        return "";
-    }
-
-    void addSpace(LinearLayout root, int height) {
-
-        TextView space = new TextView(this);
-        space.setHeight(height);
-
-        root.addView(space);
+        return 0;
     }
 }
