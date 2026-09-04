@@ -317,43 +317,4 @@ public class EnglishDictionary {
 
         words.add(new Word("Galvanic Process", "Гальванический процесс", "Qalvanik proses"));
         words.add(new Word("Gas", "Газ", "Qaz"));
-        words.add(new Word("Gas Cylinder", "Газовый баллон", "Qaz balonu"));
-        words.add(new Word("Gas Leak", "Утечка газа", "Qaz sızması"));
-        words.add(new Word("Gas Pressure", "Давление газа", "Qaz təzyiqi"));
-        words.add(new Word("Gas Regulator", "Газовый регулятор", "Qaz tənzimləyicisi"));
-        words.add(new Word("Gauge", "Калибр", "Kalibr"));
-        words.add(new Word("Gear", "Шестерня", "Dişli"));
-        words.add(new Word("Gearbox", "Коробка передач", "Sürətlər qutusu"));
-        words.add(new Word("Gear Ratio", "Передаточное отношение", "Ötürmə nisbəti"));
-        words.add(new Word("Gloves", "Перчатки", "Əlcəklər"));
-        words.add(new Word("Granite Surface Plate", "Гранитная плита", "Qranit səth plitəsi"));
-        words.add(new Word("Grease", "Смазка", "Yağlama maddəsi"));
-        words.add(new Word("Grease Gun", "Шприц для смазки", "Yağlama şprisi"));
-        words.add(new Word("Grinding", "Шлифование", "Daşlama"));
-        words.add(new Word("Grinding Disc", "Шлифовальный диск", "Daşlama diski"));
-        words.add(new Word("Grinding Tool", "Шлифовальный инструмент", "Daşlama aləti"));
-        words.add(new Word("Grinding Wheel", "Шлифовальный круг", "Daşlama dairəsi"));
-        words.add(new Word("Ground Cable", "Заземляющий кабель", "Torpaqlama kabeli"));
-        words.add(new Word("Ground Clamp", "Заземляющий зажим", "Torpaqlama sıxacı"));
-        words.add(new Word("Ground Wire", "Заземляющий провод", "Torpaqlama naqili"));
-        words.add(new Word("Guard", "Защитное ограждение", "Qoruyucu örtük"));
-        words.add(new Word("Guide", "Направляющая", "İstiqamətləndirici"));
-        words.add(new Word("Guide Bush", "Направляющая втулка", "İstiqamətləndirici oymaq"));
-        words.add(new Word("Guide Pin", "Направляющий штифт", "İstiqamətləndirici sancaq"));
-
-        // ================= H =================
-
-        words.add(new Word("Hacksaw", "Ножовка", "Mişar"));
-        words.add(new Word("Hacksaw Blade", "Полотно ножовки", "Mişar bıçağı"));
-        words.add(new Word("Hammer", "Молоток", "Çəkic"));
-        words.add(new Word("Hand Drill", "Ручная дрель", "Əl dreli"));
-        words.add(new Word("Hand Tool", "Ручной инструмент", "Əl aləti"));
-        words.add(new Word("Handwheel", "Маховик", "Əl çarxı"));
-        words.add(new Word("Hardening", "Закалка", "Bərkitmə"));
-        words.add(new Word("Hardness", "Твёрдость", "Sərtlik"));
-        words.add(new Word("Hazard", "Опасность", "Təhlükə"));
-        words.add(new Word("Heat Treatment", "Термообработка", "İstilik emalı"));
-        words.add(new Word("Heat Treatment Furnace", "Печь термообработки", "İstilik emalı sobası"));
-        words.add(new Word("Heat Source", "Источник тепла", "İstilik mənbəyi"));
-        words.add(new Word("Heating", "Нагрев", "Qızdırma"));
-        words.add(new Word("Heating Element", "Нагревательный элемент
+       
