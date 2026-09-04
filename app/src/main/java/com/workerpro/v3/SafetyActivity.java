@@ -6,7 +6,6 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
 import android.view.Gravity;
-import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -14,7 +13,6 @@ import android.widget.TextView;
 public class SafetyActivity extends Activity {
 
 private String language = "RU";
-private LinearLayout root;
 private LinearLayout content;
 
 @Override
@@ -32,14 +30,14 @@ protected void onCreate(Bundle savedInstanceState) {
 
 private void createScreen() {
 
-    root = new LinearLayout(this);
+    LinearLayout root = new LinearLayout(this);
     root.setOrientation(LinearLayout.VERTICAL);
     root.setBackgroundColor(Color.WHITE);
     root.setPadding(18, 12, 18, 10);
 
     // HEADER
     TextView title = new TextView(this);
-    title.setText("🦺  " + getTitle());
+    title.setText("🦺  " + getSafetyTitle());
     title.setTextSize(27);
     title.setTypeface(null, Typeface.BOLD);
     title.setTextColor(Color.rgb(0, 130, 70));
@@ -123,7 +121,7 @@ private TextView createCard(String text) {
     return card;
 }
 
-private String getTitle() {
+private String getSafetyTitle() {
 
     if (language.equals("AZ")) {
         return "Təhlükəsizlik";
