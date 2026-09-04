@@ -65,8 +65,8 @@ public class EnglishDictionary {
         words.add(new Word("Circular Saw", "Циркулярная пила", "Dairəvi mişar"));
         words.add(new Word("Clamp", "Зажим", "Sıxac"));
         words.add(new Word("Cleaning", "Очистка", "Təmizləmə"));
-        words.add(new Word("CNC Machine", "Станок с ЧПУ", "CNC dəzgahı"));
         words.add(new Word("CNC Control", "Управление ЧПУ", "CNC idarəetməsi"));
+        words.add(new Word("CNC Machine", "Станок с ЧПУ", "CNC dəzgahı"));
         words.add(new Word("CNC Program", "Программа ЧПУ", "CNC proqramı"));
         words.add(new Word("CNC Programmer", "Программист ЧПУ", "CNC proqramçısı"));
         words.add(new Word("Collet", "Цанга", "Sıxac patronu"));
@@ -109,6 +109,8 @@ public class EnglishDictionary {
         words.add(new Word("Edge", "Кромка", "Kənar"));
         words.add(new Word("Electrical Panel", "Электрическая панель", "Elektrik paneli"));
         words.add(new Word("Electricity", "Электричество", "Elektrik"));
+        words.add(new Word("Electrode", "Электрод", "Elektrod"));
+        words.add(new Word("Electroplating", "Гальваническое покрытие", "Elektrokaplama"));
         words.add(new Word("Emergency", "Аварийная ситуация", "Fövqəladə vəziyyət"));
         words.add(new Word("Emergency Exit", "Аварийный выход", "Fövqəladə çıxış"));
         words.add(new Word("Emergency Stop", "Аварийная остановка", "Fövqəladə dayandırma"));
@@ -117,8 +119,6 @@ public class EnglishDictionary {
         words.add(new Word("Equipment", "Оборудование", "Avadanlıq"));
         words.add(new Word("Error", "Ошибка", "Səhv"));
         words.add(new Word("Extension Cord", "Удлинитель", "Uzatma kabeli"));
-        words.add(new Word("Electrode", "Электрод", "Elektrod"));
-        words.add(new Word("Electroplating", "Гальваническое покрытие", "Elektrokaplama"));
 
         // ================= F =================
         words.add(new Word("Face Mill", "Торцевая фреза", "Üz frezi"));
@@ -135,6 +135,7 @@ public class EnglishDictionary {
         words.add(new Word("Furnace", "Печь", "Soba"));
 
         // ================= G =================
+        words.add(new Word("Galvanic Process", "Гальванический процесс", "Qalvanik proses"));
         words.add(new Word("Gas", "Газ", "Qaz"));
         words.add(new Word("Gauge", "Измерительный прибор", "Ölçü cihazı"));
         words.add(new Word("Gear", "Шестерня", "Dişli çarx"));
@@ -153,13 +154,13 @@ public class EnglishDictionary {
         words.add(new Word("Hardness", "Твёрдость", "Sərtlik"));
         words.add(new Word("Hazard", "Опасность", "Təhlükə"));
         words.add(new Word("Heat Treatment", "Термообработка", "İstilik emalı"));
+        words.add(new Word("Heating Element", "Нагревательный элемент", "Qızdırıcı element"));
         words.add(new Word("Helmet", "Каска", "Dəbilqə"));
         words.add(new Word("Height", "Высота", "Hündürlük"));
         words.add(new Word("Hydraulic", "Гидравлический", "Hidravlik"));
         words.add(new Word("Hydraulic Cylinder", "Гидравлический цилиндр", "Hidravlik silindr"));
         words.add(new Word("Hydraulic Oil", "Гидравлическое масло", "Hidravlik yağ"));
         words.add(new Word("Hydraulic Pressure", "Гидравлическое давление", "Hidravlik təzyiq"));
-        words.add(new Word("Heating Element", "Нагревательный элемент", "Qızdırıcı element"));
 
         // ================= I =================
         words.add(new Word("Impact Wrench", "Ударный гайковёрт", "Zərbəli açar"));
@@ -190,7 +191,7 @@ public class EnglishDictionary {
         words.add(new Word("Limit Switch", "Концевой выключатель", "Son açarı"));
         words.add(new Word("Lock Nut", "Стопорная гайка", "Kilid qozu"));
         words.add(new Word("Lubricant", "Смазка", "Sürtkü"));
-        words.add(new Word("Lubrication", "Смазка / смазывание", "Yağlama"));
+        words.add(new Word("Lubrication", "Смазывание", "Yağlama"));
 
         // ================= M =================
         words.add(new Word("Machine", "Станок / машина", "Dəzgah / maşın"));
@@ -212,12 +213,12 @@ public class EnglishDictionary {
         words.add(new Word("Motor", "Двигатель", "Mühərrik"));
 
         // ================= N =================
+        words.add(new Word("Needle Valve", "Игольчатый клапан", "İynə klapanı"));
         words.add(new Word("Nipple", "Ниппель", "Nipel"));
+        words.add(new Word("Noise", "Шум", "Səs-küy"));
         words.add(new Word("Nozzle", "Сопло", "Ucluq"));
         words.add(new Word("Nominal Diameter", "Номинальный диаметр", "Nominal diametr"));
         words.add(new Word("Nut", "Гайка", "Qayka"));
-        words.add(new Word("Needle Valve", "Игольчатый клапан", "İynə klapanı"));
-        words.add(new Word("Noise", "Шум", "Səs-küy"));
 
         // ================= O =================
         words.add(new Word("Oil", "Масло", "Yağ"));
@@ -266,7 +267,7 @@ public class EnglishDictionary {
         words.add(new Word("Risk", "Риск", "Risk"));
         words.add(new Word("Robot", "Робот", "Robot"));
         words.add(new Word("Ruler", "Линейка", "Xətkeş"));
-        words.add(new Word("Runout", "Радиальное биение", "Yeyilmə / qaçma"));
+        words.add(new Word("Runout", "Радиальное биение", "Qaçma"));
 
         // ================= S =================
         words.add(new Word("Safety", "Безопасность", "Təhlükəsizlik"));
@@ -349,6 +350,113 @@ public class EnglishDictionary {
         words.add(new Word("Z-Axis", "Ось Z", "Z oxu"));
         words.add(new Word("Z-Axis Limit", "Ограничитель оси Z", "Z oxunun məhdudlaşdırıcısı"));
         words.add(new Word("Zero Point", "Нулевая точка", "Sıfır nöqtəsi"));
+
+        // ================= GALVANIC PROCESSES =================
+        words.add(new Word("Chemical Bath", "Химическая ванна", "Kimyəvi vanna"));
+        words.add(new Word("Chemical Cleaning", "Химическая очистка", "Kimyəvi təmizləmə"));
+        words.add(new Word("Chemical Container", "Контейнер для химикатов", "Kimyəvi maddə qabı"));
+        words.add(new Word("Chemical Concentration", "Концентрация химического вещества", "Kimyəvi maddənin konsentrasiyası"));
+        words.add(new Word("Chemical Fume", "Химические пары", "Kimyəvi buxar"));
+        words.add(new Word("Chemical Label", "Этикетка химиката", "Kimyəvi maddə etiketi"));
+        words.add(new Word("Chemical Solution", "Химический раствор", "Kimyəvi məhlul"));
+        words.add(new Word("Chemical Spill", "Разлив химического вещества", "Kimyəvi maddə dağılması"));
+        words.add(new Word("Chemical Storage", "Хранение химикатов", "Kimyəvi maddələrin saxlanması"));
+        words.add(new Word("Chemical Waste", "Химические отходы", "Kimyəvi tullantı"));
+        words.add(new Word("Coating Adhesion", "Адгезия покрытия", "Örtüyün yapışması"));
+        words.add(new Word("Coating Defect", "Дефект покрытия", "Örtük qüsuru"));
+        words.add(new Word("Coating Thickness", "Толщина покрытия", "Örtük qalınlığı"));
+        words.add(new Word("Coating Uniformity", "Равномерность покрытия", "Örtüyün vahidliyi"));
+        words.add(new Word("Copper Plating", "Меднение", "Mis kaplama"));
+        words.add(new Word("Current Density", "Плотность тока", "Cərəyan sıxlığı"));
+        words.add(new Word("Degreasing", "Обезжиривание", "Yağdan təmizləmə"));
+        words.add(new Word("Etching", "Травление", "Aşındırma"));
+        words.add(new Word("Filter Cleaning", "Очистка фильтра", "Filtrin təmizlənməsi"));
+        words.add(new Word("Filter Replacement", "Замена фильтра", "Filtrin dəyişdirilməsi"));
+        words.add(new Word("Nickel Plating", "Никелирование", "Nikel kaplama"));
+        words.add(new Word("Passivation", "Пассивирование", "Passivləşdirmə"));
+        words.add(new Word("pH Measurement", "Измерение pH", "pH ölçülməsi"));
+        words.add(new Word("pH Value", "Значение pH", "pH dəyəri"));
+        words.add(new Word("Plating Bath", "Гальваническая ванна", "Kaplama vannası"));
+        words.add(new Word("Plating Current", "Ток нанесения покрытия", "Kaplama cərəyanı"));
+        words.add(new Word("Plating Inspection", "Проверка покрытия", "Kaplamanın yoxlanılması"));
+        words.add(new Word("Plating Quality", "Качество покрытия", "Kaplamanın keyfiyyəti"));
+        words.add(new Word("Plating Time", "Время нанесения покрытия", "Kaplama vaxtı"));
+        words.add(new Word("Plating Voltage", "Напряжение нанесения покрытия", "Kaplama gərginliyi"));
+        words.add(new Word("Protective Coating", "Защитное покрытие", "Qoruyucu örtük"));
+        words.add(new Word("Rinse Tank", "Промывочная ванна", "Yuma vannası"));
+        words.add(new Word("Rinsing", "Промывка", "Yuma"));
+        words.add(new Word("Surface Activation", "Активация поверхности", "Səthin aktivləşdirilməsi"));
+        words.add(new Word("Surface Coating", "Поверхностное покрытие", "Səth örtüyü"));
+        words.add(new Word("Surface Preparation", "Подготовка поверхности", "Səthin hazırlanması"));
+        words.add(new Word("Ventilation", "Вентиляция", "Ventilyasiya"));
+        words.add(new Word("Zinc Plating", "Цинкование", "Sinkləmə"));
+
+        // ================= FIRE SAFETY =================
+        words.add(new Word("Carbon Dioxide Extinguisher", "Углекислотный огнетушитель", "Karbon qazlı yanğınsöndürən"));
+        words.add(new Word("Class A Fire", "Пожар класса A", "A sinfi yanğın"));
+        words.add(new Word("Class B Fire", "Пожар класса B", "B sinfi yanğın"));
+        words.add(new Word("Class C Fire", "Пожар класса C", "C sinfi yanğın"));
+        words.add(new Word("Class D Fire", "Пожар класса D", "D sinfi yanğın"));
+        words.add(new Word("Class F Fire", "Пожар класса F", "F sinfi yanğın"));
+        words.add(new Word("Clean Agent Extinguisher", "Огнетушитель с чистым агентом", "Təmiz agentli yanğınsöndürən"));
+        words.add(new Word("Combustible Material", "Горючий материал", "Yanıcı material"));
+        words.add(new Word("CO2 Extinguisher", "CO2-огнетушитель", "CO2 yanğınsöndürən"));
+        words.add(new Word("Emergency Assembly Area", "Зона сбора при аварии", "Fövqəladə toplanış sahəsi"));
+        words.add(new Word("Emergency Evacuation", "Аварийная эвакуация", "Fövqəladə təxliyə"));
+        words.add(new Word("Emergency Light", "Аварийный светильник", "Fövqəladə işıq"));
+        words.add(new Word("Emergency Lighting", "Аварийное освещение", "Fövqəladə işıqlandırma"));
+        words.add(new Word("Emergency Route", "Аварийный маршрут", "Fövqəladə marşrut"));
+        words.add(new Word("Extinguisher Inspection", "Проверка огнетушителя", "Yanğınsöndürənin yoxlanılması"));
+        words.add(new Word("Extinguisher Pressure", "Давление огнетушителя", "Yanğınsöndürənin təzyiqi"));
+        words.add(new Word("Fire Alarm Panel", "Панель пожарной сигнализации", "Yanğın siqnalizasiya paneli"));
+        words.add(new Word("Fire Alarm Test", "Проверка пожарной сигнализации", "Yanğın siqnalizasiyasının testi"));
+        words.add(new Word("Fire Blanket", "Противопожарное покрывало", "Yanğın örtüyü"));
+        words.add(new Word("Fire Bucket", "Противопожарное ведро", "Yanğın vedrəsi"));
+        words.add(new Word("Fire Cabinet", "Пожарный шкаф", "Yanğın şkafı"));
+        words.add(new Word("Fire Control Panel", "Панель управления пожаром", "Yanğın idarəetmə paneli"));
+        words.add(new Word("Fire Detector", "Пожарный датчик", "Yanğın detektoru"));
+        words.add(new Word("Fire Door", "Противопожарная дверь", "Yanğın qapısı"));
+        words.add(new Word("Fire Emergency", "Пожарная аварийная ситуация", "Yanğın fövqəladə vəziyyəti"));
+        words.add(new Word("Fire Emergency Plan", "План действий при пожаре", "Yanğın zamanı fəaliyyət planı"));
+        words.add(new Word("Fire Extinguisher Class", "Класс огнетушителя", "Yanğınsöndürən sinfi"));
+        words.add(new Word("Fire Hose", "Пожарный шланг", "Yanğın şlanqı"));
+        words.add(new Word("Fire Hydrant", "Пожарный гидрант", "Yanğın hidrantı"));
+        words.add(new Word("Fire Inspection", "Пожарная проверка", "Yanğın yoxlaması"));
+        words.add(new Word("Fire Nozzle", "Пожарный ствол", "Yanğın lüləsi"));
+        words.add(new Word("Fire Prevention", "Предотвращение пожара", "Yanğının qarşısının alınması"));
+        words.add(new Word("Fire Resistant", "Огнестойкий", "Yanğına davamlı"));
+        words.add(new Word("Fire Resistant Clothing", "Огнестойкая одежда", "Yanğına davamlı geyim"));
+        words.add(new Word("Fire Resistant Gloves", "Огнестойкие перчатки", "Yanğına davamlı əlcəklər"));
+        words.add(new Word("Fire Risk Assessment", "Оценка пожарного риска", "Yanğın riskinin qiymətləndirilməsi"));
+        words.add(new Word("Fire Safety", "Пожарная безопасность", "Yanğın təhlükəsizliyi"));
+        words.add(new Word("Fire Spread", "Распространение огня", "Yanğının yayılması"));
+        words.add(new Word("Fire Suppression System", "Система пожаротушения", "Yanğınsöndürmə sistemi"));
+        words.add(new Word("Fire Training", "Пожарное обучение", "Yanğın təlimi"));
+        words.add(new Word("Fire Triangle", "Треугольник огня", "Yanğın üçbucağı"));
+        words.add(new Word("Fire Warden", "Ответственный за пожарную безопасность", "Yanğın təhlükəsizliyi üzrə məsul şəxs"));
+        words.add(new Word("Fire Watch", "Пожарное наблюдение", "Yanğın nəzarəti"));
+        words.add(new Word("Flame", "Пламя", "Alov"));
+        words.add(new Word("Flammable Gas", "Легковоспламеняющийся газ", "Tez alışan qaz"));
+        words.add(new Word("Flammable Liquid", "Легковоспламеняющаяся жидкость", "Tez alışan maye"));
+        words.add(new Word("Foam Extinguisher", "Пенный огнетушитель", "Köpüklü yanğınsöndürən"));
+        words.add(new Word("Fuel", "Топливо", "Yanacaq"));
+        words.add(new Word("Gas Fire", "Пожар газа", "Qaz yanğını"));
+        words.add(new Word("Heat Detector", "Тепловой датчик", "İstilik detektoru"));
+        words.add(new Word("Heat Source", "Источник тепла", "İstilik mənbəyi"));
+        words.add(new Word("Ignition Source", "Источник воспламенения", "Alışma mənbəyi"));
+        words.add(new Word("Metal Fire", "Пожар металлов", "Metal yanğını"));
+        words.add(new Word("Muster Point", "Место сбора", "Toplanış yeri"));
+        words.add(new Word("Oil Fire", "Пожар масла", "Yağ yanğını"));
+        words.add(new Word("Open Flame", "Открытое пламя", "Açıq alov"));
+        words.add(new Word("Oxygen", "Кислород", "Oksigen"));
+        words.add(new Word("Safety Pin", "Предохранительная чека", "Təhlükəsizlik sancağı"));
+        words.add(new Word("Smoke", "Дым", "Tüstü"));
+        words.add(new Word("Smoke Control", "Контроль дыма", "Tüstüyə nəzarət"));
+        words.add(new Word("Spark", "Искра", "Qığılcım"));
+        words.add(new Word("Sprinkler System", "Спринклерная система", "Sprinkler sistemi"));
+        words.add(new Word("Static Electricity", "Статическое электричество", "Statik elektrik"));
+        words.add(new Word("Water Extinguisher", "Водный огнетушитель", "Su ilə yanğınsöndürən"));
+        words.add(new Word("Wet Chemical Extinguisher", "Огнетушитель с химическим раствором", "Yaş kimyəvi yanğınsöndürən"));
 
         return words;
     }
