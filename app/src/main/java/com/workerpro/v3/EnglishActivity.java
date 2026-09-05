@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.speech.tts.TextToSpeech;
 import android.view.Gravity;
 import android.view.View;
@@ -15,7 +14,6 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.HorizontalScrollView;
 import android.widget.TextView;
-import android.widget.ImageView;
 import android.widget.Toast;
 import android.graphics.drawable.GradientDrawable;
 
@@ -23,8 +21,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.Locale;
+import java.util.Set;
 
 public class EnglishActivity extends Activity {
 
@@ -240,7 +238,6 @@ private void createScreen() {
             )
     );
 
-    // ЛУПА
     TextView searchButton =
             new TextView(this);
 
@@ -251,25 +248,14 @@ private void createScreen() {
             Gravity.CENTER
     );
 
-    searchButton.setPadding(
-            12,
-            4,
-            12,
-            4
-    );
-
     GradientDrawable searchButtonBg =
             new GradientDrawable();
 
-    searchButtonBg.setColor(
-            Color.LTGRAY
-    );
-
+    searchButtonBg.setColor(Color.LTGRAY);
     searchButtonBg.setStroke(
             2,
             Color.DKGRAY
     );
-
     searchButtonBg.setCornerRadius(15);
 
     searchButton.setBackground(
@@ -332,9 +318,7 @@ private void createScreen() {
     HorizontalScrollView alphabetScroll =
             new HorizontalScrollView(this);
 
-    alphabetScroll.setHorizontalScrollBarEnabled(
-            false
-    );
+    alphabetScroll.setHorizontalScrollBarEnabled(false);
 
     LinearLayout alphabet =
             new LinearLayout(this);
@@ -360,7 +344,7 @@ private void createScreen() {
         b.setOnClickListener(v -> {
 
             selectedLetter =
-                    ((TextView)v)
+                    ((TextView) v)
                             .getText()
                             .toString();
 
@@ -374,12 +358,12 @@ private void createScreen() {
             alphabetScroll,
             new LinearLayout.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT,
-                    60
+                    70
             )
     );
 
     // =========================
-    // CATEGORIES
+    // SECTIONS TITLE
     // =========================
 
     TextView sectionTitle =
@@ -389,28 +373,40 @@ private void createScreen() {
             "📂 " + getSectionsText()
     );
 
-    sectionTitle.setTextSize(16);
+    sectionTitle.setTextSize(17);
     sectionTitle.setTextColor(Color.BLACK);
     sectionTitle.setTypeface(
             null,
             Typeface.BOLD
     );
 
-    sectionTitle.setPadding(
-            12,
-            5,
-            12,
-            5
+    sectionTitle.setGravity(
+            Gravity.CENTER_VERTICAL
     );
 
-    root.addView(sectionTitle);
+    sectionTitle.setPadding(
+            12,
+            6,
+            12,
+            6
+    );
+
+    root.addView(
+            sectionTitle,
+            new LinearLayout.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    45
+            )
+    );
+
+    // =========================
+    // CATEGORIES
+    // =========================
 
     HorizontalScrollView categoryScroll =
             new HorizontalScrollView(this);
 
-    categoryScroll.setHorizontalScrollBarEnabled(
-            false
-    );
+    categoryScroll.setHorizontalScrollBarEnabled(false);
 
     LinearLayout categoryLayout =
             new LinearLayout(this);
@@ -433,7 +429,7 @@ private void createScreen() {
         b.setOnClickListener(v -> {
 
             selectedCategory =
-                    (String)v.getTag();
+                    (String) v.getTag();
 
             refreshList();
         });
@@ -443,11 +439,13 @@ private void createScreen() {
             categoryLayout
     );
 
+    // ВАЖНО: увеличили высоту,
+    // чтобы надписи не обрезались
     root.addView(
             categoryScroll,
             new LinearLayout.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT,
-                    65
+                    82
             )
     );
 
@@ -494,7 +492,12 @@ private void createScreen() {
     footer.setTextSize(12);
     footer.setTextColor(Color.GRAY);
     footer.setGravity(Gravity.CENTER);
-    footer.setPadding(0, 5, 0, 8);
+    footer.setPadding(
+            0,
+            5,
+            0,
+            8
+    );
 
     root.addView(footer);
 
@@ -528,9 +531,9 @@ private TextView createSectionButton(
 
     button.setPadding(
             18,
-            8,
+            10,
             18,
-            8
+            10
     );
 
     GradientDrawable bg =
@@ -547,17 +550,19 @@ private TextView createSectionButton(
 
     button.setBackground(bg);
 
+    // ВАЖНО:
+    // высота кнопки 62
     LinearLayout.LayoutParams p =
             new LinearLayout.LayoutParams(
                     ViewGroup.LayoutParams.WRAP_CONTENT,
-                    50
+                    62
             );
 
     p.setMargins(
             4,
-            5,
+            7,
             4,
-            5
+            7
     );
 
     button.setLayoutParams(p);
@@ -566,7 +571,7 @@ private TextView createSectionButton(
 }
 
 // =========================
-// LIST
+// WORD LIST
 // =========================
 
 private void refreshList() {
@@ -712,12 +717,10 @@ private void addWordCard(
             new GradientDrawable();
 
     cardBg.setColor(Color.WHITE);
-
     cardBg.setStroke(
             2,
             Color.LTGRAY
     );
-
     cardBg.setCornerRadius(16);
 
     card.setBackground(cardBg);
@@ -806,7 +809,6 @@ private void addWordCard(
             LinearLayout.HORIZONTAL
     );
 
-    // SPEAK
     TextView speak =
             createActionButton("🔊");
 
@@ -816,7 +818,6 @@ private void addWordCard(
 
     buttons.addView(speak);
 
-    // FAVORITE
     TextView favorite =
             createActionButton(
                     favorites.contains(
@@ -854,7 +855,6 @@ private void addWordCard(
 
     buttons.addView(favorite);
 
-    // COPY
     TextView copy =
             createActionButton("📋");
 
@@ -913,12 +913,10 @@ private TextView createActionButton(
             new GradientDrawable();
 
     bg.setColor(Color.WHITE);
-
     bg.setStroke(
             2,
             Color.DKGRAY
     );
-
     bg.setCornerRadius(12);
 
     b.setBackground(bg);
@@ -969,7 +967,7 @@ private void speak(String text) {
 }
 
 // =========================
-// TEXT
+// LOCALIZATION
 // =========================
 
 private String getTitleText() {
