@@ -4,232 +4,133 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.graphics.Color;
+import android.graphics.Typeface;
+import android.graphics.drawable.GradientDrawable;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
+import java.util.Calendar;
 import java.util.Locale;
 
 public class LessonOfDayActivity extends Activity {
 
     private TextToSpeech tts;
+    private String language = "RU";
 
-    private final String[][] lessons = {
+    private final String[][] words = {
 
-            {"Safety", "Безопасность", "Təhlükəsizlik",
-                    "Safety first.", "Безопасность прежде всего.", "Təhlükəsizlik hər şeydən əvvəl."},
+            {"Safety", "Безопасность", "Təhlükəsizlik"},
+            {"Worker", "Рабочий", "İşçi"},
+            {"Machine", "Станок", "Dəzgah"},
+            {"Tool", "Инструмент", "Alət"},
+            {"Quality", "Качество", "Keyfiyyət"},
+            {"Defect", "Дефект", "Qüsur"},
+            {"Sensor", "Датчик", "Sensor"},
+            {"CNC", "Станок с ЧПУ", "CNC dəzgahı"},
+            {"Stamping", "Штамповка", "Ştamplama"},
+            {"Welding", "Сварка", "Qaynaq"},
+            {"Maintenance", "Обслуживание", "Texniki xidmət"},
+            {"Repair", "Ремонт", "Təmir"},
+            {"Measurement", "Измерение", "Ölçmə"},
+            {"Tolerance", "Допуск", "Tolerans"},
+            {"Emergency", "Авария", "Fövqəladə vəziyyət"}
+    };
 
-            {"Machine", "Станок", "Dəzgah",
-                    "The machine is running.", "Станок работает.", "Dəzgah işləyir."},
+    private final String[][] phrases = {
 
-            {"Worker", "Рабочий", "İşçi",
-                    "I am a worker.", "Я рабочий.", "Mən işçiyəm."},
+            {
+                    "Safety first.",
+                    "Безопасность прежде всего.",
+                    "Təhlükəsizlik hər şeydən əvvəl."
+            },
 
-            {"Task", "Задание", "Tapşırıq",
-                    "What is my task today?", "Какое у меня сегодня задание?", "Bu gün mənim tapşırığım nədir?"},
+            {
+                    "Check the machine.",
+                    "Проверь станок.",
+                    "Dəzgahı yoxla."
+            },
 
-            {"Tool", "Инструмент", "Alət",
-                    "Check the tool.", "Проверь инструмент.", "Aləti yoxla."},
+            {
+                    "I found a defect.",
+                    "Я нашёл дефект.",
+                    "Qüsur tapdım."
+            },
 
-            {"Quality", "Качество", "Keyfiyyət",
-                    "Check the quality.", "Проверь качество.", "Keyfiyyəti yoxla."},
+            {
+                    "Please check my work.",
+                    "Пожалуйста, проверьте мою работу.",
+                    "Zəhmət olmasa işimi yoxlayın."
+            },
 
-            {"Defect", "Дефект", "Qüsur",
-                    "I found a defect.", "Я нашёл дефект.", "Qüsur tapdım."},
+            {
+                    "The machine stopped.",
+                    "Станок остановился.",
+                    "Dəzgah dayandı."
+            },
 
-            {"CNC", "Станок с ЧПУ", "CNC dəzgahı",
-                    "Check the CNC program.", "Проверь программу CNC.", "CNC proqramını yoxla."},
+            {
+                    "I need help.",
+                    "Мне нужна помощь.",
+                    "Mənə kömək lazımdır."
+            },
 
-            {"Stamping", "Штамповка", "Ştamplama",
-                    "The stamping machine is ready.", "Штамповочная машина готова.", "Ştamplama maşını hazırdır."},
+            {
+                    "Wear your gloves.",
+                    "Надень перчатки.",
+                    "Əlcəklərini tax."
+            },
 
-            {"Gloves", "Перчатки", "Əlcəklər",
-                    "Wear your gloves.", "Надень перчатки.", "Əlcəklərini tax."},
+            {
+                    "Check the CNC program.",
+                    "Проверь программу CNC.",
+                    "CNC proqramını yoxla."
+            },
 
-            {"Helmet", "Каска", "Dəbilqə",
-                    "Wear your helmet.", "Надень каску.", "Dəbilqəni tax."},
+            {
+                    "Stop the machine.",
+                    "Останови станок.",
+                    "Dəzgahı dayandır."
+            },
 
-            {"Emergency", "Авария", "Fövqəladə vəziyyət",
-                    "Emergency!", "Авария!", "Fövqəladə vəziyyət!"},
+            {
+                    "The quality is good.",
+                    "Качество хорошее.",
+                    "Keyfiyyət yaxşıdır."
+            },
 
-            {"Fire extinguisher", "Огнетушитель", "Yanğınsöndürən",
-                    "Use the fire extinguisher.", "Используй огнетушитель.", "Yanğınsöndürəndən istifadə et."},
+            {
+                    "The tool is worn.",
+                    "Инструмент изношен.",
+                    "Alət aşınıb."
+            },
 
-            {"Welding", "Сварка", "Qaynaq",
-                    "The welding machine is ready.", "Сварочный аппарат готов.", "Qaynaq aparatı hazırdır."},
-
-            {"Maintenance", "Техническое обслуживание", "Texniki xidmət",
-                    "The machine needs maintenance.", "Станку нужно обслуживание.", "Dəzgaha texniki xidmət lazımdır."},
-
-            {"Repair", "Ремонт", "Təmir",
-                    "The machine needs repair.", "Станку нужен ремонт.", "Dəzgaha təmir lazımdır."},
-
-            {"Sensor", "Датчик", "Sensor",
-                    "Check the sensor.", "Проверь датчик.", "Sensoru yoxla."},
-
-            {"Measurement", "Измерение", "Ölçmə",
-                    "The measurement is correct.", "Измерение правильное.", "Ölçmə düzgündür."},
-
-            {"Tolerance", "Допуск", "Tolerans",
-                    "Check the tolerance.", "Проверь допуск.", "Toleransı yoxla."},
-
-            {"Stop", "Остановить", "Dayandırmaq",
-                    "Stop the machine.", "Останови станок.", "Dəzgahı dayandır."}
+            {
+                    "The machine needs maintenance.",
+                    "Станку нужно обслуживание.",
+                    "Dəzgaha texniki xidmət lazımdır."
+            }
     };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        String language = getIntent().getStringExtra("LANGUAGE");
+        String savedLanguage = getIntent().getStringExtra("LANGUAGE");
 
-        if (language == null) {
-            language = "RU";
+        if (savedLanguage != null) {
+            language = savedLanguage;
         }
 
-        final String currentLanguage = language;
-
-        LinearLayout root = new LinearLayout(this);
-        root.setOrientation(LinearLayout.VERTICAL);
-        root.setPadding(30, 30, 30, 30);
-        root.setBackgroundColor(Color.WHITE);
-
-        TextView title = new TextView(this);
-        title.setText("📚 " + getTitleText(currentLanguage));
-        title.setTextSize(28);
-        title.setTextColor(Color.rgb(0, 120, 60));
-        title.setGravity(Gravity.CENTER);
-        title.setPadding(0, 10, 0, 25);
-
-        root.addView(title);
-
-        int day = java.util.Calendar.getInstance()
-                .get(java.util.Calendar.DAY_OF_YEAR);
-
-        int index = day % lessons.length;
-
-        String[] lesson = lessons[index];
-
-        TextView dayText = new TextView(this);
-        dayText.setText(
-                currentLanguage.equals("AZ")
-                        ? "Günün dərsi"
-                        : currentLanguage.equals("EN")
-                        ? "Lesson of the Day"
-                        : "Урок дня"
-        );
-        dayText.setTextSize(20);
-        dayText.setGravity(Gravity.CENTER);
-        dayText.setTextColor(Color.DKGRAY);
-        dayText.setPadding(0, 10, 0, 20);
-
-        root.addView(dayText);
-
-        TextView word = new TextView(this);
-        word.setText("🇬🇧 " + lesson[0]);
-        word.setTextSize(30);
-        word.setGravity(Gravity.CENTER);
-        word.setTextColor(Color.BLACK);
-        word.setPadding(10, 20, 10, 20);
-
-        root.addView(word);
-
-        TextView translation = new TextView(this);
-
-        String translationText;
-
-        if (currentLanguage.equals("AZ")) {
-            translationText = "🇦🇿 " + lesson[2];
-        } else if (currentLanguage.equals("EN")) {
-            translationText = "🇷🇺 " + lesson[1] +
-                    "\n🇦🇿 " + lesson[2];
-        } else {
-            translationText = "🇷🇺 " + lesson[1] +
-                    "\n🇦🇿 " + lesson[2];
-        }
-
-        translation.setText(translationText);
-        translation.setTextSize(22);
-        translation.setGravity(Gravity.CENTER);
-        translation.setTextColor(Color.DKGRAY);
-        translation.setPadding(10, 10, 10, 25);
-
-        root.addView(translation);
-
-        TextView phraseTitle = new TextView(this);
-        phraseTitle.setText(
-                currentLanguage.equals("AZ")
-                        ? "Cümlə:"
-                        : currentLanguage.equals("EN")
-                        ? "Phrase:"
-                        : "Фраза:"
-        );
-        phraseTitle.setTextSize(19);
-        phraseTitle.setTextColor(Color.rgb(0, 120, 60));
-        phraseTitle.setGravity(Gravity.CENTER);
-
-        root.addView(phraseTitle);
-
-        TextView phrase = new TextView(this);
-        phrase.setText(
-                "🇬🇧 " + lesson[3] +
-                "\n\n🇷🇺 " + lesson[4] +
-                "\n\n🇦🇿 " + lesson[5]
-        );
-        phrase.setTextSize(19);
-        phrase.setGravity(Gravity.CENTER);
-        phrase.setTextColor(Color.BLACK);
-        phrase.setPadding(10, 15, 10, 20);
-
-        root.addView(phrase);
-
-        Button speak = new Button(this);
-        speak.setText("🔊 " +
-                (currentLanguage.equals("AZ")
-                        ? "Dinlə"
-                        : currentLanguage.equals("EN")
-                        ? "Listen"
-                        : "Послушать"));
-
-        root.addView(speak);
-
-        speak.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if (tts != null) {
-                    tts.setLanguage(Locale.US);
-                    tts.speak(
-                            lesson[3],
-                            TextToSpeech.QUEUE_FLUSH,
-                            null,
-                            "lesson"
-                    );
-                }
-            }
-        });
-
-        TextView footer = new TextView(this);
-        footer.setText("\nF.S");
-        footer.setTextSize(14);
-        footer.setGravity(Gravity.CENTER);
-        footer.setTextColor(Color.GRAY);
-
-        root.addView(
-                footer,
-                new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.MATCH_PARENT,
-                        LinearLayout.LayoutParams.WRAP_CONTENT
-                )
-        );
-
-        setContentView(root);
+        createScreen();
 
         tts = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
+
                 if (status == TextToSpeech.SUCCESS) {
                     tts.setLanguage(Locale.US);
                 }
@@ -237,7 +138,254 @@ public class LessonOfDayActivity extends Activity {
         });
     }
 
-    private String getTitleText(String language) {
+    private void createScreen() {
+
+        ScrollView scrollView = new ScrollView(this);
+
+        LinearLayout root = new LinearLayout(this);
+        root.setOrientation(LinearLayout.VERTICAL);
+        root.setPadding(20, 20, 20, 20);
+        root.setBackgroundColor(Color.WHITE);
+
+        // TITLE
+
+        TextView title = new TextView(this);
+
+        title.setText("📚 " + getTitleText());
+        title.setTextSize(28);
+        title.setTypeface(null, Typeface.BOLD);
+        title.setTextColor(Color.rgb(0, 130, 70));
+        title.setGravity(Gravity.CENTER);
+        title.setPadding(0, 10, 0, 20);
+
+        root.addView(title);
+
+        // DAY NUMBER
+
+        Calendar calendar = Calendar.getInstance();
+
+        int day = calendar.get(Calendar.DAY_OF_YEAR);
+
+        TextView dayText = new TextView(this);
+
+        dayText.setText(
+                getDayText() + " #" + (day % 365 + 1)
+        );
+
+        dayText.setTextSize(18);
+        dayText.setGravity(Gravity.CENTER);
+        dayText.setTextColor(Color.DKGRAY);
+        dayText.setPadding(0, 0, 0, 20);
+
+        root.addView(dayText);
+
+        // WORDS TITLE
+
+        TextView wordsTitle = new TextView(this);
+
+        wordsTitle.setText("📖 " + getWordsTitle());
+        wordsTitle.setTextSize(23);
+        wordsTitle.setTypeface(null, Typeface.BOLD);
+        wordsTitle.setTextColor(Color.rgb(0, 120, 60));
+        wordsTitle.setPadding(0, 10, 0, 15);
+
+        root.addView(wordsTitle);
+
+        // FIVE WORDS
+
+        int startWord = day % words.length;
+
+        for (int i = 0; i < 5; i++) {
+
+            int index = (startWord + i) % words.length;
+
+            addWordCard(root, words[index]);
+        }
+
+        // PHRASES TITLE
+
+        TextView phrasesTitle = new TextView(this);
+
+        phrasesTitle.setText("💬 " + getPhrasesTitle());
+        phrasesTitle.setTextSize(23);
+        phrasesTitle.setTypeface(null, Typeface.BOLD);
+        phrasesTitle.setTextColor(Color.rgb(0, 120, 60));
+        phrasesTitle.setPadding(0, 25, 0, 15);
+
+        root.addView(phrasesTitle);
+
+        // THREE PHRASES
+
+        int startPhrase = day % phrases.length;
+
+        for (int i = 0; i < 3; i++) {
+
+            int index = (startPhrase + i) % phrases.length;
+
+            addPhraseCard(root, phrases[index]);
+        }
+
+        // FOOTER
+
+        TextView footer = new TextView(this);
+
+        footer.setText("\nF.S");
+        footer.setTextSize(15);
+        footer.setGravity(Gravity.CENTER);
+        footer.setTextColor(Color.GRAY);
+        footer.setPadding(0, 20, 0, 10);
+
+        root.addView(footer);
+
+        scrollView.addView(root);
+
+        setContentView(scrollView);
+    }
+
+    private void addWordCard(
+            LinearLayout root,
+            String[] word) {
+
+        LinearLayout card = new LinearLayout(this);
+
+        card.setOrientation(LinearLayout.VERTICAL);
+        card.setPadding(20, 15, 20, 15);
+
+        GradientDrawable background = new GradientDrawable();
+
+        background.setColor(Color.rgb(242, 248, 244));
+        background.setCornerRadius(18);
+        background.setStroke(
+                2,
+                Color.rgb(0, 130, 70)
+        );
+
+        card.setBackground(background);
+
+        TextView english = new TextView(this);
+
+        english.setText("🇬🇧 " + word[0]);
+        english.setTextSize(22);
+        english.setTypeface(null, Typeface.BOLD);
+        english.setTextColor(Color.BLACK);
+
+        card.addView(english);
+
+        TextView translation = new TextView(this);
+
+        if (language.equals("AZ")) {
+
+            translation.setText("🇦🇿 " + word[2]);
+
+        } else {
+
+            translation.setText(
+                    "🇷🇺 " + word[1] +
+                    "\n🇦🇿 " + word[2]
+            );
+        }
+
+        translation.setTextSize(18);
+        translation.setTextColor(Color.DKGRAY);
+        translation.setPadding(0, 8, 0, 8);
+
+        card.addView(translation);
+
+        Button listen = new Button(this);
+
+        listen.setText(
+                "🔊 " + getListenText()
+        );
+
+        listen.setOnClickListener(
+                v -> speak(word[0])
+        );
+
+        card.addView(listen);
+
+        LinearLayout.LayoutParams params =
+                new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT
+                );
+
+        params.setMargins(0, 0, 0, 12);
+
+        root.addView(card, params);
+    }
+
+    private void addPhraseCard(
+            LinearLayout root,
+            String[] phrase) {
+
+        LinearLayout card = new LinearLayout(this);
+
+        card.setOrientation(LinearLayout.VERTICAL);
+        card.setPadding(20, 15, 20, 15);
+
+        GradientDrawable background = new GradientDrawable();
+
+        background.setColor(Color.rgb(248, 250, 248));
+        background.setCornerRadius(18);
+        background.setStroke(
+                2,
+                Color.rgb(0, 130, 70)
+        );
+
+        card.setBackground(background);
+
+        TextView text = new TextView(this);
+
+        text.setText(
+                "🇬🇧 " + phrase[0] +
+                "\n\n🇷🇺 " + phrase[1] +
+                "\n🇦🇿 " + phrase[2]
+        );
+
+        text.setTextSize(18);
+        text.setTextColor(Color.BLACK);
+
+        card.addView(text);
+
+        Button listen = new Button(this);
+
+        listen.setText(
+                "🔊 " + getListenText()
+        );
+
+        listen.setOnClickListener(
+                v -> speak(phrase[0])
+        );
+
+        card.addView(listen);
+
+        LinearLayout.LayoutParams params =
+                new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT
+                );
+
+        params.setMargins(0, 0, 0, 12);
+
+        root.addView(card, params);
+    }
+
+    private void speak(String text) {
+
+        if (tts != null) {
+
+            tts.setLanguage(Locale.US);
+
+            tts.speak(
+                    text,
+                    TextToSpeech.QUEUE_FLUSH,
+                    null,
+                    "worker_pro_lesson"
+            );
+        }
+    }
+
+    private String getTitleText() {
 
         if (language.equals("AZ")) {
             return "Günün dərsi";
@@ -250,10 +398,63 @@ public class LessonOfDayActivity extends Activity {
         return "Урок дня";
     }
 
+    private String getDayText() {
+
+        if (language.equals("AZ")) {
+            return "Günün dərsi";
+        }
+
+        if (language.equals("EN")) {
+            return "Daily lesson";
+        }
+
+        return "Ежедневный урок";
+    }
+
+    private String getWordsTitle() {
+
+        if (language.equals("AZ")) {
+            return "5 yeni söz";
+        }
+
+        if (language.equals("EN")) {
+            return "5 New Words";
+        }
+
+        return "5 новых слов";
+    }
+
+    private String getPhrasesTitle() {
+
+        if (language.equals("AZ")) {
+            return "3 işçi ifadəsi";
+        }
+
+        if (language.equals("EN")) {
+            return "3 Worker Phrases";
+        }
+
+        return "3 рабочие фразы";
+    }
+
+    private String getListenText() {
+
+        if (language.equals("AZ")) {
+            return "Dinlə";
+        }
+
+        if (language.equals("EN")) {
+            return "Listen";
+        }
+
+        return "Послушать";
+    }
+
     @Override
     protected void onDestroy() {
 
         if (tts != null) {
+
             tts.stop();
             tts.shutdown();
         }
