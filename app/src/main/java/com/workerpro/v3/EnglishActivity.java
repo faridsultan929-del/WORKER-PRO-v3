@@ -54,6 +54,15 @@ public class EnglishActivity extends Activity {
             "TOOLS"
     };
 
+    // ПЕРЕВОД PIXELS В dp
+    private int dp(int value) {
+        return (int) (
+                value * getResources()
+                        .getDisplayMetrics()
+                        .density + 0.5f
+        );
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,17 +104,38 @@ public class EnglishActivity extends Activity {
         LinearLayout topBar = new LinearLayout(this);
         topBar.setOrientation(LinearLayout.HORIZONTAL);
         topBar.setGravity(Gravity.CENTER_VERTICAL);
-        topBar.setPadding(8, 8, 8, 8);
-        topBar.setBackgroundColor(Color.rgb(35, 35, 40));
+
+        topBar.setPadding(
+                dp(6),
+                dp(5),
+                dp(6),
+                dp(5)
+        );
+
+        topBar.setBackgroundColor(
+                Color.rgb(35, 35, 40)
+        );
 
         TextView title = new TextView(this);
 
-        title.setText("🇬🇧 " + getTitleText());
+        title.setText(
+                "🇬🇧 " + getTitleText()
+        );
+
         title.setTextSize(17);
         title.setTextColor(Color.WHITE);
-        title.setTypeface(null, Typeface.BOLD);
-        title.setGravity(Gravity.CENTER_VERTICAL);
+        title.setTypeface(
+                null,
+                Typeface.BOLD
+        );
+
+        title.setGravity(
+                Gravity.CENTER_VERTICAL
+        );
+
         title.setSingleLine(true);
+
+        title.setIncludeFontPadding(false);
 
         title.setEllipsize(
                 android.text.TextUtils.TruncateAt.END
@@ -115,7 +145,7 @@ public class EnglishActivity extends Activity {
                 title,
                 new LinearLayout.LayoutParams(
                         0,
-                        58,
+                        ViewGroup.LayoutParams.MATCH_PARENT,
                         1
                 )
         );
@@ -147,28 +177,43 @@ public class EnglishActivity extends Activity {
             b.setText(lang);
             b.setTextSize(11);
             b.setTextColor(Color.BLACK);
-            b.setTypeface(null, Typeface.BOLD);
-            b.setGravity(Gravity.CENTER);
+
+            b.setTypeface(
+                    null,
+                    Typeface.BOLD
+            );
+
+            b.setGravity(
+                    Gravity.CENTER
+            );
+
+            b.setIncludeFontPadding(false);
 
             GradientDrawable bg =
                     new GradientDrawable();
 
             bg.setColor(Color.WHITE);
-            bg.setStroke(2, Color.DKGRAY);
-            bg.setCornerRadius(9);
+            bg.setStroke(
+                    dp(2),
+                    Color.DKGRAY
+            );
+
+            bg.setCornerRadius(
+                    dp(9)
+            );
 
             b.setBackground(bg);
 
             LinearLayout.LayoutParams p =
                     new LinearLayout.LayoutParams(
-                            37,
-                            38
+                            dp(37),
+                            dp(38)
                     );
 
             p.setMargins(
-                    2,
+                    dp(2),
                     0,
-                    2,
+                    dp(2),
                     0
             );
 
@@ -199,7 +244,7 @@ public class EnglishActivity extends Activity {
                 topBar,
                 new LinearLayout.LayoutParams(
                         ViewGroup.LayoutParams.MATCH_PARENT,
-                        74
+                        dp(64)
                 )
         );
 
@@ -219,10 +264,10 @@ public class EnglishActivity extends Activity {
         );
 
         searchRow.setPadding(
-                8,
-                5,
-                8,
-                5
+                dp(8),
+                dp(5),
+                dp(8),
+                dp(5)
         );
 
         searchEdit =
@@ -232,22 +277,16 @@ public class EnglishActivity extends Activity {
                 getSearchText()
         );
 
-        searchEdit.setTextColor(
-                Color.BLACK
-        );
-
-        searchEdit.setHintTextColor(
-                Color.GRAY
-        );
-
+        searchEdit.setTextColor(Color.BLACK);
+        searchEdit.setHintTextColor(Color.GRAY);
         searchEdit.setTextSize(16);
 
         searchEdit.setSingleLine(true);
 
         searchEdit.setPadding(
-                14,
+                dp(14),
                 0,
-                14,
+                dp(14),
                 0
         );
 
@@ -257,21 +296,21 @@ public class EnglishActivity extends Activity {
         searchBg.setColor(Color.WHITE);
 
         searchBg.setStroke(
-                2,
+                dp(2),
                 Color.DKGRAY
         );
 
-        searchBg.setCornerRadius(14);
-
-        searchEdit.setBackground(
-                searchBg
+        searchBg.setCornerRadius(
+                dp(14)
         );
+
+        searchEdit.setBackground(searchBg);
 
         searchRow.addView(
                 searchEdit,
                 new LinearLayout.LayoutParams(
                         0,
-                        52,
+                        dp(50),
                         1
                 )
         );
@@ -282,22 +321,25 @@ public class EnglishActivity extends Activity {
         searchButton.setText("🔍");
         searchButton.setTextSize(24);
         searchButton.setTextColor(Color.BLACK);
-        searchButton.setGravity(Gravity.CENTER);
+
+        searchButton.setGravity(
+                Gravity.CENTER
+        );
+
+        searchButton.setIncludeFontPadding(false);
 
         GradientDrawable searchButtonBg =
                 new GradientDrawable();
 
-        searchButtonBg.setColor(
-                Color.WHITE
-        );
+        searchButtonBg.setColor(Color.WHITE);
 
         searchButtonBg.setStroke(
-                2,
+                dp(2),
                 Color.DKGRAY
         );
 
         searchButtonBg.setCornerRadius(
-                14
+                dp(14)
         );
 
         searchButton.setBackground(
@@ -306,12 +348,12 @@ public class EnglishActivity extends Activity {
 
         LinearLayout.LayoutParams searchParams =
                 new LinearLayout.LayoutParams(
-                        56,
-                        52
+                        dp(56),
+                        dp(50)
                 );
 
         searchParams.setMargins(
-                6,
+                dp(6),
                 0,
                 0,
                 0
@@ -326,7 +368,7 @@ public class EnglishActivity extends Activity {
                 searchRow,
                 new LinearLayout.LayoutParams(
                         ViewGroup.LayoutParams.MATCH_PARENT,
-                        62
+                        dp(60)
                 )
         );
 
@@ -342,8 +384,7 @@ public class EnglishActivity extends Activity {
                             int start,
                             int count,
                             int after
-                    ) {
-                    }
+                    ) {}
 
                     public void onTextChanged(
                             CharSequence s,
@@ -356,8 +397,7 @@ public class EnglishActivity extends Activity {
 
                     public void afterTextChanged(
                             android.text.Editable s
-                    ) {
-                    }
+                    ) {}
                 }
         );
 
@@ -373,10 +413,10 @@ public class EnglishActivity extends Activity {
         );
 
         alphabetScroll.setPadding(
-                4,
-                2,
-                4,
-                2
+                dp(4),
+                dp(2),
+                dp(4),
+                dp(2)
         );
 
         LinearLayout alphabet =
@@ -415,15 +455,13 @@ public class EnglishActivity extends Activity {
             });
         }
 
-        alphabetScroll.addView(
-                alphabet
-        );
+        alphabetScroll.addView(alphabet);
 
         root.addView(
                 alphabetScroll,
                 new LinearLayout.LayoutParams(
                         ViewGroup.LayoutParams.MATCH_PARENT,
-                        82
+                        dp(62)
                 )
         );
 
@@ -439,38 +477,35 @@ public class EnglishActivity extends Activity {
         );
 
         sectionTitle.setTextSize(19);
-
-        sectionTitle.setTextColor(
-                Color.BLACK
-        );
+        sectionTitle.setTextColor(Color.BLACK);
 
         sectionTitle.setTypeface(
                 null,
                 Typeface.BOLD
         );
 
-        // Главное исправление:
-        // текст полностью по центру
         sectionTitle.setGravity(
                 Gravity.CENTER
         );
 
-        sectionTitle.setSingleLine(
-                true
-        );
+        sectionTitle.setSingleLine(true);
+
+        // ВАЖНО — убирает лишнее пространство
+        // сверху и снизу букв
+        sectionTitle.setIncludeFontPadding(false);
 
         sectionTitle.setPadding(
-                12,
-                2,
-                12,
-                2
+                dp(8),
+                0,
+                dp(8),
+                0
         );
 
         root.addView(
                 sectionTitle,
                 new LinearLayout.LayoutParams(
                         ViewGroup.LayoutParams.MATCH_PARENT,
-                        52
+                        dp(50)
                 )
         );
 
@@ -486,10 +521,10 @@ public class EnglishActivity extends Activity {
         );
 
         categoryScroll.setPadding(
-                4,
-                2,
-                4,
-                2
+                dp(4),
+                dp(2),
+                dp(4),
+                dp(2)
         );
 
         LinearLayout categoryLayout =
@@ -507,9 +542,7 @@ public class EnglishActivity extends Activity {
 
             TextView b =
                     createSectionButton(
-                            getCategoryName(
-                                    category
-                            )
+                            getCategoryName(category)
                     );
 
             b.setTag(category);
@@ -533,7 +566,7 @@ public class EnglishActivity extends Activity {
                 categoryScroll,
                 new LinearLayout.LayoutParams(
                         ViewGroup.LayoutParams.MATCH_PARENT,
-                        94
+                        dp(72)
                 )
         );
 
@@ -552,15 +585,13 @@ public class EnglishActivity extends Activity {
         );
 
         listLayout.setPadding(
-                8,
-                5,
-                8,
-                10
+                dp(8),
+                dp(5),
+                dp(8),
+                dp(10)
         );
 
-        scroll.addView(
-                listLayout
-        );
+        scroll.addView(listLayout);
 
         root.addView(
                 scroll,
@@ -579,22 +610,28 @@ public class EnglishActivity extends Activity {
                 new TextView(this);
 
         footer.setText("F.S");
+
         footer.setTextSize(12);
         footer.setTextColor(Color.GRAY);
-        footer.setGravity(Gravity.CENTER);
+
+        footer.setGravity(
+                Gravity.CENTER
+        );
+
+        footer.setIncludeFontPadding(false);
 
         footer.setPadding(
                 0,
-                4,
+                dp(4),
                 0,
-                6
+                dp(6)
         );
 
         root.addView(
                 footer,
                 new LinearLayout.LayoutParams(
                         ViewGroup.LayoutParams.MATCH_PARENT,
-                        32
+                        dp(30)
                 )
         );
 
@@ -617,10 +654,7 @@ public class EnglishActivity extends Activity {
         button.setText(text);
 
         button.setTextSize(15);
-
-        button.setTextColor(
-                Color.BLACK
-        );
+        button.setTextColor(Color.BLACK);
 
         button.setTypeface(
                 null,
@@ -631,31 +665,29 @@ public class EnglishActivity extends Activity {
                 Gravity.CENTER
         );
 
+        button.setIncludeFontPadding(false);
+
         button.setPadding(
-                18,
-                5,
-                18,
-                5
+                dp(18),
+                dp(5),
+                dp(18),
+                dp(5)
         );
 
-        button.setSingleLine(
-                true
-        );
+        button.setSingleLine(true);
 
         GradientDrawable bg =
                 new GradientDrawable();
 
-        bg.setColor(
-                Color.WHITE
-        );
+        bg.setColor(Color.WHITE);
 
         bg.setStroke(
-                2,
+                dp(2),
                 Color.DKGRAY
         );
 
         bg.setCornerRadius(
-                18
+                dp(18)
         );
 
         button.setBackground(bg);
@@ -663,14 +695,14 @@ public class EnglishActivity extends Activity {
         LinearLayout.LayoutParams p =
                 new LinearLayout.LayoutParams(
                         ViewGroup.LayoutParams.WRAP_CONTENT,
-                        62
+                        dp(50)
                 );
 
         p.setMargins(
-                4,
-                7,
-                4,
-                7
+                dp(4),
+                dp(5),
+                dp(4),
+                dp(5)
         );
 
         button.setLayoutParams(p);
@@ -714,7 +746,6 @@ public class EnglishActivity extends Activity {
                             EnglishDictionary.Word a,
                             EnglishDictionary.Word b
                     ) {
-
                         return a.english
                                 .compareToIgnoreCase(
                                         b.english
@@ -731,18 +762,14 @@ public class EnglishActivity extends Activity {
         ) {
 
             boolean categoryOK =
-                    selectedCategory.equals(
-                            "ALL"
-                    )
+                    selectedCategory.equals("ALL")
                     ||
                     word.category.equals(
                             selectedCategory
                     );
 
             boolean letterOK =
-                    selectedLetter.equals(
-                            "ALL"
-                    )
+                    selectedLetter.equals("ALL")
                     ||
                     word.english
                             .toUpperCase()
@@ -755,21 +782,15 @@ public class EnglishActivity extends Activity {
                     ||
                     word.english
                             .toLowerCase()
-                            .contains(
-                                    search
-                            )
+                            .contains(search)
                     ||
                     word.russian
                             .toLowerCase()
-                            .contains(
-                                    search
-                            )
+                            .contains(search)
                     ||
                     word.azerbaijani
                             .toLowerCase()
-                            .contains(
-                                    search
-                            );
+                            .contains(search);
 
             if (
                     !categoryOK
@@ -794,25 +815,20 @@ public class EnglishActivity extends Activity {
             );
 
             empty.setTextSize(18);
-
-            empty.setTextColor(
-                    Color.BLACK
-            );
+            empty.setTextColor(Color.BLACK);
 
             empty.setGravity(
                     Gravity.CENTER
             );
 
             empty.setPadding(
-                    20,
-                    50,
-                    20,
-                    50
+                    dp(20),
+                    dp(50),
+                    dp(20),
+                    dp(50)
             );
 
-            listLayout.addView(
-                    empty
-            );
+            listLayout.addView(empty);
         }
     }
 
@@ -832,31 +848,27 @@ public class EnglishActivity extends Activity {
         );
 
         card.setPadding(
-                14,
-                12,
-                14,
-                12
+                dp(14),
+                dp(12),
+                dp(14),
+                dp(12)
         );
 
         GradientDrawable cardBg =
                 new GradientDrawable();
 
-        cardBg.setColor(
-                Color.WHITE
-        );
+        cardBg.setColor(Color.WHITE);
 
         cardBg.setStroke(
-                2,
+                dp(2),
                 Color.LTGRAY
         );
 
         cardBg.setCornerRadius(
-                15
+                dp(15)
         );
 
-        card.setBackground(
-                cardBg
-        );
+        card.setBackground(cardBg);
 
         LinearLayout.LayoutParams cp =
                 new LinearLayout.LayoutParams(
@@ -866,9 +878,9 @@ public class EnglishActivity extends Activity {
 
         cp.setMargins(
                 0,
-                4,
+                dp(4),
                 0,
-                4
+                dp(4)
         );
 
         card.setLayoutParams(cp);
@@ -881,19 +893,14 @@ public class EnglishActivity extends Activity {
         );
 
         english.setTextSize(20);
-
-        english.setTextColor(
-                Color.BLACK
-        );
+        english.setTextColor(Color.BLACK);
 
         english.setTypeface(
                 null,
                 Typeface.BOLD
         );
 
-        card.addView(
-                english
-        );
+        card.addView(english);
 
         TextView russian =
                 new TextView(this);
@@ -903,14 +910,9 @@ public class EnglishActivity extends Activity {
         );
 
         russian.setTextSize(16);
+        russian.setTextColor(Color.BLACK);
 
-        russian.setTextColor(
-                Color.BLACK
-        );
-
-        card.addView(
-                russian
-        );
+        card.addView(russian);
 
         TextView az =
                 new TextView(this);
@@ -921,14 +923,9 @@ public class EnglishActivity extends Activity {
         );
 
         az.setTextSize(16);
+        az.setTextColor(Color.BLACK);
 
-        az.setTextColor(
-                Color.BLACK
-        );
-
-        card.addView(
-                az
-        );
+        card.addView(az);
 
         TextView cat =
                 new TextView(this);
@@ -941,21 +938,16 @@ public class EnglishActivity extends Activity {
         );
 
         cat.setTextSize(13);
-
-        cat.setTextColor(
-                Color.DKGRAY
-        );
+        cat.setTextColor(Color.DKGRAY);
 
         cat.setPadding(
                 0,
-                7,
+                dp(7),
                 0,
-                3
+                dp(3)
         );
 
-        card.addView(
-                cat
-        );
+        card.addView(cat);
 
         LinearLayout buttons =
                 new LinearLayout(this);
@@ -965,19 +957,13 @@ public class EnglishActivity extends Activity {
         );
 
         TextView speak =
-                createActionButton(
-                        "🔊"
-                );
+                createActionButton("🔊");
 
         speak.setOnClickListener(
-                v -> speak(
-                        word.english
-                )
+                v -> speak(word.english)
         );
 
-        buttons.addView(
-                speak
-        );
+        buttons.addView(speak);
 
         TextView favorite =
                 createActionButton(
@@ -1000,9 +986,7 @@ public class EnglishActivity extends Activity {
                         word.english
                 );
 
-                favorite.setText(
-                        "☆"
-                );
+                favorite.setText("☆");
 
             } else {
 
@@ -1010,22 +994,16 @@ public class EnglishActivity extends Activity {
                         word.english
                 );
 
-                favorite.setText(
-                        "⭐"
-                );
+                favorite.setText("⭐");
             }
 
             saveFavorites();
         });
 
-        buttons.addView(
-                favorite
-        );
+        buttons.addView(favorite);
 
         TextView copy =
-                createActionButton(
-                        "📋"
-                );
+                createActionButton("📋");
 
         copy.setOnClickListener(v -> {
 
@@ -1057,17 +1035,11 @@ public class EnglishActivity extends Activity {
             ).show();
         });
 
-        buttons.addView(
-                copy
-        );
+        buttons.addView(copy);
 
-        card.addView(
-                buttons
-        );
+        card.addView(buttons);
 
-        listLayout.addView(
-                card
-        );
+        listLayout.addView(card);
     }
 
     // =========================
@@ -1082,48 +1054,42 @@ public class EnglishActivity extends Activity {
                 new TextView(this);
 
         b.setText(text);
-
         b.setTextSize(19);
-
-        b.setTextColor(
-                Color.BLACK
-        );
+        b.setTextColor(Color.BLACK);
 
         b.setGravity(
                 Gravity.CENTER
         );
 
+        b.setIncludeFontPadding(false);
+
         GradientDrawable bg =
                 new GradientDrawable();
 
-        bg.setColor(
-                Color.WHITE
-        );
+        bg.setColor(Color.WHITE);
 
         bg.setStroke(
-                2,
+                dp(2),
                 Color.DKGRAY
         );
 
         bg.setCornerRadius(
-                12
+                dp(12)
         );
 
-        b.setBackground(
-                bg
-        );
+        b.setBackground(bg);
 
         LinearLayout.LayoutParams p =
                 new LinearLayout.LayoutParams(
-                        58,
-                        48
+                        dp(58),
+                        dp(48)
                 );
 
         p.setMargins(
-                3,
-                3,
-                3,
-                3
+                dp(3),
+                dp(3),
+                dp(3),
+                dp(3)
         );
 
         b.setLayoutParams(p);
@@ -1150,12 +1116,10 @@ public class EnglishActivity extends Activity {
     }
 
     // =========================
-    // SPEAK
+    // SPEECH
     // =========================
 
-    private void speak(
-            String text
-    ) {
+    private void speak(String text) {
 
         if (tts == null)
             return;
@@ -1277,10 +1241,6 @@ public class EnglishActivity extends Activity {
         }
     }
 
-    // =========================
-    // CATEGORY NAMES
-    // =========================
-
     private String getCategoryName(
             String category
     ) {
@@ -1288,236 +1248,96 @@ public class EnglishActivity extends Activity {
         if (language.equals("AZ")) {
 
             switch (category) {
-
-                case "ALL":
-                    return "HAMISI";
-
-                case "WORK":
-                    return "İŞ";
-
-                case "MACHINE":
-                    return "MAŞIN";
-
-                case "CNC":
-                    return "CNC";
-
-                case "STAMPING":
-                    return "ŞTAMPLAMA";
-
-                case "FURNACE":
-                    return "SOBALAR";
-
-                case "FIRE":
-                    return "YANĞIN";
-
-                case "SAFETY":
-                    return "TƏHLÜKƏSİZLİK";
-
-                case "WELDING":
-                    return "QAYNAQ";
-
-                case "GALVANIC":
-                    return "GALVANİK";
-
-                case "MAINTENANCE":
-                    return "TƏMİR";
-
-                case "QUALITY":
-                    return "KEYFİYYƏT";
-
-                case "MEASUREMENT":
-                    return "ÖLÇMƏ";
-
-                case "TOOLS":
-                    return "ALƏTLƏR";
+                case "ALL": return "HAMISI";
+                case "WORK": return "İŞ";
+                case "MACHINE": return "MAŞIN";
+                case "CNC": return "CNC";
+                case "STAMPING": return "ŞTAMPLAMA";
+                case "FURNACE": return "SOBALAR";
+                case "FIRE": return "YANĞIN";
+                case "SAFETY": return "TƏHLÜKƏSİZLİK";
+                case "WELDING": return "QAYNAQ";
+                case "GALVANIC": return "GALVANİK";
+                case "MAINTENANCE": return "TƏMİR";
+                case "QUALITY": return "KEYFİYYƏT";
+                case "MEASUREMENT": return "ÖLÇMƏ";
+                case "TOOLS": return "ALƏTLƏR";
             }
 
         } else if (language.equals("EN")) {
 
             switch (category) {
-
-                case "ALL":
-                    return "ALL";
-
-                case "WORK":
-                    return "WORK";
-
-                case "MACHINE":
-                    return "MACHINE";
-
-                case "CNC":
-                    return "CNC";
-
-                case "STAMPING":
-                    return "STAMPING";
-
-                case "FURNACE":
-                    return "FURNACE";
-
-                case "FIRE":
-                    return "FIRE";
-
-                case "SAFETY":
-                    return "SAFETY";
-
-                case "WELDING":
-                    return "WELDING";
-
-                case "GALVANIC":
-                    return "GALVANIC";
-
-                case "MAINTENANCE":
-                    return "MAINTENANCE";
-
-                case "QUALITY":
-                    return "QUALITY";
-
-                case "MEASUREMENT":
-                    return "MEASUREMENT";
-
-                case "TOOLS":
-                    return "TOOLS";
+                case "ALL": return "ALL";
+                case "WORK": return "WORK";
+                case "MACHINE": return "MACHINE";
+                case "CNC": return "CNC";
+                case "STAMPING": return "STAMPING";
+                case "FURNACE": return "FURNACE";
+                case "FIRE": return "FIRE";
+                case "SAFETY": return "SAFETY";
+                case "WELDING": return "WELDING";
+                case "GALVANIC": return "GALVANIC";
+                case "MAINTENANCE": return "MAINTENANCE";
+                case "QUALITY": return "QUALITY";
+                case "MEASUREMENT": return "MEASUREMENT";
+                case "TOOLS": return "TOOLS";
             }
 
         } else if (language.equals("TR")) {
 
             switch (category) {
-
-                case "ALL":
-                    return "TÜMÜ";
-
-                case "WORK":
-                    return "İŞ";
-
-                case "MACHINE":
-                    return "MAKİNE";
-
-                case "CNC":
-                    return "CNC";
-
-                case "STAMPING":
-                    return "PRESLEME";
-
-                case "FURNACE":
-                    return "FIRIN";
-
-                case "FIRE":
-                    return "YANGIN";
-
-                case "SAFETY":
-                    return "GÜVENLİK";
-
-                case "WELDING":
-                    return "KAYNAK";
-
-                case "GALVANIC":
-                    return "GALVANİK";
-
-                case "MAINTENANCE":
-                    return "BAKIM";
-
-                case "QUALITY":
-                    return "KALİTE";
-
-                case "MEASUREMENT":
-                    return "ÖLÇÜM";
-
-                case "TOOLS":
-                    return "ALETLER";
+                case "ALL": return "TÜMÜ";
+                case "WORK": return "İŞ";
+                case "MACHINE": return "MAKİNE";
+                case "CNC": return "CNC";
+                case "STAMPING": return "PRESLEME";
+                case "FURNACE": return "FIRIN";
+                case "FIRE": return "YANGIN";
+                case "SAFETY": return "GÜVENLİK";
+                case "WELDING": return "KAYNAK";
+                case "GALVANIC": return "GALVANİK";
+                case "MAINTENANCE": return "BAKIM";
+                case "QUALITY": return "KALİTE";
+                case "MEASUREMENT": return "ÖLÇÜM";
+                case "TOOLS": return "ALETLER";
             }
 
         } else if (language.equals("DE")) {
 
             switch (category) {
-
-                case "ALL":
-                    return "ALLE";
-
-                case "WORK":
-                    return "ARBEIT";
-
-                case "MACHINE":
-                    return "MASCHINE";
-
-                case "CNC":
-                    return "CNC";
-
-                case "STAMPING":
-                    return "STANZEN";
-
-                case "FURNACE":
-                    return "OFEN";
-
-                case "FIRE":
-                    return "FEUER";
-
-                case "SAFETY":
-                    return "SICHERHEIT";
-
-                case "WELDING":
-                    return "SCHWEISSEN";
-
-                case "GALVANIC":
-                    return "GALVANISCH";
-
-                case "MAINTENANCE":
-                    return "WARTUNG";
-
-                case "QUALITY":
-                    return "QUALITÄT";
-
-                case "MEASUREMENT":
-                    return "MESSUNG";
-
-                case "TOOLS":
-                    return "WERKZEUGE";
+                case "ALL": return "ALLE";
+                case "WORK": return "ARBEIT";
+                case "MACHINE": return "MASCHINE";
+                case "CNC": return "CNC";
+                case "STAMPING": return "STANZEN";
+                case "FURNACE": return "OFEN";
+                case "FIRE": return "FEUER";
+                case "SAFETY": return "SICHERHEIT";
+                case "WELDING": return "SCHWEISSEN";
+                case "GALVANIC": return "GALVANISCH";
+                case "MAINTENANCE": return "WARTUNG";
+                case "QUALITY": return "QUALITÄT";
+                case "MEASUREMENT": return "MESSUNG";
+                case "TOOLS": return "WERKZEUGE";
             }
 
         } else {
 
             switch (category) {
-
-                case "ALL":
-                    return "ВСЕ";
-
-                case "WORK":
-                    return "РАБОТА";
-
-                case "MACHINE":
-                    return "СТАНОК";
-
-                case "CNC":
-                    return "CNC";
-
-                case "STAMPING":
-                    return "ШТАМПОВКА";
-
-                case "FURNACE":
-                    return "ПЕЧИ";
-
-                case "FIRE":
-                    return "ПОЖАР";
-
-                case "SAFETY":
-                    return "БЕЗОПАСНОСТЬ";
-
-                case "WELDING":
-                    return "СВАРКА";
-
-                case "GALVANIC":
-                    return "ГАЛЬВАНИКА";
-
-                case "MAINTENANCE":
-                    return "РЕМОНТ";
-
-                case "QUALITY":
-                    return "КАЧЕСТВО";
-
-                case "MEASUREMENT":
-                    return "ИЗМЕРЕНИЕ";
-
-                case "TOOLS":
-                    return "ИНСТРУМЕНТЫ";
+                case "ALL": return "ВСЕ";
+                case "WORK": return "РАБОТА";
+                case "MACHINE": return "СТАНОК";
+                case "CNC": return "CNC";
+                case "STAMPING": return "ШТАМПОВКА";
+                case "FURNACE": return "ПЕЧИ";
+                case "FIRE": return "ПОЖАР";
+                case "SAFETY": return "БЕЗОПАСНОСТЬ";
+                case "WELDING": return "СВАРКА";
+                case "GALVANIC": return "ГАЛЬВАНИКА";
+                case "MAINTENANCE": return "РЕМОНТ";
+                case "QUALITY": return "КАЧЕСТВО";
+                case "MEASUREMENT": return "ИЗМЕРЕНИЕ";
+                case "TOOLS": return "ИНСТРУМЕНТЫ";
             }
         }
 
@@ -1528,7 +1348,6 @@ public class EnglishActivity extends Activity {
     protected void onDestroy() {
 
         if (tts != null) {
-
             tts.stop();
             tts.shutdown();
         }
