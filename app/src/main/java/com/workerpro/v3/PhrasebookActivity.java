@@ -179,6 +179,92 @@ public class PhrasebookActivity extends Activity {
         );
 
         // =========================
+        // LANGUAGES
+        // =========================
+
+        HorizontalScrollView languageScroll =
+                new HorizontalScrollView(this);
+
+        languageScroll.setHorizontalScrollBarEnabled(
+                false
+        );
+
+        languageScroll.setFillViewport(false);
+
+        languageScroll.setPadding(
+                dp(2),
+                dp(2),
+                dp(2),
+                dp(2)
+        );
+
+        LinearLayout languageLayout =
+                new LinearLayout(this);
+
+        languageLayout.setOrientation(
+                LinearLayout.HORIZONTAL
+        );
+
+        languageLayout.setGravity(
+                Gravity.CENTER_VERTICAL
+        );
+
+        String[] languageCodes = {
+                "RU",
+                "AZ",
+                "EN",
+                "TR",
+                "DE"
+        };
+
+        String[] languageNames = {
+                "🇷🇺\nRU",
+                "🇦🇿\nAZ",
+                "🇬🇧\nEN",
+                "🇹🇷\nTR",
+                "🇩🇪\nDE"
+        };
+
+        for (int i = 0; i < languageCodes.length; i++) {
+
+            TextView languageButton =
+                    createLanguageButton(
+                            languageNames[i],
+                            languageCodes[i]
+                    );
+
+            final String selectedLanguage =
+                    languageCodes[i];
+
+            languageButton.setOnClickListener(v -> {
+
+                language = selectedLanguage;
+
+                createScreen();
+            });
+
+            languageLayout.addView(
+                    languageButton
+            );
+        }
+
+        languageScroll.addView(
+                languageLayout,
+                new HorizontalScrollView.LayoutParams(
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        dp(58)
+                )
+        );
+
+        root.addView(
+                languageScroll,
+                new LinearLayout.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        dp(62)
+                )
+        );
+
+        // =========================
         // SEARCH
         // =========================
 
@@ -586,6 +672,105 @@ public class PhrasebookActivity extends Activity {
         setContentView(root);
 
         refreshPhrases();
+    }
+
+    // =========================
+    // LANGUAGE BUTTON
+    // =========================
+
+    private TextView createLanguageButton(
+            String text,
+            String code
+    ) {
+
+        TextView button =
+                new TextView(this);
+
+        button.setText(text);
+
+        button.setTextSize(15);
+
+        button.setTextColor(
+                Color.BLACK
+        );
+
+        button.setTypeface(
+                null,
+                Typeface.BOLD
+        );
+
+        button.setGravity(
+                Gravity.CENTER
+        );
+
+        button.setIncludeFontPadding(
+                false
+        );
+
+        button.setLineSpacing(
+                0,
+                0.9f
+        );
+
+        button.setPadding(
+                dp(5),
+                dp(3),
+                dp(5),
+                dp(3)
+        );
+
+        GradientDrawable bg =
+                new GradientDrawable();
+
+        if (language.equals(code)) {
+
+            bg.setColor(
+                    Color.rgb(220, 245, 220)
+            );
+
+            bg.setStroke(
+                    dp(3),
+                    Color.rgb(46, 125, 50)
+            );
+
+        } else {
+
+            bg.setColor(
+                    Color.WHITE
+            );
+
+            bg.setStroke(
+                    dp(2),
+                    Color.DKGRAY
+            );
+        }
+
+        bg.setCornerRadius(
+                dp(12)
+        );
+
+        button.setBackground(
+                bg
+        );
+
+        LinearLayout.LayoutParams params =
+                new LinearLayout.LayoutParams(
+                        dp(68),
+                        dp(54)
+                );
+
+        params.setMargins(
+                dp(4),
+                dp(2),
+                dp(4),
+                dp(2)
+        );
+
+        button.setLayoutParams(
+                params
+        );
+
+        return button;
     }
 
     // =========================
