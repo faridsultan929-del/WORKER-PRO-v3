@@ -2,23 +2,24 @@ package com.workerpro.v3;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.content.ClipData;
-import android.content.ClipboardManager;
-import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.speech.tts.TextToSpeech;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
+import android.widget.HorizontalScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
@@ -26,26 +27,16 @@ import java.util.Set;
 
 public class EnglishActivity extends Activity {
 
+    private LinearLayout listLayout;
+    private EditText searchEdit;
     private String language = "RU";
-
-    private EditText searchBox;
-    private LinearLayout wordsContainer;
 
     private String selectedCategory = "ALL";
     private String selectedLetter = "ALL";
-    private boolean favoritesOnly = false;
-
-    private final Set<String> favorites = new HashSet<>();
 
     private TextToSpeech tts;
 
-    private final String[] letters = {
-            "ALL",
-            "A", "B", "C", "D", "E", "F", "G",
-            "H", "I", "J", "K", "L", "M", "N",
-            "O", "P", "Q", "R", "S", "T", "U",
-            "V", "W", "X", "Y", "Z"
-    };
+    private final Set<String> favorites = new HashSet<>();
 
     private final String[] categories = {
             "ALL",
@@ -68,31 +59,26 @@ public class EnglishActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        String receivedLanguage =
-                getIntent().getStringExtra("LANGUAGE");
-
-        if (receivedLanguage != null) {
-            language = receivedLanguage;
-        }
+        language = getSharedPreferences(
+                "WORKER_PRO_SETTINGS",
+                MODE_PRIVATE
+        ).getString("language", "RU");
 
         favorites.addAll(
                 getSharedPreferences(
-                        "WORKER_PRO_ENGLISH_FAVORITES",
+                        "WORKER_PRO_FAVORITES",
                         MODE_PRIVATE
                 ).getStringSet(
-                        "favorites",
+                        "english_words",
                         new HashSet<String>()
                 )
         );
 
-        tts = new TextToSpeech(
-                this,
-                status -> {
-                    if (status == TextToSpeech.SUCCESS) {
-                        tts.setLanguage(Locale.US);
-                    }
-                }
-        );
+        tts = new TextToSpeech(this, status -> {
+            if (status == TextToSpeech.SUCCESS) {
+                setTtsLanguage();
+            }
+        });
 
         createScreen();
     }
@@ -102,82 +88,147 @@ public class EnglishActivity extends Activity {
         LinearLayout root = new LinearLayout(this);
         root.setOrientation(LinearLayout.VERTICAL);
         root.setBackgroundColor(Color.WHITE);
-        root.setPadding(10, 10, 10, 10);
+
+        // TOP BAR
+        LinearLayout topBar = new LinearLayout(this);
+        topBar.setOrientation(LinearLayout.HORIZONTAL);
+        topBar.setGravity(Gravity.CENTER_VERTICAL);
+        topBar.setPadding(12, 8, 8, 8);
 
         TextView title = new TextView(this);
-        title.setText(getTitleText());
-        title.setTextSize(25);
+        title.setText("🇬🇧 " + getTitleText());
+        title.setTextSize(21);
         title.setTextColor(Color.BLACK);
         title.setTypeface(null, Typeface.BOLD);
-        title.setGravity(Gravity.CENTER);
-        title.setPadding(0, 5, 0, 10);
 
-        root.addView(title);
+        topBar.addView(
+                title,
+                new LinearLayout.LayoutParams(
+                        0,
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        1
+                )
+        );
 
-        searchBox = new EditText(this);
-        searchBox.setHint(getSearchHint());
-        searchBox.setTextSize(16);
-        searchBox.setTextColor(Color.BLACK);
-        searchBox.setHintTextColor(Color.DKGRAY);
-        searchBox.setSingleLine(true);
+        // LANGUAGE BUTTONS
+        LinearLayout languages = new LinearLayout(this);
+        languages.setOrientation(LinearLayout.HORIZONTAL);
+
+        String[] langs = {"RU", "AZ", "EN", "TR", "DE"};
+
+        for (String lang : langs) {
+
+            TextView langButton = new TextView(this);
+
+            langButton.setText(lang);
+            langButton.setTextSize(11);
+            langButton.setTextColor(Color.BLACK);
+            langButton.setTypeface(null, Typeface.BOLD);
+            langButton.setGravity(Gravity.CENTER);
+
+            langButton.setPadding(6, 8, 6, 8);
+            langButton.setBackgroundResource(
+                    android.R.drawable.btn_default
+            );
+
+            LinearLayout.LayoutParams lp =
+                    new LinearLayout.LayoutParams(38, 40);
+
+            lp.setMargins(2, 0, 2, 0);
+
+            languages.addView(langButton, lp);
+
+            langButton.setOnClickListener(v -> {
+
+                language = lang;
+
+                getSharedPreferences(
+                        "WORKER_PRO_SETTINGS",
+                        MODE_PRIVATE
+                )
+                        .edit()
+                        .putString("language", language)
+                        .apply();
+
+                createScreen();
+            });
+        }
+
+        topBar.addView(languages);
 
         root.addView(
-                searchBox,
+                topBar,
+                new LinearLayout.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT
+                )
+        );
+
+        // SEARCH
+        searchEdit = new EditText(this);
+
+        searchEdit.setHint(getSearchText());
+        searchEdit.setTextColor(Color.BLACK);
+        searchEdit.setHintTextColor(Color.GRAY);
+        searchEdit.setTextSize(16);
+        searchEdit.setSingleLine(true);
+        searchEdit.setPadding(16, 10, 16, 10);
+
+        root.addView(
+                searchEdit,
                 new LinearLayout.LayoutParams(
                         ViewGroup.LayoutParams.MATCH_PARENT,
                         55
                 )
         );
 
-        // Алфавит
-        TextView alphabetTitle = new TextView(this);
-        alphabetTitle.setText(getAlphabetTitle());
-        alphabetTitle.setTextSize(16);
-        alphabetTitle.setTextColor(Color.BLACK);
-        alphabetTitle.setTypeface(null, Typeface.BOLD);
-        alphabetTitle.setPadding(5, 10, 5, 5);
-
-        root.addView(alphabetTitle);
-
+        // ALPHABET
         HorizontalScrollView alphabetScroll =
                 new HorizontalScrollView(this);
 
-        alphabetScroll.setHorizontalScrollBarEnabled(false);
-
-        LinearLayout alphabet =
+        LinearLayout alphabetLayout =
                 new LinearLayout(this);
 
-        alphabet.setOrientation(LinearLayout.HORIZONTAL);
+        alphabetLayout.setOrientation(
+                LinearLayout.HORIZONTAL
+        );
 
-        for (String letter : letters) {
+        String[] alphabet = {
+                "ALL",
+                "A","B","C","D","E","F","G","H","I","J",
+                "K","L","M","N","O","P","Q","R","S","T",
+                "U","V","W","X","Y","Z"
+        };
 
-            TextView button = createFilterButton(letter);
+        for (String letter : alphabet) {
+
+            TextView button =
+                    createFilterButton(letter);
 
             button.setOnClickListener(v -> {
-                selectedLetter = letter;
-                refreshWords();
+
+                selectedLetter =
+                        ((TextView) v).getText().toString();
+
+                refreshList();
             });
 
-            alphabet.addView(button);
+            alphabetLayout.addView(button);
         }
 
-        alphabetScroll.addView(alphabet);
-        root.addView(alphabetScroll);
+        alphabetScroll.addView(alphabetLayout);
 
-        // Категории
-        TextView categoryTitle = new TextView(this);
-        categoryTitle.setText(getCategoryTitle());
-        categoryTitle.setTextSize(16);
-        categoryTitle.setTextColor(Color.BLACK);
-        categoryTitle.setTypeface(null, Typeface.BOLD);
-        categoryTitle.setPadding(5, 10, 5, 5);
+        root.addView(
+                alphabetScroll,
+                new LinearLayout.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        58
+                )
+        );
 
-        root.addView(categoryTitle);
-
+        // CATEGORIES
         HorizontalScrollView categoryScroll =
                 new HorizontalScrollView(this);
-
-        categoryScroll.setHorizontalScrollBarEnabled(false);
 
         LinearLayout categoryLayout =
                 new LinearLayout(this);
@@ -189,54 +240,44 @@ public class EnglishActivity extends Activity {
         for (String category : categories) {
 
             TextView button =
-                    createFilterButton(category);
+                    createFilterButton(
+                            getCategoryName(category)
+                    );
+
+            button.setTag(category);
 
             button.setOnClickListener(v -> {
-                selectedCategory = category;
-                refreshWords();
+
+                selectedCategory =
+                        (String) v.getTag();
+
+                refreshList();
             });
 
             categoryLayout.addView(button);
         }
 
         categoryScroll.addView(categoryLayout);
-        root.addView(categoryScroll);
 
-        // Избранное
-        Button favoriteButton = new Button(this);
-        favoriteButton.setText(getFavoriteButtonText());
-        favoriteButton.setTextSize(14);
-        favoriteButton.setTextColor(Color.BLACK);
-        favoriteButton.setAllCaps(false);
+        root.addView(
+                categoryScroll,
+                new LinearLayout.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        58
+                )
+        );
 
-        favoriteButton.setOnClickListener(v -> {
-            favoritesOnly = !favoritesOnly;
+        // WORD LIST
+        ScrollView scrollView = new ScrollView(this);
 
-            favoriteButton.setText(
-                    getFavoriteButtonText()
-            );
-
-            refreshWords();
-        });
-
-        root.addView(favoriteButton);
-
-        // Список слов
-        ScrollView scrollView =
-                new ScrollView(this);
-
-        wordsContainer =
-                new LinearLayout(this);
-
-        wordsContainer.setOrientation(
+        listLayout = new LinearLayout(this);
+        listLayout.setOrientation(
                 LinearLayout.VERTICAL
         );
 
-        wordsContainer.setPadding(
-                5, 5, 5, 20
-        );
+        listLayout.setPadding(10, 10, 10, 10);
 
-        scrollView.addView(wordsContainer);
+        scrollView.addView(listLayout);
 
         root.addView(
                 scrollView,
@@ -247,70 +288,79 @@ public class EnglishActivity extends Activity {
                 )
         );
 
-        // Назад
-        Button backButton = new Button(this);
-        backButton.setText(getBackText());
-        backButton.setTextSize(16);
-        backButton.setTextColor(Color.BLACK);
-        backButton.setAllCaps(false);
-
-        backButton.setOnClickListener(v -> finish());
-
-        root.addView(backButton);
-
+        // FOOTER
         TextView footer = new TextView(this);
-        footer.setText("F.S");
-        footer.setTextSize(13);
-        footer.setTextColor(Color.DKGRAY);
-        footer.setGravity(Gravity.CENTER);
 
-        root.addView(footer);
+        footer.setText("F.S");
+        footer.setTextSize(12);
+        footer.setTextColor(Color.GRAY);
+        footer.setGravity(Gravity.CENTER);
+        footer.setPadding(0, 5, 0, 8);
+
+        root.addView(
+                footer,
+                new LinearLayout.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT
+                )
+        );
 
         setContentView(root);
 
-        searchBox.addTextChangedListener(
+        searchEdit.setOnEditorActionListener(
+                (v, actionId, event) -> {
+                    refreshList();
+                    return false;
+                }
+        );
+
+        searchEdit.addTextChangedListener(
                 new android.text.TextWatcher() {
 
-                    @Override
                     public void beforeTextChanged(
                             CharSequence s,
                             int start,
                             int count,
-                            int after) {
-                    }
+                            int after
+                    ) {}
 
-                    @Override
                     public void onTextChanged(
                             CharSequence s,
                             int start,
                             int before,
-                            int count) {
-
-                        refreshWords();
+                            int count
+                    ) {
+                        refreshList();
                     }
 
-                    @Override
                     public void afterTextChanged(
-                            android.text.Editable s) {
-                    }
+                            android.text.Editable s
+                    ) {}
                 }
         );
 
-        refreshWords();
+        refreshList();
     }
 
-    private TextView createFilterButton(
-            String text) {
+    // =========================================================
+    // FILTER BUTTON
+    // =========================================================
+
+    private TextView createFilterButton(String text) {
 
         TextView button = new TextView(this);
 
         button.setText(text);
-        button.setTextSize(13);
+        button.setTextSize(15);
         button.setTextColor(Color.BLACK);
         button.setTypeface(null, Typeface.BOLD);
         button.setGravity(Gravity.CENTER);
-        button.setPadding(12, 8, 12, 8);
+
+        button.setPadding(18, 8, 18, 8);
+
         button.setClickable(true);
+        button.setFocusable(true);
+
         button.setBackgroundResource(
                 android.R.drawable.btn_default
         );
@@ -318,93 +368,109 @@ public class EnglishActivity extends Activity {
         LinearLayout.LayoutParams params =
                 new LinearLayout.LayoutParams(
                         ViewGroup.LayoutParams.WRAP_CONTENT,
-                        45
+                        50
                 );
 
-        params.setMargins(3, 2, 3, 2);
+        params.setMargins(4, 3, 4, 3);
 
         button.setLayoutParams(params);
 
         return button;
     }
 
-    private void refreshWords() {
+    // =========================================================
+    // LIST
+    // =========================================================
 
-        wordsContainer.removeAllViews();
+    private void refreshList() {
+
+        if (listLayout == null) return;
+
+        listLayout.removeAllViews();
 
         String search =
-                searchBox.getText()
-                        .toString()
-                        .toLowerCase(Locale.ROOT)
-                        .trim();
+                searchEdit == null
+                        ? ""
+                        : searchEdit
+                            .getText()
+                            .toString()
+                            .trim()
+                            .toLowerCase();
 
-        List<EnglishDictionary.Word> result =
-                new ArrayList<>();
+        List<EnglishDictionary.Word> words =
+                EnglishDictionary.getWords();
 
-        for (EnglishDictionary.Word word :
-                EnglishDictionary.getWords()) {
+        Collections.sort(
+                words,
+                new Comparator<EnglishDictionary.Word>() {
+                    @Override
+                    public int compare(
+                            EnglishDictionary.Word a,
+                            EnglishDictionary.Word b
+                    ) {
+                        return a.english.compareToIgnoreCase(
+                                b.english
+                        );
+                    }
+                }
+        );
 
-            boolean letterMatch =
-                    selectedLetter.equals("ALL")
-                            || word.english
-                            .toUpperCase(Locale.ROOT)
-                            .startsWith(
-                                    selectedLetter
-                            );
+        int count = 0;
 
-            boolean categoryMatch =
+        for (EnglishDictionary.Word word : words) {
+
+            boolean categoryOK =
                     selectedCategory.equals("ALL")
-                            || word.category
-                            .equals(selectedCategory);
+                    || word.category.equals(selectedCategory);
 
-            boolean searchMatch =
+            boolean letterOK =
+                    selectedLetter.equals("ALL")
+                    || word.english
+                        .toUpperCase()
+                        .startsWith(selectedLetter);
+
+            boolean searchOK =
                     search.isEmpty()
-                            || word.english
-                            .toLowerCase(Locale.ROOT)
-                            .contains(search)
-                            || word.russian
-                            .toLowerCase(Locale.ROOT)
-                            .contains(search)
-                            || word.azerbaijani
-                            .toLowerCase(Locale.ROOT)
-                            .contains(search);
+                    || word.english
+                        .toLowerCase()
+                        .contains(search)
+                    || word.russian
+                        .toLowerCase()
+                        .contains(search)
+                    || word.azerbaijani
+                        .toLowerCase()
+                        .contains(search);
 
-            boolean favoriteMatch =
-                    !favoritesOnly
-                            || favorites.contains(
-                            word.english
-                    );
-
-            if (letterMatch
-                    && categoryMatch
-                    && searchMatch
-                    && favoriteMatch) {
-
-                result.add(word);
+            if (!categoryOK || !letterOK || !searchOK) {
+                continue;
             }
-        }
-
-        for (EnglishDictionary.Word word : result) {
 
             addWordCard(word);
+
+            count++;
         }
 
-        if (result.isEmpty()) {
+        if (count == 0) {
 
             TextView empty = new TextView(this);
 
             empty.setText(getNoResultsText());
-            empty.setTextSize(18);
+            empty.setTextSize(17);
             empty.setTextColor(Color.BLACK);
             empty.setGravity(Gravity.CENTER);
-            empty.setPadding(10, 40, 10, 40);
+            empty.setPadding(20, 40, 20, 40);
 
-            wordsContainer.addView(empty);
+            listLayout.addView(empty);
         }
     }
 
+    // =========================================================
+    // WORD CARD
+    // =========================================================
+
     private void addWordCard(
-            EnglishDictionary.Word word) {
+            EnglishDictionary.Word word
+    ) {
 
         LinearLayout card =
                 new LinearLayout(this);
@@ -414,11 +480,28 @@ public class EnglishActivity extends Activity {
         );
 
         card.setPadding(
-                15, 12, 15, 12
+                16,
+                14,
+                16,
+                14
         );
 
-        TextView english =
-                new TextView(this);
+        card.setBackgroundResource(
+                android.R.drawable.dialog_holo_light_frame
+        );
+
+        LinearLayout.LayoutParams cardParams =
+                new LinearLayout.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT
+                );
+
+        cardParams.setMargins(0, 5, 0, 5);
+
+        card.setLayoutParams(cardParams);
+
+        // ENGLISH
+        TextView english = new TextView(this);
 
         english.setText(
                 "🇬🇧 " + word.english
@@ -426,330 +509,397 @@ public class EnglishActivity extends Activity {
 
         english.setTextSize(20);
         english.setTextColor(Color.BLACK);
-        english.setTypeface(
-                null,
-                Typeface.BOLD
-        );
+        english.setTypeface(null, Typeface.BOLD);
 
         card.addView(english);
 
-        TextView russian =
-                new TextView(this);
+        // RUSSIAN
+        TextView russian = new TextView(this);
 
         russian.setText(
                 "🇷🇺 " + word.russian
         );
 
         russian.setTextSize(16);
-        russian.setTextColor(Color.DKGRAY);
+        russian.setTextColor(Color.BLACK);
 
         card.addView(russian);
 
-        TextView azerbaijani =
-                new TextView(this);
+        // AZERBAIJANI
+        TextView azerbaijani = new TextView(this);
 
         azerbaijani.setText(
                 "🇦🇿 " + word.azerbaijani
         );
 
         azerbaijani.setTextSize(16);
-        azerbaijani.setTextColor(Color.DKGRAY);
+        azerbaijani.setTextColor(Color.BLACK);
 
         card.addView(azerbaijani);
 
-        LinearLayout actions =
+        // CATEGORY
+        TextView category = new TextView(this);
+
+        category.setText(
+                "📂 " + getCategoryName(word.category)
+        );
+
+        category.setTextSize(13);
+        category.setTextColor(Color.DKGRAY);
+
+        category.setPadding(0, 8, 0, 4);
+
+        card.addView(category);
+
+        // BUTTONS
+        LinearLayout buttons =
                 new LinearLayout(this);
 
-        actions.setOrientation(
+        buttons.setOrientation(
                 LinearLayout.HORIZONTAL
         );
 
-        Button speak =
-                new Button(this);
+        buttons.setGravity(Gravity.CENTER_VERTICAL);
 
-        speak.setText("🔊");
-        speak.setTextSize(18);
+        // SPEAK
+        TextView speak =
+                createActionButton("🔊");
 
-        speak.setOnClickListener(v -> {
+        speak.setOnClickListener(v ->
+                speak(word.english)
+        );
 
-            if (tts != null) {
+        buttons.addView(speak);
 
-                tts.setLanguage(Locale.US);
-
-                tts.speak(
-                        word.english,
-                        TextToSpeech.QUEUE_FLUSH,
-                        null,
-                        "worker_word"
+        // FAVORITE
+        TextView favorite =
+                createActionButton(
+                        favorites.contains(word.english)
+                                ? "⭐"
+                                : "☆"
                 );
+
+        favorite.setOnClickListener(v -> {
+
+            if (favorites.contains(word.english)) {
+
+                favorites.remove(word.english);
+                favorite.setText("☆");
+
+            } else {
+
+                favorites.add(word.english);
+                favorite.setText("⭐");
             }
+
+            saveFavorites();
         });
 
-        actions.addView(speak);
+        buttons.addView(favorite);
 
-        Button copy =
-                new Button(this);
-
-        copy.setText("📋");
-        copy.setTextSize(18);
+        // COPY
+        TextView copy =
+                createActionButton("📋");
 
         copy.setOnClickListener(v -> {
 
-            ClipboardManager clipboard =
-                    (ClipboardManager)
+            android.content.ClipboardManager clipboard =
+                    (android.content.ClipboardManager)
                             getSystemService(
                                     Context.CLIPBOARD_SERVICE
                             );
 
             String text =
                     word.english
-                            + " — "
-                            + word.russian
-                            + " — "
-                            + word.azerbaijani;
+                    + "\n"
+                    + word.russian
+                    + "\n"
+                    + word.azerbaijani;
 
             clipboard.setPrimaryClip(
-                    ClipData.newPlainText(
+                    android.content.ClipData.newPlainText(
                             "WORKER PRO",
                             text
                     )
             );
+
+            Toast.makeText(
+                    this,
+                    getCopiedText(),
+                    Toast.LENGTH_SHORT
+            ).show();
         });
 
-        actions.addView(copy);
+        buttons.addView(copy);
 
-        Button favorite =
-                new Button(this);
+        card.addView(buttons);
 
-        favorite.setText(
-                favorites.contains(
-                        word.english
-                ) ? "★" : "☆"
-        );
-
-        favorite.setTextSize(20);
-
-        favorite.setOnClickListener(v -> {
-
-            if (favorites.contains(
-                    word.english)) {
-
-                favorites.remove(
-                        word.english
-                );
-
-            } else {
-
-                favorites.add(
-                        word.english
-                );
-            }
-
-            saveFavorites();
-            refreshWords();
-        });
-
-        actions.addView(favorite);
-
-        card.addView(actions);
-
-        wordsContainer.addView(card);
-
-        View line = new View(this);
-
-        line.setBackgroundColor(
-                Color.LTGRAY
-        );
-
-        wordsContainer.addView(
-                line,
-                new LinearLayout.LayoutParams(
-                        ViewGroup.LayoutParams.MATCH_PARENT,
-                        1
-                )
-        );
+        listLayout.addView(card);
     }
+
+    private TextView createActionButton(String text) {
+
+        TextView button = new TextView(this);
+
+        button.setText(text);
+        button.setTextSize(18);
+        button.setTextColor(Color.BLACK);
+        button.setGravity(Gravity.CENTER);
+
+        button.setPadding(15, 8, 15, 8);
+
+        button.setBackgroundResource(
+                android.R.drawable.btn_default
+        );
+
+        LinearLayout.LayoutParams params =
+                new LinearLayout.LayoutParams(
+                        55,
+                        48
+                );
+
+        params.setMargins(3, 3, 3, 3);
+
+        button.setLayoutParams(params);
+
+        return button;
+    }
+
+    // =========================================================
+    // FAVORITES
+    // =========================================================
 
     private void saveFavorites() {
 
         getSharedPreferences(
-                "WORKER_PRO_ENGLISH_FAVORITES",
+                "WORKER_PRO_FAVORITES",
                 MODE_PRIVATE
         )
                 .edit()
                 .putStringSet(
-                        "favorites",
-                        new HashSet<>(favorites)
+                        "english_words",
+                        favorites
                 )
                 .apply();
     }
 
+    // =========================================================
+    // TTS
+    // =========================================================
+
+    private void speak(String text) {
+
+        if (tts == null) return;
+
+        setTtsLanguage();
+
+        tts.speak(
+                text,
+                TextToSpeech.QUEUE_FLUSH,
+                null,
+                "worker_pro_word"
+        );
+    }
+
+    private void setTtsLanguage() {
+
+        if (tts == null) return;
+
+        Locale locale =
+                Locale.ENGLISH;
+
+        tts.setLanguage(locale);
+    }
+
+    // =========================================================
+    // LOCALIZATION
+    // =========================================================
+
     private String getTitleText() {
 
-        if (language.equals("AZ")) {
-            return "🇬🇧 İşçilər üçün İngilis dili";
-        }
+        switch (language) {
 
-        if (language.equals("EN")) {
-            return "🇬🇧 English for Workers";
-        }
+            case "AZ":
+                return "İşçilər üçün İngilis dili";
 
-        if (language.equals("TR")) {
-            return "🇬🇧 İşçiler için İngilizce";
-        }
+            case "EN":
+                return "English for Workers";
 
-        if (language.equals("DE")) {
-            return "🇬🇧 Englisch für Arbeiter";
-        }
+            case "TR":
+                return "İşçiler için İngilizce";
 
-        return "🇬🇧 English for Workers";
+            case "DE":
+                return "Englisch für Arbeiter";
+
+            default:
+                return "Английский для рабочих";
+        }
     }
 
-    private String getSearchHint() {
+    private String getSearchText() {
 
-        if (language.equals("AZ")) {
-            return "Söz axtar...";
+        switch (language) {
+
+            case "AZ":
+                return "Axtar...";
+
+            case "EN":
+                return "Search...";
+
+            case "TR":
+                return "Ara...";
+
+            case "DE":
+                return "Suchen...";
+
+            default:
+                return "Поиск...";
         }
-
-        if (language.equals("EN")) {
-            return "Search word...";
-        }
-
-        if (language.equals("TR")) {
-            return "Kelime ara...";
-        }
-
-        if (language.equals("DE")) {
-            return "Wort suchen...";
-        }
-
-        return "Поиск слова...";
-    }
-
-    private String getAlphabetTitle() {
-
-        if (language.equals("AZ")) {
-            return "🔤 Əlifba";
-        }
-
-        if (language.equals("EN")) {
-            return "🔤 Alphabet";
-        }
-
-        if (language.equals("TR")) {
-            return "🔤 Alfabe";
-        }
-
-        if (language.equals("DE")) {
-            return "🔤 Alphabet";
-        }
-
-        return "🔤 Алфавит";
-    }
-
-    private String getCategoryTitle() {
-
-        if (language.equals("AZ")) {
-            return "📚 Kateqoriyalar";
-        }
-
-        if (language.equals("EN")) {
-            return "📚 Categories";
-        }
-
-        if (language.equals("TR")) {
-            return "📚 Kategoriler";
-        }
-
-        if (language.equals("DE")) {
-            return "📚 Kategorien";
-        }
-
-        return "📚 Категории";
-    }
-
-    private String getFavoriteButtonText() {
-
-        if (favoritesOnly) {
-
-            if (language.equals("AZ")) {
-                return "⭐ Yalnız seçilmişlər";
-            }
-
-            if (language.equals("EN")) {
-                return "⭐ Favorites only";
-            }
-
-            if (language.equals("TR")) {
-                return "⭐ Sadece favoriler";
-            }
-
-            if (language.equals("DE")) {
-                return "⭐ Nur Favoriten";
-            }
-
-            return "⭐ Только избранное";
-        }
-
-        if (language.equals("AZ")) {
-            return "⭐ Seçilmişlər";
-        }
-
-        if (language.equals("EN")) {
-            return "⭐ Favorites";
-        }
-
-        if (language.equals("TR")) {
-            return "⭐ Favoriler";
-        }
-
-        if (language.equals("DE")) {
-            return "⭐ Favoriten";
-        }
-
-        return "⭐ Избранное";
     }
 
     private String getNoResultsText() {
 
-        if (language.equals("AZ")) {
-            return "Nəticə tapılmadı";
-        }
+        switch (language) {
 
-        if (language.equals("EN")) {
-            return "No results";
-        }
+            case "AZ":
+                return "Nəticə tapılmadı";
 
-        if (language.equals("TR")) {
-            return "Sonuç bulunamadı";
-        }
+            case "EN":
+                return "No results";
 
-        if (language.equals("DE")) {
-            return "Keine Ergebnisse";
-        }
+            case "TR":
+                return "Sonuç bulunamadı";
 
-        return "Ничего не найдено";
+            case "DE":
+                return "Keine Ergebnisse";
+
+            default:
+                return "Ничего не найдено";
+        }
     }
 
-    private String getBackText() {
+    private String getCopiedText() {
+
+        switch (language) {
+
+            case "AZ":
+                return "Kopyalandı";
+
+            case "EN":
+                return "Copied";
+
+            case "TR":
+                return "Kopyalandı";
+
+            case "DE":
+                return "Kopiert";
+
+            default:
+                return "Скопировано";
+        }
+    }
+
+    private String getCategoryName(
+            String category
+    ) {
 
         if (language.equals("AZ")) {
-            return "← Geri";
+
+            switch (category) {
+                case "ALL": return "HAMISI";
+                case "WORK": return "İŞ";
+                case "MACHINE": return "MAŞIN";
+                case "CNC": return "CNC";
+                case "STAMPING": return "ŞTAMPLAMA";
+                case "FURNACE": return "SOBALAR";
+                case "FIRE": return "YANĞIN";
+                case "SAFETY": return "TƏHLÜKƏSİZLİK";
+                case "WELDING": return "QAYNAQ";
+                case "GALVANIC": return "GALVANİK";
+                case "MAINTENANCE": return "TƏMİR";
+                case "QUALITY": return "KEYFİYYƏT";
+                case "MEASUREMENT": return "ÖLÇMƏ";
+                case "TOOLS": return "ALƏTLƏR";
+            }
+
+        } else if (language.equals("EN")) {
+
+            switch (category) {
+                case "ALL": return "ALL";
+                case "WORK": return "WORK";
+                case "MACHINE": return "MACHINE";
+                case "CNC": return "CNC";
+                case "STAMPING": return "STAMPING";
+                case "FURNACE": return "FURNACE";
+                case "FIRE": return "FIRE";
+                case "SAFETY": return "SAFETY";
+                case "WELDING": return "WELDING";
+                case "GALVANIC": return "GALVANIC";
+                case "MAINTENANCE": return "MAINTENANCE";
+                case "QUALITY": return "QUALITY";
+                case "MEASUREMENT": return "MEASUREMENT";
+                case "TOOLS": return "TOOLS";
+            }
+
+        } else if (language.equals("TR")) {
+
+            switch (category) {
+                case "ALL": return "TÜMÜ";
+                case "WORK": return "İŞ";
+                case "MACHINE": return "MAKİNE";
+                case "CNC": return "CNC";
+                case "STAMPING": return "PRESLEME";
+                case "FURNACE": return "FIRIN";
+                case "FIRE": return "YANGIN";
+                case "SAFETY": return "GÜVENLİK";
+                case "WELDING": return "KAYNAK";
+                case "GALVANIC": return "GALVANİK";
+                case "MAINTENANCE": return "BAKIM";
+                case "QUALITY": return "KALİTE";
+                case "MEASUREMENT": return "ÖLÇÜM";
+                case "TOOLS": return "ALETLER";
+            }
+
+        } else if (language.equals("DE")) {
+
+            switch (category) {
+                case "ALL": return "ALLE";
+                case "WORK": return "ARBEIT";
+                case "MACHINE": return "MASCHINE";
+                case "CNC": return "CNC";
+                case "STAMPING": return "STANZEN";
+                case "FURNACE": return "OFEN";
+                case "FIRE": return "FEUER";
+                case "SAFETY": return "SICHERHEIT";
+                case "WELDING": return "SCHWEISSEN";
+                case "GALVANIC": return "GALVANISCH";
+                case "MAINTENANCE": return "WARTUNG";
+                case "QUALITY": return "QUALITÄT";
+                case "MEASUREMENT": return "MESSUNG";
+                case "TOOLS": return "WERKZEUGE";
+            }
+
+        } else {
+
+            switch (category) {
+                case "ALL": return "ВСЕ";
+                case "WORK": return "РАБОТА";
+                case "MACHINE": return "СТАНОК";
+                case "CNC": return "CNC";
+                case "STAMPING": return "ШТАМПОВКА";
+                case "FURNACE": return "ПЕЧИ";
+                case "FIRE": return "ПОЖАР";
+                case "SAFETY": return "БЕЗОПАСНОСТЬ";
+                case "WELDING": return "СВАРКА";
+                case "GALVANIC": return "ГАЛЬВАНИКА";
+                case "MAINTENANCE": return "РЕМОНТ";
+                case "QUALITY": return "КАЧЕСТВО";
+                case "MEASUREMENT": return "ИЗМЕРЕНИЕ";
+                case "TOOLS": return "ИНСТРУМЕНТЫ";
+            }
         }
 
-        if (language.equals("EN")) {
-            return "← Back";
-        }
-
-        if (language.equals("TR")) {
-            return "← Geri";
-        }
-
-        if (language.equals("DE")) {
-            return "← Zurück";
-        }
-
-        return "← Назад";
+        return category;
     }
 
     @Override
