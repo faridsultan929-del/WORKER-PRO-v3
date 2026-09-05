@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.HorizontalScrollView;
@@ -74,7 +75,6 @@ public class PhrasebookActivity extends Activity {
         root.setOrientation(LinearLayout.VERTICAL);
         root.setBackgroundColor(Color.WHITE);
 
-        // TITLE
         TextView title = new TextView(this);
 
         title.setText(getPhrasebookTitle());
@@ -103,7 +103,6 @@ public class PhrasebookActivity extends Activity {
                 )
         );
 
-        // SEARCH
         search = new EditText(this);
 
         search.setHint(getSearchHint());
@@ -162,7 +161,6 @@ public class PhrasebookActivity extends Activity {
                 }
         );
 
-        // CATEGORIES
         HorizontalScrollView categoryScroll =
                 new HorizontalScrollView(this);
 
@@ -206,7 +204,6 @@ public class PhrasebookActivity extends Activity {
                 )
         );
 
-        // FAVORITES
         favoritesButton = new Button(this);
 
         favoritesButton.setText(
@@ -245,7 +242,6 @@ public class PhrasebookActivity extends Activity {
                 favParams
         );
 
-        // PHRASES
         ScrollView scroll =
                 new ScrollView(this);
 
@@ -274,7 +270,6 @@ public class PhrasebookActivity extends Activity {
                 )
         );
 
-        // FOOTER
         TextView footer =
                 new TextView(this);
 
@@ -333,19 +328,17 @@ public class PhrasebookActivity extends Activity {
                     search.getText().toString()
             );
 
-            View parent = button.getParent();
+            ViewGroup parent =
+                    (ViewGroup) button.getParent();
 
-            if (parent instanceof LinearLayout) {
-
-                LinearLayout layout =
-                        (LinearLayout) parent;
+            if (parent != null) {
 
                 for (int i = 0;
-                     i < layout.getChildCount();
+                     i < parent.getChildCount();
                      i++) {
 
                     View child =
-                            layout.getChildAt(i);
+                            parent.getChildAt(i);
 
                     if (child instanceof Button) {
 
@@ -495,11 +488,7 @@ public class PhrasebookActivity extends Activity {
                 new GradientDrawable();
 
         background.setColor(
-                Color.rgb(
-                        248,
-                        248,
-                        248
-                )
+                Color.rgb(248, 248, 248)
         );
 
         background.setCornerRadius(18);
@@ -592,7 +581,6 @@ public class PhrasebookActivity extends Activity {
 
         card.addView(buttons);
 
-        // SPEAK
         Button speak =
                 new Button(this);
 
@@ -614,7 +602,6 @@ public class PhrasebookActivity extends Activity {
 
         buttons.addView(speak);
 
-        // COPY
         Button copy =
                 new Button(this);
 
@@ -646,7 +633,6 @@ public class PhrasebookActivity extends Activity {
 
         buttons.addView(copy);
 
-        // FAVORITE
         Button favorite =
                 new Button(this);
 
@@ -701,7 +687,6 @@ public class PhrasebookActivity extends Activity {
         if (language.equals("AZ")) {
 
             return new String[][]{
-
                     {"ALL", "Hamısı"},
                     {"WORK", "🏭 İş"},
                     {"BOSS", "👷 Rəhbər"},
@@ -721,7 +706,6 @@ public class PhrasebookActivity extends Activity {
         if (language.equals("EN")) {
 
             return new String[][]{
-
                     {"ALL", "All"},
                     {"WORK", "🏭 Work"},
                     {"BOSS", "👷 Boss"},
@@ -739,7 +723,6 @@ public class PhrasebookActivity extends Activity {
         }
 
         return new String[][]{
-
                 {"ALL", "Все"},
                 {"WORK", "🏭 Работа"},
                 {"BOSS", "👷 Начальник"},
