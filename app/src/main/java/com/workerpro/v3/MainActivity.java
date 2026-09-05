@@ -77,7 +77,8 @@ public class MainActivity extends Activity {
                 "⚡  Сварка",
                 "✅  Контроль качества",
                 "🇬🇧  English for Workers",
-                "💬  Разговорник"
+                "💬  Разговорник",
+                "📚  Урок дня"
         };
 
         String[] az = {
@@ -90,7 +91,8 @@ public class MainActivity extends Activity {
                 "⚡  Qaynaq",
                 "✅  Keyfiyyətə nəzarət",
                 "🇬🇧  İşçilər üçün İngilis dili",
-                "💬  Danışıq kitabçası"
+                "💬  Danışıq kitabçası",
+                "📚  Günün dərsi"
         };
 
         String[] en = {
@@ -103,10 +105,11 @@ public class MainActivity extends Activity {
                 "⚡  Welding",
                 "✅  Quality Control",
                 "🇬🇧  English for Workers",
-                "💬  Phrasebook"
+                "💬  Phrasebook",
+                "📚  Lesson of the Day"
         };
 
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 11; i++) {
 
             final int section = i + 1;
 
@@ -271,6 +274,10 @@ public class MainActivity extends Activity {
 
             case 10:
                 intent = new Intent(this, PhrasebookActivity.class);
+                break;
+
+            case 11:
+                intent = new Intent(this, LessonOfDayActivity.class);
                 break;
 
             default:
