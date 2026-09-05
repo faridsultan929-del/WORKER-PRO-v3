@@ -15,7 +15,6 @@ import android.widget.ScrollView;
 import android.widget.HorizontalScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import android.graphics.drawable.GradientDrawable;
 
 import java.util.Collections;
@@ -89,17 +88,14 @@ public class EnglishActivity extends Activity {
         root.setOrientation(LinearLayout.VERTICAL);
         root.setBackgroundColor(Color.WHITE);
 
-        // =========================
         // TOP BAR
-        // =========================
-
         LinearLayout topBar = new LinearLayout(this);
         topBar.setOrientation(LinearLayout.HORIZONTAL);
         topBar.setGravity(Gravity.CENTER_VERTICAL);
         topBar.setPadding(8, 8, 8, 8);
+        topBar.setBackgroundColor(Color.rgb(35, 35, 40));
 
         TextView title = new TextView(this);
-
         title.setText("🇬🇧 " + getTitleText());
         title.setTextSize(17);
         title.setTextColor(Color.WHITE);
@@ -108,10 +104,6 @@ public class EnglishActivity extends Activity {
         title.setSingleLine(true);
         title.setEllipsize(
                 android.text.TextUtils.TruncateAt.END
-        );
-
-        topBar.setBackgroundColor(
-                Color.rgb(35, 35, 40)
         );
 
         topBar.addView(
@@ -124,11 +116,7 @@ public class EnglishActivity extends Activity {
         );
 
         String[] langs = {
-                "RU",
-                "AZ",
-                "EN",
-                "TR",
-                "DE"
+                "RU", "AZ", "EN", "TR", "DE"
         };
 
         LinearLayout langLayout =
@@ -144,26 +132,19 @@ public class EnglishActivity extends Activity {
 
         for (String lang : langs) {
 
-            TextView b =
-                    new TextView(this);
+            TextView b = new TextView(this);
 
             b.setText(lang);
             b.setTextSize(11);
             b.setTextColor(Color.BLACK);
-            b.setTypeface(
-                    null,
-                    Typeface.BOLD
-            );
+            b.setTypeface(null, Typeface.BOLD);
             b.setGravity(Gravity.CENTER);
 
             GradientDrawable bg =
                     new GradientDrawable();
 
             bg.setColor(Color.WHITE);
-            bg.setStroke(
-                    2,
-                    Color.DKGRAY
-            );
+            bg.setStroke(2, Color.DKGRAY);
             bg.setCornerRadius(9);
 
             b.setBackground(bg);
@@ -174,12 +155,7 @@ public class EnglishActivity extends Activity {
                             38
                     );
 
-            p.setMargins(
-                    2,
-                    0,
-                    2,
-                    0
-            );
+            p.setMargins(2, 0, 2, 0);
 
             langLayout.addView(b, p);
 
@@ -212,10 +188,7 @@ public class EnglishActivity extends Activity {
                 )
         );
 
-        // =========================
         // SEARCH
-        // =========================
-
         LinearLayout searchRow =
                 new LinearLayout(this);
 
@@ -228,10 +201,7 @@ public class EnglishActivity extends Activity {
         );
 
         searchRow.setPadding(
-                8,
-                5,
-                8,
-                5
+                8, 5, 8, 5
         );
 
         searchEdit =
@@ -241,37 +211,23 @@ public class EnglishActivity extends Activity {
                 getSearchText()
         );
 
-        searchEdit.setTextColor(
-                Color.BLACK
-        );
-
-        searchEdit.setHintTextColor(
-                Color.GRAY
-        );
-
+        searchEdit.setTextColor(Color.BLACK);
+        searchEdit.setHintTextColor(Color.GRAY);
         searchEdit.setTextSize(16);
         searchEdit.setSingleLine(true);
 
         searchEdit.setPadding(
-                14,
-                0,
-                14,
-                0
+                14, 0, 14, 0
         );
 
         GradientDrawable searchBg =
                 new GradientDrawable();
 
         searchBg.setColor(Color.WHITE);
-        searchBg.setStroke(
-                2,
-                Color.DKGRAY
-        );
+        searchBg.setStroke(2, Color.DKGRAY);
         searchBg.setCornerRadius(14);
 
-        searchEdit.setBackground(
-                searchBg
-        );
+        searchEdit.setBackground(searchBg);
 
         searchRow.addView(
                 searchEdit,
@@ -288,22 +244,13 @@ public class EnglishActivity extends Activity {
         searchButton.setText("🔍");
         searchButton.setTextSize(24);
         searchButton.setTextColor(Color.BLACK);
-        searchButton.setGravity(
-                Gravity.CENTER
-        );
+        searchButton.setGravity(Gravity.CENTER);
 
         GradientDrawable searchButtonBg =
                 new GradientDrawable();
 
-        searchButtonBg.setColor(
-                Color.WHITE
-        );
-
-        searchButtonBg.setStroke(
-                2,
-                Color.DKGRAY
-        );
-
+        searchButtonBg.setColor(Color.WHITE);
+        searchButtonBg.setStroke(2, Color.DKGRAY);
         searchButtonBg.setCornerRadius(14);
 
         searchButton.setBackground(
@@ -317,10 +264,7 @@ public class EnglishActivity extends Activity {
                 );
 
         searchParams.setMargins(
-                6,
-                0,
-                0,
-                0
+                6, 0, 0, 0
         );
 
         searchRow.addView(
@@ -365,10 +309,7 @@ public class EnglishActivity extends Activity {
                 }
         );
 
-        // =========================
         // ALPHABET
-        // =========================
-
         HorizontalScrollView alphabetScroll =
                 new HorizontalScrollView(this);
 
@@ -377,10 +318,7 @@ public class EnglishActivity extends Activity {
         );
 
         alphabetScroll.setPadding(
-                4,
-                2,
-                4,
-                2
+                4, 2, 4, 2
         );
 
         LinearLayout alphabet =
@@ -419,9 +357,7 @@ public class EnglishActivity extends Activity {
             });
         }
 
-        alphabetScroll.addView(
-                alphabet
-        );
+        alphabetScroll.addView(alphabet);
 
         root.addView(
                 alphabetScroll,
@@ -431,10 +367,7 @@ public class EnglishActivity extends Activity {
                 )
         );
 
-        // =========================
         // SECTIONS TITLE
-        // =========================
-
         TextView sectionTitle =
                 new TextView(this);
 
@@ -443,10 +376,7 @@ public class EnglishActivity extends Activity {
         );
 
         sectionTitle.setTextSize(17);
-        sectionTitle.setTextColor(
-                Color.BLACK
-        );
-
+        sectionTitle.setTextColor(Color.BLACK);
         sectionTitle.setTypeface(
                 null,
                 Typeface.BOLD
@@ -457,24 +387,19 @@ public class EnglishActivity extends Activity {
         );
 
         sectionTitle.setPadding(
-                12,
-                4,
-                12,
-                4
+                12, 5, 12, 5
         );
 
+        // Увеличено до 58
         root.addView(
                 sectionTitle,
                 new LinearLayout.LayoutParams(
                         ViewGroup.LayoutParams.MATCH_PARENT,
-                        48
+                        58
                 )
         );
 
-        // =========================
         // CATEGORIES
-        // =========================
-
         HorizontalScrollView categoryScroll =
                 new HorizontalScrollView(this);
 
@@ -483,10 +408,7 @@ public class EnglishActivity extends Activity {
         );
 
         categoryScroll.setPadding(
-                4,
-                2,
-                4,
-                2
+                4, 2, 4, 2
         );
 
         LinearLayout categoryLayout =
@@ -526,18 +448,16 @@ public class EnglishActivity extends Activity {
                 categoryLayout
         );
 
+        // Увеличено до 94
         root.addView(
                 categoryScroll,
                 new LinearLayout.LayoutParams(
                         ViewGroup.LayoutParams.MATCH_PARENT,
-                        84
+                        94
                 )
         );
 
-        // =========================
         // WORD LIST
-        // =========================
-
         ScrollView scroll =
                 new ScrollView(this);
 
@@ -549,15 +469,10 @@ public class EnglishActivity extends Activity {
         );
 
         listLayout.setPadding(
-                8,
-                5,
-                8,
-                10
+                8, 5, 8, 10
         );
 
-        scroll.addView(
-                listLayout
-        );
+        scroll.addView(listLayout);
 
         root.addView(
                 scroll,
@@ -568,25 +483,17 @@ public class EnglishActivity extends Activity {
                 )
         );
 
-        // =========================
         // FOOTER
-        // =========================
-
         TextView footer =
                 new TextView(this);
 
         footer.setText("F.S");
         footer.setTextSize(12);
         footer.setTextColor(Color.GRAY);
-        footer.setGravity(
-                Gravity.CENTER
-        );
+        footer.setGravity(Gravity.CENTER);
 
         footer.setPadding(
-                0,
-                4,
-                0,
-                6
+                0, 4, 0, 6
         );
 
         root.addView(
@@ -602,10 +509,7 @@ public class EnglishActivity extends Activity {
         refreshList();
     }
 
-    // =========================
     // SECTION BUTTON
-    // =========================
-
     private TextView createSectionButton(
             String text
     ) {
@@ -615,9 +519,7 @@ public class EnglishActivity extends Activity {
 
         button.setText(text);
         button.setTextSize(15);
-        button.setTextColor(
-                Color.BLACK
-        );
+        button.setTextColor(Color.BLACK);
 
         button.setTypeface(
                 null,
@@ -629,10 +531,7 @@ public class EnglishActivity extends Activity {
         );
 
         button.setPadding(
-                18,
-                5,
-                18,
-                5
+                18, 5, 18, 5
         );
 
         button.setSingleLine(true);
@@ -640,18 +539,9 @@ public class EnglishActivity extends Activity {
         GradientDrawable bg =
                 new GradientDrawable();
 
-        bg.setColor(
-                Color.WHITE
-        );
-
-        bg.setStroke(
-                2,
-                Color.DKGRAY
-        );
-
-        bg.setCornerRadius(
-                18
-        );
+        bg.setColor(Color.WHITE);
+        bg.setStroke(2, Color.DKGRAY);
+        bg.setCornerRadius(18);
 
         button.setBackground(bg);
 
@@ -662,10 +552,7 @@ public class EnglishActivity extends Activity {
                 );
 
         p.setMargins(
-                4,
-                7,
-                4,
-                7
+                4, 7, 4, 7
         );
 
         button.setLayoutParams(p);
@@ -673,10 +560,7 @@ public class EnglishActivity extends Activity {
         return button;
     }
 
-    // =========================
     // WORD LIST
-    // =========================
-
     private void refreshList() {
 
         if (listLayout == null)
@@ -757,16 +641,13 @@ public class EnglishActivity extends Activity {
 
             if (
                     !categoryOK
-                    ||
-                    !letterOK
-                    ||
-                    !searchOK
+                    || !letterOK
+                    || !searchOK
             ) {
                 continue;
             }
 
             addWordCard(word);
-
             count++;
         }
 
@@ -780,31 +661,20 @@ public class EnglishActivity extends Activity {
             );
 
             empty.setTextSize(18);
-            empty.setTextColor(
-                    Color.BLACK
-            );
-
+            empty.setTextColor(Color.BLACK);
             empty.setGravity(
                     Gravity.CENTER
             );
 
             empty.setPadding(
-                    20,
-                    50,
-                    20,
-                    50
+                    20, 50, 20, 50
             );
 
-            listLayout.addView(
-                    empty
-            );
+            listLayout.addView(empty);
         }
     }
 
-    // =========================
     // WORD CARD
-    // =========================
-
     private void addWordCard(
             EnglishDictionary.Word word
     ) {
@@ -817,31 +687,20 @@ public class EnglishActivity extends Activity {
         );
 
         card.setPadding(
-                14,
-                12,
-                14,
-                12
+                14, 12, 14, 12
         );
 
         GradientDrawable cardBg =
                 new GradientDrawable();
 
-        cardBg.setColor(
-                Color.WHITE
-        );
-
+        cardBg.setColor(Color.WHITE);
         cardBg.setStroke(
                 2,
                 Color.LTGRAY
         );
+        cardBg.setCornerRadius(15);
 
-        cardBg.setCornerRadius(
-                15
-        );
-
-        card.setBackground(
-                cardBg
-        );
+        card.setBackground(cardBg);
 
         LinearLayout.LayoutParams cp =
                 new LinearLayout.LayoutParams(
@@ -850,10 +709,7 @@ public class EnglishActivity extends Activity {
                 );
 
         cp.setMargins(
-                0,
-                4,
-                0,
-                4
+                0, 4, 0, 4
         );
 
         card.setLayoutParams(cp);
@@ -866,18 +722,13 @@ public class EnglishActivity extends Activity {
         );
 
         english.setTextSize(20);
-        english.setTextColor(
-                Color.BLACK
-        );
-
+        english.setTextColor(Color.BLACK);
         english.setTypeface(
                 null,
                 Typeface.BOLD
         );
 
-        card.addView(
-                english
-        );
+        card.addView(english);
 
         TextView russian =
                 new TextView(this);
@@ -887,13 +738,9 @@ public class EnglishActivity extends Activity {
         );
 
         russian.setTextSize(16);
-        russian.setTextColor(
-                Color.BLACK
-        );
+        russian.setTextColor(Color.BLACK);
 
-        card.addView(
-                russian
-        );
+        card.addView(russian);
 
         TextView az =
                 new TextView(this);
@@ -904,13 +751,9 @@ public class EnglishActivity extends Activity {
         );
 
         az.setTextSize(16);
-        az.setTextColor(
-                Color.BLACK
-        );
+        az.setTextColor(Color.BLACK);
 
-        card.addView(
-                az
-        );
+        card.addView(az);
 
         TextView cat =
                 new TextView(this);
@@ -923,20 +766,13 @@ public class EnglishActivity extends Activity {
         );
 
         cat.setTextSize(13);
-        cat.setTextColor(
-                Color.DKGRAY
-        );
+        cat.setTextColor(Color.DKGRAY);
 
         cat.setPadding(
-                0,
-                7,
-                0,
-                3
+                0, 7, 0, 3
         );
 
-        card.addView(
-                cat
-        );
+        card.addView(cat);
 
         LinearLayout buttons =
                 new LinearLayout(this);
@@ -949,14 +785,10 @@ public class EnglishActivity extends Activity {
                 createActionButton("🔊");
 
         speak.setOnClickListener(
-                v -> speak(
-                        word.english
-                )
+                v -> speak(word.english)
         );
 
-        buttons.addView(
-                speak
-        );
+        buttons.addView(speak);
 
         TextView favorite =
                 createActionButton(
@@ -993,9 +825,7 @@ public class EnglishActivity extends Activity {
             saveFavorites();
         });
 
-        buttons.addView(
-                favorite
-        );
+        buttons.addView(favorite);
 
         TextView copy =
                 createActionButton("📋");
@@ -1030,17 +860,11 @@ public class EnglishActivity extends Activity {
             ).show();
         });
 
-        buttons.addView(
-                copy
-        );
+        buttons.addView(copy);
 
-        card.addView(
-                buttons
-        );
+        card.addView(buttons);
 
-        listLayout.addView(
-                card
-        );
+        listLayout.addView(card);
     }
 
     private TextView createActionButton(
@@ -1052,29 +876,18 @@ public class EnglishActivity extends Activity {
 
         b.setText(text);
         b.setTextSize(19);
-        b.setTextColor(
-                Color.BLACK
-        );
-
-        b.setGravity(
-                Gravity.CENTER
-        );
+        b.setTextColor(Color.BLACK);
+        b.setGravity(Gravity.CENTER);
 
         GradientDrawable bg =
                 new GradientDrawable();
 
-        bg.setColor(
-                Color.WHITE
-        );
-
+        bg.setColor(Color.WHITE);
         bg.setStroke(
                 2,
                 Color.DKGRAY
         );
-
-        bg.setCornerRadius(
-                12
-        );
+        bg.setCornerRadius(12);
 
         b.setBackground(bg);
 
@@ -1085,10 +898,7 @@ public class EnglishActivity extends Activity {
                 );
 
         p.setMargins(
-                3,
-                3,
-                3,
-                3
+                3, 3, 3, 3
         );
 
         b.setLayoutParams(p);
@@ -1110,9 +920,7 @@ public class EnglishActivity extends Activity {
                 .apply();
     }
 
-    private void speak(
-            String text
-    ) {
+    private void speak(String text) {
 
         if (tts == null)
             return;
@@ -1125,9 +933,7 @@ public class EnglishActivity extends Activity {
         );
     }
 
-    // =========================
     // LOCALIZATION
-    // =========================
 
     private String getTitleText() {
 
