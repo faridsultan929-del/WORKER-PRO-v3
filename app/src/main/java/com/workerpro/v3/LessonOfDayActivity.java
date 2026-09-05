@@ -26,8 +26,11 @@ public class LessonOfDayActivity extends Activity {
     private final Set<String> learnedWords = new HashSet<>();
 
     private int learnedToday = 0;
+    private int streak = 0;
+    private int bestStreak = 0;
 
     private TextView progressText;
+    private TextView streakText;
 
     private final String[][] words = {
 
@@ -49,87 +52,64 @@ public class LessonOfDayActivity extends Activity {
             {"Helmet", "Каска", "Dəbilqə"},
             {"Gloves", "Перчатки", "Əlcəklər"},
             {"Fire", "Пожар", "Yanğın"},
-            {"Sensor", "Датчик", "Sensor"},
             {"Operator", "Оператор", "Operator"},
             {"Production", "Производство", "İstehsalat"},
             {"Factory", "Завод", "Zavod"},
             {"Process", "Процесс", "Proses"},
-            {"Material", "Материал", "Material"}
+            {"Material", "Материал", "Material"},
+            {"Task", "Задание", "Tapşırıq"},
+            {"Operator", "Оператор", "Operator"}
     };
 
     private final String[][] phrases = {
 
-            {
-                    "Safety first.",
+            {"Safety first.",
                     "Безопасность прежде всего.",
-                    "Təhlükəsizlik hər şeydən əvvəl."
-            },
+                    "Təhlükəsizlik hər şeydən əvvəl."},
 
-            {
-                    "Check the machine.",
+            {"Check the machine.",
                     "Проверь станок.",
-                    "Dəzgahı yoxla."
-            },
+                    "Dəzgahı yoxla."},
 
-            {
-                    "I found a defect.",
+            {"I found a defect.",
                     "Я нашёл дефект.",
-                    "Qüsur tapdım."
-            },
+                    "Qüsur tapdım."},
 
-            {
-                    "Please check my work.",
+            {"Please check my work.",
                     "Пожалуйста, проверьте мою работу.",
-                    "Zəhmət olmasa işimi yoxlayın."
-            },
+                    "Zəhmət olmasa işimi yoxlayın."},
 
-            {
-                    "The machine stopped.",
+            {"The machine stopped.",
                     "Станок остановился.",
-                    "Dəzgah dayandı."
-            },
+                    "Dəzgah dayandı."},
 
-            {
-                    "I need help.",
+            {"I need help.",
                     "Мне нужна помощь.",
-                    "Mənə kömək lazımdır."
-            },
+                    "Mənə kömək lazımdır."},
 
-            {
-                    "Wear your gloves.",
+            {"Wear your gloves.",
                     "Надень перчатки.",
-                    "Əlcəklərini tax."
-            },
+                    "Əlcəklərini tax."},
 
-            {
-                    "Check the CNC program.",
+            {"Check the CNC program.",
                     "Проверь программу CNC.",
-                    "CNC proqramını yoxla."
-            },
+                    "CNC proqramını yoxla."},
 
-            {
-                    "Stop the machine.",
+            {"Stop the machine.",
                     "Останови станок.",
-                    "Dəzgahı dayandır."
-            },
+                    "Dəzgahı dayandır."},
 
-            {
-                    "The quality is good.",
+            {"The quality is good.",
                     "Качество хорошее.",
-                    "Keyfiyyət yaxşıdır."
-            },
+                    "Keyfiyyət yaxşıdır."},
 
-            {
-                    "The tool is worn.",
+            {"The tool is worn.",
                     "Инструмент изношен.",
-                    "Alət aşınıb."
-            },
+                    "Alət aşınıb."},
 
-            {
-                    "The machine needs maintenance.",
+            {"The machine needs maintenance.",
                     "Станку нужно обслуживание.",
-                    "Dəzgaha texniki xidmət lazımdır."
-            }
+                    "Dəzgaha texniki xidmət lazımdır."}
     };
 
     @Override
@@ -144,7 +124,6 @@ public class LessonOfDayActivity extends Activity {
         }
 
         loadProgress();
-
         createScreen();
 
         tts = new TextToSpeech(
@@ -188,7 +167,8 @@ public class LessonOfDayActivity extends Activity {
 
         Calendar calendar = Calendar.getInstance();
 
-        int day = calendar.get(Calendar.DAY_OF_YEAR);
+        int day =
+                calendar.get(Calendar.DAY_OF_YEAR);
 
         TextView dayText = new TextView(this);
 
@@ -203,6 +183,20 @@ public class LessonOfDayActivity extends Activity {
 
         root.addView(dayText);
 
+        // STREAK
+
+        streakText = new TextView(this);
+
+        streakText.setTextSize(20);
+        streakText.setTypeface(null, Typeface.BOLD);
+        streakText.setGravity(Gravity.CENTER);
+        streakText.setTextColor(Color.rgb(220, 120, 0));
+        streakText.setPadding(0, 5, 0, 8);
+
+        root.addView(streakText);
+
+        updateStreak();
+
         // PROGRESS
 
         progressText = new TextView(this);
@@ -211,7 +205,7 @@ public class LessonOfDayActivity extends Activity {
         progressText.setTypeface(null, Typeface.BOLD);
         progressText.setGravity(Gravity.CENTER);
         progressText.setTextColor(Color.rgb(0, 120, 60));
-        progressText.setPadding(0, 10, 0, 20);
+        progressText.setPadding(0, 5, 0, 20);
 
         root.addView(progressText);
 
@@ -234,7 +228,8 @@ public class LessonOfDayActivity extends Activity {
 
         // FIVE WORDS
 
-        int startWord = day % words.length;
+        int startWord =
+                day % words.length;
 
         for (int i = 0; i < 5; i++) {
 
@@ -243,23 +238,32 @@ public class LessonOfDayActivity extends Activity {
 
             addWordCard(
                     root,
-                    words[index],
-                    index
+                    words[index]
             );
         }
 
         // PHRASES TITLE
 
-        TextView phrasesTitle = new TextView(this);
+        TextView phrasesTitle =
+                new TextView(this);
 
         phrasesTitle.setText(
                 "💬 " + getPhrasesTitle()
         );
 
         phrasesTitle.setTextSize(23);
-        phrasesTitle.setTypeface(null, Typeface.BOLD);
-        phrasesTitle.setTextColor(Color.rgb(0, 120, 60));
-        phrasesTitle.setPadding(0, 25, 0, 15);
+        phrasesTitle.setTypeface(
+                null,
+                Typeface.BOLD
+        );
+
+        phrasesTitle.setTextColor(
+                Color.rgb(0, 120, 60)
+        );
+
+        phrasesTitle.setPadding(
+                0, 25, 0, 15
+        );
 
         root.addView(phrasesTitle);
 
@@ -281,13 +285,16 @@ public class LessonOfDayActivity extends Activity {
 
         // FOOTER
 
-        TextView footer = new TextView(this);
+        TextView footer =
+                new TextView(this);
 
         footer.setText("\nF.S");
         footer.setTextSize(15);
         footer.setGravity(Gravity.CENTER);
         footer.setTextColor(Color.GRAY);
-        footer.setPadding(0, 20, 0, 10);
+        footer.setPadding(
+                0, 20, 0, 10
+        );
 
         root.addView(footer);
 
@@ -298,8 +305,7 @@ public class LessonOfDayActivity extends Activity {
 
     private void addWordCard(
             LinearLayout root,
-            String[] word,
-            int wordIndex) {
+            String[] word) {
 
         LinearLayout card =
                 new LinearLayout(this);
@@ -309,10 +315,7 @@ public class LessonOfDayActivity extends Activity {
         );
 
         card.setPadding(
-                20,
-                15,
-                20,
-                15
+                20, 15, 20, 15
         );
 
         GradientDrawable background =
@@ -339,6 +342,7 @@ public class LessonOfDayActivity extends Activity {
         );
 
         english.setTextSize(22);
+
         english.setTypeface(
                 null,
                 Typeface.BOLD
@@ -367,7 +371,9 @@ public class LessonOfDayActivity extends Activity {
 
         translation.setTextSize(18);
         translation.setTextColor(Color.DKGRAY);
-        translation.setPadding(0, 8, 0, 8);
+        translation.setPadding(
+                0, 8, 0, 8
+        );
 
         card.addView(translation);
 
@@ -417,6 +423,10 @@ public class LessonOfDayActivity extends Activity {
 
                         learnedToday++;
 
+                        if (learnedToday > 5) {
+                            learnedToday = 5;
+                        }
+
                         saveProgress();
 
                         learned.setText(
@@ -425,6 +435,11 @@ public class LessonOfDayActivity extends Activity {
                         );
 
                         updateProgress();
+
+                        if (learnedToday == 5) {
+
+                            completeToday();
+                        }
                     }
                 }
         );
@@ -438,13 +453,13 @@ public class LessonOfDayActivity extends Activity {
                 );
 
         params.setMargins(
-                0,
-                0,
-                0,
-                12
+                0, 0, 0, 12
         );
 
-        root.addView(card, params);
+        root.addView(
+                card,
+                params
+        );
     }
 
     private void addPhraseCard(
@@ -459,10 +474,7 @@ public class LessonOfDayActivity extends Activity {
         );
 
         card.setPadding(
-                20,
-                15,
-                20,
-                15
+                20, 15, 20, 15
         );
 
         GradientDrawable background =
@@ -515,33 +527,60 @@ public class LessonOfDayActivity extends Activity {
                 );
 
         params.setMargins(
-                0,
-                0,
-                0,
-                12
+                0, 0, 0, 12
         );
 
-        root.addView(card, params);
+        root.addView(
+                card,
+                params
+        );
     }
 
-    private void updateProgress() {
+    private void completeToday() {
 
-        if (progressText == null) {
-            return;
+        Calendar calendar =
+                Calendar.getInstance();
+
+        int today =
+                calendar.get(Calendar.DAY_OF_YEAR);
+
+        android.content.SharedPreferences prefs =
+                getSharedPreferences(
+                        "WORKER_PRO_LESSON_PROGRESS",
+                        MODE_PRIVATE
+                );
+
+        int completedDay =
+                prefs.getInt(
+                        "completedDay",
+                        -1
+                );
+
+        if (completedDay != today) {
+
+            streak++;
+
+            if (streak > bestStreak) {
+                bestStreak = streak;
+            }
+
+            prefs.edit()
+                    .putInt(
+                            "completedDay",
+                            today
+                    )
+                    .putInt(
+                            "streak",
+                            streak
+                    )
+                    .putInt(
+                            "bestStreak",
+                            bestStreak
+                    )
+                    .apply();
+
+            updateStreak();
         }
-
-        progressText.setText(
-                "📊 " +
-                getProgressText() +
-                ": " +
-                learnedToday +
-                " / 5"
-        );
-    }
-
-    private String wordKey(String[] word) {
-
-        return word[0];
     }
 
     private void loadProgress() {
@@ -552,17 +591,31 @@ public class LessonOfDayActivity extends Activity {
                         MODE_PRIVATE
                 );
 
+        Calendar calendar =
+                Calendar.getInstance();
+
+        int today =
+                calendar.get(
+                        Calendar.DAY_OF_YEAR
+                );
+
         int savedDay =
                 prefs.getInt(
                         "day",
                         -1
                 );
 
-        Calendar calendar =
-                Calendar.getInstance();
+        streak =
+                prefs.getInt(
+                        "streak",
+                        0
+                );
 
-        int today =
-                calendar.get(Calendar.DAY_OF_YEAR);
+        bestStreak =
+                prefs.getInt(
+                        "bestStreak",
+                        0
+                );
 
         if (savedDay == today) {
 
@@ -594,13 +647,21 @@ public class LessonOfDayActivity extends Activity {
         } else {
 
             learnedToday = 0;
-
             learnedWords.clear();
 
             prefs.edit()
-                    .putInt("day", today)
-                    .putInt("learnedToday", 0)
-                    .putString("learnedWords", "")
+                    .putInt(
+                            "day",
+                            today
+                    )
+                    .putInt(
+                            "learnedToday",
+                            0
+                    )
+                    .putString(
+                            "learnedWords",
+                            ""
+                    )
                     .apply();
         }
     }
@@ -610,7 +671,8 @@ public class LessonOfDayActivity extends Activity {
         StringBuilder builder =
                 new StringBuilder();
 
-        for (String word : learnedWords) {
+        for (String word :
+                learnedWords) {
 
             builder.append(word)
                     .append("|");
@@ -620,14 +682,19 @@ public class LessonOfDayActivity extends Activity {
                 Calendar.getInstance();
 
         int today =
-                calendar.get(Calendar.DAY_OF_YEAR);
+                calendar.get(
+                        Calendar.DAY_OF_YEAR
+                );
 
         getSharedPreferences(
                 "WORKER_PRO_LESSON_PROGRESS",
                 MODE_PRIVATE
         )
                 .edit()
-                .putInt("day", today)
+                .putInt(
+                        "day",
+                        today
+                )
                 .putInt(
                         "learnedToday",
                         learnedToday
@@ -637,6 +704,42 @@ public class LessonOfDayActivity extends Activity {
                         builder.toString()
                 )
                 .apply();
+    }
+
+    private void updateProgress() {
+
+        if (progressText != null) {
+
+            progressText.setText(
+                    "📊 " +
+                    getProgressText() +
+                    ": " +
+                    learnedToday +
+                    " / 5"
+            );
+        }
+    }
+
+    private void updateStreak() {
+
+        if (streakText != null) {
+
+            streakText.setText(
+                    "🔥 " +
+                    getStreakText() +
+                    ": " +
+                    streak +
+                    "\n🏆 " +
+                    getBestText() +
+                    ": " +
+                    bestStreak
+            );
+        }
+    }
+
+    private String wordKey(String[] word) {
+
+        return word[0];
     }
 
     private void speak(String text) {
@@ -758,11 +861,36 @@ public class LessonOfDayActivity extends Activity {
         return "Прогресс сегодня";
     }
 
+    private String getStreakText() {
+
+        if (language.equals("AZ")) {
+            return "Ardıcıl günlər";
+        }
+
+        if (language.equals("EN")) {
+            return "Day streak";
+        }
+
+        return "Дней подряд";
+    }
+
+    private String getBestText() {
+
+        if (language.equals("AZ")) {
+            return "Ən yaxşı nəticə";
+        }
+
+        if (language.equals("EN")) {
+            return "Best streak";
+        }
+
+        return "Лучший результат";
+    }
+
     @Override
     protected void onDestroy() {
 
         if (tts != null) {
-
             tts.stop();
             tts.shutdown();
         }
