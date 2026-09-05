@@ -266,7 +266,7 @@ public class EnglishDictionary {
         words.add(new Word("Limit Switch", "Концевой выключатель", "Son açarı"));
         words.add(new Word("Lock Nut", "Контргайка", "Kontrqayka"));
         words.add(new Word("Lubricant", "Смазка", "Sürtkü"));
-        words.add(new Word("Lubrication", "Смазка / смазывание", "Yağlama"));
+        words.add(new Word("Lubrication", "Смазывание", "Yağlama"));
 
         // ================= M =================
         words.add(new Word("Machine", "Станок / машина", "Dəzgah / maşın"));
@@ -425,118 +425,4 @@ public class EnglishDictionary {
         words.add(new Word("Die Life", "Срок службы штампа", "Ştampın xidmət müddəti"));
         words.add(new Word("Die Maintenance", "Обслуживание штампа", "Ştampın texniki xidməti"));
         words.add(new Word("Die Repair", "Ремонт штампа", "Ştampın təmiri"));
-        words.add(new Word("Die Alignment", "Центровка штампа", "Ştampın mərkəzlənməsi"));
-        words.add(new Word("Die Inspection", "Проверка штампа", "Ştampın yoxlanılması"));
-        words.add(new Word("Stamping Cycle", "Цикл штамповки", "Ştamplama dövrü"));
-        words.add(new Word("Stamping Force", "Усилие штамповки", "Ştamplama qüvvəsi"));
-        words.add(new Word("Stamping Speed", "Скорость штамповки", "Ştamplama sürəti"));
-        words.add(new Word("Stamping Defect", "Дефект штамповки", "Ştamplama qüsuru"));
-        words.add(new Word("Crack", "Трещина", "Çat"));
-        words.add(new Word("Wrinkle", "Морщина / складка", "Qırış"));
-        words.add(new Word("Scratch", "Царапина", "Cızıq"));
-        words.add(new Word("Dent", "Вмятина", "Əzik"));
-        words.add(new Word("Deformation", "Деформация", "Deformasiya"));
-        words.add(new Word("Burr Height", "Высота заусенца", "Qabarıq hündürlüyü"));
-        words.add(new Word("Part Ejection", "Выталкивание детали", "Detalın çıxarılması"));
-        words.add(new Word("Ejection Pin", "Выталкивающий штифт", "Çıxarıcı sancaq"));
-        words.add(new Word("Ejector Plate", "Выталкивающая плита", "Çıxarıcı lövhə"));
-        words.add(new Word("Scrap", "Отходы / брак", "Tullantı"));
-        words.add(new Word("Scrap Rate", "Процент брака", "Tullantı faizi"));
-        words.add(new Word("Finished Part", "Готовая деталь", "Hazır detal"));
-
-        // ================= T =================
-        words.add(new Word("Tap", "Метчик", "Metçik"));
-        words.add(new Word("Tap Wrench", "Вороток для метчика", "Metçik tutacağı"));
-        words.add(new Word("Task", "Задание", "Tapşırıq"));
-        words.add(new Word("Technician", "Техник", "Texnik"));
-        words.add(new Word("Temperature", "Температура", "Temperatur"));
-        words.add(new Word("Thickness", "Толщина", "Qalınlıq"));
-        words.add(new Word("Thread", "Резьба", "Yiv"));
-        words.add(new Word("Thread Gauge", "Резьбомер", "Yiv ölçən"));
-        words.add(new Word("Tool", "Инструмент", "Alət"));
-        words.add(new Word("Tool Change", "Смена инструмента", "Alət dəyişməsi"));
-        words.add(new Word("Tool Holder", "Держатель инструмента", "Alət tutacağı"));
-        words.add(new Word("Tool Life", "Срок службы инструмента", "Alətin xidmət müddəti"));
-        words.add(new Word("Torque", "Крутящий момент", "Fırlanma momenti"));
-        words.add(new Word("Torque Wrench", "Динамометрический ключ", "Dinamometrik açar"));
-        words.add(new Word("Training", "Обучение", "Təlim"));
-        words.add(new Word("Turning", "Точение", "Torna emalı"));
-
-        // ================= U =================
-        words.add(new Word("Unclamp", "Разжать", "Sıxacı açmaq"));
-        words.add(new Word("Unclamping", "Разжим", "Sıxacın açılması"));
-        words.add(new Word("Uniformity", "Однородность", "Bərabərlik"));
-        words.add(new Word("Unit", "Единица", "Vahid"));
-        words.add(new Word("Urgent", "Срочный", "Təcili"));
-
-        // ================= V =================
-        words.add(new Word("Valve", "Клапан", "Klapan"));
-        words.add(new Word("Vernier Caliper", "Штангенциркуль", "Ştangensirkul"));
-        words.add(new Word("Vibration", "Вибрация", "Titrəmə"));
-        words.add(new Word("Vice", "Тиски", "Məngənə"));
-        words.add(new Word("Voltage", "Напряжение", "Gərginlik"));
-
-        // ================= W =================
-        words.add(new Word("Washer", "Шайба", "Şayba"));
-        words.add(new Word("Wear", "Износ", "Aşınma"));
-        words.add(new Word("Welding", "Сварка", "Qaynaq"));
-        words.add(new Word("Welding Cable", "Сварочный кабель", "Qaynaq kabeli"));
-        words.add(new Word("Welding Machine", "Сварочный аппарат", "Qaynaq aparatı"));
-        words.add(new Word("Welding Torch", "Сварочная горелка", "Qaynaq məşəli"));
-        words.add(new Word("Welder", "Сварщик", "Qaynaqçı"));
-        words.add(new Word("Width", "Ширина", "En"));
-        words.add(new Word("Wire", "Провод / проволока", "Tel"));
-        words.add(new Word("Worker", "Рабочий", "Fəhlə"));
-        words.add(new Word("Work Bench", "Верстак", "İş dəzgahı"));
-        words.add(new Word("Workpiece", "Заготовка / деталь", "İş parçası"));
-        words.add(new Word("Workplace", "Рабочее место", "İş yeri"));
-        words.add(new Word("Workshop", "Цех", "Sex"));
-        words.add(new Word("Wrench", "Гаечный ключ", "Açar"));
-
-        // ================= X =================
-        words.add(new Word("X-Axis", "Ось X", "X oxu"));
-        words.add(new Word("X-Axis Limit", "Концевой выключатель оси X", "X oxunun son açarı"));
-
-        // ================= Y =================
-        words.add(new Word("Y-Axis", "Ось Y", "Y oxu"));
-        words.add(new Word("Y-Axis Limit", "Концевой выключатель оси Y", "Y oxunun son açarı"));
-
-        // ================= Z =================
-        words.add(new Word("Z-Axis", "Ось Z", "Z oxu"));
-        words.add(new Word("Z-Axis Limit", "Концевой выключатель оси Z", "Z oxunun son açarı"));
-        words.add(new Word("Zero Point", "Нулевая точка", "Sıfır nöqtəsi"));
-
-        // ================= WELDING =================
-        words.add(new Word("Arc Welding", "Дуговая сварка", "Qövs qaynağı"));
-        words.add(new Word("Welding Current", "Сварочный ток", "Qaynaq cərəyanı"));
-        words.add(new Word("Welding Voltage", "Сварочное напряжение", "Qaynaq gərginliyi"));
-        words.add(new Word("Welding Rod", "Сварочный пруток", "Qaynaq çubuğu"));
-        words.add(new Word("Electrode Holder", "Держатель электрода", "Elektrod tutacağı"));
-        words.add(new Word("Weld Bead", "Сварочный шов", "Qaynaq tikişi"));
-        words.add(new Word("Weld Joint", "Сварное соединение", "Qaynaq birləşməsi"));
-        words.add(new Word("Butt Joint", "Стыковое соединение", "Alın birləşməsi"));
-        words.add(new Word("Lap Joint", "Нахлёсточное соединение", "Üst-üstə birləşmə"));
-        words.add(new Word("Fillet Weld", "Угловой сварной шов", "Künc qaynaq tikişi"));
-        words.add(new Word("Groove Weld", "Сварка в разделку", "Yivli qaynaq"));
-        words.add(new Word("Tack Weld", "Прихваточный шов", "Tutucu qaynaq"));
-        words.add(new Word("Weld Root", "Корень шва", "Tikiş kökü"));
-        words.add(new Word("Weld Face", "Лицевая сторона шва", "Tikiş üzü"));
-        words.add(new Word("Weld Toe", "Край сварного шва", "Qaynaq tikişinin kənarı"));
-        words.add(new Word("Weld Crack", "Трещина сварного шва", "Qaynaq tikişində çat"));
-        words.add(new Word("Weld Porosity", "Пористость шва", "Tikiş məsaməliliyi"));
-        words.add(new Word("Weld Spatter", "Брызги металла", "Metal sıçraması"));
-        words.add(new Word("Weld Defect", "Дефект сварки", "Qaynaq qüsuru"));
-        words.add(new Word("Weld Inspection", "Проверка сварного шва", "Qaynaq tikişinin yoxlanılması"));
-        words.add(new Word("Welding Position", "Положение сварки", "Qaynaq mövqeyi"));
-        words.add(new Word("Welding Speed", "Скорость сварки", "Qaynaq sürəti"));
-        words.add(new Word("Welding Gas", "Сварочный газ", "Qaynaq qazı"));
-        words.add(new Word("Gas Cylinder", "Газовый баллон", "Qaz balonu"));
-        words.add(new Word("Gas Regulator", "Газовый редуктор", "Qaz reduktoru"));
-        words.add(new Word("Gas Pressure", "Давление газа", "Qaz təzyiqi"));
-        words.add(new Word("Gas Hose", "Газовый шланг", "Qaz şlanqı"));
-        words.add(new Word("Welding Mask", "Сварочная маска", "Qaynaq maskası"));
-        words.add(new Word("Welding Helmet", "Сварочная каска", "Qaynaq dəbilqəsi"));
-        words.add(new Word("Welding Gloves", "Сварочные перчатки", "Qaynaq əlcəkləri"));
-        words.add(new Word("Welding Apron", "Сварочный фартук", "Qaynaq önlüyü"));
-        words.add(new Word("Welding Screen", "Сварочный экран", "Qaynaq ekranı"));
-        words.add
+        words.add(new Word("Die Alignment", "Центровка
