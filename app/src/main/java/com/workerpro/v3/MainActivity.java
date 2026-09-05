@@ -61,6 +61,36 @@ public class MainActivity extends Activity {
             "🏆 My Progress"
     };
 
+    private final String[] tr = {
+            "🦺 İş Güvenliği",
+            "🏭 Üretim",
+            "🔨 Presleme",
+            "🔥 Fırınlar ve Isıtma",
+            "🧯 Yangın Söndürücüler",
+            "📡 Sensörler",
+            "⚡ Kaynak",
+            "✅ Kalite Kontrol",
+            "🇬🇧 İşçiler için İngilizce",
+            "💬 Konuşma Kitabı",
+            "📚 Günün Dersi",
+            "🏆 İlerlemem"
+    };
+
+    private final String[] de = {
+            "🦺 Arbeitssicherheit",
+            "🏭 Produktion",
+            "🔨 Stanzen",
+            "🔥 Öfen und Erwärmung",
+            "🧯 Feuerlöscher",
+            "📡 Sensoren",
+            "⚡ Schweißen",
+            "✅ Qualitätskontrolle",
+            "🇬🇧 Englisch für Arbeiter",
+            "💬 Sprachführer",
+            "📚 Lektion des Tages",
+            "🏆 Mein Fortschritt"
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,14 +103,46 @@ public class MainActivity extends Activity {
         root.setOrientation(LinearLayout.VERTICAL);
         root.setBackgroundColor(Color.WHITE);
 
+        // Верхняя строка
+        LinearLayout topBar = new LinearLayout(this);
+        topBar.setOrientation(LinearLayout.HORIZONTAL);
+        topBar.setGravity(Gravity.CENTER_VERTICAL);
+        topBar.setPadding(15, 20, 8, 5);
+
         TextView header = new TextView(this);
         header.setText("WORKER PRO");
-        header.setTextSize(30);
+        header.setTextSize(25);
         header.setTypeface(null, Typeface.BOLD);
-        header.setGravity(Gravity.CENTER);
-        header.setPadding(0, 25, 0, 5);
 
-        root.addView(header);
+        topBar.addView(
+                header,
+                new LinearLayout.LayoutParams(
+                        0,
+                        LinearLayout.LayoutParams.WRAP_CONTENT,
+                        1
+                )
+        );
+
+        // Языки справа
+        LinearLayout languages = new LinearLayout(this);
+        languages.setOrientation(LinearLayout.HORIZONTAL);
+        languages.setGravity(Gravity.CENTER_VERTICAL);
+
+        Button ruButton = createLanguageButton("RU");
+        Button azButton = createLanguageButton("AZ");
+        Button enButton = createLanguageButton("EN");
+        Button trButton = createLanguageButton("TR");
+        Button deButton = createLanguageButton("DE");
+
+        languages.addView(ruButton);
+        languages.addView(azButton);
+        languages.addView(enButton);
+        languages.addView(trButton);
+        languages.addView(deButton);
+
+        topBar.addView(languages);
+
+        root.addView(topBar);
 
         TextView subtitle = new TextView(this);
         subtitle.setText(getSubtitle());
@@ -89,25 +151,6 @@ public class MainActivity extends Activity {
         subtitle.setPadding(0, 0, 0, 15);
 
         root.addView(subtitle);
-
-        LinearLayout languages = new LinearLayout(this);
-        languages.setOrientation(LinearLayout.HORIZONTAL);
-        languages.setGravity(Gravity.CENTER);
-
-        Button ruButton = new Button(this);
-        ruButton.setText("RU");
-
-        Button azButton = new Button(this);
-        azButton.setText("AZ");
-
-        Button enButton = new Button(this);
-        enButton.setText("EN");
-
-        languages.addView(ruButton);
-        languages.addView(azButton);
-        languages.addView(enButton);
-
-        root.addView(languages);
 
         ScrollView scrollView = new ScrollView(this);
 
@@ -143,6 +186,7 @@ public class MainActivity extends Activity {
         }
 
         scrollView.addView(menu);
+
         root.addView(
                 scrollView,
                 new LinearLayout.LayoutParams(
@@ -176,6 +220,36 @@ public class MainActivity extends Activity {
             language = "EN";
             createMainScreen();
         });
+
+        trButton.setOnClickListener(v -> {
+            language = "TR";
+            createMainScreen();
+        });
+
+        deButton.setOnClickListener(v -> {
+            language = "DE";
+            createMainScreen();
+        });
+    }
+
+    private Button createLanguageButton(String text) {
+
+        Button button = new Button(this);
+        button.setText(text);
+        button.setTextSize(11);
+        button.setAllCaps(false);
+
+        LinearLayout.LayoutParams params =
+                new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.WRAP_CONTENT,
+                        42
+                );
+
+        params.setMargins(1, 0, 1, 0);
+
+        button.setLayoutParams(params);
+
+        return button;
     }
 
     private String getMenuText(int index) {
@@ -186,6 +260,14 @@ public class MainActivity extends Activity {
 
         if (language.equals("EN")) {
             return en[index];
+        }
+
+        if (language.equals("TR")) {
+            return tr[index];
+        }
+
+        if (language.equals("DE")) {
+            return de[index];
         }
 
         return ru[index];
@@ -199,6 +281,14 @@ public class MainActivity extends Activity {
 
         if (language.equals("EN")) {
             return "English for Workers";
+        }
+
+        if (language.equals("TR")) {
+            return "İşçiler için İngilizce";
+        }
+
+        if (language.equals("DE")) {
+            return "Englisch für Arbeiter";
         }
 
         return "Английский язык для работников";
