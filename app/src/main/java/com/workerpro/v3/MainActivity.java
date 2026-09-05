@@ -107,12 +107,13 @@ public class MainActivity extends Activity {
         LinearLayout topBar = new LinearLayout(this);
         topBar.setOrientation(LinearLayout.HORIZONTAL);
         topBar.setGravity(Gravity.CENTER_VERTICAL);
-        topBar.setPadding(15, 20, 8, 5);
+        topBar.setPadding(8, 12, 4, 5);
 
         TextView header = new TextView(this);
         header.setText("WORKER PRO");
-        header.setTextSize(25);
+        header.setTextSize(22);
         header.setTypeface(null, Typeface.BOLD);
+        header.setGravity(Gravity.CENTER_VERTICAL);
 
         topBar.addView(
                 header,
@@ -128,11 +129,11 @@ public class MainActivity extends Activity {
         languages.setOrientation(LinearLayout.HORIZONTAL);
         languages.setGravity(Gravity.CENTER_VERTICAL);
 
-        Button ruButton = createLanguageButton("RU");
-        Button azButton = createLanguageButton("AZ");
-        Button enButton = createLanguageButton("EN");
-        Button trButton = createLanguageButton("TR");
-        Button deButton = createLanguageButton("DE");
+        TextView ruButton = createLanguageButton("RU");
+        TextView azButton = createLanguageButton("AZ");
+        TextView enButton = createLanguageButton("EN");
+        TextView trButton = createLanguageButton("TR");
+        TextView deButton = createLanguageButton("DE");
 
         languages.addView(ruButton);
         languages.addView(azButton);
@@ -146,9 +147,9 @@ public class MainActivity extends Activity {
 
         TextView subtitle = new TextView(this);
         subtitle.setText(getSubtitle());
-        subtitle.setTextSize(16);
+        subtitle.setTextSize(15);
         subtitle.setGravity(Gravity.CENTER);
-        subtitle.setPadding(0, 0, 0, 15);
+        subtitle.setPadding(0, 0, 0, 10);
 
         root.addView(subtitle);
 
@@ -156,7 +157,7 @@ public class MainActivity extends Activity {
 
         LinearLayout menu = new LinearLayout(this);
         menu.setOrientation(LinearLayout.VERTICAL);
-        menu.setPadding(20, 10, 20, 10);
+        menu.setPadding(15, 5, 15, 10);
 
         for (int i = 0; i < 12; i++) {
 
@@ -164,7 +165,7 @@ public class MainActivity extends Activity {
 
             Button button = new Button(this);
             button.setText(getMenuText(i));
-            button.setTextSize(17);
+            button.setTextSize(16);
             button.setAllCaps(false);
 
             LinearLayout.LayoutParams params =
@@ -173,7 +174,7 @@ public class MainActivity extends Activity {
                             LinearLayout.LayoutParams.WRAP_CONTENT
                     );
 
-            params.setMargins(0, 5, 0, 5);
+            params.setMargins(0, 3, 0, 3);
 
             menu.addView(button, params);
 
@@ -198,9 +199,9 @@ public class MainActivity extends Activity {
 
         TextView footer = new TextView(this);
         footer.setText("F.S");
-        footer.setTextSize(14);
+        footer.setTextSize(13);
         footer.setGravity(Gravity.CENTER);
-        footer.setPadding(0, 8, 0, 10);
+        footer.setPadding(0, 5, 0, 8);
 
         root.addView(footer);
 
@@ -232,20 +233,22 @@ public class MainActivity extends Activity {
         });
     }
 
-    private Button createLanguageButton(String text) {
+    private TextView createLanguageButton(String text) {
 
-        Button button = new Button(this);
+        TextView button = new TextView(this);
         button.setText(text);
         button.setTextSize(11);
-        button.setAllCaps(false);
+        button.setTypeface(null, Typeface.BOLD);
+        button.setGravity(Gravity.CENTER);
+        button.setPadding(3, 3, 3, 3);
+        button.setClickable(true);
+        button.setFocusable(true);
 
         LinearLayout.LayoutParams params =
                 new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.WRAP_CONTENT,
-                        42
+                        32,
+                        38
                 );
-
-        params.setMargins(1, 0, 1, 0);
 
         button.setLayoutParams(params);
 
