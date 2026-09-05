@@ -14,12 +14,20 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import java.util.Calendar;
+import java.util.HashSet;
 import java.util.Locale;
+import java.util.Set;
 
 public class LessonOfDayActivity extends Activity {
 
     private TextToSpeech tts;
     private String language = "RU";
+
+    private final Set<String> learnedWords = new HashSet<>();
+
+    private int learnedToday = 0;
+
+    private TextView progressText;
 
     private final String[][] words = {
 
@@ -37,7 +45,16 @@ public class LessonOfDayActivity extends Activity {
             {"Repair", "Ремонт", "Təmir"},
             {"Measurement", "Измерение", "Ölçmə"},
             {"Tolerance", "Допуск", "Tolerans"},
-            {"Emergency", "Авария", "Fövqəladə vəziyyət"}
+            {"Emergency", "Авария", "Fövqəladə vəziyyət"},
+            {"Helmet", "Каска", "Dəbilqə"},
+            {"Gloves", "Перчатки", "Əlcəklər"},
+            {"Fire", "Пожар", "Yanğın"},
+            {"Sensor", "Датчик", "Sensor"},
+            {"Operator", "Оператор", "Operator"},
+            {"Production", "Производство", "İstehsalat"},
+            {"Factory", "Завод", "Zavod"},
+            {"Process", "Процесс", "Proses"},
+            {"Material", "Материал", "Material"}
     };
 
     private final String[][] phrases = {
@@ -119,23 +136,29 @@ public class LessonOfDayActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        String savedLanguage = getIntent().getStringExtra("LANGUAGE");
+        String savedLanguage =
+                getIntent().getStringExtra("LANGUAGE");
 
         if (savedLanguage != null) {
             language = savedLanguage;
         }
 
+        loadProgress();
+
         createScreen();
 
-        tts = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
-            @Override
-            public void onInit(int status) {
+        tts = new TextToSpeech(
+                this,
+                new TextToSpeech.OnInitListener() {
+                    @Override
+                    public void onInit(int status) {
 
-                if (status == TextToSpeech.SUCCESS) {
-                    tts.setLanguage(Locale.US);
+                        if (status == TextToSpeech.SUCCESS) {
+                            tts.setLanguage(Locale.US);
+                        }
+                    }
                 }
-            }
-        });
+        );
     }
 
     private void createScreen() {
@@ -143,6 +166,7 @@ public class LessonOfDayActivity extends Activity {
         ScrollView scrollView = new ScrollView(this);
 
         LinearLayout root = new LinearLayout(this);
+
         root.setOrientation(LinearLayout.VERTICAL);
         root.setPadding(20, 20, 20, 20);
         root.setBackgroundColor(Color.WHITE);
@@ -160,7 +184,7 @@ public class LessonOfDayActivity extends Activity {
 
         root.addView(title);
 
-        // DAY NUMBER
+        // DAY
 
         Calendar calendar = Calendar.getInstance();
 
@@ -169,21 +193,38 @@ public class LessonOfDayActivity extends Activity {
         TextView dayText = new TextView(this);
 
         dayText.setText(
-                getDayText() + " #" + (day % 365 + 1)
+                getDayText() + " #" + day
         );
 
         dayText.setTextSize(18);
         dayText.setGravity(Gravity.CENTER);
         dayText.setTextColor(Color.DKGRAY);
-        dayText.setPadding(0, 0, 0, 20);
+        dayText.setPadding(0, 0, 0, 15);
 
         root.addView(dayText);
+
+        // PROGRESS
+
+        progressText = new TextView(this);
+
+        progressText.setTextSize(20);
+        progressText.setTypeface(null, Typeface.BOLD);
+        progressText.setGravity(Gravity.CENTER);
+        progressText.setTextColor(Color.rgb(0, 120, 60));
+        progressText.setPadding(0, 10, 0, 20);
+
+        root.addView(progressText);
+
+        updateProgress();
 
         // WORDS TITLE
 
         TextView wordsTitle = new TextView(this);
 
-        wordsTitle.setText("📖 " + getWordsTitle());
+        wordsTitle.setText(
+                "📖 " + getWordsTitle()
+        );
+
         wordsTitle.setTextSize(23);
         wordsTitle.setTypeface(null, Typeface.BOLD);
         wordsTitle.setTextColor(Color.rgb(0, 120, 60));
@@ -197,16 +238,24 @@ public class LessonOfDayActivity extends Activity {
 
         for (int i = 0; i < 5; i++) {
 
-            int index = (startWord + i) % words.length;
+            int index =
+                    (startWord + i) % words.length;
 
-            addWordCard(root, words[index]);
+            addWordCard(
+                    root,
+                    words[index],
+                    index
+            );
         }
 
         // PHRASES TITLE
 
         TextView phrasesTitle = new TextView(this);
 
-        phrasesTitle.setText("💬 " + getPhrasesTitle());
+        phrasesTitle.setText(
+                "💬 " + getPhrasesTitle()
+        );
+
         phrasesTitle.setTextSize(23);
         phrasesTitle.setTypeface(null, Typeface.BOLD);
         phrasesTitle.setTextColor(Color.rgb(0, 120, 60));
@@ -216,13 +265,18 @@ public class LessonOfDayActivity extends Activity {
 
         // THREE PHRASES
 
-        int startPhrase = day % phrases.length;
+        int startPhrase =
+                day % phrases.length;
 
         for (int i = 0; i < 3; i++) {
 
-            int index = (startPhrase + i) % phrases.length;
+            int index =
+                    (startPhrase + i) % phrases.length;
 
-            addPhraseCard(root, phrases[index]);
+            addPhraseCard(
+                    root,
+                    phrases[index]
+            );
         }
 
         // FOOTER
@@ -244,17 +298,32 @@ public class LessonOfDayActivity extends Activity {
 
     private void addWordCard(
             LinearLayout root,
-            String[] word) {
+            String[] word,
+            int wordIndex) {
 
-        LinearLayout card = new LinearLayout(this);
+        LinearLayout card =
+                new LinearLayout(this);
 
-        card.setOrientation(LinearLayout.VERTICAL);
-        card.setPadding(20, 15, 20, 15);
+        card.setOrientation(
+                LinearLayout.VERTICAL
+        );
 
-        GradientDrawable background = new GradientDrawable();
+        card.setPadding(
+                20,
+                15,
+                20,
+                15
+        );
 
-        background.setColor(Color.rgb(242, 248, 244));
+        GradientDrawable background =
+                new GradientDrawable();
+
+        background.setColor(
+                Color.rgb(242, 248, 244)
+        );
+
         background.setCornerRadius(18);
+
         background.setStroke(
                 2,
                 Color.rgb(0, 130, 70)
@@ -262,20 +331,31 @@ public class LessonOfDayActivity extends Activity {
 
         card.setBackground(background);
 
-        TextView english = new TextView(this);
+        TextView english =
+                new TextView(this);
 
-        english.setText("🇬🇧 " + word[0]);
+        english.setText(
+                "🇬🇧 " + word[0]
+        );
+
         english.setTextSize(22);
-        english.setTypeface(null, Typeface.BOLD);
+        english.setTypeface(
+                null,
+                Typeface.BOLD
+        );
+
         english.setTextColor(Color.BLACK);
 
         card.addView(english);
 
-        TextView translation = new TextView(this);
+        TextView translation =
+                new TextView(this);
 
         if (language.equals("AZ")) {
 
-            translation.setText("🇦🇿 " + word[2]);
+            translation.setText(
+                    "🇦🇿 " + word[2]
+            );
 
         } else {
 
@@ -291,7 +371,8 @@ public class LessonOfDayActivity extends Activity {
 
         card.addView(translation);
 
-        Button listen = new Button(this);
+        Button listen =
+                new Button(this);
 
         listen.setText(
                 "🔊 " + getListenText()
@@ -303,13 +384,65 @@ public class LessonOfDayActivity extends Activity {
 
         card.addView(listen);
 
+        Button learned =
+                new Button(this);
+
+        boolean isLearned =
+                learnedWords.contains(
+                        wordKey(word)
+                );
+
+        if (isLearned) {
+
+            learned.setText(
+                    "✅ " + getLearnedText()
+            );
+
+        } else {
+
+            learned.setText(
+                    "⭐ " + getLearnText()
+            );
+        }
+
+        learned.setOnClickListener(
+                v -> {
+
+                    String key =
+                            wordKey(word);
+
+                    if (!learnedWords.contains(key)) {
+
+                        learnedWords.add(key);
+
+                        learnedToday++;
+
+                        saveProgress();
+
+                        learned.setText(
+                                "✅ " +
+                                getLearnedText()
+                        );
+
+                        updateProgress();
+                    }
+                }
+        );
+
+        card.addView(learned);
+
         LinearLayout.LayoutParams params =
                 new LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.MATCH_PARENT,
                         LinearLayout.LayoutParams.WRAP_CONTENT
                 );
 
-        params.setMargins(0, 0, 0, 12);
+        params.setMargins(
+                0,
+                0,
+                0,
+                12
+        );
 
         root.addView(card, params);
     }
@@ -318,15 +451,29 @@ public class LessonOfDayActivity extends Activity {
             LinearLayout root,
             String[] phrase) {
 
-        LinearLayout card = new LinearLayout(this);
+        LinearLayout card =
+                new LinearLayout(this);
 
-        card.setOrientation(LinearLayout.VERTICAL);
-        card.setPadding(20, 15, 20, 15);
+        card.setOrientation(
+                LinearLayout.VERTICAL
+        );
 
-        GradientDrawable background = new GradientDrawable();
+        card.setPadding(
+                20,
+                15,
+                20,
+                15
+        );
 
-        background.setColor(Color.rgb(248, 250, 248));
+        GradientDrawable background =
+                new GradientDrawable();
+
+        background.setColor(
+                Color.rgb(248, 250, 248)
+        );
+
         background.setCornerRadius(18);
+
         background.setStroke(
                 2,
                 Color.rgb(0, 130, 70)
@@ -334,7 +481,8 @@ public class LessonOfDayActivity extends Activity {
 
         card.setBackground(background);
 
-        TextView text = new TextView(this);
+        TextView text =
+                new TextView(this);
 
         text.setText(
                 "🇬🇧 " + phrase[0] +
@@ -347,7 +495,8 @@ public class LessonOfDayActivity extends Activity {
 
         card.addView(text);
 
-        Button listen = new Button(this);
+        Button listen =
+                new Button(this);
 
         listen.setText(
                 "🔊 " + getListenText()
@@ -365,9 +514,129 @@ public class LessonOfDayActivity extends Activity {
                         LinearLayout.LayoutParams.WRAP_CONTENT
                 );
 
-        params.setMargins(0, 0, 0, 12);
+        params.setMargins(
+                0,
+                0,
+                0,
+                12
+        );
 
         root.addView(card, params);
+    }
+
+    private void updateProgress() {
+
+        if (progressText == null) {
+            return;
+        }
+
+        progressText.setText(
+                "📊 " +
+                getProgressText() +
+                ": " +
+                learnedToday +
+                " / 5"
+        );
+    }
+
+    private String wordKey(String[] word) {
+
+        return word[0];
+    }
+
+    private void loadProgress() {
+
+        android.content.SharedPreferences prefs =
+                getSharedPreferences(
+                        "WORKER_PRO_LESSON_PROGRESS",
+                        MODE_PRIVATE
+                );
+
+        int savedDay =
+                prefs.getInt(
+                        "day",
+                        -1
+                );
+
+        Calendar calendar =
+                Calendar.getInstance();
+
+        int today =
+                calendar.get(Calendar.DAY_OF_YEAR);
+
+        if (savedDay == today) {
+
+            learnedToday =
+                    prefs.getInt(
+                            "learnedToday",
+                            0
+                    );
+
+            String savedWords =
+                    prefs.getString(
+                            "learnedWords",
+                            ""
+                    );
+
+            if (!savedWords.isEmpty()) {
+
+                String[] list =
+                        savedWords.split("\\|");
+
+                for (String item : list) {
+
+                    if (!item.isEmpty()) {
+                        learnedWords.add(item);
+                    }
+                }
+            }
+
+        } else {
+
+            learnedToday = 0;
+
+            learnedWords.clear();
+
+            prefs.edit()
+                    .putInt("day", today)
+                    .putInt("learnedToday", 0)
+                    .putString("learnedWords", "")
+                    .apply();
+        }
+    }
+
+    private void saveProgress() {
+
+        StringBuilder builder =
+                new StringBuilder();
+
+        for (String word : learnedWords) {
+
+            builder.append(word)
+                    .append("|");
+        }
+
+        Calendar calendar =
+                Calendar.getInstance();
+
+        int today =
+                calendar.get(Calendar.DAY_OF_YEAR);
+
+        getSharedPreferences(
+                "WORKER_PRO_LESSON_PROGRESS",
+                MODE_PRIVATE
+        )
+                .edit()
+                .putInt("day", today)
+                .putInt(
+                        "learnedToday",
+                        learnedToday
+                )
+                .putString(
+                        "learnedWords",
+                        builder.toString()
+                )
+                .apply();
     }
 
     private void speak(String text) {
@@ -401,7 +670,7 @@ public class LessonOfDayActivity extends Activity {
     private String getDayText() {
 
         if (language.equals("AZ")) {
-            return "Günün dərsi";
+            return "Gündəlik dərs";
         }
 
         if (language.equals("EN")) {
@@ -448,6 +717,45 @@ public class LessonOfDayActivity extends Activity {
         }
 
         return "Послушать";
+    }
+
+    private String getLearnText() {
+
+        if (language.equals("AZ")) {
+            return "Öyrəndim";
+        }
+
+        if (language.equals("EN")) {
+            return "I learned it";
+        }
+
+        return "Я выучил";
+    }
+
+    private String getLearnedText() {
+
+        if (language.equals("AZ")) {
+            return "Öyrənildi";
+        }
+
+        if (language.equals("EN")) {
+            return "Learned";
+        }
+
+        return "Выучено";
+    }
+
+    private String getProgressText() {
+
+        if (language.equals("AZ")) {
+            return "Bugünkü irəliləyiş";
+        }
+
+        if (language.equals("EN")) {
+            return "Today's progress";
+        }
+
+        return "Прогресс сегодня";
     }
 
     @Override
