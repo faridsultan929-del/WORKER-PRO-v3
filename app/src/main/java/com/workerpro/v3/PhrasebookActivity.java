@@ -37,7 +37,7 @@ public class PhrasebookActivity extends Activity {
 
         // HEADER
         TextView title = new TextView(this);
-        title.setText(getTitle());
+        title.setText(getPhrasebookTitle());
         title.setTextSize(25);
         title.setTypeface(null, Typeface.BOLD);
         title.setTextColor(Color.rgb(0, 130, 70));
@@ -120,7 +120,7 @@ public class PhrasebookActivity extends Activity {
         setContentView(root);
     }
 
-    private String getTitle() {
+    private String getPhrasebookTitle() {
 
         if (language.equals("AZ")) {
             return "💬 Danışıq kitabçası";
