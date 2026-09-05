@@ -375,27 +375,34 @@ public class EnglishActivity extends Activity {
                 "📂 " + getSectionsText()
         );
 
-        sectionTitle.setTextSize(17);
-        sectionTitle.setTextColor(Color.BLACK);
+        // Немного крупнее
+        sectionTitle.setTextSize(19);
+
+        sectionTitle.setTextColor(
+                Color.BLACK
+        );
+
         sectionTitle.setTypeface(
                 null,
                 Typeface.BOLD
         );
 
+        // Полностью по центру
         sectionTitle.setGravity(
-                Gravity.CENTER_VERTICAL
+                Gravity.CENTER
         );
 
+        // Нормальные отступы
         sectionTitle.setPadding(
-                12, 5, 12, 5
+                12, 4, 12, 4
         );
 
-        // Увеличено до 58
+        // Высота 52dp
         root.addView(
                 sectionTitle,
                 new LinearLayout.LayoutParams(
                         ViewGroup.LayoutParams.MATCH_PARENT,
-                        58
+                        52
                 )
         );
 
@@ -448,7 +455,6 @@ public class EnglishActivity extends Activity {
                 categoryLayout
         );
 
-        // Увеличено до 94
         root.addView(
                 categoryScroll,
                 new LinearLayout.LayoutParams(
