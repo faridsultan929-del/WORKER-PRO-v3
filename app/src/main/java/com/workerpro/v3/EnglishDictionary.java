@@ -65,6 +65,26 @@ public class EnglishDictionary {
         add(words, "Raw Material", "Сырьё", "Xammal", "WORK");
         add(words, "Output", "Выпуск / производительность", "Çıxış / istehsal", "WORK");
 
+        add(words, "Production Rate", "Производительность", "İstehsal sürəti", "WORK");
+        add(words, "Production Plan", "План производства", "İstehsal planı", "WORK");
+        add(words, "Production Order", "Производственный заказ", "İstehsal sifarişi", "WORK");
+        add(words, "Shift", "Смена", "Növbə", "WORK");
+        add(words, "Day Shift", "Дневная смена", "Gündüz növbəsi", "WORK");
+        add(words, "Night Shift", "Ночная смена", "Gecə növbəsi", "WORK");
+        add(words, "Shift Change", "Смена смены", "Növbə dəyişməsi", "WORK");
+        add(words, "Workstation", "Рабочее место", "İş yeri", "WORK");
+        add(words, "Work Area", "Рабочая зона", "İş sahəsi", "WORK");
+        add(words, "Production Area", "Производственная зона", "İstehsal sahəsi", "WORK");
+        add(words, "Work Instruction", "Рабочая инструкция", "İş təlimatı", "WORK");
+        add(words, "Standard Operation", "Стандартная операция", "Standart əməliyyat", "WORK");
+        add(words, "Work Order", "Рабочее задание", "İş tapşırığı", "WORK");
+        add(words, "Downtime", "Простой", "Boşdayanma", "WORK");
+        add(words, "Production Time", "Производственное время", "İstehsal vaxtı", "WORK");
+        add(words, "Break Time", "Время перерыва", "Fasilə vaxtı", "WORK");
+        add(words, "Shift Leader", "Начальник смены", "Növbə rəisi", "WORK");
+        add(words, "Supervisor", "Руководитель / мастер", "Nəzarətçi / usta", "WORK");
+        add(words, "Team Leader", "Бригадир", "Briqadir", "WORK");
+
         // =====================================================
         // MACHINE
         // =====================================================
@@ -94,6 +114,27 @@ public class EnglishDictionary {
         add(words, "Alarm", "Аварийный сигнал", "Siqnal", "MACHINE");
         add(words, "Error", "Ошибка", "Səhv", "MACHINE");
         add(words, "Error Code", "Код ошибки", "Səhv kodu", "MACHINE");
+
+        add(words, "Machine Cover", "Кожух станка", "Dəzgah örtüyü", "MACHINE");
+        add(words, "Machine Door", "Дверь станка", "Dəzgah qapısı", "MACHINE");
+        add(words, "Machine Cabinet", "Шкаф станка", "Dəzgah şkafı", "MACHINE");
+        add(words, "Electrical Cabinet", "Электрический шкаф", "Elektrik şkafı", "MACHINE");
+        add(words, "Hydraulic System", "Гидравлическая система", "Hidravlik sistem", "MACHINE");
+        add(words, "Hydraulic Pump", "Гидравлический насос", "Hidravlik nasos", "MACHINE");
+        add(words, "Hydraulic Pressure", "Гидравлическое давление", "Hidravlik təzyiq", "MACHINE");
+        add(words, "Hydraulic Valve", "Гидравлический клапан", "Hidravlik klapan", "MACHINE");
+        add(words, "Pneumatic System", "Пневматическая система", "Pnevmatik sistem", "MACHINE");
+        add(words, "Air Pressure", "Давление воздуха", "Hava təzyiqi", "MACHINE");
+        add(words, "Air Filter", "Воздушный фильтр", "Hava filtri", "MACHINE");
+        add(words, "Solenoid Valve", "Электромагнитный клапан", "Solenoid klapan", "MACHINE");
+        add(words, "Actuator", "Приводной механизм", "İcra mexanizmi", "MACHINE");
+        add(words, "Cylinder", "Цилиндр", "Silindr", "MACHINE");
+        add(words, "Piston", "Поршень", "Porşen", "MACHINE");
+        add(words, "Valve", "Клапан", "Klapan", "MACHINE");
+        add(words, "Pump", "Насос", "Nasos", "MACHINE");
+        add(words, "Pressure", "Давление", "Təzyiq", "MACHINE");
+        add(words, "Flow", "Поток / расход", "Axın", "MACHINE");
+        add(words, "Temperature Sensor", "Датчик температуры", "Temperatur sensoru", "MACHINE");
 
         // =====================================================
         // CNC
@@ -138,17 +179,10 @@ public class EnglishDictionary {
         add(words, "Cutting Speed", "Скорость резания", "Kəsmə sürəti", "CNC");
         add(words, "Cutting Depth", "Глубина резания", "Kəsmə dərinliyi", "CNC");
 
-        // =====================================================
-        // CNC EXTENDED
-        // =====================================================
-
         add(words, "G-Code", "G-код", "G-kod", "CNC");
         add(words, "M-Code", "M-код", "M-kod", "CNC");
         add(words, "Tool Offset", "Коррекция инструмента", "Alət korreksiyası", "CNC");
         add(words, "Work Offset", "Рабочая коррекция", "İş korreksiyası", "CNC");
-        add(words, "Tool Length Offset", "Коррекция длины инструмента", "Alət uzunluğu korreksiyası", "CNC");
-        add(words, "Tool Radius Compensation", "Коррекция радиуса инструмента", "Alət radiusunun kompensasiyası", "CNC");
-        add(words, "Cutter Compensation", "Коррекция фрезы", "Freze kompensasiyası", "CNC");
         add(words, "Tool Life", "Срок службы инструмента", "Alətin xidmət müddəti", "CNC");
         add(words, "Tool Wear", "Износ инструмента", "Alətin aşınması", "CNC");
         add(words, "Tool Wear Compensation", "Компенсация износа инструмента", "Alət aşınmasının kompensasiyası", "CNC");
@@ -162,8 +196,6 @@ public class EnglishDictionary {
         add(words, "Work Origin", "Начало координат детали", "Detal koordinat başlanğıcı", "CNC");
         add(words, "Absolute Position", "Абсолютная позиция", "Mütləq mövqe", "CNC");
         add(words, "Incremental Position", "Относительная позиция", "Nisbi mövqe", "CNC");
-        add(words, "Absolute Programming", "Абсолютное программирование", "Mütləq proqramlaşdırma", "CNC");
-        add(words, "Incremental Programming", "Относительное программирование", "Nisbi proqramlaşdırma", "CNC");
         add(words, "Positioning", "Позиционирование", "Mövqeləndirmə", "CNC");
         add(words, "Interpolation", "Интерполяция", "İnterpolyasiya", "CNC");
         add(words, "Linear Interpolation", "Линейная интерполяция", "Xətti interpolyasiya", "CNC");
@@ -173,7 +205,6 @@ public class EnglishDictionary {
         add(words, "Spindle Direction", "Направление вращения шпинделя", "Şpindelin fırlanma istiqaməti", "CNC");
         add(words, "Spindle Start", "Запуск шпинделя", "Şpindelin işə salınması", "CNC");
         add(words, "Spindle Stop", "Остановка шпинделя", "Şpindelin dayandırılması", "CNC");
-        add(words, "Spindle Speed Override", "Коррекция скорости шпинделя", "Şpindel sürətinin korreksiyası", "CNC");
         add(words, "Feed Override", "Коррекция подачи", "Veriş korreksiyası", "CNC");
         add(words, "Rapid Override", "Коррекция быстрого хода", "Sürətli gediş korreksiyası", "CNC");
         add(words, "Feed Hold Button", "Кнопка остановки подачи", "Verişi saxlama düyməsi", "CNC");
@@ -190,16 +221,13 @@ public class EnglishDictionary {
         add(words, "Program Lock", "Блокировка программы", "Proqram kilidi", "CNC");
         add(words, "Parameter", "Параметр", "Parametr", "CNC");
         add(words, "Parameter Setting", "Настройка параметров", "Parametrlərin sazlanması", "CNC");
-        add(words, "Machine Parameter", "Параметр станка", "Dəzgah parametri", "CNC");
         add(words, "Offset Setting", "Настройка коррекции", "Korreksiyanın sazlanması", "CNC");
         add(words, "Program Editing", "Редактирование программы", "Proqramın redaktəsi", "CNC");
         add(words, "Program Backup", "Резервная копия программы", "Proqramın ehtiyat nüsxəsi", "CNC");
         add(words, "Program Transfer", "Передача программы", "Proqramın ötürülməsi", "CNC");
         add(words, "USB Transfer", "Передача через USB", "USB vasitəsilə ötürmə", "CNC");
-        add(words, "Memory Card", "Карта памяти", "Yaddaş kartı", "CNC");
         add(words, "Program File", "Файл программы", "Proqram faylı", "CNC");
         add(words, "Program Name", "Имя программы", "Proqram adı", "CNC");
-        add(words, "Program Comment", "Комментарий программы", "Proqram şərhi", "CNC");
         add(words, "Sequence Number", "Номер последовательности", "Ardıcıllıq nömrəsi", "CNC");
         add(words, "Block Number", "Номер блока", "Blok nömrəsi", "CNC");
         add(words, "Block Skip", "Пропуск блока", "Blokun buraxılması", "CNC");
@@ -225,28 +253,8 @@ public class EnglishDictionary {
         add(words, "Contour Milling", "Контурное фрезерование", "Kontur frezləmə", "CNC");
         add(words, "Pocket Milling", "Фрезерование кармана", "Cib frezləməsi", "CNC");
         add(words, "Slot Milling", "Фрезерование паза", "Yiv frezləməsi", "CNC");
-        add(words, "Step Milling", "Ступенчатое фрезерование", "Pilləli frezləmə", "CNC");
         add(words, "Roughing", "Черновая обработка", "Qaba emal", "CNC");
         add(words, "Finishing", "Чистовая обработка", "Təmiz emal", "CNC");
-        add(words, "Semi-Finishing", "Получистовая обработка", "Yarımçıq təmiz emal", "CNC");
-        add(words, "Surface Milling", "Обработка поверхности фрезой", "Səthin frezlənməsi", "CNC");
-        add(words, "Cutting Tool Wear", "Износ режущего инструмента", "Kəsici alətin aşınması", "CNC");
-        add(words, "Cutting Edge", "Режущая кромка", "Kəsici kənar", "CNC");
-        add(words, "Insert", "Сменная пластина", "Dəyişən lövhə", "CNC");
-        add(words, "Carbide Insert", "Твердосплавная пластина", "Sərt ərintili lövhə", "CNC");
-        add(words, "Indexable Insert", "Сменная режущая пластина", "Dəyişən kəsici lövhə", "CNC");
-        add(words, "End Mill", "Концевая фреза", "Son frez", "CNC");
-        add(words, "Ball Nose Cutter", "Сферическая фреза", "Sferik frez", "CNC");
-        add(words, "Corner Radius Cutter", "Фреза с радиусом угла", "Künc radiuslu frez", "CNC");
-        add(words, "Face Mill Cutter", "Торцевая фреза", "Üz frezi", "CNC");
-        add(words, "Slot Cutter", "Фреза для пазов", "Yiv frezi", "CNC");
-        add(words, "Drill Diameter", "Диаметр сверла", "Burğunun diametri", "CNC");
-        add(words, "Hole Diameter", "Диаметр отверстия", "Deşiyin diametri", "CNC");
-        add(words, "Hole Depth", "Глубина отверстия", "Deşiyin dərinliyi", "CNC");
-        add(words, "Hole Position", "Положение отверстия", "Deşiyin mövqeyi", "CNC");
-        add(words, "Center Drill", "Центровочное сверло", "Mərkəz burğusu", "CNC");
-        add(words, "Countersink", "Зенкер", "Zenker", "CNC");
-        add(words, "Counterbore", "Цековка", "Səth genişləndirməsi", "CNC");
         add(words, "Workpiece", "Заготовка / деталь", "Pəstah / detal", "CNC");
         add(words, "Workholding", "Закрепление детали", "Detalın bərkidilməsi", "CNC");
         add(words, "Clamping", "Зажим", "Sıxma", "CNC");
@@ -255,24 +263,17 @@ public class EnglishDictionary {
         add(words, "Three-Jaw Chuck", "Трёхкулачковый патрон", "Üççənəli patron", "CNC");
         add(words, "Four-Jaw Chuck", "Четырёхкулачковый патрон", "Dördçənəli patron", "CNC");
         add(words, "Collet", "Цанга", "Sıxac patronu", "CNC");
-        add(words, "Collet Chuck", "Цанговый патрон", "Sıxac patronu", "CNC");
         add(words, "Soft Jaw", "Мягкие кулачки", "Yumşaq çənələr", "CNC");
         add(words, "Hard Jaw", "Жёсткие кулачки", "Sərt çənələr", "CNC");
-        add(words, "Fixture Plate", "Монтажная плита", "Bərkitmə lövhəsi", "CNC");
-        add(words, "Workholding Fixture", "Приспособление для крепления детали", "Detal bərkitmə qurğusu", "CNC");
-        add(words, "Cutting Fluid", "СОЖ / режущая жидкость", "Kəsici maye", "CNC");
         add(words, "Coolant", "Охлаждающая жидкость", "Soyuducu maye", "CNC");
         add(words, "Coolant Pressure", "Давление охлаждающей жидкости", "Soyuducu maye təzyiqi", "CNC");
         add(words, "Coolant Flow", "Поток охлаждающей жидкости", "Soyuducu maye axını", "CNC");
-        add(words, "Through-Spindle Coolant", "Подача СОЖ через шпиндель", "Şpindeldən soyuducu maye verilişi", "CNC");
         add(words, "Air Blast", "Воздушное охлаждение", "Hava üfürülməsi", "CNC");
         add(words, "Chip", "Стружка", "Yonqar", "CNC");
         add(words, "Chip Removal", "Удаление стружки", "Yonqarın çıxarılması", "CNC");
         add(words, "Chip Conveyor", "Конвейер для стружки", "Yonqar konveyeri", "CNC");
         add(words, "Chip Load", "Нагрузка на зуб", "Dişə düşən yük", "CNC");
-        add(words, "Chip Thickness", "Толщина стружки", "Yonqar qalınlığı", "CNC");
         add(words, "Cutting Force", "Сила резания", "Kəsmə qüvvəsi", "CNC");
-        add(words, "Cutting Torque", "Крутящий момент резания", "Kəsmə fırlanma momenti", "CNC");
         add(words, "Cutting Temperature", "Температура резания", "Kəsmə temperaturu", "CNC");
         add(words, "Surface Speed", "Скорость поверхности", "Səth sürəti", "CNC");
         add(words, "Feed Per Tooth", "Подача на зуб", "Diş başına veriş", "CNC");
@@ -280,7 +281,6 @@ public class EnglishDictionary {
         add(words, "Depth of Cut", "Глубина резания", "Kəsmə dərinliyi", "CNC");
         add(words, "Step Over", "Шаг поперечной подачи", "Eninə veriş addımı", "CNC");
         add(words, "Step Down", "Шаг по глубине", "Dərinlik addımı", "CNC");
-        add(words, "Material Removal Rate", "Скорость съёма материала", "Materialın çıxarılma sürəti", "CNC");
         add(words, "Machining Time", "Время обработки", "Emal vaxtı", "CNC");
         add(words, "Machine Accuracy", "Точность станка", "Dəzgah dəqiqliyi", "CNC");
         add(words, "Machine Repeatability", "Повторяемость станка", "Dəzgahın təkrarlanma qabiliyyəti", "CNC");
@@ -293,14 +293,11 @@ public class EnglishDictionary {
         add(words, "Linear Scale", "Линейная шкала", "Xətti şkala", "CNC");
         add(words, "Ball Screw", "Шарико-винтовая передача", "Kürəcikli vint ötürməsi", "CNC");
         add(words, "Linear Guide", "Линейная направляющая", "Xətti istiqamətləndirici", "CNC");
-        add(words, "Guide Rail", "Направляющая рейка", "İstiqamətləndirici rels", "CNC");
-        add(words, "Axis Limit", "Ограничение оси", "Ox limiti", "CNC");
         add(words, "Overtravel", "Выход за пределы хода", "Hərəkət həddinin aşılması", "CNC");
         add(words, "Servo Alarm", "Авария сервопривода", "Servo siqnalı", "CNC");
         add(words, "Spindle Alarm", "Авария шпинделя", "Şpindel siqnalı", "CNC");
         add(words, "Overload Alarm", "Сигнал перегрузки", "Həddindən artıq yüklənmə siqnalı", "CNC");
         add(words, "Communication Error", "Ошибка связи", "Rabitə xətası", "CNC");
-        add(words, "Low Oil Alarm", "Сигнал низкого уровня масла", "Aşağı yağ səviyyəsi siqnalı", "CNC");
         add(words, "Coolant Alarm", "Авария системы охлаждения", "Soyutma sistemi siqnalı", "CNC");
 
         // =====================================================
@@ -341,6 +338,37 @@ public class EnglishDictionary {
         add(words, "Ejection Pin", "Выталкивающий штифт", "Çıxarıcı ştift", "STAMPING");
         add(words, "Ejector Plate", "Выталкивающая плита", "Çıxarıcı lövhə", "STAMPING");
         add(words, "Finished Part", "Готовая деталь", "Hazır detal", "STAMPING");
+
+        add(words, "Press", "Пресс", "Pres", "STAMPING");
+        add(words, "Press Capacity", "Мощность пресса", "Pres gücü", "STAMPING");
+        add(words, "Press Stroke", "Ход пресса", "Pres gedişi", "STAMPING");
+        add(words, "Stroke Length", "Длина хода", "Gediş uzunluğu", "STAMPING");
+        add(words, "Press Speed", "Скорость пресса", "Pres sürəti", "STAMPING");
+        add(words, "Press Operator", "Оператор пресса", "Pres operatoru", "STAMPING");
+        add(words, "Sheet Metal", "Листовой металл", "Sac metal", "STAMPING");
+        add(words, "Metal Sheet", "Металлический лист", "Metal təbəqə", "STAMPING");
+        add(words, "Sheet Thickness", "Толщина листа", "Sac qalınlığı", "STAMPING");
+        add(words, "Sheet Width", "Ширина листа", "Sac eni", "STAMPING");
+        add(words, "Sheet Length", "Длина листа", "Sac uzunluğu", "STAMPING");
+        add(words, "Coil", "Рулон металла", "Metal rulonu", "STAMPING");
+        add(words, "Coil Feeding", "Подача рулона", "Rulonun verilməsi", "STAMPING");
+        add(words, "Feeder", "Подающее устройство", "Verici qurğu", "STAMPING");
+        add(words, "Strip Feeder", "Подача металлической ленты", "Metal lent vericisi", "STAMPING");
+        add(words, "Feeding System", "Система подачи", "Veriş sistemi", "STAMPING");
+        add(words, "Feed Length", "Длина подачи", "Veriş uzunluğu", "STAMPING");
+        add(words, "Progressive Die", "Прогрессивный штамп", "Proqressiv ştamp", "STAMPING");
+        add(words, "Compound Die", "Совмещённый штамп", "Kombinə edilmiş ştamp", "STAMPING");
+        add(words, "Forming", "Формовка", "Formalaşdırma", "STAMPING");
+        add(words, "Forming Tool", "Формовочный инструмент", "Formalaşdırma aləti", "STAMPING");
+        add(words, "Cutting Operation", "Операция резки", "Kəsmə əməliyyatı", "STAMPING");
+        add(words, "Blanking", "Вырезка заготовки", "Pəstahın kəsilməsi", "STAMPING");
+        add(words, "Trimming", "Обрезка", "Kənarların kəsilməsi", "STAMPING");
+        add(words, "Flanging", "Отбортовка", "Bortlama", "STAMPING");
+        add(words, "Metal Forming", "Обработка металла давлением", "Metalın təzyiqlə formalaşdırılması", "STAMPING");
+        add(words, "Press Brake", "Листогибочный пресс", "Sac bükmə presi", "STAMPING");
+        add(words, "Press Tool", "Штамповочный инструмент", "Ştamplama aləti", "STAMPING");
+        add(words, "Tool Clearance", "Зазор инструмента", "Alət boşluğu", "STAMPING");
+        add(words, "Strip", "Металлическая лента", "Metal lent", "STAMPING");
 
         // =====================================================
         // FURNACE
@@ -407,6 +435,27 @@ public class EnglishDictionary {
         add(words, "Emergency Route", "Аварийный маршрут", "Fövqəladə marşrut", "SAFETY");
         add(words, "Grounding", "Заземление", "Torpaqlama", "SAFETY");
         add(words, "Insulation", "Изоляция", "İzolyasiya", "SAFETY");
+
+        add(words, "Safety Helmet", "Защитная каска", "Qoruyucu dəbilqə", "SAFETY");
+        add(words, "Ear Protection", "Защита слуха", "Qulaq mühafizəsi", "SAFETY");
+        add(words, "Face Shield", "Защитный щиток для лица", "Üz qoruyucusu", "SAFETY");
+        add(words, "Respirator", "Респиратор", "Respirator", "SAFETY");
+        add(words, "Protective Clothing", "Защитная одежда", "Qoruyucu geyim", "SAFETY");
+        add(words, "Safety Harness", "Страховочная привязь", "Təhlükəsizlik kəməri", "SAFETY");
+        add(words, "Warning Sign", "Предупреждающий знак", "Xəbərdarlıq nişanı", "SAFETY");
+        add(words, "Danger Sign", "Знак опасности", "Təhlükə nişanı", "SAFETY");
+        add(words, "Safety Barrier", "Защитное ограждение", "Təhlükəsizlik baryeri", "SAFETY");
+        add(words, "Restricted Area", "Запретная зона", "Məhdud ərazi", "SAFETY");
+        add(words, "Safe Distance", "Безопасное расстояние", "Təhlükəsiz məsafə", "SAFETY");
+        add(words, "Lockout", "Блокировка оборудования", "Avadanlığın kilidlənməsi", "SAFETY");
+        add(words, "Tagout", "Маркировка оборудования", "Avadanlığın nişanlanması", "SAFETY");
+        add(words, "Lockout Tagout", "Блокировка и маркировка", "Kilidləmə və nişanlama", "SAFETY");
+        add(words, "Electrical Safety", "Электрическая безопасность", "Elektrik təhlükəsizliyi", "SAFETY");
+        add(words, "Mechanical Hazard", "Механическая опасность", "Mexaniki təhlükə", "SAFETY");
+        add(words, "Chemical Hazard", "Химическая опасность", "Kimyəvi təhlükə", "SAFETY");
+        add(words, "Noise Level", "Уровень шума", "Səs-küy səviyyəsi", "SAFETY");
+        add(words, "Safety Inspection", "Проверка безопасности", "Təhlükəsizlik yoxlaması", "SAFETY");
+        add(words, "Incident", "Инцидент", "Hadisə", "SAFETY");
 
         // =====================================================
         // WELDING
@@ -500,6 +549,27 @@ public class EnglishDictionary {
         add(words, "Burr", "Заусенец", "Qrat", "QUALITY");
         add(words, "Burr Height", "Высота заусенца", "Qrat hündürlüyü", "QUALITY");
 
+        add(words, "Inspection Point", "Точка контроля", "Nəzarət nöqtəsi", "QUALITY");
+        add(words, "Inspection Method", "Метод проверки", "Yoxlama üsulu", "QUALITY");
+        add(words, "Inspection Result", "Результат проверки", "Yoxlama nəticəsi", "QUALITY");
+        add(words, "Acceptance Criteria", "Критерии приёмки", "Qəbul meyarları", "QUALITY");
+        add(words, "Specification", "Спецификация", "Spesifikasiya", "QUALITY");
+        add(words, "Drawing", "Чертёж", "Çertyoj", "QUALITY");
+        add(words, "Technical Drawing", "Технический чертёж", "Texniki çertyoj", "QUALITY");
+        add(words, "Drawing Number", "Номер чертежа", "Çertyoj nömrəsi", "QUALITY");
+        add(words, "Revision", "Редакция / версия", "Versiya", "QUALITY");
+        add(words, "Traceability", "Прослеживаемость", "İzlənəbilənlik", "QUALITY");
+        add(words, "Batch Number", "Номер партии", "Partiya nömrəsi", "QUALITY");
+        add(words, "Serial Number", "Серийный номер", "Seriya nömrəsi", "QUALITY");
+        add(words, "Inspection Record", "Запись проверки", "Yoxlama qeydi", "QUALITY");
+        add(words, "Nonconformance", "Несоответствие", "Uyğunsuzluq", "QUALITY");
+        add(words, "Corrective Action", "Корректирующее действие", "Düzəldici tədbir", "QUALITY");
+        add(words, "Preventive Action", "Предупреждающее действие", "Qabaqlayıcı tədbir", "QUALITY");
+        add(words, "Root Cause", "Первопричина", "Əsas səbəb", "QUALITY");
+        add(words, "Visual Inspection", "Визуальный контроль", "Vizual yoxlama", "QUALITY");
+        add(words, "Dimensional Inspection", "Размерный контроль", "Ölçü yoxlaması", "QUALITY");
+        add(words, "Final Inspection", "Финальный контроль", "Yekun yoxlama", "QUALITY");
+
         // =====================================================
         // MEASUREMENT
         // =====================================================
@@ -520,6 +590,26 @@ public class EnglishDictionary {
         add(words, "Thickness", "Толщина", "Qalınlıq", "MEASUREMENT");
         add(words, "Depth", "Глубина", "Dərinlik", "MEASUREMENT");
         add(words, "Tolerance", "Допуск", "Tolerans", "MEASUREMENT");
+
+        add(words, "Ruler", "Линейка", "Xətkeş", "MEASUREMENT");
+        add(words, "Steel Ruler", "Металлическая линейка", "Metal xətkeş", "MEASUREMENT");
+        add(words, "Dial Indicator", "Индикатор часового типа", "Saat tipli indikator", "MEASUREMENT");
+        add(words, "Digital Caliper", "Электронный штангенциркуль", "Elektron ştangensirkul", "MEASUREMENT");
+        add(words, "Digital Micrometer", "Электронный микрометр", "Elektron mikrometr", "MEASUREMENT");
+        add(words, "Height Gauge", "Высотомер", "Hündürlük ölçən", "MEASUREMENT");
+        add(words, "Radius Gauge", "Радиусный шаблон", "Radius şablonu", "MEASUREMENT");
+        add(words, "Thread Gauge", "Резьбовой калибр", "Yiv kalibri", "MEASUREMENT");
+        add(words, "Go Gauge", "Проходной калибр", "Keçən kalibr", "MEASUREMENT");
+        add(words, "No-Go Gauge", "Непроходной калибр", "Keçməyən kalibr", "MEASUREMENT");
+        add(words, "Gauge Block", "Концевые меры длины", "Ölçü plitəsi", "MEASUREMENT");
+        add(words, "Measurement Error", "Погрешность измерения", "Ölçmə xətası", "MEASUREMENT");
+        add(words, "Measurement Accuracy", "Точность измерения", "Ölçmə dəqiqliyi", "MEASUREMENT");
+        add(words, "Calibration", "Калибровка", "Kalibrləmə", "MEASUREMENT");
+        add(words, "Calibration Certificate", "Сертификат калибровки", "Kalibrləmə sertifikatı", "MEASUREMENT");
+        add(words, "Unit", "Единица измерения", "Ölçü vahidi", "MEASUREMENT");
+        add(words, "Millimeter", "Миллиметр", "Millimetr", "MEASUREMENT");
+        add(words, "Angle", "Угол", "Bucaq", "MEASUREMENT");
+        add(words, "Angle Gauge", "Угломер", "Bucaqölçən", "MEASUREMENT");
 
         // =====================================================
         // TOOLS
