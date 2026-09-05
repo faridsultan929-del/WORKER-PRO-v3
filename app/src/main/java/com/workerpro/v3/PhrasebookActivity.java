@@ -1,5 +1,6 @@
 package com.workerpro.v3;
 
+import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -18,13 +19,10 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class PhrasebookActivity extends AppCompatActivity {
+public class PhrasebookActivity extends Activity {
 
     private LinearLayout phraseContainer;
     private EditText search;
@@ -72,46 +70,23 @@ public class PhrasebookActivity extends AppCompatActivity {
 
     private void createInterface() {
 
-        LinearLayout root = new LinearLayout(
-                this
-        );
+        LinearLayout root = new LinearLayout(this);
+        root.setOrientation(LinearLayout.VERTICAL);
+        root.setBackgroundColor(Color.WHITE);
 
-        root.setOrientation(
-                LinearLayout.VERTICAL
-        );
-
-        root.setBackgroundColor(
-                Color.WHITE
-        );
-
-        // =========================
         // TITLE
-        // =========================
-
         TextView title = new TextView(this);
 
-        title.setText(
-                getPhrasebookTitle()
-        );
-
+        title.setText(getPhrasebookTitle());
         title.setTextSize(26);
-
-        title.setTextColor(
-                Color.WHITE
-        );
-
-        title.setGravity(
-                Gravity.CENTER
-        );
-
+        title.setTextColor(Color.WHITE);
+        title.setGravity(Gravity.CENTER);
         title.setTypeface(
                 null,
                 android.graphics.Typeface.BOLD
         );
 
-        title.setBackgroundColor(
-                GREEN
-        );
+        title.setBackgroundColor(GREEN);
 
         title.setPadding(
                 10,
@@ -128,16 +103,10 @@ public class PhrasebookActivity extends AppCompatActivity {
                 )
         );
 
-        // =========================
         // SEARCH
-        // =========================
-
         search = new EditText(this);
 
-        search.setHint(
-                getSearchHint()
-        );
-
+        search.setHint(getSearchHint());
         search.setSingleLine(true);
 
         search.setPadding(
@@ -183,9 +152,7 @@ public class PhrasebookActivity extends AppCompatActivity {
                             int before,
                             int count) {
 
-                        filterPhrases(
-                                s.toString()
-                        );
+                        filterPhrases(s.toString());
                     }
 
                     @Override
@@ -195,16 +162,11 @@ public class PhrasebookActivity extends AppCompatActivity {
                 }
         );
 
-        // =========================
-        // CATEGORY BUTTONS
-        // =========================
-
+        // CATEGORIES
         HorizontalScrollView categoryScroll =
                 new HorizontalScrollView(this);
 
-        categoryScroll.setHorizontalScrollBarEnabled(
-                false
-        );
+        categoryScroll.setHorizontalScrollBarEnabled(false);
 
         LinearLayout categories =
                 new LinearLayout(this);
@@ -225,23 +187,16 @@ public class PhrasebookActivity extends AppCompatActivity {
 
         for (String[] item : categoryData) {
 
-            String key = item[0];
-            String text = item[1];
-
             Button button =
                     createCategoryButton(
-                            key,
-                            text
+                            item[0],
+                            item[1]
                     );
 
-            categories.addView(
-                    button
-            );
+            categories.addView(button);
         }
 
-        categoryScroll.addView(
-                categories
-        );
+        categoryScroll.addView(categories);
 
         root.addView(
                 categoryScroll,
@@ -251,34 +206,26 @@ public class PhrasebookActivity extends AppCompatActivity {
                 )
         );
 
-        // =========================
-        // FAVORITES BUTTON
-        // =========================
-
-        favoritesButton =
-                new Button(this);
+        // FAVORITES
+        favoritesButton = new Button(this);
 
         favoritesButton.setText(
                 getFavoritesText()
         );
 
-        favoritesButton.setTextSize(
-                15
-        );
+        favoritesButton.setTextSize(15);
 
-        favoritesButton.setOnClickListener(
-                v -> {
+        favoritesButton.setOnClickListener(v -> {
 
-                    showFavoritesOnly =
-                            !showFavoritesOnly;
+            showFavoritesOnly =
+                    !showFavoritesOnly;
 
-                    updateFavoritesButton();
+            updateFavoritesButton();
 
-                    filterPhrases(
-                            search.getText().toString()
-                    );
-                }
-        );
+            filterPhrases(
+                    search.getText().toString()
+            );
+        });
 
         LinearLayout.LayoutParams favParams =
                 new LinearLayout.LayoutParams(
@@ -298,10 +245,7 @@ public class PhrasebookActivity extends AppCompatActivity {
                 favParams
         );
 
-        // =========================
         // PHRASES
-        // =========================
-
         ScrollView scroll =
                 new ScrollView(this);
 
@@ -319,9 +263,7 @@ public class PhrasebookActivity extends AppCompatActivity {
                 20
         );
 
-        scroll.addView(
-                phraseContainer
-        );
+        scroll.addView(phraseContainer);
 
         root.addView(
                 scroll,
@@ -332,24 +274,14 @@ public class PhrasebookActivity extends AppCompatActivity {
                 )
         );
 
-        // =========================
         // FOOTER
-        // =========================
-
         TextView footer =
                 new TextView(this);
 
         footer.setText("F.S");
-
         footer.setTextSize(13);
-
-        footer.setTextColor(
-                Color.GRAY
-        );
-
-        footer.setGravity(
-                Gravity.CENTER
-        );
+        footer.setTextColor(Color.GRAY);
+        footer.setGravity(Gravity.CENTER);
 
         footer.setPadding(
                 5,
@@ -369,21 +301,14 @@ public class PhrasebookActivity extends AppCompatActivity {
         setContentView(root);
     }
 
-    // =========================
-    // CATEGORY BUTTON
-    // =========================
-
     private Button createCategoryButton(
             String key,
             String text) {
 
-        Button button =
-                new Button(this);
+        Button button = new Button(this);
 
         button.setText(text);
-
         button.setTextSize(13);
-
         button.setAllCaps(false);
 
         button.setPadding(
@@ -393,54 +318,51 @@ public class PhrasebookActivity extends AppCompatActivity {
                 5
         );
 
+        button.setTag(key);
+
         updateCategoryButton(
                 button,
                 key
         );
 
-        button.setOnClickListener(
-                v -> {
+        button.setOnClickListener(v -> {
 
-                    selectedCategory = key;
+            selectedCategory = key;
 
-                    filterPhrases(
-                            search.getText().toString()
-                    );
+            filterPhrases(
+                    search.getText().toString()
+            );
 
-                    // Обновляем все кнопки
-                    View parent = (View) button.getParent();
+            View parent = button.getParent();
 
-                    if (parent instanceof LinearLayout) {
+            if (parent instanceof LinearLayout) {
 
-                        LinearLayout layout =
-                                (LinearLayout) parent;
+                LinearLayout layout =
+                        (LinearLayout) parent;
 
-                        for (int i = 0;
-                             i < layout.getChildCount();
-                             i++) {
+                for (int i = 0;
+                     i < layout.getChildCount();
+                     i++) {
 
-                            View child =
-                                    layout.getChildAt(i);
+                    View child =
+                            layout.getChildAt(i);
 
-                            if (child instanceof Button) {
+                    if (child instanceof Button) {
 
-                                Button b =
-                                        (Button) child;
+                        Button b =
+                                (Button) child;
 
-                                String categoryKey =
-                                        (String) b.getTag();
+                        String categoryKey =
+                                (String) b.getTag();
 
-                                updateCategoryButton(
-                                        b,
-                                        categoryKey
-                                );
-                            }
-                        }
+                        updateCategoryButton(
+                                b,
+                                categoryKey
+                        );
                     }
                 }
-        );
-
-        button.setTag(key);
+            }
+        });
 
         return button;
     }
@@ -449,56 +371,28 @@ public class PhrasebookActivity extends AppCompatActivity {
             Button button,
             String key) {
 
+        GradientDrawable background =
+                new GradientDrawable();
+
+        background.setCornerRadius(30);
+
         if (key.equals(selectedCategory)) {
 
-            button.setTextColor(
-                    Color.WHITE
-            );
+            button.setTextColor(Color.WHITE);
 
-            GradientDrawable background =
-                    new GradientDrawable();
-
-            background.setColor(
-                    GREEN
-            );
-
-            background.setCornerRadius(
-                    30
-            );
-
-            button.setBackground(
-                    background
-            );
+            background.setColor(GREEN);
 
         } else {
 
-            button.setTextColor(
-                    DARK
-            );
+            button.setTextColor(DARK);
 
-            GradientDrawable background =
-                    new GradientDrawable();
-
-            background.setColor(
-                    LIGHT_GREEN
-            );
-
-            background.setCornerRadius(
-                    30
-            );
-
-            button.setBackground(
-                    background
-            );
+            background.setColor(LIGHT_GREEN);
         }
+
+        button.setBackground(background);
     }
 
-    // =========================
-    // FILTER
-    // =========================
-
-    private void filterPhrases(
-            String query) {
+    private void filterPhrases(String query) {
 
         phraseContainer.removeAllViews();
 
@@ -550,9 +444,7 @@ public class PhrasebookActivity extends AppCompatActivity {
                             && matchesSearch
             ) {
 
-                addPhraseView(
-                        phrase
-                );
+                addPhraseView(phrase);
 
                 count++;
             }
@@ -567,17 +459,9 @@ public class PhrasebookActivity extends AppCompatActivity {
                     getNoResultsText()
             );
 
-            empty.setTextSize(
-                    18
-            );
-
-            empty.setTextColor(
-                    Color.GRAY
-            );
-
-            empty.setGravity(
-                    Gravity.CENTER
-            );
+            empty.setTextSize(18);
+            empty.setTextColor(Color.GRAY);
+            empty.setGravity(Gravity.CENTER);
 
             empty.setPadding(
                     20,
@@ -586,15 +470,9 @@ public class PhrasebookActivity extends AppCompatActivity {
                     40
             );
 
-            phraseContainer.addView(
-                    empty
-            );
+            phraseContainer.addView(empty);
         }
     }
-
-    // =========================
-    // PHRASE CARD
-    // =========================
 
     private void addPhraseView(
             WorkerPhrasebook.Phrase phrase) {
@@ -624,13 +502,9 @@ public class PhrasebookActivity extends AppCompatActivity {
                 )
         );
 
-        background.setCornerRadius(
-                18
-        );
+        background.setCornerRadius(18);
 
-        card.setBackground(
-                background
-        );
+        card.setBackground(background);
 
         LinearLayout.LayoutParams cardParams =
                 new LinearLayout.LayoutParams(
@@ -657,22 +531,15 @@ public class PhrasebookActivity extends AppCompatActivity {
                 "🇬🇧 " + phrase.english
         );
 
-        english.setTextSize(
-                19
-        );
-
-        english.setTextColor(
-                GREEN
-        );
+        english.setTextSize(19);
+        english.setTextColor(GREEN);
 
         english.setTypeface(
                 null,
                 android.graphics.Typeface.BOLD
         );
 
-        card.addView(
-                english
-        );
+        card.addView(english);
 
         TextView russian =
                 new TextView(this);
@@ -681,13 +548,8 @@ public class PhrasebookActivity extends AppCompatActivity {
                 "🇷🇺 " + phrase.russian
         );
 
-        russian.setTextSize(
-                16
-        );
-
-        russian.setTextColor(
-                DARK
-        );
+        russian.setTextSize(16);
+        russian.setTextColor(DARK);
 
         russian.setPadding(
                 0,
@@ -696,9 +558,7 @@ public class PhrasebookActivity extends AppCompatActivity {
                 0
         );
 
-        card.addView(
-                russian
-        );
+        card.addView(russian);
 
         TextView azerbaijani =
                 new TextView(this);
@@ -707,13 +567,8 @@ public class PhrasebookActivity extends AppCompatActivity {
                 "🇦🇿 " + phrase.azerbaijani
         );
 
-        azerbaijani.setTextSize(
-                16
-        );
-
-        azerbaijani.setTextColor(
-                DARK
-        );
+        azerbaijani.setTextSize(16);
+        azerbaijani.setTextColor(DARK);
 
         azerbaijani.setPadding(
                 0,
@@ -722,9 +577,7 @@ public class PhrasebookActivity extends AppCompatActivity {
                 5
         );
 
-        card.addView(
-                azerbaijani
-        );
+        card.addView(azerbaijani);
 
         LinearLayout buttons =
                 new LinearLayout(this);
@@ -737,94 +590,63 @@ public class PhrasebookActivity extends AppCompatActivity {
                 Gravity.CENTER_VERTICAL
         );
 
-        card.addView(
-                buttons
-        );
+        card.addView(buttons);
 
-        // =========================
         // SPEAK
-        // =========================
-
         Button speak =
                 new Button(this);
 
-        speak.setText(
-                "🔊"
-        );
+        speak.setText("🔊");
+        speak.setTextSize(18);
 
-        speak.setTextSize(
-                18
-        );
+        speak.setOnClickListener(v -> {
 
-        speak.setOnClickListener(
-                v -> {
+            if (tts != null) {
 
-                    if (tts != null) {
+                tts.speak(
+                        phrase.english,
+                        TextToSpeech.QUEUE_FLUSH,
+                        null,
+                        "worker_phrase"
+                );
+            }
+        });
 
-                        tts.speak(
-                                phrase.english,
-                                TextToSpeech.QUEUE_FLUSH,
-                                null,
-                                "worker_phrase"
-                        );
-                    }
-                }
-        );
+        buttons.addView(speak);
 
-        buttons.addView(
-                speak
-        );
-
-        // =========================
         // COPY
-        // =========================
-
         Button copy =
                 new Button(this);
 
-        copy.setText(
-                "📋"
-        );
+        copy.setText("📋");
+        copy.setTextSize(18);
 
-        copy.setTextSize(
-                18
-        );
+        copy.setOnClickListener(v -> {
 
-        copy.setOnClickListener(
-                v -> {
-
-                    ClipboardManager clipboard =
-                            (ClipboardManager)
-                                    getSystemService(
-                                            Context.CLIPBOARD_SERVICE
-                                    );
-
-                    ClipData data =
-                            ClipData.newPlainText(
-                                    "WORKER PRO",
-                                    phrase.english
+            ClipboardManager clipboard =
+                    (ClipboardManager)
+                            getSystemService(
+                                    Context.CLIPBOARD_SERVICE
                             );
 
-                    clipboard.setPrimaryClip(
-                            data
+            ClipData data =
+                    ClipData.newPlainText(
+                            "WORKER PRO",
+                            phrase.english
                     );
 
-                    Toast.makeText(
-                            this,
-                            getCopiedText(),
-                            Toast.LENGTH_SHORT
-                    ).show();
-                }
-        );
+            clipboard.setPrimaryClip(data);
 
-        buttons.addView(
-                copy
-        );
+            Toast.makeText(
+                    this,
+                    getCopiedText(),
+                    Toast.LENGTH_SHORT
+            ).show();
+        });
 
-        // =========================
+        buttons.addView(copy);
+
         // FAVORITE
-        // =========================
-
         Button favorite =
                 new Button(this);
 
@@ -840,49 +662,39 @@ public class PhrasebookActivity extends AppCompatActivity {
                         : "☆"
         );
 
-        favorite.setTextSize(
-                20
-        );
+        favorite.setTextSize(20);
 
-        favorite.setOnClickListener(
-                v -> {
+        favorite.setOnClickListener(v -> {
 
-                    boolean current =
-                            favorites.getBoolean(
-                                    phrase.english,
-                                    false
-                            );
-
-                    favorites.edit()
-                            .putBoolean(
-                                    phrase.english,
-                                    !current
-                            )
-                            .apply();
-
-                    favorite.setText(
-                            !current
-                                    ? "⭐"
-                                    : "☆"
+            boolean current =
+                    favorites.getBoolean(
+                            phrase.english,
+                            false
                     );
 
-                    if (showFavoritesOnly) {
+            favorites.edit()
+                    .putBoolean(
+                            phrase.english,
+                            !current
+                    )
+                    .apply();
 
-                        filterPhrases(
-                                search.getText().toString()
-                        );
-                    }
-                }
-        );
+            favorite.setText(
+                    !current
+                            ? "⭐"
+                            : "☆"
+            );
 
-        buttons.addView(
-                favorite
-        );
+            if (showFavoritesOnly) {
+
+                filterPhrases(
+                        search.getText().toString()
+                );
+            }
+        });
+
+        buttons.addView(favorite);
     }
-
-    // =========================
-    // CATEGORIES
-    // =========================
 
     private String[][] getCategories() {
 
@@ -943,10 +755,6 @@ public class PhrasebookActivity extends AppCompatActivity {
                 {"EMERGENCY", "🚨 Авария"}
         };
     }
-
-    // =========================
-    // TEXTS
-    // =========================
 
     private String getPhrasebookTitle() {
 
@@ -1040,7 +848,6 @@ public class PhrasebookActivity extends AppCompatActivity {
     protected void onDestroy() {
 
         if (tts != null) {
-
             tts.stop();
             tts.shutdown();
         }
