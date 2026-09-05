@@ -16,6 +16,14 @@
             android:exported="false" />
 
         <activity
+            android:name=".LessonOfDayActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ProgressActivity"
+            android:exported="false" />
+
+        <activity
             android:name=".QualityControlActivity"
             android:exported="false" />
 
