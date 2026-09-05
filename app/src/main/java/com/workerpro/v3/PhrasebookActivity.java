@@ -1,14 +1,12 @@
 package com.workerpro.v3;
 
 import android.app.Activity;
-import android.content.ClipData;
-import android.content.ClipboardManager;
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.speech.tts.TextToSpeech;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,25 +18,41 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 public class PhrasebookActivity extends Activity {
 
-    private LinearLayout phraseContainer;
-    private EditText search;
+    private LinearLayout listLayout;
+    private EditText searchBox;
+
+    private List<WorkerPhrasebook.Phrase> phrases;
+
     private TextToSpeech tts;
-    private SharedPreferences favorites;
 
-    private boolean showFavoritesOnly = false;
-    private Button favoritesButton;
-
-    private String selectedCategory = "ALL";
     private String language = "RU";
+    private String selectedCategory = "ALL";
+    private boolean favoritesOnly = false;
 
-    private final int GREEN = Color.rgb(0, 150, 70);
-    private final int LIGHT_GREEN = Color.rgb(220, 245, 230);
-    private final int DARK = Color.rgb(35, 35, 35);
+    private final Set<String> favorites = new HashSet<>();
+
+    private final String[] categories = {
+            "ALL",
+            "WORK",
+            "BOSS",
+            "MACHINE",
+            "CNC",
+            "STAMPING",
+            "QUALITY",
+            "SAFETY",
+            "FIRE",
+            "WELDING",
+            "GALVANIC",
+            "MAINTENANCE",
+            "EMERGENCY"
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,91 +64,216 @@ public class PhrasebookActivity extends Activity {
             language = "RU";
         }
 
-        favorites = getSharedPreferences(
-                "WORKER_PRO_FAVORITES",
-                MODE_PRIVATE
-        );
+        phrases = WorkerPhrasebook.getPhrases();
 
-        createInterface();
+        loadFavorites();
 
-        tts = new TextToSpeech(
-                this,
-                status -> {
-                    if (status == TextToSpeech.SUCCESS) {
-                        tts.setLanguage(Locale.ENGLISH);
-                    }
+        tts = new TextToSpeech(this, status -> {
+
+            if (status == TextToSpeech.SUCCESS) {
+
+                int result = tts.setLanguage(Locale.US);
+
+                if (result == TextToSpeech.LANG_MISSING_DATA
+                        || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+
+                    Toast.makeText(
+                            this,
+                            getTtsErrorText(),
+                            Toast.LENGTH_SHORT
+                    ).show();
                 }
-        );
+            }
+        });
 
-        filterPhrases("");
+        buildScreen();
     }
 
-    private void createInterface() {
+    private void buildScreen() {
 
         LinearLayout root = new LinearLayout(this);
+
         root.setOrientation(LinearLayout.VERTICAL);
-        root.setBackgroundColor(Color.WHITE);
 
-        TextView title = new TextView(this);
-
-        title.setText(getPhrasebookTitle());
-        title.setTextSize(26);
-        title.setTextColor(Color.WHITE);
-        title.setGravity(Gravity.CENTER);
-        title.setTypeface(
-                null,
-                android.graphics.Typeface.BOLD
-        );
-
-        title.setBackgroundColor(GREEN);
-
-        title.setPadding(
-                10,
-                25,
-                10,
-                25
-        );
-
-        root.addView(
-                title,
-                new LinearLayout.LayoutParams(
-                        -1,
-                        -2
-                )
-        );
-
-        search = new EditText(this);
-
-        search.setHint(getSearchHint());
-        search.setSingleLine(true);
-
-        search.setPadding(
-                20,
-                10,
-                20,
+        root.setPadding(
+                16,
+                16,
+                16,
                 10
         );
 
-        LinearLayout.LayoutParams searchParams =
-                new LinearLayout.LayoutParams(
-                        -1,
-                        -2
-                );
+        root.setBackgroundColor(Color.WHITE);
 
-        searchParams.setMargins(
-                15,
-                10,
-                15,
-                5
+        // ================= TITLE =================
+
+        TextView title = new TextView(this);
+
+        title.setText(getTitleText());
+
+        title.setTextSize(25);
+
+        title.setTypeface(
+                Typeface.DEFAULT,
+                Typeface.BOLD
+        );
+
+        title.setTextColor(
+                Color.rgb(0, 130, 70)
+        );
+
+        title.setGravity(Gravity.CENTER);
+
+        title.setPadding(
+                0,
+                5,
+                0,
+                12
+        );
+
+        root.addView(title);
+
+        // ================= SEARCH =================
+
+        searchBox = new EditText(this);
+
+        searchBox.setHint(
+                getSearchHint()
+        );
+
+        searchBox.setTextSize(17);
+
+        searchBox.setSingleLine(true);
+
+        searchBox.setPadding(
+                18,
+                0,
+                18,
+                0
         );
 
         root.addView(
-                search,
-                searchParams
+                searchBox,
+                new LinearLayout.LayoutParams(
+                        -1,
+                        58
+                )
         );
 
-        search.addTextChangedListener(
-                new android.text.TextWatcher() {
+        // ================= FAVORITES =================
+
+        Button favoritesButton = new Button(this);
+
+        favoritesButton.setText(
+                favoritesOnly
+                        ? "⭐ " + getFavoritesText()
+                        : "☆ " + getFavoritesText()
+        );
+
+        favoritesButton.setTextSize(13);
+
+        favoritesButton.setOnClickListener(v -> {
+
+            favoritesOnly = !favoritesOnly;
+
+            favoritesButton.setText(
+                    favoritesOnly
+                            ? "⭐ " + getFavoritesText()
+                            : "☆ " + getFavoritesText()
+            );
+
+            showPhrases(
+                    searchBox.getText().toString()
+            );
+        });
+
+        root.addView(
+                favoritesButton,
+                new LinearLayout.LayoutParams(
+                        -1,
+                        52
+                )
+        );
+
+        // ================= CATEGORY SCROLL =================
+
+        HorizontalScrollView categoryScroll =
+                new HorizontalScrollView(this);
+
+        categoryScroll.setHorizontalScrollBarEnabled(false);
+
+        LinearLayout categoryLayout =
+                new LinearLayout(this);
+
+        categoryLayout.setOrientation(
+                LinearLayout.HORIZONTAL
+        );
+
+        buildCategoryButtons(categoryLayout);
+
+        categoryScroll.addView(
+                categoryLayout
+        );
+
+        root.addView(
+                categoryScroll,
+                new LinearLayout.LayoutParams(
+                        -1,
+                        62
+                )
+        );
+
+        // ================= LIST =================
+
+        listLayout =
+                new LinearLayout(this);
+
+        listLayout.setOrientation(
+                LinearLayout.VERTICAL
+        );
+
+        ScrollView scrollView =
+                new ScrollView(this);
+
+        scrollView.addView(
+                listLayout
+        );
+
+        root.addView(
+                scrollView,
+                new LinearLayout.LayoutParams(
+                        -1,
+                        0,
+                        1
+                )
+        );
+
+        // ================= FOOTER =================
+
+        TextView footer = new TextView(this);
+
+        footer.setText("F.S");
+
+        footer.setTextSize(13);
+
+        footer.setTextColor(Color.GRAY);
+
+        footer.setGravity(Gravity.CENTER);
+
+        footer.setPadding(
+                0,
+                5,
+                0,
+                3
+        );
+
+        root.addView(footer);
+
+        setContentView(root);
+
+        // ================= SEARCH LISTENER =================
+
+        searchBox.addTextChangedListener(
+                new TextWatcher() {
 
                     @Override
                     public void beforeTextChanged(
@@ -151,299 +290,134 @@ public class PhrasebookActivity extends Activity {
                             int before,
                             int count) {
 
-                        filterPhrases(s.toString());
+                        showPhrases(
+                                s.toString()
+                        );
                     }
 
                     @Override
                     public void afterTextChanged(
-                            android.text.Editable s) {
+                            Editable s) {
                     }
                 }
         );
 
-        HorizontalScrollView categoryScroll =
-                new HorizontalScrollView(this);
+        showPhrases("");
+    }
 
-        categoryScroll.setHorizontalScrollBarEnabled(false);
+    // ================= CATEGORY BUTTONS =================
 
-        LinearLayout categories =
-                new LinearLayout(this);
+    private void buildCategoryButtons(
+            LinearLayout categoryLayout) {
 
-        categories.setOrientation(
-                LinearLayout.HORIZONTAL
-        );
+        categoryLayout.removeAllViews();
 
-        categories.setPadding(
-                10,
-                5,
-                10,
-                8
-        );
-
-        String[][] categoryData =
-                getCategories();
-
-        for (String[] item : categoryData) {
+        for (String category : categories) {
 
             Button button =
-                    createCategoryButton(
-                            item[0],
-                            item[1]
-                    );
+                    new Button(this);
 
-            categories.addView(button);
-        }
-
-        categoryScroll.addView(categories);
-
-        root.addView(
-                categoryScroll,
-                new LinearLayout.LayoutParams(
-                        -1,
-                        -2
-                )
-        );
-
-        favoritesButton = new Button(this);
-
-        favoritesButton.setText(
-                getFavoritesText()
-        );
-
-        favoritesButton.setTextSize(15);
-
-        favoritesButton.setOnClickListener(v -> {
-
-            showFavoritesOnly =
-                    !showFavoritesOnly;
-
-            updateFavoritesButton();
-
-            filterPhrases(
-                    search.getText().toString()
+            button.setText(
+                    getCategoryText(category)
             );
-        });
 
-        LinearLayout.LayoutParams favParams =
-                new LinearLayout.LayoutParams(
-                        -1,
-                        -2
+            button.setTextSize(12);
+
+            if (category.equals(
+                    selectedCategory)) {
+
+                button.setTextColor(
+                        Color.rgb(0, 130, 70)
                 );
 
-        favParams.setMargins(
-                10,
-                0,
-                10,
-                5
-        );
-
-        root.addView(
-                favoritesButton,
-                favParams
-        );
-
-        ScrollView scroll =
-                new ScrollView(this);
-
-        phraseContainer =
-                new LinearLayout(this);
-
-        phraseContainer.setOrientation(
-                LinearLayout.VERTICAL
-        );
-
-        phraseContainer.setPadding(
-                10,
-                5,
-                10,
-                20
-        );
-
-        scroll.addView(phraseContainer);
-
-        root.addView(
-                scroll,
-                new LinearLayout.LayoutParams(
-                        -1,
-                        0,
-                        1
-                )
-        );
-
-        TextView footer =
-                new TextView(this);
-
-        footer.setText("F.S");
-        footer.setTextSize(13);
-        footer.setTextColor(Color.GRAY);
-        footer.setGravity(Gravity.CENTER);
-
-        footer.setPadding(
-                5,
-                8,
-                5,
-                8
-        );
-
-        root.addView(
-                footer,
-                new LinearLayout.LayoutParams(
-                        -1,
-                        -2
-                )
-        );
-
-        setContentView(root);
-    }
-
-    private Button createCategoryButton(
-            String key,
-            String text) {
-
-        Button button = new Button(this);
-
-        button.setText(text);
-        button.setTextSize(13);
-        button.setAllCaps(false);
-
-        button.setPadding(
-                15,
-                5,
-                15,
-                5
-        );
-
-        button.setTag(key);
-
-        updateCategoryButton(
-                button,
-                key
-        );
-
-        button.setOnClickListener(v -> {
-
-            selectedCategory = key;
-
-            filterPhrases(
-                    search.getText().toString()
-            );
-
-            ViewGroup parent =
-                    (ViewGroup) button.getParent();
-
-            if (parent != null) {
-
-                for (int i = 0;
-                     i < parent.getChildCount();
-                     i++) {
-
-                    View child =
-                            parent.getChildAt(i);
-
-                    if (child instanceof Button) {
-
-                        Button b =
-                                (Button) child;
-
-                        String categoryKey =
-                                (String) b.getTag();
-
-                        updateCategoryButton(
-                                b,
-                                categoryKey
-                        );
-                    }
-                }
+                button.setTypeface(
+                        Typeface.DEFAULT,
+                        Typeface.BOLD
+                );
             }
-        });
 
-        return button;
+            button.setOnClickListener(v -> {
+
+                selectedCategory = category;
+
+                buildCategoryButtons(
+                        categoryLayout
+                );
+
+                showPhrases(
+                        searchBox.getText().toString()
+                );
+            });
+
+            categoryLayout.addView(
+                    button,
+                    new LinearLayout.LayoutParams(
+                            -2,
+                            54
+                    )
+            );
+        }
     }
 
-    private void updateCategoryButton(
-            Button button,
-            String key) {
+    // ================= SHOW PHRASES =================
 
-        GradientDrawable background =
-                new GradientDrawable();
+    private void showPhrases(String search) {
 
-        background.setCornerRadius(30);
-
-        if (key.equals(selectedCategory)) {
-
-            button.setTextColor(Color.WHITE);
-
-            background.setColor(GREEN);
-
-        } else {
-
-            button.setTextColor(DARK);
-
-            background.setColor(LIGHT_GREEN);
+        if (listLayout == null) {
+            return;
         }
 
-        button.setBackground(background);
-    }
+        listLayout.removeAllViews();
 
-    private void filterPhrases(String query) {
+        String query =
+                search.toLowerCase(
+                        Locale.ROOT
+                );
 
-        phraseContainer.removeAllViews();
+        int shown = 0;
 
-        String text =
-                query == null
-                        ? ""
-                        : query.toLowerCase(
-                                Locale.getDefault()
-                        );
+        for (WorkerPhrasebook.Phrase phrase :
+                phrases) {
 
-        List<WorkerPhrasebook.Phrase> phrases =
-                WorkerPhrasebook.getPhrases();
+            boolean matchesSearch =
+                    query.isEmpty()
+                            || phrase.english
+                            .toLowerCase(Locale.ROOT)
+                            .contains(query)
 
-        int count = 0;
+                            || phrase.russian
+                            .toLowerCase(Locale.ROOT)
+                            .contains(query)
 
-        for (
-                WorkerPhrasebook.Phrase phrase
-                : phrases
-        ) {
+                            || phrase.azerbaijani
+                            .toLowerCase(Locale.ROOT)
+                            .contains(query);
 
             boolean matchesCategory =
                     selectedCategory.equals("ALL")
-                            || phrase.category.equals(
-                                    selectedCategory
-                            );
+                            || selectedCategory.equals(
+                            phrase.category
+                    );
 
             boolean matchesFavorite =
-                    !showFavoritesOnly
-                            || favorites.getBoolean(
-                                    phrase.english,
-                                    false
-                            );
+                    !favoritesOnly
+                            || favorites.contains(
+                            phrase.english
+                    );
 
-            boolean matchesSearch =
-                    text.isEmpty()
-                            || phrase.english
-                            .toLowerCase()
-                            .contains(text)
-                            || phrase.russian
-                            .toLowerCase()
-                            .contains(text)
-                            || phrase.azerbaijani
-                            .toLowerCase()
-                            .contains(text);
+            if (!matchesSearch
+                    || !matchesCategory
+                    || !matchesFavorite) {
 
-            if (
-                    matchesCategory
-                            && matchesFavorite
-                            && matchesSearch
-            ) {
-
-                addPhraseView(phrase);
-
-                count++;
+                continue;
             }
+
+            addPhraseCard(phrase);
+
+            shown++;
         }
 
-        if (count == 0) {
+        if (shown == 0) {
 
             TextView empty =
                     new TextView(this);
@@ -452,9 +426,15 @@ public class PhrasebookActivity extends Activity {
                     getNoResultsText()
             );
 
-            empty.setTextSize(18);
-            empty.setTextColor(Color.GRAY);
-            empty.setGravity(Gravity.CENTER);
+            empty.setTextSize(17);
+
+            empty.setTextColor(
+                    Color.GRAY
+            );
+
+            empty.setGravity(
+                    Gravity.CENTER
+            );
 
             empty.setPadding(
                     20,
@@ -463,11 +443,19 @@ public class PhrasebookActivity extends Activity {
                     40
             );
 
-            phraseContainer.addView(empty);
+            listLayout.addView(
+                    empty,
+                    new LinearLayout.LayoutParams(
+                            -1,
+                            -2
+                    )
+            );
         }
     }
 
-    private void addPhraseView(
+    // ================= PHRASE CARD =================
+
+    private void addPhraseCard(
             WorkerPhrasebook.Phrase phrase) {
 
         LinearLayout card =
@@ -478,22 +466,15 @@ public class PhrasebookActivity extends Activity {
         );
 
         card.setPadding(
-                15,
-                12,
-                15,
-                12
+                18,
+                14,
+                18,
+                14
         );
 
-        GradientDrawable background =
-                new GradientDrawable();
-
-        background.setColor(
-                Color.rgb(248, 248, 248)
+        card.setBackgroundColor(
+                Color.rgb(245, 250, 247)
         );
-
-        background.setCornerRadius(18);
-
-        card.setBackground(background);
 
         LinearLayout.LayoutParams cardParams =
                 new LinearLayout.LayoutParams(
@@ -502,71 +483,41 @@ public class PhrasebookActivity extends Activity {
                 );
 
         cardParams.setMargins(
-                5,
-                5,
-                5,
-                10
+                0,
+                0,
+                0,
+                12
         );
 
-        phraseContainer.addView(
-                card,
-                cardParams
-        );
+        // ================= PHRASE TEXT =================
 
-        TextView english =
+        TextView text =
                 new TextView(this);
 
-        english.setText(
+        text.setText(
                 "🇬🇧 " + phrase.english
+                        + "\n\n"
+                        + "🇷🇺 " + phrase.russian
+                        + "\n"
+                        + "🇦🇿 " + phrase.azerbaijani
         );
 
-        english.setTextSize(19);
-        english.setTextColor(GREEN);
+        text.setTextSize(17);
 
-        english.setTypeface(
-                null,
-                android.graphics.Typeface.BOLD
+        text.setTextColor(
+                Color.DKGRAY
         );
 
-        card.addView(english);
-
-        TextView russian =
-                new TextView(this);
-
-        russian.setText(
-                "🇷🇺 " + phrase.russian
-        );
-
-        russian.setTextSize(16);
-        russian.setTextColor(DARK);
-
-        russian.setPadding(
+        text.setPadding(
                 0,
-                5,
                 0,
-                0
+                0,
+                8
         );
 
-        card.addView(russian);
+        card.addView(text);
 
-        TextView azerbaijani =
-                new TextView(this);
-
-        azerbaijani.setText(
-                "🇦🇿 " + phrase.azerbaijani
-        );
-
-        azerbaijani.setTextSize(16);
-        azerbaijani.setTextColor(DARK);
-
-        azerbaijani.setPadding(
-                0,
-                3,
-                0,
-                5
-        );
-
-        card.addView(azerbaijani);
+        // ================= BUTTONS =================
 
         LinearLayout buttons =
                 new LinearLayout(this);
@@ -575,263 +526,444 @@ public class PhrasebookActivity extends Activity {
                 LinearLayout.HORIZONTAL
         );
 
-        buttons.setGravity(
-                Gravity.CENTER_VERTICAL
+        // SPEAK
+
+        Button speakButton =
+                new Button(this);
+
+        speakButton.setText("🔊");
+
+        speakButton.setTextSize(17);
+
+        speakButton.setOnClickListener(
+                v -> speak(phrase.english)
         );
 
-        card.addView(buttons);
+        // COPY
 
-        Button speak =
+        Button copyButton =
                 new Button(this);
 
-        speak.setText("🔊");
-        speak.setTextSize(18);
+        copyButton.setText("📋");
 
-        speak.setOnClickListener(v -> {
+        copyButton.setTextSize(17);
 
-            if (tts != null) {
+        copyButton.setOnClickListener(
+                v -> copyPhrase(phrase)
+        );
 
-                tts.speak(
-                        phrase.english,
-                        TextToSpeech.QUEUE_FLUSH,
-                        null,
-                        "worker_phrase"
-                );
-            }
-        });
+        // FAVORITE
 
-        buttons.addView(speak);
-
-        Button copy =
+        Button favoriteButton =
                 new Button(this);
 
-        copy.setText("📋");
-        copy.setTextSize(18);
-
-        copy.setOnClickListener(v -> {
-
-            ClipboardManager clipboard =
-                    (ClipboardManager)
-                            getSystemService(
-                                    Context.CLIPBOARD_SERVICE
-                            );
-
-            ClipData data =
-                    ClipData.newPlainText(
-                            "WORKER PRO",
-                            phrase.english
-                    );
-
-            clipboard.setPrimaryClip(data);
-
-            Toast.makeText(
-                    this,
-                    getCopiedText(),
-                    Toast.LENGTH_SHORT
-            ).show();
-        });
-
-        buttons.addView(copy);
-
-        Button favorite =
-                new Button(this);
-
-        boolean isFavorite =
-                favorites.getBoolean(
-                        phrase.english,
-                        false
-                );
-
-        favorite.setText(
-                isFavorite
+        favoriteButton.setText(
+                favorites.contains(
+                        phrase.english
+                )
                         ? "⭐"
                         : "☆"
         );
 
-        favorite.setTextSize(20);
+        favoriteButton.setTextSize(17);
 
-        favorite.setOnClickListener(v -> {
+        favoriteButton.setOnClickListener(v -> {
 
-            boolean current =
-                    favorites.getBoolean(
-                            phrase.english,
-                            false
-                    );
+            toggleFavorite(
+                    phrase.english
+            );
 
-            favorites.edit()
-                    .putBoolean(
-                            phrase.english,
-                            !current
+            favoriteButton.setText(
+                    favorites.contains(
+                            phrase.english
                     )
-                    .apply();
-
-            favorite.setText(
-                    !current
                             ? "⭐"
                             : "☆"
             );
 
-            if (showFavoritesOnly) {
+            if (favoritesOnly) {
 
-                filterPhrases(
-                        search.getText().toString()
+                showPhrases(
+                        searchBox.getText().toString()
                 );
             }
         });
 
-        buttons.addView(favorite);
+        buttons.addView(
+                speakButton,
+                new LinearLayout.LayoutParams(
+                        0,
+                        50,
+                        1
+                )
+        );
+
+        buttons.addView(
+                copyButton,
+                new LinearLayout.LayoutParams(
+                        0,
+                        50,
+                        1
+                )
+        );
+
+        buttons.addView(
+                favoriteButton,
+                new LinearLayout.LayoutParams(
+                        0,
+                        50,
+                        1
+                )
+        );
+
+        card.addView(buttons);
+
+        // Нажатие на саму карточку
+        // тоже произносит английскую фразу
+
+        card.setOnClickListener(
+                v -> speak(phrase.english)
+        );
+
+        listLayout.addView(
+                card,
+                cardParams
+        );
     }
 
-    private String[][] getCategories() {
+    // ================= TEXT TO SPEECH =================
+
+    private void speak(String text) {
+
+        if (tts != null) {
+
+            tts.speak(
+                    text,
+                    TextToSpeech.QUEUE_FLUSH,
+                    null,
+                    "phrase_" +
+                            System.currentTimeMillis()
+            );
+        }
+    }
+
+    // ================= COPY =================
+
+    private void copyPhrase(
+            WorkerPhrasebook.Phrase phrase) {
+
+        android.content.ClipboardManager clipboard =
+                (android.content.ClipboardManager)
+                        getSystemService(
+                                CLIPBOARD_SERVICE
+                        );
+
+        android.content.ClipData clip =
+                android.content.ClipData.newPlainText(
+                        "WORKER PRO",
+                        phrase.english
+                                + "\n"
+                                + phrase.russian
+                                + "\n"
+                                + phrase.azerbaijani
+                );
+
+        clipboard.setPrimaryClip(clip);
+
+        Toast.makeText(
+                this,
+                getCopiedText(),
+                Toast.LENGTH_SHORT
+        ).show();
+    }
+
+    // ================= FAVORITES =================
+
+    private void toggleFavorite(
+            String english) {
+
+        if (favorites.contains(english)) {
+
+            favorites.remove(english);
+
+        } else {
+
+            favorites.add(english);
+        }
+
+        getSharedPreferences(
+                "WORKER_PRO_PHRASE_FAVORITES",
+                MODE_PRIVATE
+        )
+                .edit()
+                .putStringSet(
+                        "favorites",
+                        new HashSet<>(favorites)
+                )
+                .apply();
+    }
+
+    private void loadFavorites() {
+
+        Set<String> saved =
+                getSharedPreferences(
+                        "WORKER_PRO_PHRASE_FAVORITES",
+                        MODE_PRIVATE
+                )
+                        .getStringSet(
+                                "favorites",
+                                null
+                        );
+
+        if (saved != null) {
+
+            favorites.clear();
+
+            favorites.addAll(saved);
+        }
+    }
+
+    // ================= LOCALIZATION =================
+
+    private String getTitleText() {
 
         if (language.equals("AZ")) {
 
-            return new String[][]{
-                    {"ALL", "Hamısı"},
-                    {"WORK", "🏭 İş"},
-                    {"BOSS", "👷 Rəhbər"},
-                    {"MACHINE", "⚙️ Dəzgah"},
-                    {"CNC", "🖥 CNC"},
-                    {"STAMPING", "🔨 Ştamplama"},
-                    {"QUALITY", "✅ Keyfiyyət"},
-                    {"SAFETY", "🦺 Təhlükəsizlik"},
-                    {"FIRE", "🧯 Yanğın"},
-                    {"WELDING", "⚡ Qaynaq"},
-                    {"GALVANIC", "🧪 Qalvanika"},
-                    {"MAINTENANCE", "🔧 Texniki xidmət"},
-                    {"EMERGENCY", "🚨 Fövqəladə"}
-            };
+            return "💬 İşçilər üçün danışıq kitabçası";
         }
 
         if (language.equals("EN")) {
 
-            return new String[][]{
-                    {"ALL", "All"},
-                    {"WORK", "🏭 Work"},
-                    {"BOSS", "👷 Boss"},
-                    {"MACHINE", "⚙️ Machine"},
-                    {"CNC", "🖥 CNC"},
-                    {"STAMPING", "🔨 Stamping"},
-                    {"QUALITY", "✅ Quality"},
-                    {"SAFETY", "🦺 Safety"},
-                    {"FIRE", "🧯 Fire"},
-                    {"WELDING", "⚡ Welding"},
-                    {"GALVANIC", "🧪 Galvanic"},
-                    {"MAINTENANCE", "🔧 Maintenance"},
-                    {"EMERGENCY", "🚨 Emergency"}
-            };
+            return "💬 Worker Phrasebook";
         }
 
-        return new String[][]{
-                {"ALL", "Все"},
-                {"WORK", "🏭 Работа"},
-                {"BOSS", "👷 Начальник"},
-                {"MACHINE", "⚙️ Станок"},
-                {"CNC", "🖥 CNC"},
-                {"STAMPING", "🔨 Штамповка"},
-                {"QUALITY", "✅ Качество"},
-                {"SAFETY", "🦺 Безопасность"},
-                {"FIRE", "🧯 Пожар"},
-                {"WELDING", "⚡ Сварка"},
-                {"GALVANIC", "🧪 Гальваника"},
-                {"MAINTENANCE", "🔧 Обслуживание"},
-                {"EMERGENCY", "🚨 Авария"}
-        };
-    }
-
-    private String getPhrasebookTitle() {
-
-        if (language.equals("AZ")) {
-            return "💬 Danışıq kitabçası";
-        }
-
-        if (language.equals("EN")) {
-            return "💬 Phrasebook";
-        }
-
-        return "💬 Разговорник";
+        return "💬 Разговорник для рабочих";
     }
 
     private String getSearchHint() {
 
         if (language.equals("AZ")) {
-            return "Axtar...";
+
+            return "🔍 Axtarış...";
         }
 
         if (language.equals("EN")) {
-            return "Search...";
+
+            return "🔍 Search...";
         }
 
-        return "Поиск...";
+        return "🔍 Поиск...";
     }
 
     private String getFavoritesText() {
 
-        if (showFavoritesOnly) {
-
-            if (language.equals("AZ")) {
-                return "⭐ Bütün ifadələr";
-            }
-
-            if (language.equals("EN")) {
-                return "⭐ All phrases";
-            }
-
-            return "⭐ Все фразы";
-        }
-
         if (language.equals("AZ")) {
-            return "⭐ Seçilmişlər";
+
+            return "Seçilmişlər";
         }
 
         if (language.equals("EN")) {
-            return "⭐ Favorites";
+
+            return "Favorites";
         }
 
-        return "⭐ Избранное";
-    }
-
-    private void updateFavoritesButton() {
-
-        if (favoritesButton != null) {
-
-            favoritesButton.setText(
-                    getFavoritesText()
-            );
-        }
-    }
-
-    private String getNoResultsText() {
-
-        if (language.equals("AZ")) {
-            return "Heç nə tapılmadı";
-        }
-
-        if (language.equals("EN")) {
-            return "Nothing found";
-        }
-
-        return "Ничего не найдено";
+        return "Избранное";
     }
 
     private String getCopiedText() {
 
         if (language.equals("AZ")) {
+
             return "Kopyalandı";
         }
 
         if (language.equals("EN")) {
+
             return "Copied";
         }
 
         return "Скопировано";
     }
 
+    private String getNoResultsText() {
+
+        if (language.equals("AZ")) {
+
+            return "Nəticə tapılmadı";
+        }
+
+        if (language.equals("EN")) {
+
+            return "No results";
+        }
+
+        return "Ничего не найдено";
+    }
+
+    private String getTtsErrorText() {
+
+        if (language.equals("AZ")) {
+
+            return "İngilis dili səsi mövcud deyil";
+        }
+
+        if (language.equals("EN")) {
+
+            return "English voice is not available";
+        }
+
+        return "Английский голос недоступен";
+    }
+
+    // ================= CATEGORY NAMES =================
+
+    private String getCategoryText(
+            String category) {
+
+        if (language.equals("AZ")) {
+
+            switch (category) {
+
+                case "ALL":
+                    return "Hamısı";
+
+                case "WORK":
+                    return "🏭 İş";
+
+                case "BOSS":
+                    return "👷 Rəhbər";
+
+                case "MACHINE":
+                    return "⚙️ Dəzgah";
+
+                case "CNC":
+                    return "🖥 CNC";
+
+                case "STAMPING":
+                    return "🔨 Ştamplama";
+
+                case "QUALITY":
+                    return "✅ Keyfiyyət";
+
+                case "SAFETY":
+                    return "🦺 Təhlükəsizlik";
+
+                case "FIRE":
+                    return "🧯 Yanğın";
+
+                case "WELDING":
+                    return "⚡ Qaynaq";
+
+                case "GALVANIC":
+                    return "🧪 Qalvanika";
+
+                case "MAINTENANCE":
+                    return "🔧 Texniki xidmət";
+
+                case "EMERGENCY":
+                    return "🚨 Fövqəladə";
+            }
+        }
+
+        if (language.equals("EN")) {
+
+            switch (category) {
+
+                case "ALL":
+                    return "All";
+
+                case "WORK":
+                    return "🏭 Work";
+
+                case "BOSS":
+                    return "👷 Boss";
+
+                case "MACHINE":
+                    return "⚙️ Machine";
+
+                case "CNC":
+                    return "🖥 CNC";
+
+                case "STAMPING":
+                    return "🔨 Stamping";
+
+                case "QUALITY":
+                    return "✅ Quality";
+
+                case "SAFETY":
+                    return "🦺 Safety";
+
+                case "FIRE":
+                    return "🧯 Fire";
+
+                case "WELDING":
+                    return "⚡ Welding";
+
+                case "GALVANIC":
+                    return "🧪 Galvanic";
+
+                case "MAINTENANCE":
+                    return "🔧 Maintenance";
+
+                case "EMERGENCY":
+                    return "🚨 Emergency";
+            }
+        }
+
+        switch (category) {
+
+            case "ALL":
+                return "Все";
+
+            case "WORK":
+                return "🏭 Работа";
+
+            case "BOSS":
+                return "👷 Начальник";
+
+            case "MACHINE":
+                return "⚙️ Станок";
+
+            case "CNC":
+                return "🖥 CNC";
+
+            case "STAMPING":
+                return "🔨 Штамповка";
+
+            case "QUALITY":
+                return "✅ Качество";
+
+            case "SAFETY":
+                return "🦺 Безопасность";
+
+            case "FIRE":
+                return "🧯 Пожар";
+
+            case "WELDING":
+                return "⚡ Сварка";
+
+            case "GALVANIC":
+                return "🧪 Гальваника";
+
+            case "MAINTENANCE":
+                return "🔧 Обслуживание";
+
+            case "EMERGENCY":
+                return "🚨 Авария";
+        }
+
+        return category;
+    }
+
+    // ================= DESTROY =================
+
     @Override
     protected void onDestroy() {
 
         if (tts != null) {
+
             tts.stop();
+
             tts.shutdown();
         }
 
