@@ -19,7 +19,6 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -27,7 +26,6 @@ public class PhrasebookActivity extends Activity {
 
     private LinearLayout container;
     private EditText searchBox;
-
     private TextToSpeech tts;
 
     private String language = "RU";
@@ -75,38 +73,58 @@ public class PhrasebookActivity extends Activity {
         root.setOrientation(LinearLayout.VERTICAL);
         root.setBackgroundColor(Color.WHITE);
 
+        // ===== ЗАГОЛОВОК =====
+
         TextView title = new TextView(this);
         title.setText("РАЗГОВОРНИК");
         title.setTextSize(25);
         title.setTextColor(Color.rgb(0, 140, 70));
         title.setTypeface(null, Typeface.BOLD);
         title.setGravity(Gravity.CENTER);
-        title.setPadding(10, 20, 10, 15);
+        title.setPadding(
+                dp(8),
+                dp(18),
+                dp(8),
+                dp(12)
+        );
 
         root.addView(title);
 
-        // Языки
+        // ===== ЯЗЫКИ =====
+
         HorizontalScrollView languageScroll =
                 new HorizontalScrollView(this);
+
+        languageScroll.setHorizontalScrollBarEnabled(false);
 
         LinearLayout languageLayout =
                 new LinearLayout(this);
 
-        languageLayout.setOrientation(LinearLayout.HORIZONTAL);
-        languageLayout.setPadding(8, 5, 8, 5);
+        languageLayout.setOrientation(
+                LinearLayout.HORIZONTAL
+        );
+
+        languageLayout.setPadding(
+                dp(8),
+                dp(4),
+                dp(8),
+                dp(6)
+        );
 
         String[] languages = {
                 "RU", "AZ", "EN", "TR", "DE"
         };
 
         for (String lang : languages) {
-            TextView button = createLanguageButton(lang);
+
+            TextView button =
+                    createLanguageButton(lang);
 
             languageLayout.addView(
                     button,
                     new LinearLayout.LayoutParams(
                             dp(65),
-                            dp(45)
+                            dp(44)
                     )
             );
         }
@@ -114,90 +132,98 @@ public class PhrasebookActivity extends Activity {
         languageScroll.addView(languageLayout);
         root.addView(languageScroll);
 
-        // Поиск
+        // ===== ПОИСК =====
+
         searchBox = new EditText(this);
-        searchBox.setHint("Поиск фразы...");
-        searchBox.setSingleLine(true);
+        searchBox.setHint("🔍  Поиск фразы...");
         searchBox.setTextSize(16);
+        searchBox.setSingleLine(true);
         searchBox.setPadding(
-                dp(15),
-                dp(5),
-                dp(15),
-                dp(5)
+                dp(14),
+                0,
+                dp(14),
+                0
         );
 
         root.addView(
                 searchBox,
                 new LinearLayout.LayoutParams(
                         ViewGroup.LayoutParams.MATCH_PARENT,
-                        dp(55)
+                        dp(52)
                 )
         );
 
-        // Категории
+        // ===== РАЗДЕЛЫ =====
+
+        TextView sectionsTitle = new TextView(this);
+        sectionsTitle.setText("РАЗДЕЛЫ");
+        sectionsTitle.setTextSize(17);
+        sectionsTitle.setTextColor(
+                Color.rgb(0, 130, 60)
+        );
+        sectionsTitle.setTypeface(null, Typeface.BOLD);
+        sectionsTitle.setPadding(
+                dp(10),
+                dp(8),
+                dp(10),
+                dp(4)
+        );
+
+        root.addView(sectionsTitle);
+
         HorizontalScrollView categoryScroll =
                 new HorizontalScrollView(this);
+
+        categoryScroll.setHorizontalScrollBarEnabled(false);
 
         LinearLayout categoryLayout =
                 new LinearLayout(this);
 
-        categoryLayout.setOrientation(LinearLayout.HORIZONTAL);
-        categoryLayout.setPadding(8, 5, 8, 5);
+        categoryLayout.setOrientation(
+                LinearLayout.HORIZONTAL
+        );
+
+        categoryLayout.setPadding(
+                dp(6),
+                dp(4),
+                dp(6),
+                dp(8)
+        );
 
         for (String category : categories) {
 
-            TextView button = new TextView(this);
+            TextView button =
+                    createCategoryButton(category);
 
-            button.setText(category);
-            button.setTextSize(14);
-            button.setTextColor(Color.WHITE);
-            button.setGravity(Gravity.CENTER);
-            button.setTypeface(null, Typeface.BOLD);
-            button.setPadding(
-                    dp(12),
-                    dp(8),
-                    dp(12),
-                    dp(8)
-            );
-
-            button.setBackgroundColor(
-                    Color.rgb(0, 150, 70)
-            );
-
-            button.setOnClickListener(v -> {
-                selectedCategory = category;
-                showPhrases();
-            });
-
-            LinearLayout.LayoutParams params =
+            categoryLayout.addView(
+                    button,
                     new LinearLayout.LayoutParams(
                             ViewGroup.LayoutParams.WRAP_CONTENT,
-                            dp(42)
-                    );
-
-            params.setMargins(
-                    dp(4),
-                    0,
-                    dp(4),
-                    0
+                            dp(48)
+                    )
             );
-
-            categoryLayout.addView(button, params);
         }
 
         categoryScroll.addView(categoryLayout);
         root.addView(categoryScroll);
 
-        // Список фраз
-        ScrollView scrollView = new ScrollView(this);
+        // ===== ФРАЗЫ =====
 
-        container = new LinearLayout(this);
-        container.setOrientation(LinearLayout.VERTICAL);
+        ScrollView scrollView =
+                new ScrollView(this);
+
+        container =
+                new LinearLayout(this);
+
+        container.setOrientation(
+                LinearLayout.VERTICAL
+        );
+
         container.setPadding(
                 dp(8),
+                dp(4),
                 dp(8),
-                dp(8),
-                dp(20)
+                dp(15)
         );
 
         scrollView.addView(container);
@@ -211,12 +237,19 @@ public class PhrasebookActivity extends Activity {
                 )
         );
 
+        // ===== НИЗ =====
+
         TextView footer = new TextView(this);
         footer.setText("F.S");
         footer.setTextSize(14);
         footer.setTextColor(Color.GRAY);
         footer.setGravity(Gravity.CENTER);
-        footer.setPadding(0, 8, 0, 8);
+        footer.setPadding(
+                0,
+                dp(5),
+                0,
+                dp(7)
+        );
 
         root.addView(footer);
 
@@ -253,7 +286,12 @@ public class PhrasebookActivity extends Activity {
         showPhrases();
     }
 
-    private TextView createLanguageButton(String lang) {
+    // =========================================================
+    // ЯЗЫКИ
+    // =========================================================
+
+    private TextView createLanguageButton(
+            String lang) {
 
         TextView button = new TextView(this);
 
@@ -262,8 +300,11 @@ public class PhrasebookActivity extends Activity {
         button.setTextColor(Color.WHITE);
         button.setGravity(Gravity.CENTER);
         button.setTypeface(null, Typeface.BOLD);
+
         button.setBackgroundColor(
-                Color.rgb(0, 150, 70)
+                lang.equals(language)
+                        ? Color.rgb(0, 120, 55)
+                        : Color.rgb(0, 160, 75)
         );
 
         button.setOnClickListener(v -> {
@@ -275,8 +316,187 @@ public class PhrasebookActivity extends Activity {
             showPhrases();
         });
 
+        LinearLayout.LayoutParams params =
+                new LinearLayout.LayoutParams(
+                        dp(65),
+                        dp(44)
+                );
+
+        params.setMargins(
+                dp(3),
+                0,
+                dp(3),
+                0
+        );
+
+        button.setLayoutParams(params);
+
         return button;
     }
+
+    // =========================================================
+    // РАЗДЕЛЫ
+    // =========================================================
+
+    private TextView createCategoryButton(
+            String category) {
+
+        TextView button = new TextView(this);
+
+        button.setText(
+                getCategoryIcon(category)
+                        + " "
+                        + getCategoryName(category)
+        );
+
+        button.setTextSize(14);
+
+        button.setTextColor(Color.WHITE);
+
+        button.setGravity(Gravity.CENTER);
+
+        button.setTypeface(
+                null,
+                Typeface.BOLD
+        );
+
+        button.setPadding(
+                dp(12),
+                dp(4),
+                dp(12),
+                dp(4)
+        );
+
+        button.setBackgroundColor(
+                category.equals(selectedCategory)
+                        ? Color.rgb(0, 120, 55)
+                        : Color.rgb(0, 150, 70)
+        );
+
+        button.setOnClickListener(v -> {
+
+            selectedCategory = category;
+
+            showPhrases();
+        });
+
+        LinearLayout.LayoutParams params =
+                new LinearLayout.LayoutParams(
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        dp(48)
+                );
+
+        params.setMargins(
+                dp(3),
+                0,
+                dp(3),
+                0
+        );
+
+        button.setLayoutParams(params);
+
+        return button;
+    }
+
+    private String getCategoryIcon(
+            String category) {
+
+        switch (category) {
+
+            case "WORK":
+                return "👷";
+
+            case "BOSS":
+                return "👔";
+
+            case "MACHINE":
+                return "⚙";
+
+            case "CNC":
+                return "🛠";
+
+            case "STAMPING":
+                return "🔨";
+
+            case "QUALITY":
+                return "✓";
+
+            case "SAFETY":
+                return "🦺";
+
+            case "FIRE":
+                return "🔥";
+
+            case "WELDING":
+                return "⚡";
+
+            case "GALVANIC":
+                return "🧪";
+
+            case "MAINTENANCE":
+                return "🔧";
+
+            case "EMERGENCY":
+                return "🚨";
+
+            case "ALL":
+            default:
+                return "📚";
+        }
+    }
+
+    private String getCategoryName(
+            String category) {
+
+        switch (category) {
+
+            case "ALL":
+                return "ALL";
+
+            case "WORK":
+                return "WORK";
+
+            case "BOSS":
+                return "BOSS";
+
+            case "MACHINE":
+                return "MACHINE";
+
+            case "CNC":
+                return "CNC";
+
+            case "STAMPING":
+                return "STAMPING";
+
+            case "QUALITY":
+                return "QUALITY";
+
+            case "SAFETY":
+                return "SAFETY";
+
+            case "FIRE":
+                return "FIRE";
+
+            case "WELDING":
+                return "WELDING";
+
+            case "GALVANIC":
+                return "GALVANIC";
+
+            case "MAINTENANCE":
+                return "MAINTENANCE";
+
+            case "EMERGENCY":
+                return "EMERGENCY";
+
+            default:
+                return category;
+        }
+    }
+
+    // =========================================================
+    // ФРАЗЫ
+    // =========================================================
 
     private void showPhrases() {
 
@@ -292,6 +512,7 @@ public class PhrasebookActivity extends Activity {
         String query = "";
 
         if (searchBox != null) {
+
             query = searchBox
                     .getText()
                     .toString()
@@ -299,10 +520,15 @@ public class PhrasebookActivity extends Activity {
                     .trim();
         }
 
-        for (WorkerPhrasebook.Phrase phrase : phrases) {
+        int count = 0;
 
-            if (!selectedCategory.equals("ALL") &&
-                    !phrase.category.equals(selectedCategory)) {
+        for (WorkerPhrasebook.Phrase phrase :
+                phrases) {
+
+            if (!selectedCategory.equals("ALL")
+                    && !phrase.category.equals(
+                    selectedCategory)) {
+
                 continue;
             }
 
@@ -315,99 +541,145 @@ public class PhrasebookActivity extends Activity {
                         phrase.turkish + " " +
                         phrase.german;
 
-                if (!allText.toLowerCase()
+                if (!allText
+                        .toLowerCase()
                         .contains(query)) {
+
                     continue;
                 }
             }
 
             addPhraseCard(phrase);
+
+            count++;
+        }
+
+        if (count == 0) {
+
+            TextView empty = new TextView(this);
+
+            empty.setText("Фразы не найдены");
+            empty.setTextSize(17);
+            empty.setTextColor(Color.GRAY);
+            empty.setGravity(Gravity.CENTER);
+            empty.setPadding(
+                    10,
+                    dp(30),
+                    10,
+                    dp(30)
+            );
+
+            container.addView(empty);
         }
     }
+
+    // =========================================================
+    // КАРТОЧКА
+    // =========================================================
 
     private void addPhraseCard(
             WorkerPhrasebook.Phrase phrase) {
 
-        LinearLayout card = new LinearLayout(this);
+        LinearLayout card =
+                new LinearLayout(this);
 
-        card.setOrientation(LinearLayout.VERTICAL);
+        card.setOrientation(
+                LinearLayout.VERTICAL
+        );
+
         card.setPadding(
                 dp(12),
                 dp(10),
                 dp(8),
-                dp(10)
+                dp(8)
         );
 
         card.setBackgroundColor(
                 Color.rgb(245, 245, 245)
         );
 
-        LinearLayout.LayoutParams cardParams =
+        LinearLayout.LayoutParams params =
                 new LinearLayout.LayoutParams(
                         ViewGroup.LayoutParams.MATCH_PARENT,
                         ViewGroup.LayoutParams.WRAP_CONTENT
                 );
 
-        cardParams.setMargins(
+        params.setMargins(
+                0,
+                dp(4),
+                0,
+                dp(4)
+        );
+
+        container.addView(card, params);
+
+        // Английский всегда сверху
+        TextView english =
+                new TextView(this);
+
+        english.setText(
+                "🇬🇧 " + phrase.english
+        );
+
+        english.setTextSize(18);
+        english.setTextColor(Color.BLACK);
+        english.setTypeface(
+                null,
+                Typeface.BOLD
+        );
+
+        card.addView(english);
+
+        // Выбранный перевод
+        TextView translation =
+                new TextView(this);
+
+        translation.setText(
+                getLanguageFlag(language)
+                        + " "
+                        + getSelectedText(phrase)
+        );
+
+        translation.setTextSize(17);
+        translation.setTextColor(
+                Color.rgb(0, 110, 55)
+        );
+
+        translation.setPadding(
                 0,
                 dp(5),
                 0,
                 dp(5)
         );
 
-        container.addView(card, cardParams);
+        card.addView(translation);
 
-        TextView english = new TextView(this);
-        english.setText("🇬🇧 " + phrase.english);
-        english.setTextSize(18);
-        english.setTextColor(Color.BLACK);
-        english.setTypeface(null, Typeface.BOLD);
+        // Кнопки
+        LinearLayout buttons =
+                new LinearLayout(this);
 
-        card.addView(english);
+        buttons.setOrientation(
+                LinearLayout.HORIZONTAL
+        );
 
-        TextView russian = new TextView(this);
-        russian.setText("🇷🇺 " + phrase.russian);
-        russian.setTextSize(16);
-
-        card.addView(russian);
-
-        TextView azerbaijani = new TextView(this);
-        azerbaijani.setText("🇦🇿 " + phrase.azerbaijani);
-        azerbaijani.setTextSize(16);
-
-        card.addView(azerbaijani);
-
-        TextView turkish = new TextView(this);
-        turkish.setText("🇹🇷 " + phrase.turkish);
-        turkish.setTextSize(16);
-
-        card.addView(turkish);
-
-        TextView german = new TextView(this);
-        german.setText("🇩🇪 " + phrase.german);
-        german.setTextSize(16);
-
-        card.addView(german);
-
-        LinearLayout buttons = new LinearLayout(this);
-        buttons.setOrientation(LinearLayout.HORIZONTAL);
         buttons.setGravity(Gravity.RIGHT);
 
-        // Копировать
-        TextView copy = createActionButton("📋", 25);
+        // COPY
+        TextView copy =
+                createActionButton("📋", 25);
 
         copy.setOnClickListener(v -> {
 
-            String text =
-                    phrase.english + "\n" +
-                    phrase.russian + "\n" +
-                    phrase.azerbaijani + "\n" +
-                    phrase.turkish + "\n" +
-                    phrase.german;
-
             ClipboardManager clipboard =
                     (ClipboardManager)
-                            getSystemService(Context.CLIPBOARD_SERVICE);
+                            getSystemService(
+                                    Context.CLIPBOARD_SERVICE
+                            );
+
+            String text =
+                    phrase.english
+                            + "\n"
+                            + getSelectedText(phrase);
 
             clipboard.setPrimaryClip(
                     ClipData.newPlainText(
@@ -427,30 +699,41 @@ public class PhrasebookActivity extends Activity {
                 copy,
                 new LinearLayout.LayoutParams(
                         dp(55),
-                        dp(50)
+                        dp(48)
                 )
         );
 
-        // Избранное
+        // FAVORITE
         TextView favorite =
                 createActionButton(
-                        isFavorite(phrase) ? "⭐" : "☆",
+                        isFavorite(phrase)
+                                ? "⭐"
+                                : "☆",
                         25
                 );
 
         favorite.setOnClickListener(v -> {
 
-            String key = phrase.english;
+            String key =
+                    phrase.english;
 
             boolean state =
-                    favorites.getBoolean(key, false);
+                    favorites.getBoolean(
+                            key,
+                            false
+                    );
 
             favorites.edit()
-                    .putBoolean(key, !state)
+                    .putBoolean(
+                            key,
+                            !state
+                    )
                     .apply();
 
             favorite.setText(
-                    !state ? "⭐" : "☆"
+                    !state
+                            ? "⭐"
+                            : "☆"
             );
         });
 
@@ -458,13 +741,16 @@ public class PhrasebookActivity extends Activity {
                 favorite,
                 new LinearLayout.LayoutParams(
                         dp(55),
-                        dp(50)
+                        dp(48)
                 )
         );
 
-        // Озвучка
+        // SPEAKER
         TextView speak =
-                createActionButton("🔊", 26);
+                createActionButton(
+                        "🔊",
+                        26
+                );
 
         speak.setTextColor(
                 Color.rgb(0, 130, 60)
@@ -472,20 +758,25 @@ public class PhrasebookActivity extends Activity {
 
         speak.setOnClickListener(v -> {
 
+            if (tts == null) {
+                return;
+            }
+
             String text =
                     getSelectedText(phrase);
 
-            if (language.equals("AZ")) {
+            int result =
+                    tts.setLanguage(
+                            getSpeechLocale()
+                    );
 
-                int available =
-                        tts.isLanguageAvailable(
-                                new Locale("az", "AZ")
-                        );
+            if (result ==
+                    TextToSpeech.LANG_MISSING_DATA
+                    ||
+                    result ==
+                            TextToSpeech.LANG_NOT_SUPPORTED) {
 
-                if (available ==
-                        TextToSpeech.LANG_MISSING_DATA ||
-                        available ==
-                                TextToSpeech.LANG_NOT_SUPPORTED) {
+                if (language.equals("AZ")) {
 
                     Toast.makeText(
                             this,
@@ -493,8 +784,16 @@ public class PhrasebookActivity extends Activity {
                             Toast.LENGTH_LONG
                     ).show();
 
-                    return;
+                } else {
+
+                    Toast.makeText(
+                            this,
+                            "Голос для этого языка недоступен",
+                            Toast.LENGTH_LONG
+                    ).show();
                 }
+
+                return;
             }
 
             tts.speak(
@@ -509,12 +808,16 @@ public class PhrasebookActivity extends Activity {
                 speak,
                 new LinearLayout.LayoutParams(
                         dp(55),
-                        dp(50)
+                        dp(48)
                 )
         );
 
         card.addView(buttons);
     }
+
+    // =========================================================
+    // ПЕРЕВОД
+    // =========================================================
 
     private String getSelectedText(
             WorkerPhrasebook.Phrase phrase) {
@@ -539,6 +842,33 @@ public class PhrasebookActivity extends Activity {
         }
     }
 
+    private String getLanguageFlag(
+            String lang) {
+
+        switch (lang) {
+
+            case "AZ":
+                return "🇦🇿";
+
+            case "EN":
+                return "🇬🇧";
+
+            case "TR":
+                return "🇹🇷";
+
+            case "DE":
+                return "🇩🇪";
+
+            case "RU":
+            default:
+                return "🇷🇺";
+        }
+    }
+
+    // =========================================================
+    // ИЗБРАННОЕ
+    // =========================================================
+
     private boolean isFavorite(
             WorkerPhrasebook.Phrase phrase) {
 
@@ -548,54 +878,44 @@ public class PhrasebookActivity extends Activity {
         );
     }
 
-    private TextView createActionButton(
-            String text,
-            float textSize) {
-
-        TextView button = new TextView(this);
-
-        button.setText(text);
-        button.setTextSize(textSize);
-        button.setTextColor(Color.DKGRAY);
-        button.setGravity(Gravity.CENTER);
-        button.setTypeface(null, Typeface.BOLD);
-
-        button.setBackgroundColor(
-                Color.rgb(235, 235, 235)
-        );
-
-        button.setPadding(
-                dp(4),
-                dp(4),
-                dp(4),
-                dp(4)
-        );
-
-        button.setClickable(true);
-        button.setFocusable(true);
-
-        return button;
-    }
+    // =========================================================
+    // TTS
+    // =========================================================
 
     private Locale getSpeechLocale() {
 
         switch (language) {
 
             case "AZ":
-                return new Locale("az", "AZ");
-
-            case "TR":
-                return new Locale("tr", "TR");
-
-            case "DE":
-                return new Locale("de", "DE");
+                return new Locale(
+                        "az",
+                        "AZ"
+                );
 
             case "EN":
-                return new Locale("en", "US");
+                return new Locale(
+                        "en",
+                        "US"
+                );
+
+            case "TR":
+                return new Locale(
+                        "tr",
+                        "TR"
+                );
+
+            case "DE":
+                return new Locale(
+                        "de",
+                        "DE"
+                );
 
             case "RU":
             default:
-                return new Locale("ru", "RU");
+                return new Locale(
+                        "ru",
+                        "RU"
+                );
         }
     }
 
@@ -605,25 +925,50 @@ public class PhrasebookActivity extends Activity {
             return;
         }
 
-        Locale locale = getSpeechLocale();
-
-        int result = tts.setLanguage(locale);
-
-        if (language.equals("AZ")) {
-
-            if (result ==
-                    TextToSpeech.LANG_MISSING_DATA ||
-                    result ==
-                            TextToSpeech.LANG_NOT_SUPPORTED) {
-
-                Toast.makeText(
-                        this,
-                        "Azərbaycan dili üçün səs paketi yoxdur",
-                        Toast.LENGTH_LONG
-                ).show();
-            }
-        }
+        tts.setLanguage(
+                getSpeechLocale()
+        );
     }
+
+    // =========================================================
+    // КНОПКА
+    // =========================================================
+
+    private TextView createActionButton(
+            String text,
+            float size) {
+
+        TextView button =
+                new TextView(this);
+
+        button.setText(text);
+        button.setTextSize(size);
+        button.setGravity(
+                Gravity.CENTER
+        );
+
+        button.setTypeface(
+                null,
+                Typeface.BOLD
+        );
+
+        button.setBackgroundColor(
+                Color.rgb(
+                        235,
+                        235,
+                        235
+                )
+        );
+
+        button.setClickable(true);
+        button.setFocusable(true);
+
+        return button;
+    }
+
+    // =========================================================
+    // DP
+    // =========================================================
 
     private int dp(int value) {
 
@@ -639,6 +984,7 @@ public class PhrasebookActivity extends Activity {
     protected void onDestroy() {
 
         if (tts != null) {
+
             tts.stop();
             tts.shutdown();
         }
