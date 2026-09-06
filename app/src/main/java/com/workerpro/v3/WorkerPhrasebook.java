@@ -286,6 +286,265 @@ public class WorkerPhrasebook {
         add(phrases,"Leave the area.","Покиньте территорию.","Ərazini tərk edin.","Alanı terk edin.","Verlassen Sie den Bereich.","EMERGENCY");
         add(phrases,"Follow the emergency route.","Следуйте аварийному маршруту.","Təcili çıxış marşrutu ilə gedin.","Acil durum güzergahını takip edin.","Folgen Sie dem Fluchtweg.","EMERGENCY");
 
+        // =====================================================
+        // 200 NEW PHRASES
+        // =====================================================
+
+        // =========================
+        // WORK - 30
+        // =========================
+
+        add(phrases,"I am on my shift.","Я на своей смене.","Mən növbədəyəm.","Vardiyadayım.","Ich bin in meiner Schicht.","WORK");
+        add(phrases,"The shift starts now.","Смена начинается сейчас.","Növbə indi başlayır.","Vardiya şimdi başlıyor.","Die Schicht beginnt jetzt.","WORK");
+        add(phrases,"I am ready for the next task.","Я готов к следующему заданию.","Növbəti tapşırığa hazıram.","Bir sonraki göreve hazırım.","Ich bin bereit für die nächste Aufgabe.","WORK");
+        add(phrases,"My task is clear.","Моё задание понятно.","Tapşırığım aydındır.","Görevim açık.","Meine Aufgabe ist klar.","WORK");
+        add(phrases,"I need the correct material.","Мне нужен правильный материал.","Mənə düzgün material lazımdır.","Doğru malzemeye ihtiyacım var.","Ich brauche das richtige Material.","WORK");
+        add(phrases,"Please show me the work order.","Пожалуйста, покажите мне рабочее задание.","Zəhmət olmasa iş tapşırığını göstərin.","Lütfen iş emrini gösterin.","Bitte zeigen Sie mir den Arbeitsauftrag.","WORK");
+        add(phrases,"Where is the work order?","Где рабочее задание?","İş tapşırığı haradadır?","İş emri nerede?","Wo ist der Arbeitsauftrag?","WORK");
+        add(phrases,"I will check the workplace.","Я проверю рабочее место.","İş yerini yoxlayacağam.","Çalışma yerini kontrol edeceğim.","Ich werde den Arbeitsplatz überprüfen.","WORK");
+        add(phrases,"The workplace is clean.","Рабочее место чистое.","İş yeri təmizdir.","Çalışma alanı temiz.","Der Arbeitsplatz ist sauber.","WORK");
+        add(phrases,"I need a new instruction.","Мне нужна новая инструкция.","Mənə yeni təlimat lazımdır.","Yeni bir talimata ihtiyacım var.","Ich brauche eine neue Anweisung.","WORK");
+        add(phrases,"Please explain this step.","Пожалуйста, объясните этот шаг.","Zəhmət olmasa bu addımı izah edin.","Lütfen bu adımı açıklayın.","Bitte erklären Sie diesen Schritt.","WORK");
+        add(phrases,"I have completed this operation.","Я завершил эту операцию.","Bu əməliyyatı tamamlamışam.","Bu işlemi tamamladım.","Ich habe diesen Vorgang abgeschlossen.","WORK");
+        add(phrases,"I am checking the result.","Я проверяю результат.","Nəticəni yoxlayıram.","Sonucu kontrol ediyorum.","Ich überprüfe das Ergebnis.","WORK");
+        add(phrases,"The material is missing.","Материала нет.","Material yoxdur.","Malzeme eksik.","Das Material fehlt.","WORK");
+        add(phrases,"We need more material.","Нам нужно больше материала.","Bizə daha çox material lazımdır.","Daha fazla malzemeye ihtiyacımız var.","Wir brauchen mehr Material.","WORK");
+        add(phrases,"The job is almost finished.","Работа почти закончена.","İş demək olar ki, bitib.","İş neredeyse bitti.","Die Arbeit ist fast fertig.","WORK");
+        add(phrases,"I need a short break.","Мне нужен короткий перерыв.","Mənə qısa fasilə lazımdır.","Kısa bir molaya ihtiyacım var.","Ich brauche eine kurze Pause.","WORK");
+        add(phrases,"I am back from my break.","Я вернулся с перерыва.","Fasilədən qayıtmışam.","Moladan döndüm.","Ich bin aus meiner Pause zurück.","WORK");
+        add(phrases,"I will continue working.","Я продолжу работать.","İşləməyə davam edəcəyəm.","Çalışmaya devam edeceğim.","Ich werde weiterarbeiten.","WORK");
+        add(phrases,"Please bring the material.","Пожалуйста, принесите материал.","Zəhmət olmasa materialı gətirin.","Lütfen malzemeyi getirin.","Bitte bringen Sie das Material.","WORK");
+        add(phrases,"The material has arrived.","Материал прибыл.","Material gəlib.","Malzeme geldi.","Das Material ist angekommen.","WORK");
+        add(phrases,"I need more information.","Мне нужна дополнительная информация.","Mənə daha çox məlumat lazımdır.","Daha fazla bilgiye ihtiyacım var.","Ich brauche mehr Informationen.","WORK");
+        add(phrases,"Please write it down.","Пожалуйста, запишите это.","Zəhmət olmasa bunu yazın.","Lütfen bunu yazın.","Bitte schreiben Sie es auf.","WORK");
+        add(phrases,"I will check it again.","Я проверю это ещё раз.","Bunu yenidən yoxlayacağam.","Bunu tekrar kontrol edeceğim.","Ich werde es noch einmal überprüfen.","WORK");
+        add(phrases,"The task is completed.","Задание выполнено.","Tapşırıq yerinə yetirilib.","Görev tamamlandı.","Die Aufgabe ist erledigt.","WORK");
+        add(phrases,"I am ready for inspection.","Я готов к проверке.","Yoxlamaya hazıram.","Kontrole hazırım.","Ich bin bereit für die Prüfung.","WORK");
+        add(phrases,"Please check the workplace.","Пожалуйста, проверьте рабочее место.","Zəhmət olmasa iş yerini yoxlayın.","Lütfen çalışma alanını kontrol edin.","Bitte überprüfen Sie den Arbeitsplatz.","WORK");
+        add(phrases,"I need a clean tool.","Мне нужен чистый инструмент.","Mənə təmiz alət lazımdır.","Temiz bir takıma ihtiyacım var.","Ich brauche ein sauberes Werkzeug.","WORK");
+        add(phrases,"We can start now.","Мы можем начать сейчас.","İndi başlaya bilərik.","Şimdi başlayabiliriz.","Wir können jetzt anfangen.","WORK");
+        add(phrases,"The next operation is ready.","Следующая операция готова.","Növbəti əməliyyat hazırdır.","Sonraki işlem hazır.","Der nächste Vorgang ist bereit.","WORK");
+
+        // =========================
+        // BOSS - 20
+        // =========================
+
+        add(phrases,"Can I ask a question?","Можно задать вопрос?","Sual verə bilərəm?","Bir soru sorabilir miyim?","Darf ich eine Frage stellen?","BOSS");
+        add(phrases,"Please approve this job.","Пожалуйста, одобрите эту работу.","Zəhmət olmasa bu işi təsdiqləyin.","Lütfen bu işi onaylayın.","Bitte genehmigen Sie diese Arbeit.","BOSS");
+        add(phrases,"Please check the drawing.","Пожалуйста, проверьте чертёж.","Zəhmət olmasa çertyoju yoxlayın.","Lütfen teknik resmi kontrol edin.","Bitte überprüfen Sie die Zeichnung.","BOSS");
+        add(phrases,"Please check the settings.","Пожалуйста, проверьте настройки.","Zəhmət olmasa parametrləri yoxlayın.","Lütfen ayarları kontrol edin.","Bitte überprüfen Sie die Einstellungen.","BOSS");
+        add(phrases,"I have finished this batch.","Я закончил эту партию.","Bu partiyanı bitirmişəm.","Bu partiyi bitirdim.","Ich habe diese Charge fertiggestellt.","BOSS");
+        add(phrases,"The batch is ready.","Партия готова.","Partiya hazırdır.","Parti hazır.","Die Charge ist bereit.","BOSS");
+        add(phrases,"Should I continue?","Мне продолжать?","Davam edim?","Devam edeyim mi?","Soll ich weitermachen?","BOSS");
+        add(phrases,"Which operation is next?","Какая следующая операция?","Növbəti əməliyyat hansıdır?","Sonraki işlem hangisi?","Welcher Vorgang kommt als Nächstes?","BOSS");
+        add(phrases,"Which material should I use?","Какой материал мне использовать?","Hansı materialdan istifadə etməliyəm?","Hangi malzemeyi kullanmalıyım?","Welches Material soll ich verwenden?","BOSS");
+        add(phrases,"Do you need this urgently?","Вам это нужно срочно?","Buna təcili ehtiyacınız var?","Buna acilen ihtiyacınız var mı?","Brauchen Sie das dringend?","BOSS");
+        add(phrases,"I need your confirmation.","Мне нужно ваше подтверждение.","Mənə sizin təsdiqiniz lazımdır.","Onayınıza ihtiyacım var.","Ich brauche Ihre Bestätigung.","BOSS");
+        add(phrases,"Please sign the document.","Пожалуйста, подпишите документ.","Zəhmət olmasa sənədi imzalayın.","Lütfen belgeyi imzalayın.","Bitte unterschreiben Sie das Dokument.","BOSS");
+        add(phrases,"The result is ready.","Результат готов.","Nəticə hazırdır.","Sonuç hazır.","Das Ergebnis ist fertig.","BOSS");
+        add(phrases,"I found a problem.","Я нашёл проблему.","Problem tapmışam.","Bir sorun buldum.","Ich habe ein Problem gefunden.","BOSS");
+        add(phrases,"I have stopped the machine.","Я остановил станок.","Dəzgahı dayandırmışam.","Makineyi durdurdum.","Ich habe die Maschine gestoppt.","BOSS");
+        add(phrases,"Should I call maintenance?","Мне вызвать обслуживание?","Texniki xidməti çağırım?","Bakımı çağırmalı mıyım?","Soll ich die Instandhaltung rufen?","BOSS");
+        add(phrases,"Can you check this measurement?","Можете проверить этот размер?","Bu ölçünü yoxlaya bilərsiniz?","Bu ölçümü kontrol edebilir misiniz?","Können Sie dieses Maß überprüfen?","BOSS");
+        add(phrases,"Can I change the setup?","Могу я изменить настройку?","Quraşdırmanı dəyişə bilərəm?","Ayarı değiştirebilir miyim?","Kann ich die Einstellung ändern?","BOSS");
+        add(phrases,"Please tell me the priority.","Пожалуйста, скажите мне приоритет.","Zəhmət olmasa prioriteti deyin.","Lütfen önceliği söyleyin.","Bitte sagen Sie mir die Priorität.","BOSS");
+        add(phrases,"I will follow your instructions.","Я буду следовать вашим инструкциям.","Sizin təlimatlarınıza əməl edəcəyəm.","Talimatlarınıza uyacağım.","Ich werde Ihre Anweisungen befolgen.","BOSS");
+
+        // =========================
+        // MACHINE - 20
+        // =========================
+
+        add(phrases,"Turn on the main power.","Включите основное питание.","Əsas enerjini qoşun.","Ana gücü açın.","Schalten Sie die Hauptstromversorgung ein.","MACHINE");
+        add(phrases,"Turn off the main power.","Выключите основное питание.","Əsas enerjini söndürün.","Ana gücü kapatın.","Schalten Sie die Hauptstromversorgung aus.","MACHINE");
+        add(phrases,"Check the control panel.","Проверьте панель управления.","İdarəetmə panelini yoxlayın.","Kontrol panelini kontrol edin.","Überprüfen Sie das Bedienfeld.","MACHINE");
+        add(phrases,"The control panel is on.","Панель управления включена.","İdarəetmə paneli açıqdır.","Kontrol paneli açık.","Das Bedienfeld ist eingeschaltet.","MACHINE");
+        add(phrases,"The machine is in automatic mode.","Станок в автоматическом режиме.","Dəzgah avtomatik rejimdədir.","Makine otomatik modda.","Die Maschine ist im Automatikbetrieb.","MACHINE");
+        add(phrases,"The machine is in manual mode.","Станок в ручном режиме.","Dəzgah əl rejimindədir.","Makine manuel modda.","Die Maschine ist im Handbetrieb.","MACHINE");
+        add(phrases,"Check the safety switch.","Проверьте защитный выключатель.","Təhlükəsizlik açarını yoxlayın.","Güvenlik şalterini kontrol edin.","Überprüfen Sie den Sicherheitsschalter.","MACHINE");
+        add(phrases,"The safety switch is open.","Защитный выключатель разомкнут.","Təhlükəsizlik açarı açıqdır.","Güvenlik şalteri açık.","Der Sicherheitsschalter ist geöffnet.","MACHINE");
+        add(phrases,"Close the safety switch.","Закройте защитный выключатель.","Təhlükəsizlik açarını bağlayın.","Güvenlik şalterini kapatın.","Schließen Sie den Sicherheitsschalter.","MACHINE");
+        add(phrases,"Check the hydraulic system.","Проверьте гидравлическую систему.","Hidravlik sistemi yoxlayın.","Hidrolik sistemi kontrol edin.","Überprüfen Sie das Hydrauliksystem.","MACHINE");
+        add(phrases,"The hydraulic pressure is low.","Гидравлическое давление низкое.","Hidravlik təzyiq aşağıdır.","Hidrolik basınç düşük.","Der Hydraulikdruck ist niedrig.","MACHINE");
+        add(phrases,"The hydraulic pressure is high.","Гидравлическое давление высокое.","Hidravlik təzyiq yüksəkdir.","Hidrolik basınç yüksek.","Der Hydraulikdruck ist hoch.","MACHINE");
+        add(phrases,"Check the coolant level.","Проверьте уровень охлаждающей жидкости.","Soyuducu mayenin səviyyəsini yoxlayın.","Soğutma sıvısı seviyesini kontrol edin.","Überprüfen Sie den Kühlmittelstand.","MACHINE");
+        add(phrases,"The coolant level is low.","Уровень охлаждающей жидкости низкий.","Soyuducu mayenin səviyyəsi aşağıdır.","Soğutma sıvısı seviyesi düşük.","Der Kühlmittelstand ist niedrig.","MACHINE");
+        add(phrases,"Add coolant.","Добавьте охлаждающую жидкость.","Soyuducu maye əlavə edin.","Soğutma sıvısı ekleyin.","Füllen Sie Kühlmittel nach.","MACHINE");
+        add(phrases,"The machine needs lubrication.","Станку нужна смазка.","Dəzgaha yağlama lazımdır.","Makinenin yağlanması gerekiyor.","Die Maschine braucht Schmierung.","MACHINE");
+        add(phrases,"Check the alarm light.","Проверьте сигнальную лампу.","Siqnal lampasını yoxlayın.","Alarm lambasını kontrol edin.","Überprüfen Sie die Warnleuchte.","MACHINE");
+        add(phrases,"The alarm light is on.","Сигнальная лампа горит.","Siqnal lampası yanır.","Alarm lambası yanıyor.","Die Warnleuchte ist an.","MACHINE");
+        add(phrases,"Reset the machine.","Сбросьте станок.","Dəzgahı sıfırlayın.","Makineyi sıfırlayın.","Setzen Sie die Maschine zurück.","MACHINE");
+        add(phrases,"The machine is ready for production.","Станок готов к производству.","Dəzgah istehsala hazırdır.","Makine üretime hazır.","Die Maschine ist für die Produktion bereit.","MACHINE");
+
+        // =========================
+        // CNC - 20
+        // =========================
+
+        add(phrases,"Open the CNC program.","Откройте программу ЧПУ.","CNC proqramını açın.","CNC programını açın.","Öffnen Sie das CNC-Programm.","CNC");
+        add(phrases,"Select the correct program.","Выберите правильную программу.","Düzgün proqramı seçin.","Doğru programı seçin.","Wählen Sie das richtige Programm.","CNC");
+        add(phrases,"Check the program version.","Проверьте версию программы.","Proqramın versiyasını yoxlayın.","Program sürümünü kontrol edin.","Überprüfen Sie die Programmversion.","CNC");
+        add(phrases,"Check the tool length.","Проверьте длину инструмента.","Alətin uzunluğunu yoxlayın.","Takım uzunluğunu kontrol edin.","Überprüfen Sie die Werkzeuglänge.","CNC");
+        add(phrases,"Measure the tool length.","Измерьте длину инструмента.","Alətin uzunluğunu ölçün.","Takım uzunluğunu ölçün.","Messen Sie die Werkzeuglänge.","CNC");
+        add(phrases,"Check the work offset.","Проверьте рабочую коррекцию.","İş korreksiyasını yoxlayın.","İş ofsetini kontrol edin.","Überprüfen Sie den Werkstückoffset.","CNC");
+        add(phrases,"Set the work offset.","Установите рабочую коррекцию.","İş korreksiyasını təyin edin.","İş ofsetini ayarlayın.","Stellen Sie den Werkstückoffset ein.","CNC");
+        add(phrases,"Check the cutting depth.","Проверьте глубину резания.","Kəsmə dərinliyini yoxlayın.","Kesme derinliğini kontrol edin.","Überprüfen Sie die Schnitttiefe.","CNC");
+        add(phrases,"Set the cutting depth.","Установите глубину резания.","Kəsmə dərinliyini təyin edin.","Kesme derinliğini ayarlayın.","Stellen Sie die Schnitttiefe ein.","CNC");
+        add(phrases,"Check the cutting speed.","Проверьте скорость резания.","Kəsmə sürətini yoxlayın.","Kesme hızını kontrol edin.","Überprüfen Sie die Schnittgeschwindigkeit.","CNC");
+        add(phrases,"Reduce the cutting speed.","Уменьшите скорость резания.","Kəsmə sürətini azaldın.","Kesme hızını azaltın.","Reduzieren Sie die Schnittgeschwindigkeit.","CNC");
+        add(phrases,"Increase the feed rate.","Увеличьте скорость подачи.","Veriş sürətini artırın.","İlerleme hızını artırın.","Erhöhen Sie den Vorschub.","CNC");
+        add(phrases,"Reduce the feed rate.","Уменьшите скорость подачи.","Veriş sürətini azaldın.","İlerleme hızını azaltın.","Reduzieren Sie den Vorschub.","CNC");
+        add(phrases,"Check the spindle direction.","Проверьте направление шпинделя.","Şpindelin istiqamətini yoxlayın.","İş mili yönünü kontrol edin.","Überprüfen Sie die Spindelrichtung.","CNC");
+        add(phrases,"Check the coolant flow.","Проверьте поток охлаждающей жидкости.","Soyuducu mayenin axınını yoxlayın.","Soğutma sıvısı akışını kontrol edin.","Überprüfen Sie den Kühlmittelfluss.","CNC");
+        add(phrases,"Start the machining cycle.","Запустите цикл обработки.","Emal siklini işə salın.","İşleme çevrimini başlatın.","Starten Sie den Bearbeitungszyklus.","CNC");
+        add(phrases,"Stop the machining cycle.","Остановите цикл обработки.","Emal siklini dayandırın.","İşleme çevrimini durdurun.","Stoppen Sie den Bearbeitungszyklus.","CNC");
+        add(phrases,"The CNC alarm is active.","Авария ЧПУ активна.","CNC alarmı aktivdir.","CNC alarmı aktif.","Der CNC-Alarm ist aktiv.","CNC");
+        add(phrases,"Check the machine coordinates.","Проверьте координаты станка.","Dəzgah koordinatlarını yoxlayın.","Makine koordinatlarını kontrol edin.","Überprüfen Sie die Maschinenkoordinaten.","CNC");
+        add(phrases,"Save the new settings.","Сохраните новые настройки.","Yeni parametrləri yadda saxlayın.","Yeni ayarları kaydedin.","Speichern Sie die neuen Einstellungen.","CNC");
+
+        // =========================
+        // STAMPING - 20
+        // =========================
+
+        add(phrases,"Check the press before starting.","Проверьте пресс перед запуском.","Presi işə salmazdan əvvəl yoxlayın.","Presi çalıştırmadan önce kontrol edin.","Überprüfen Sie die Presse vor dem Start.","STAMPING");
+        add(phrases,"Check the die alignment.","Проверьте выравнивание матрицы.","Matrisin düzülüşünü yoxlayın.","Kalıp hizalamasını kontrol edin.","Überprüfen Sie die Ausrichtung der Matrize.","STAMPING");
+        add(phrases,"Align the die correctly.","Правильно выровняйте матрицу.","Matrisi düzgün düzün.","Kalıbı doğru hizalayın.","Richten Sie die Matrize richtig aus.","STAMPING");
+        add(phrases,"Check the upper die.","Проверьте верхнюю матрицу.","Üst matrisi yoxlayın.","Üst kalıbı kontrol edin.","Überprüfen Sie die obere Matrize.","STAMPING");
+        add(phrases,"Check the lower die.","Проверьте нижнюю матрицу.","Alt matrisi yoxlayın.","Alt kalıbı kontrol edin.","Überprüfen Sie die untere Matrize.","STAMPING");
+        add(phrases,"Check the die clearance.","Проверьте зазор матрицы.","Matris boşluğunu yoxlayın.","Kalıp boşluğunu kontrol edin.","Überprüfen Sie den Matrizenspalt.","STAMPING");
+        add(phrases,"The die clearance is too small.","Зазор матрицы слишком маленький.","Matris boşluğu çox kiçikdir.","Kalıp boşluğu çok küçük.","Der Matrizenspalt ist zu klein.","STAMPING");
+        add(phrases,"The die clearance is too large.","Зазор матрицы слишком большой.","Matris boşluğu çox böyükdür.","Kalıp boşluğu çok büyük.","Der Matrizenspalt ist zu groß.","STAMPING");
+        add(phrases,"Check the press stroke.","Проверьте ход пресса.","Presin gedişini yoxlayın.","Pres strokunu kontrol edin.","Überprüfen Sie den Pressenhub.","STAMPING");
+        add(phrases,"Set the press stroke.","Установите ход пресса.","Presin gedişini təyin edin.","Pres strokunu ayarlayın.","Stellen Sie den Pressenhub ein.","STAMPING");
+        add(phrases,"Check the material position.","Проверьте положение материала.","Materialın vəziyyətini yoxlayın.","Malzeme konumunu kontrol edin.","Überprüfen Sie die Materialposition.","STAMPING");
+        add(phrases,"Position the sheet correctly.","Правильно установите лист.","Vərəqi düzgün yerləşdirin.","Sac levhayı doğru yerleştirin.","Positionieren Sie das Blech richtig.","STAMPING");
+        add(phrases,"The sheet is not aligned.","Лист не выровнен.","Vərəq düzgün düzülməyib.","Sac levha hizalanmamış.","Das Blech ist nicht ausgerichtet.","STAMPING");
+        add(phrases,"Check the feeding system.","Проверьте систему подачи.","Qidalandırma sistemini yoxlayın.","Besleme sistemini kontrol edin.","Überprüfen Sie das Zuführsystem.","STAMPING");
+        add(phrases,"The feeder is not working.","Подающее устройство не работает.","Verici qurğu işləmir.","Besleyici çalışmıyor.","Die Zuführeinrichtung funktioniert nicht.","STAMPING");
+        add(phrases,"Check the safety guard.","Проверьте защитное ограждение.","Mühafizə örtüyünü yoxlayın.","Koruyucu muhafazayı kontrol edin.","Überprüfen Sie die Schutzvorrichtung.","STAMPING");
+        add(phrases,"The press is making a strange noise.","Пресс издаёт странный шум.","Pres qəribə səs çıxarır.","Pres garip bir ses çıkarıyor.","Die Presse macht ein ungewöhnliches Geräusch.","STAMPING");
+        add(phrases,"The stamping cycle is complete.","Цикл штамповки завершён.","Ştamplama sikli tamamlanıb.","Presleme çevrimi tamamlandı.","Der Stanzzyklus ist abgeschlossen.","STAMPING");
+        add(phrases,"Remove the finished part.","Снимите готовую деталь.","Hazır detalı çıxarın.","Bitmiş parçayı çıkarın.","Entfernen Sie das fertige Teil.","STAMPING");
+        add(phrases,"Inspect the stamped part.","Проверьте штампованную деталь.","Ştamplanmış detalı yoxlayın.","Preslenmiş parçayı kontrol edin.","Prüfen Sie das gestanzte Teil.","STAMPING");
+
+        // =========================
+        // QUALITY - 20
+        // =========================
+
+        add(phrases,"Check the part against the drawing.","Проверьте деталь по чертежу.","Detalı çertyoja görə yoxlayın.","Parçayı teknik resme göre kontrol edin.","Prüfen Sie das Teil anhand der Zeichnung.","QUALITY");
+        add(phrases,"Compare the part with the sample.","Сравните деталь с образцом.","Detalı nümunə ilə müqayisə edin.","Parçayı numuneyle karşılaştırın.","Vergleichen Sie das Teil mit dem Muster.","QUALITY");
+        add(phrases,"Record the measurement.","Запишите измерение.","Ölçünü qeyd edin.","Ölçümü kaydedin.","Notieren Sie das Maß.","QUALITY");
+        add(phrases,"Write down the result.","Запишите результат.","Nəticəni yazın.","Sonucu yazın.","Schreiben Sie das Ergebnis auf.","QUALITY");
+        add(phrases,"The measurement is within tolerance.","Размер находится в допуске.","Ölçü tolerantlıq daxilindədir.","Ölçüm tolerans dahilinde.","Das Maß liegt innerhalb der Toleranz.","QUALITY");
+        add(phrases,"The measurement is outside tolerance.","Размер вне допуска.","Ölçü tolerantlıqdan kənardadır.","Ölçüm tolerans dışında.","Das Maß liegt außerhalb der Toleranz.","QUALITY");
+        add(phrases,"Check the thickness.","Проверьте толщину.","Qalınlığı yoxlayın.","Kalınlığı kontrol edin.","Überprüfen Sie die Dicke.","QUALITY");
+        add(phrases,"Check the hole diameter.","Проверьте диаметр отверстия.","Deşiyin diametrini yoxlayın.","Deliğin çapını kontrol edin.","Überprüfen Sie den Lochdurchmesser.","QUALITY");
+        add(phrases,"Check the hole position.","Проверьте положение отверстия.","Deşiyin vəziyyətini yoxlayın.","Deliğin konumunu kontrol edin.","Überprüfen Sie die Lochposition.","QUALITY");
+        add(phrases,"Check the angle.","Проверьте угол.","Bucağı yoxlayın.","Açıyı kontrol edin.","Überprüfen Sie den Winkel.","QUALITY");
+        add(phrases,"Check the flatness.","Проверьте плоскостность.","Hamarlığı yoxlayın.","Düzlemselliği kontrol edin.","Überprüfen Sie die Ebenheit.","QUALITY");
+        add(phrases,"Check the surface finish.","Проверьте качество поверхности.","Səthin işlənməsini yoxlayın.","Yüzey kalitesini kontrol edin.","Überprüfen Sie die Oberflächenqualität.","QUALITY");
+        add(phrases,"There is a scratch.","Есть царапина.","Cızıq var.","Çizik var.","Es gibt einen Kratzer.","QUALITY");
+        add(phrases,"There is a dent.","Есть вмятина.","Çökəklik var.","Çöküntü var.","Es gibt eine Delle.","QUALITY");
+        add(phrases,"There is a deformation.","Есть деформация.","Deformasiya var.","Deformasyon var.","Es gibt eine Verformung.","QUALITY");
+        add(phrases,"The edge is damaged.","Кромка повреждена.","Kənar zədələnib.","Kenar hasarlı.","Die Kante ist beschädigt.","QUALITY");
+        add(phrases,"The part needs rework.","Деталь требует доработки.","Detal yenidən işlənməlidir.","Parçanın yeniden işlenmesi gerekiyor.","Das Teil muss nachgearbeitet werden.","QUALITY");
+        add(phrases,"The part needs another inspection.","Деталь нужно проверить ещё раз.","Detalı yenidən yoxlamaq lazımdır.","Parçanın tekrar kontrol edilmesi gerekiyor.","Das Teil muss erneut geprüft werden.","QUALITY");
+        add(phrases,"Separate the defective parts.","Отделите бракованные детали.","Qüsurlu detalları ayırın.","Hatalı parçaları ayırın.","Trennen Sie die fehlerhaften Teile.","QUALITY");
+        add(phrases,"Mark the rejected part.","Пометьте забракованную деталь.","Yararsız detalı işarələyin.","Reddedilen parçayı işaretleyin.","Kennzeichnen Sie das abgelehnte Teil.","QUALITY");
+
+        // =========================
+        // SAFETY - 20
+        // =========================
+
+        add(phrases,"Keep your hands away from the machine.","Держите руки подальше от станка.","Əllərinizi dəzgahdan uzaq saxlayın.","Ellerinizi makineden uzak tutun.","Halten Sie Ihre Hände von der Maschine fern.","SAFETY");
+        add(phrases,"Keep a safe distance.","Соблюдайте безопасную дистанцию.","Təhlükəsiz məsafə saxlayın.","Güvenli mesafeyi koruyun.","Halten Sie einen sicheren Abstand.","SAFETY");
+        add(phrases,"Do not enter this area.","Не входите в эту зону.","Bu əraziyə girməyin.","Bu alana girmeyin.","Betreten Sie diesen Bereich nicht.","SAFETY");
+        add(phrases,"Do not work without protection.","Не работайте без защиты.","Mühafizəsiz işləməyin.","Koruma olmadan çalışmayın.","Arbeiten Sie nicht ohne Schutz.","SAFETY");
+        add(phrases,"Check your personal protective equipment.","Проверьте свои средства защиты.","Fərdi mühafizə vasitələrinizi yoxlayın.","Kişisel koruyucu ekipmanınızı kontrol edin.","Überprüfen Sie Ihre persönliche Schutzausrüstung.","SAFETY");
+        add(phrases,"Use hearing protection.","Используйте защиту слуха.","Eşitmə qoruyucusundan istifadə edin.","Kulak koruyucusu kullanın.","Verwenden Sie Gehörschutz.","SAFETY");
+        add(phrases,"Use the correct protective equipment.","Используйте правильные средства защиты.","Düzgün mühafizə vasitələrindən istifadə edin.","Doğru koruyucu ekipmanı kullanın.","Verwenden Sie die richtige Schutzausrüstung.","SAFETY");
+        add(phrases,"Do not wear loose clothing.","Не носите свободную одежду.","Boş paltar geyinməyin.","Bol kıyafet giymeyin.","Tragen Sie keine lose Kleidung.","SAFETY");
+        add(phrases,"Tie back long hair.","Уберите длинные волосы.","Uzun saçları yığın.","Uzun saçları toplayın.","Binden Sie lange Haare zusammen.","SAFETY");
+        add(phrases,"Keep the floor dry.","Держите пол сухим.","Döşəməni quru saxlayın.","Zemini kuru tutun.","Halten Sie den Boden trocken.","SAFETY");
+        add(phrases,"Clean the oil spill.","Уберите разлив масла.","Yağ töküntüsünü təmizləyin.","Yağ döküntüsünü temizleyin.","Beseitigen Sie die Ölverschüttung.","SAFETY");
+        add(phrases,"Report unsafe conditions.","Сообщайте об опасных условиях.","Təhlükəli şərait barədə məlumat verin.","Güvensiz koşulları bildirin.","Melden Sie unsichere Bedingungen.","SAFETY");
+        add(phrases,"Report the hazard immediately.","Немедленно сообщите об опасности.","Təhlükə barədə dərhal məlumat verin.","Tehlikeyi hemen bildirin.","Melden Sie die Gefahr sofort.","SAFETY");
+        add(phrases,"Do not bypass the safety system.","Не обходите систему безопасности.","Təhlükəsizlik sistemini keçməyin.","Güvenlik sistemini devre dışı bırakmayın.","Umgehen Sie das Sicherheitssystem nicht.","SAFETY");
+        add(phrases,"Do not remove the safety guard.","Не снимайте защитное ограждение.","Mühafizə örtüyünü çıxarmayın.","Koruyucu muhafazayı çıkarmayın.","Entfernen Sie die Schutzvorrichtung nicht.","SAFETY");
+        add(phrases,"Wait until the machine stops.","Подождите, пока станок остановится.","Dəzgah dayanana qədər gözləyin.","Makine durana kadar bekleyin.","Warten Sie, bis die Maschine stoppt.","SAFETY");
+        add(phrases,"Lock out the machine before maintenance.","Заблокируйте станок перед обслуживанием.","Texniki xidmətdən əvvəl dəzgahı bloklayın.","Bakım öncesi makineyi kilitleyin.","Sichern Sie die Maschine vor der Wartung.","SAFETY");
+        add(phrases,"Keep the emergency exit clear.","Держите аварийный выход свободным.","Təcili çıxışı açıq saxlayın.","Acil çıkışı açık tutun.","Halten Sie den Notausgang frei.","SAFETY");
+        add(phrases,"Know the emergency procedure.","Знайте порядок действий при аварии.","Təcili vəziyyət prosedurunu bilin.","Acil durum prosedürünü bilin.","Kennen Sie das Notfallverfahren.","SAFETY");
+        add(phrases,"Follow the safety signs.","Следуйте знакам безопасности.","Təhlükəsizlik nişanlarına əməl edin.","Güvenlik işaretlerine uyun.","Befolgen Sie die Sicherheitszeichen.","SAFETY");
+
+        // =========================
+        // MAINTENANCE - 20
+        // =========================
+
+        add(phrases,"Check the hydraulic oil.","Проверьте гидравлическое масло.","Hidravlik yağı yoxlayın.","Hidrolik yağı kontrol edin.","Überprüfen Sie das Hydrauliköl.","MAINTENANCE");
+        add(phrases,"Check the coolant system.","Проверьте систему охлаждения.","Soyutma sistemini yoxlayın.","Soğutma sistemini kontrol edin.","Überprüfen Sie das Kühlsystem.","MAINTENANCE");
+        add(phrases,"Check the electrical cabinet.","Проверьте электрический шкаф.","Elektrik şkafını yoxlayın.","Elektrik panosunu kontrol edin.","Überprüfen Sie den Schaltschrank.","MAINTENANCE");
+        add(phrases,"Check the cables.","Проверьте кабели.","Kabelləri yoxlayın.","Kabloları kontrol edin.","Überprüfen Sie die Kabel.","MAINTENANCE");
+        add(phrases,"Check the connectors.","Проверьте разъёмы.","Birləşdiriciləri yoxlayın.","Konektörleri kontrol edin.","Überprüfen Sie die Steckverbinder.","MAINTENANCE");
+        add(phrases,"Tighten the loose bolt.","Затяните ослабленный болт.","Boşalmış boltu sıxın.","Gevşek cıvatayı sıkın.","Ziehen Sie die lose Schraube fest.","MAINTENANCE");
+        add(phrases,"Tighten the loose nut.","Затяните ослабленную гайку.","Boşalmış qozanı sıxın.","Gevşek somunu sıkın.","Ziehen Sie die lose Mutter fest.","MAINTENANCE");
+        add(phrases,"Replace the damaged cable.","Замените повреждённый кабель.","Zədələnmiş kabeli dəyişin.","Hasarlı kabloyu değiştirin.","Ersetzen Sie das beschädigte Kabel.","MAINTENANCE");
+        add(phrases,"Replace the worn belt.","Замените изношенный ремень.","Yeyilmiş kəməri dəyişin.","Aşınmış kayışı değiştirin.","Ersetzen Sie den verschlissenen Riemen.","MAINTENANCE");
+        add(phrases,"Clean the filter.","Очистите фильтр.","Filtri təmizləyin.","Filtreyi temizleyin.","Reinigen Sie den Filter.","MAINTENANCE");
+        add(phrases,"Clean the machine.","Очистите станок.","Dəzgahı təmizləyin.","Makineyi temizleyin.","Reinigen Sie die Maschine.","MAINTENANCE");
+        add(phrases,"Clean the sensor.","Очистите датчик.","Sensoru təmizləyin.","Sensörü temizleyin.","Reinigen Sie den Sensor.","MAINTENANCE");
+        add(phrases,"Check the pump.","Проверьте насос.","Nasosu yoxlayın.","Pompayı kontrol edin.","Überprüfen Sie die Pumpe.","MAINTENANCE");
+        add(phrases,"The pump is not working.","Насос не работает.","Nasos işləmir.","Pompa çalışmıyor.","Die Pumpe funktioniert nicht.","MAINTENANCE");
+        add(phrases,"Check the valve.","Проверьте клапан.","Klapanı yoxlayın.","Vanayı kontrol edin.","Überprüfen Sie das Ventil.","MAINTENANCE");
+        add(phrases,"The valve is leaking.","Клапан протекает.","Klapan sızdırır.","Vana sızdırıyor.","Das Ventil ist undicht.","MAINTENANCE");
+        add(phrases,"Check the pressure gauge.","Проверьте манометр.","Təzyiqölçəni yoxlayın.","Basınç göstergesini kontrol edin.","Überprüfen Sie das Manometer.","MAINTENANCE");
+        add(phrases,"Check the cooling fan.","Проверьте вентилятор охлаждения.","Soyutma ventilyatorunu yoxlayın.","Soğutma fanını kontrol edin.","Überprüfen Sie den Kühllüfter.","MAINTENANCE");
+        add(phrases,"The fan is not working.","Вентилятор не работает.","Ventilyator işləmir.","Fan çalışmıyor.","Der Lüfter funktioniert nicht.","MAINTENANCE");
+        add(phrases,"Test the machine after repair.","Проверьте станок после ремонта.","Təmirdən sonra dəzgahı sınaqdan keçirin.","Onarımdan sonra makineyi test edin.","Testen Sie die Maschine nach der Reparatur.","MAINTENANCE");
+
+        // =========================
+        // WELDING - 10
+        // =========================
+
+        add(phrases,"Check the welding current.","Проверьте сварочный ток.","Qaynaq cərəyanını yoxlayın.","Kaynak akımını kontrol edin.","Überprüfen Sie den Schweißstrom.","WELDING");
+        add(phrases,"Set the welding current.","Установите сварочный ток.","Qaynaq cərəyanını təyin edin.","Kaynak akımını ayarlayın.","Stellen Sie den Schweißstrom ein.","WELDING");
+        add(phrases,"Check the welding voltage.","Проверьте сварочное напряжение.","Qaynaq gərginliyini yoxlayın.","Kaynak voltajını kontrol edin.","Überprüfen Sie die Schweißspannung.","WELDING");
+        add(phrases,"Set the welding voltage.","Установите сварочное напряжение.","Qaynaq gərginliyini təyin edin.","Kaynak voltajını ayarlayın.","Stellen Sie die Schweißspannung ein.","WELDING");
+        add(phrases,"Clean the welding surface.","Очистите сварочную поверхность.","Qaynaq səthini təmizləyin.","Kaynak yüzeyini temizleyin.","Reinigen Sie die Schweißfläche.","WELDING");
+        add(phrases,"Prepare the joint for welding.","Подготовьте соединение к сварке.","Birləşməni qaynaq üçün hazırlayın.","Birleşimi kaynağa hazırlayın.","Bereiten Sie die Verbindung zum Schweißen vor.","WELDING");
+        add(phrases,"Check the gas supply.","Проверьте подачу газа.","Qaz təchizatını yoxlayın.","Gaz beslemesini kontrol edin.","Überprüfen Sie die Gasversorgung.","WELDING");
+        add(phrases,"The gas pressure is low.","Давление газа низкое.","Qaz təzyiqi aşağıdır.","Gaz basıncı düşük.","Der Gasdruck ist niedrig.","WELDING");
+        add(phrases,"Protect the welding area.","Защитите сварочную зону.","Qaynaq sahəsini qoruyun.","Kaynak alanını koruyun.","Schützen Sie den Schweißbereich.","WELDING");
+        add(phrases,"Inspect the weld after welding.","Проверьте сварной шов после сварки.","Qaynaqdan sonra tikişi yoxlayın.","Kaynak sonrası dikişi kontrol edin.","Prüfen Sie die Schweißnaht nach dem Schweißen.","WELDING");
+
+        // =========================
+        // GALVANIC - 10
+        // =========================
+
+        add(phrases,"Check the chemical concentration.","Проверьте концентрацию химического раствора.","Kimyəvi məhlulun konsentrasiyasını yoxlayın.","Kimyasal çözeltinin konsantrasyonunu kontrol edin.","Überprüfen Sie die Chemikalienkonzentration.","GALVANIC");
+        add(phrases,"Measure the bath concentration.","Измерьте концентрацию ванны.","Vannanın konsentrasiyasını ölçün.","Banyo konsantrasyonunu ölçün.","Messen Sie die Badkonzentration.","GALVANIC");
+        add(phrases,"Check the solution level.","Проверьте уровень раствора.","Məhlulun səviyyəsini yoxlayın.","Çözelti seviyesini kontrol edin.","Überprüfen Sie den Lösungsstand.","GALVANIC");
+        add(phrases,"Check the anode condition.","Проверьте состояние анода.","Anodun vəziyyətini yoxlayın.","Anotun durumunu kontrol edin.","Überprüfen Sie den Zustand der Anode.","GALVANIC");
+        add(phrases,"Check the cathode connection.","Проверьте соединение катода.","Katod bağlantısını yoxlayın.","Katot bağlantısını kontrol edin.","Überprüfen Sie den Kathodenanschluss.","GALVANIC");
+        add(phrases,"Clean the contact area.","Очистите контактную зону.","Kontakt sahəsini təmizləyin.","Temas alanını temizleyin.","Reinigen Sie den Kontaktbereich.","GALVANIC");
+        add(phrases,"Wear chemical-resistant gloves.","Наденьте химически стойкие перчатки.","Kimyəviyə davamlı əlcək taxın.","Kimyasala dayanıklı eldiven takın.","Tragen Sie chemikalienbeständige Handschuhe.","GALVANIC");
+        add(phrases,"Wear chemical-resistant goggles.","Наденьте химически стойкие очки.","Kimyəviyə davamlı eynək taxın.","Kimyasala dayanıklı gözlük takın.","Tragen Sie chemikalienbeständige Schutzbrillen.","GALVANIC");
+        add(phrases,"Record the bath parameters.","Запишите параметры ванны.","Vannanın parametrlərini qeyd edin.","Banyo parametrelerini kaydedin.","Notieren Sie die Badparameter.","GALVANIC");
+        add(phrases,"Stop the process if the solution is abnormal.","Остановите процесс, если раствор ненормальный.","Məhlul normal deyilsə prosesi dayandırın.","Çözelti anormalse işlemi durdurun.","Stoppen Sie den Prozess, wenn die Lösung ungewöhnlich ist.","GALVANIC");
+
+        // =========================
+        // EMERGENCY - 10
+        // =========================
+
+        add(phrases,"Move away from the machine.","Отойдите от станка.","Dəzgahdan uzaqlaşın.","Makineden uzaklaşın.","Entfernen Sie sich von der Maschine.","EMERGENCY");
+        add(phrases,"Switch off the power if it is safe.","Отключите питание, если это безопасно.","Təhlükəsizdirsə enerjini söndürün.","Güvenliyse gücü kapatın.","Schalten Sie die Stromversorgung aus, wenn es sicher ist.","EMERGENCY");
+        add(phrases,"Raise the alarm.","Поднимите тревогу.","Həyəcan siqnalı verin.","Alarmı çalıştırın.","Lösen Sie den Alarm aus.","EMERGENCY");
+        add(phrases,"Inform the supervisor immediately.","Немедленно сообщите руководителю.","Dərhal rəhbərə məlumat verin.","Amiri hemen bilgilendirin.","Informieren Sie den Vorgesetzten sofort.","EMERGENCY");
+        add(phrases,"Call emergency services.","Позвоните в экстренные службы.","Təcili xidmətlərə zəng edin.","Acil servisleri arayın.","Rufen Sie den Rettungsdienst.","EMERGENCY");
+        add(phrases,"Do not enter the dangerous area.","Не входите в опасную зону.","Təhlükəli əraziyə girməyin.","Tehlikeli alana girmeyin.","Betreten Sie den Gefahrenbereich nicht.","EMERGENCY");
+        add(phrases,"Keep the emergency path clear.","Держите аварийный проход свободным.","Təcili keçidi açıq saxlayın.","Acil geçiş yolunu açık tutun.","Halten Sie den Fluchtweg frei.","EMERGENCY");
+        add(phrases,"Help the injured person safely.","Безопасно помогите пострадавшему.","Xəsarət alan şəxsə təhlükəsiz kömək edin.","Yaralı kişiye güvenli şekilde yardım edin.","Helfen Sie der verletzten Person sicher.","EMERGENCY");
+        add(phrases,"Wait for the emergency team.","Ждите аварийную бригаду.","Təcili yardım qrupunu gözləyin.","Acil durum ekibini bekleyin.","Warten Sie auf das Notfallteam.","EMERGENCY");
+        add(phrases,"Follow the emergency instructions.","Следуйте аварийным инструкциям.","Təcili təlimatlara əməl edin.","Acil durum talimatlarına uyun.","Befolgen Sie die Notfallanweisungen.","EMERGENCY");
+
         return phrases;
     }
 }
