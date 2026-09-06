@@ -824,4 +824,525 @@ public class PhrasebookActivity extends Activity {
                 0);
 
         buttons.addView(
-                copyButton
+                copyButton,
+                copyParams);
+
+        // ================= FAVORITE =================
+
+        TextView favoriteButton =
+                createActionButton(
+                        favorites.contains(
+                                phrase.english)
+                                ? "⭐"
+                                : "☆",
+                        26);
+
+        favoriteButton.setContentDescription(
+                "Favorite");
+
+        favoriteButton.setOnClickListener(v -> {
+
+            if (favorites.contains(
+                    phrase.english)) {
+
+                favorites.remove(
+                        phrase.english);
+
+            } else {
+
+                favorites.add(
+                        phrase.english);
+            }
+
+            saveFavorites();
+
+            refreshPhrases();
+        });
+
+        buttons.addView(
+                favoriteButton,
+                new LinearLayout.LayoutParams(
+                        dp(70),
+                        dp(58)));
+
+        card.addView(buttons);
+
+        phrasesContainer.addView(
+                card,
+                cardParams);
+    }
+
+    // =========================================================
+    // SPEECH
+    // =========================================================
+
+    private String getSpeechText(
+            WorkerPhrasebook.Phrase phrase) {
+
+        switch (language) {
+
+            case "RU":
+                return phrase.russian;
+
+            case "AZ":
+                return phrase.azerbaijani;
+
+            case "TR":
+                return phrase.turkish;
+
+            case "DE":
+                return phrase.german;
+
+            case "EN":
+            default:
+                return phrase.english;
+        }
+    }
+
+    private void setSpeechLanguage() {
+
+        if (tts == null) {
+            return;
+        }
+
+        Locale locale;
+
+        switch (language) {
+
+            case "RU":
+                locale = new Locale("ru");
+                break;
+
+            case "AZ":
+                locale = new Locale("az");
+                break;
+
+            case "TR":
+                locale = new Locale("tr");
+                break;
+
+            case "DE":
+                locale = Locale.GERMAN;
+                break;
+
+            case "EN":
+            default:
+                locale = Locale.US;
+                break;
+        }
+
+        tts.setLanguage(locale);
+    }
+
+    // =========================================================
+    // FAVORITES
+    // =========================================================
+
+    private void loadFavorites() {
+
+        SharedPreferences preferences =
+                getSharedPreferences(
+                        "WORKER_PRO_FAVORITES",
+                        MODE_PRIVATE);
+
+        favorites.addAll(
+                preferences.getStringSet(
+                        "phrases",
+                        new HashSet<>()));
+    }
+
+    private void saveFavorites() {
+
+        SharedPreferences preferences =
+                getSharedPreferences(
+                        "WORKER_PRO_FAVORITES",
+                        MODE_PRIVATE);
+
+        preferences.edit()
+                .putStringSet(
+                        "phrases",
+                        new HashSet<>(favorites))
+                .apply();
+    }
+
+    // =========================================================
+    // TITLE
+    // =========================================================
+
+    private String getTitleText() {
+
+        switch (language) {
+
+            case "AZ":
+                return "💬 Danışıq kitabçası";
+
+            case "EN":
+                return "💬 Phrasebook";
+
+            case "TR":
+                return "💬 Konuşma Kitabı";
+
+            case "DE":
+                return "💬 Sprachführer";
+
+            case "RU":
+            default:
+                return "💬 Разговорник";
+        }
+    }
+
+    // =========================================================
+    // SEARCH
+    // =========================================================
+
+    private String getSearchHint() {
+
+        switch (language) {
+
+            case "AZ":
+                return "Axtar...";
+
+            case "EN":
+                return "Search...";
+
+            case "TR":
+                return "Ara...";
+
+            case "DE":
+                return "Suchen...";
+
+            case "RU":
+            default:
+                return "Поиск...";
+        }
+    }
+
+    // =========================================================
+    // CATEGORY TITLE
+    // =========================================================
+
+    private String getCategoryTitle() {
+
+        switch (language) {
+
+            case "AZ":
+                return "Bölmələr";
+
+            case "EN":
+                return "Sections";
+
+            case "TR":
+                return "Bölümler";
+
+            case "DE":
+                return "Bereiche";
+
+            case "RU":
+            default:
+                return "Разделы";
+        }
+    }
+
+    // =========================================================
+    // CATEGORY NAMES
+    // =========================================================
+
+    private String getCategoryName(
+            String category) {
+
+        if (language.equals("RU")) {
+
+            switch (category) {
+
+                case "ALL":
+                    return "Все";
+                case "WORK":
+                    return "Работа";
+                case "BOSS":
+                    return "Начальник";
+                case "MACHINE":
+                    return "Станок";
+                case "CNC":
+                    return "CNC";
+                case "STAMPING":
+                    return "Штамповка";
+                case "QUALITY":
+                    return "Качество";
+                case "SAFETY":
+                    return "Безопасность";
+                case "FIRE":
+                    return "Пожар";
+                case "WELDING":
+                    return "Сварка";
+                case "GALVANIC":
+                    return "Гальваника";
+                case "MAINTENANCE":
+                    return "Обслуживание";
+                case "EMERGENCY":
+                    return "Авария";
+            }
+        }
+
+        if (language.equals("AZ")) {
+
+            switch (category) {
+
+                case "ALL":
+                    return "Hamısı";
+                case "WORK":
+                    return "İş";
+                case "BOSS":
+                    return "Rəhbər";
+                case "MACHINE":
+                    return "Dəzgah";
+                case "CNC":
+                    return "CNC";
+                case "STAMPING":
+                    return "Ştamplama";
+                case "QUALITY":
+                    return "Keyfiyyət";
+                case "SAFETY":
+                    return "Təhlükəsizlik";
+                case "FIRE":
+                    return "Yanğın";
+                case "WELDING":
+                    return "Qaynaq";
+                case "GALVANIC":
+                    return "Qalvanika";
+                case "MAINTENANCE":
+                    return "Texniki xidmət";
+                case "EMERGENCY":
+                    return "Fövqəladə";
+            }
+        }
+
+        if (language.equals("TR")) {
+
+            switch (category) {
+
+                case "ALL":
+                    return "Tümü";
+                case "WORK":
+                    return "İş";
+                case "BOSS":
+                    return "Patron";
+                case "MACHINE":
+                    return "Makine";
+                case "CNC":
+                    return "CNC";
+                case "STAMPING":
+                    return "Presleme";
+                case "QUALITY":
+                    return "Kalite";
+                case "SAFETY":
+                    return "Güvenlik";
+                case "FIRE":
+                    return "Yangın";
+                case "WELDING":
+                    return "Kaynak";
+                case "GALVANIC":
+                    return "Galvanik";
+                case "MAINTENANCE":
+                    return "Bakım";
+                case "EMERGENCY":
+                    return "Acil Durum";
+            }
+        }
+
+        if (language.equals("DE")) {
+
+            switch (category) {
+
+                case "ALL":
+                    return "Alle";
+                case "WORK":
+                    return "Arbeit";
+                case "BOSS":
+                    return "Chef";
+                case "MACHINE":
+                    return "Maschine";
+                case "CNC":
+                    return "CNC";
+                case "STAMPING":
+                    return "Stanzen";
+                case "QUALITY":
+                    return "Qualität";
+                case "SAFETY":
+                    return "Sicherheit";
+                case "FIRE":
+                    return "Feuer";
+                case "WELDING":
+                    return "Schweißen";
+                case "GALVANIC":
+                    return "Galvanik";
+                case "MAINTENANCE":
+                    return "Wartung";
+                case "EMERGENCY":
+                    return "Notfall";
+            }
+        }
+
+        switch (category) {
+
+            case "ALL":
+                return "All";
+            case "WORK":
+                return "Work";
+            case "BOSS":
+                return "Boss";
+            case "MACHINE":
+                return "Machine";
+            case "CNC":
+                return "CNC";
+            case "STAMPING":
+                return "Stamping";
+            case "QUALITY":
+                return "Quality";
+            case "SAFETY":
+                return "Safety";
+            case "FIRE":
+                return "Fire";
+            case "WELDING":
+                return "Welding";
+            case "GALVANIC":
+                return "Galvanic";
+            case "MAINTENANCE":
+                return "Maintenance";
+            case "EMERGENCY":
+                return "Emergency";
+
+            default:
+                return category;
+        }
+    }
+
+    // =========================================================
+    // FAVORITES TEXT
+    // =========================================================
+
+    private String getFavoriteButtonText() {
+
+        if (favoritesOnly) {
+
+            switch (language) {
+
+                case "AZ":
+                    return "⭐ Seçilmişlər";
+                case "EN":
+                    return "⭐ Favorites";
+                case "TR":
+                    return "⭐ Favoriler";
+                case "DE":
+                    return "⭐ Favoriten";
+                case "RU":
+                default:
+                    return "⭐ Избранное";
+            }
+        }
+
+        switch (language) {
+
+            case "AZ":
+                return "☆ Seçilmişlər";
+            case "EN":
+                return "☆ Favorites";
+            case "TR":
+                return "☆ Favoriler";
+            case "DE":
+                return "☆ Favoriten";
+            case "RU":
+            default:
+                return "☆ Избранное";
+        }
+    }
+
+    // =========================================================
+    // NO RESULTS
+    // =========================================================
+
+    private String getNoResultsText() {
+
+        switch (language) {
+
+            case "AZ":
+                return "Heç nə tapılmadı";
+
+            case "EN":
+                return "Nothing found";
+
+            case "TR":
+                return "Sonuç bulunamadı";
+
+            case "DE":
+                return "Nichts gefunden";
+
+            case "RU":
+            default:
+                return "Ничего не найдено";
+        }
+    }
+
+    // =========================================================
+    // COPIED
+    // =========================================================
+
+    private String getCopiedText() {
+
+        switch (language) {
+
+            case "AZ":
+                return "Kopyalandı";
+
+            case "EN":
+                return "Copied";
+
+            case "TR":
+                return "Kopyalandı";
+
+            case "DE":
+                return "Kopiert";
+
+            case "RU":
+            default:
+                return "Скопировано";
+        }
+    }
+
+    // =========================================================
+    // BACK
+    // =========================================================
+
+    private String getBackText() {
+
+        switch (language) {
+
+            case "AZ":
+                return "← Geri";
+
+            case "EN":
+                return "← Back";
+
+            case "TR":
+                return "← Geri";
+
+            case "DE":
+                return "← Zurück";
+
+            case "RU":
+            default:
+                return "← Назад";
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+
+        if (tts != null) {
+
+            tts.stop();
+            tts.shutdown();
+        }
+
+        super.onDestroy();
+    }
+}
