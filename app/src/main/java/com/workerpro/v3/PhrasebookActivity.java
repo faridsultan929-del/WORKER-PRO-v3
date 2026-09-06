@@ -8,7 +8,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.speech.tts.TextToSpeech;
 import android.view.Gravity;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
@@ -85,7 +84,9 @@ public class PhrasebookActivity extends Activity {
         button.setTextColor(Color.DKGRAY);
         button.setGravity(Gravity.CENTER);
         button.setTypeface(null, Typeface.BOLD);
-        button.setBackgroundColor(Color.rgb(235, 235, 235));
+
+        button.setBackgroundColor(
+                Color.rgb(235, 235, 235));
 
         button.setPadding(
                 dp(4),
@@ -105,10 +106,7 @@ public class PhrasebookActivity extends Activity {
         root.setOrientation(LinearLayout.VERTICAL);
         root.setBackgroundColor(Color.WHITE);
 
-        // ================= TITLE =================
-
         TextView title = new TextView(this);
-
         title.setText(getTitleText());
         title.setTextSize(24);
         title.setTextColor(Color.rgb(0, 150, 70));
@@ -121,19 +119,16 @@ public class PhrasebookActivity extends Activity {
                 dp(10),
                 dp(10));
 
-        root.addView(
-                title,
+        root.addView(title,
                 new LinearLayout.LayoutParams(
                         ViewGroup.LayoutParams.MATCH_PARENT,
                         ViewGroup.LayoutParams.WRAP_CONTENT));
 
-        // ================= LANGUAGES =================
-
+        // ЯЗЫКИ
         HorizontalScrollView languageScroll =
                 new HorizontalScrollView(this);
 
         languageScroll.setHorizontalScrollBarEnabled(false);
-        languageScroll.setFillViewport(false);
 
         LinearLayout languageRow =
                 new LinearLayout(this);
@@ -145,11 +140,7 @@ public class PhrasebookActivity extends Activity {
                 Gravity.CENTER_VERTICAL);
 
         String[] languageCodes = {
-                "RU",
-                "AZ",
-                "EN",
-                "TR",
-                "DE"
+                "RU", "AZ", "EN", "TR", "DE"
         };
 
         String[] languageNames = {
@@ -160,9 +151,7 @@ public class PhrasebookActivity extends Activity {
                 "🇩🇪\nDE"
         };
 
-        for (int i = 0;
-             i < languageCodes.length;
-             i++) {
+        for (int i = 0; i < languageCodes.length; i++) {
 
             Button button = new Button(this);
 
@@ -220,14 +209,12 @@ public class PhrasebookActivity extends Activity {
 
         languageScroll.addView(languageRow);
 
-        root.addView(
-                languageScroll,
+        root.addView(languageScroll,
                 new LinearLayout.LayoutParams(
                         ViewGroup.LayoutParams.MATCH_PARENT,
                         ViewGroup.LayoutParams.WRAP_CONTENT));
 
-        // ================= SEARCH =================
-
+        // ПОИСК
         LinearLayout searchRow =
                 new LinearLayout(this);
 
@@ -245,7 +232,9 @@ public class PhrasebookActivity extends Activity {
 
         searchBox = new EditText(this);
 
-        searchBox.setHint(getSearchHint());
+        searchBox.setHint(
+                getSearchHint());
+
         searchBox.setTextSize(16);
         searchBox.setSingleLine(true);
 
@@ -304,8 +293,7 @@ public class PhrasebookActivity extends Activity {
                     }
                 });
 
-        // ================= CATEGORY TITLE =================
-
+        // РАЗДЕЛЫ
         TextView categoryTitle =
                 new TextView(this);
 
@@ -314,8 +302,12 @@ public class PhrasebookActivity extends Activity {
 
         categoryTitle.setTextSize(18);
         categoryTitle.setTextColor(Color.DKGRAY);
-        categoryTitle.setTypeface(null, Typeface.BOLD);
-        categoryTitle.setGravity(Gravity.CENTER_VERTICAL);
+        categoryTitle.setTypeface(
+                null,
+                Typeface.BOLD);
+
+        categoryTitle.setGravity(
+                Gravity.CENTER_VERTICAL);
 
         categoryTitle.setPadding(
                 dp(12),
@@ -328,8 +320,6 @@ public class PhrasebookActivity extends Activity {
                 new LinearLayout.LayoutParams(
                         ViewGroup.LayoutParams.MATCH_PARENT,
                         ViewGroup.LayoutParams.WRAP_CONTENT));
-
-        // ================= CATEGORIES =================
 
         HorizontalScrollView categoryScroll =
                 new HorizontalScrollView(this);
@@ -347,7 +337,8 @@ public class PhrasebookActivity extends Activity {
 
         for (String category : categories) {
 
-            Button button = new Button(this);
+            Button button =
+                    new Button(this);
 
             button.setText(
                     getCategoryName(category));
@@ -367,21 +358,21 @@ public class PhrasebookActivity extends Activity {
                 button.setBackgroundColor(
                         Color.rgb(0, 150, 70));
 
-                button.setTextColor(Color.WHITE);
+                button.setTextColor(
+                        Color.WHITE);
 
             } else {
 
                 button.setBackgroundColor(
                         Color.LTGRAY);
 
-                button.setTextColor(Color.DKGRAY);
+                button.setTextColor(
+                        Color.DKGRAY);
             }
 
             button.setOnClickListener(v -> {
 
                 selectedCategory = category;
-
-                refreshPhrases();
 
                 buildUI();
             });
@@ -410,8 +401,7 @@ public class PhrasebookActivity extends Activity {
                         ViewGroup.LayoutParams.MATCH_PARENT,
                         ViewGroup.LayoutParams.WRAP_CONTENT));
 
-        // ================= FAVORITES =================
-
+        // ИЗБРАННОЕ
         Button favoritesButton =
                 new Button(this);
 
@@ -433,7 +423,8 @@ public class PhrasebookActivity extends Activity {
             favoritesButton.setBackgroundColor(
                     Color.rgb(0, 150, 70));
 
-            favoritesButton.setTextColor(Color.WHITE);
+            favoritesButton.setTextColor(
+                    Color.WHITE);
         }
 
         root.addView(
@@ -442,8 +433,7 @@ public class PhrasebookActivity extends Activity {
                         ViewGroup.LayoutParams.MATCH_PARENT,
                         ViewGroup.LayoutParams.WRAP_CONTENT));
 
-        // ================= PHRASES =================
-
+        // СПИСОК
         ScrollView scrollView =
                 new ScrollView(this);
 
@@ -468,12 +458,13 @@ public class PhrasebookActivity extends Activity {
                         0,
                         1));
 
-        // ================= BACK =================
-
+        // НАЗАД
         Button backButton =
                 new Button(this);
 
-        backButton.setText(getBackText());
+        backButton.setText(
+                getBackText());
+
         backButton.setTextSize(14);
         backButton.setAllCaps(false);
 
@@ -486,8 +477,7 @@ public class PhrasebookActivity extends Activity {
                         ViewGroup.LayoutParams.MATCH_PARENT,
                         ViewGroup.LayoutParams.WRAP_CONTENT));
 
-        // ================= FOOTER =================
-
+        // F.S
         TextView footer =
                 new TextView(this);
 
@@ -508,10 +498,6 @@ public class PhrasebookActivity extends Activity {
 
         refreshPhrases();
     }
-
-    // =========================================================
-    // REFRESH
-    // =========================================================
 
     private void refreshPhrases() {
 
@@ -545,11 +531,21 @@ public class PhrasebookActivity extends Activity {
 
             boolean searchMatch =
                     search.isEmpty()
-                            || contains(phrase.english, search)
-                            || contains(phrase.russian, search)
-                            || contains(phrase.azerbaijani, search)
-                            || contains(phrase.turkish, search)
-                            || contains(phrase.german, search);
+                            || contains(
+                            phrase.english,
+                            search)
+                            || contains(
+                            phrase.russian,
+                            search)
+                            || contains(
+                            phrase.azerbaijani,
+                            search)
+                            || contains(
+                            phrase.turkish,
+                            search)
+                            || contains(
+                            phrase.german,
+                            search);
 
             boolean favoriteMatch =
                     !favoritesOnly
@@ -608,10 +604,6 @@ public class PhrasebookActivity extends Activity {
                 .contains(search);
     }
 
-    // =========================================================
-    // PHRASE CARD
-    // =========================================================
-
     private void addPhraseCard(
             WorkerPhrasebook.Phrase phrase) {
 
@@ -641,8 +633,6 @@ public class PhrasebookActivity extends Activity {
                 dp(5),
                 dp(8));
 
-        // ================= ENGLISH =================
-
         TextView english =
                 new TextView(this);
 
@@ -665,8 +655,6 @@ public class PhrasebookActivity extends Activity {
 
         card.addView(english);
 
-        // ================= RUSSIAN =================
-
         TextView russian =
                 new TextView(this);
 
@@ -677,8 +665,6 @@ public class PhrasebookActivity extends Activity {
         russian.setTextColor(Color.DKGRAY);
 
         card.addView(russian);
-
-        // ================= AZERBAIJANI =================
 
         TextView azerbaijani =
                 new TextView(this);
@@ -691,8 +677,6 @@ public class PhrasebookActivity extends Activity {
 
         card.addView(azerbaijani);
 
-        // ================= TURKISH =================
-
         TextView turkish =
                 new TextView(this);
 
@@ -703,8 +687,6 @@ public class PhrasebookActivity extends Activity {
         turkish.setTextColor(Color.DKGRAY);
 
         card.addView(turkish);
-
-        // ================= GERMAN =================
 
         TextView german =
                 new TextView(this);
@@ -717,10 +699,7 @@ public class PhrasebookActivity extends Activity {
 
         card.addView(german);
 
-        // =====================================================
-        // ACTION BUTTONS
-        // =====================================================
-
+        // КНОПКИ
         LinearLayout buttons =
                 new LinearLayout(this);
 
@@ -736,10 +715,11 @@ public class PhrasebookActivity extends Activity {
                 0,
                 0);
 
-        // ================= SPEAKER =================
-
+        // ГОЛОС
         TextView speakButton =
-                createActionButton("🔊", 26);
+                createActionButton(
+                        "🔊",
+                        26);
 
         speakButton.setTextColor(
                 Color.rgb(0, 130, 60));
@@ -749,19 +729,49 @@ public class PhrasebookActivity extends Activity {
 
         speakButton.setOnClickListener(v -> {
 
+            if (tts == null) {
+                return;
+            }
+
             setSpeechLanguage();
 
             String text =
                     getSpeechText(phrase);
 
-            if (tts != null) {
+            int result =
+                    tts.isLanguageAvailable(
+                            getSpeechLocale());
 
-                tts.speak(
-                        text,
-                        TextToSpeech.QUEUE_FLUSH,
-                        null,
-                        "worker_phrase");
+            if (result ==
+                    TextToSpeech.LANG_MISSING_DATA ||
+                    result ==
+                    TextToSpeech.LANG_NOT_SUPPORTED) {
+
+                if (language.equals("AZ")) {
+
+                    Toast.makeText(
+                            this,
+                            "Azərbaycan dili üçün TTS səsi yoxdur",
+                            Toast.LENGTH_LONG)
+                            .show();
+
+                } else {
+
+                    Toast.makeText(
+                            this,
+                            "Bu dil üçün TTS səsi yoxdur",
+                            Toast.LENGTH_LONG)
+                            .show();
+                }
+
+                return;
             }
+
+            tts.speak(
+                    text,
+                    TextToSpeech.QUEUE_FLUSH,
+                    null,
+                    "worker_phrase");
         });
 
         LinearLayout.LayoutParams speakParams =
@@ -779,10 +789,11 @@ public class PhrasebookActivity extends Activity {
                 speakButton,
                 speakParams);
 
-        // ================= COPY =================
-
+        // КОПИРОВАТЬ
         TextView copyButton =
-                createActionButton("📋", 25);
+                createActionButton(
+                        "📋",
+                        25);
 
         copyButton.setContentDescription(
                 "Copy");
@@ -827,8 +838,7 @@ public class PhrasebookActivity extends Activity {
                 copyButton,
                 copyParams);
 
-        // ================= FAVORITE =================
-
+        // ИЗБРАННОЕ
         TextView favoriteButton =
                 createActionButton(
                         favorites.contains(
@@ -872,10 +882,7 @@ public class PhrasebookActivity extends Activity {
                 cardParams);
     }
 
-    // =========================================================
-    // SPEECH
-    // =========================================================
-
+    // ТЕКСТ ДЛЯ ОЗВУЧКИ
     private String getSpeechText(
             WorkerPhrasebook.Phrase phrase) {
 
@@ -899,44 +906,57 @@ public class PhrasebookActivity extends Activity {
         }
     }
 
+    // ЯЗЫК TTS
+    private Locale getSpeechLocale() {
+
+        switch (language) {
+
+            case "RU":
+                return new Locale("ru", "RU");
+
+            case "AZ":
+                return new Locale("az", "AZ");
+
+            case "TR":
+                return new Locale("tr", "TR");
+
+            case "DE":
+                return new Locale("de", "DE");
+
+            case "EN":
+            default:
+                return new Locale("en", "US");
+        }
+    }
+
+    // НАСТРОЙКА ГОЛОСА
     private void setSpeechLanguage() {
 
         if (tts == null) {
             return;
         }
 
-        Locale locale;
+        Locale locale =
+                getSpeechLocale();
 
-        switch (language) {
+        int result =
+                tts.setLanguage(locale);
 
-            case "RU":
-                locale = new Locale("ru");
-                break;
+        if (language.equals("AZ")) {
 
-            case "AZ":
-                locale = new Locale("az");
-                break;
+            if (result ==
+                    TextToSpeech.LANG_MISSING_DATA ||
+                    result ==
+                    TextToSpeech.LANG_NOT_SUPPORTED) {
 
-            case "TR":
-                locale = new Locale("tr");
-                break;
-
-            case "DE":
-                locale = Locale.GERMAN;
-                break;
-
-            case "EN":
-            default:
-                locale = Locale.US;
-                break;
+                Toast.makeText(
+                        this,
+                        "Azərbaycan dili üçün səs paketi yoxdur",
+                        Toast.LENGTH_LONG)
+                        .show();
+            }
         }
-
-        tts.setLanguage(locale);
     }
-
-    // =========================================================
-    // FAVORITES
-    // =========================================================
 
     private void loadFavorites() {
 
@@ -965,10 +985,6 @@ public class PhrasebookActivity extends Activity {
                 .apply();
     }
 
-    // =========================================================
-    // TITLE
-    // =========================================================
-
     private String getTitleText() {
 
         switch (language) {
@@ -990,10 +1006,6 @@ public class PhrasebookActivity extends Activity {
                 return "💬 Разговорник";
         }
     }
-
-    // =========================================================
-    // SEARCH
-    // =========================================================
 
     private String getSearchHint() {
 
@@ -1017,10 +1029,6 @@ public class PhrasebookActivity extends Activity {
         }
     }
 
-    // =========================================================
-    // CATEGORY TITLE
-    // =========================================================
-
     private String getCategoryTitle() {
 
         switch (language) {
@@ -1043,10 +1051,6 @@ public class PhrasebookActivity extends Activity {
         }
     }
 
-    // =========================================================
-    // CATEGORY NAMES
-    // =========================================================
-
     private String getCategoryName(
             String category) {
 
@@ -1054,32 +1058,19 @@ public class PhrasebookActivity extends Activity {
 
             switch (category) {
 
-                case "ALL":
-                    return "Все";
-                case "WORK":
-                    return "Работа";
-                case "BOSS":
-                    return "Начальник";
-                case "MACHINE":
-                    return "Станок";
-                case "CNC":
-                    return "CNC";
-                case "STAMPING":
-                    return "Штамповка";
-                case "QUALITY":
-                    return "Качество";
-                case "SAFETY":
-                    return "Безопасность";
-                case "FIRE":
-                    return "Пожар";
-                case "WELDING":
-                    return "Сварка";
-                case "GALVANIC":
-                    return "Гальваника";
-                case "MAINTENANCE":
-                    return "Обслуживание";
-                case "EMERGENCY":
-                    return "Авария";
+                case "ALL": return "Все";
+                case "WORK": return "Работа";
+                case "BOSS": return "Начальник";
+                case "MACHINE": return "Станок";
+                case "CNC": return "CNC";
+                case "STAMPING": return "Штамповка";
+                case "QUALITY": return "Качество";
+                case "SAFETY": return "Безопасность";
+                case "FIRE": return "Пожар";
+                case "WELDING": return "Сварка";
+                case "GALVANIC": return "Гальваника";
+                case "MAINTENANCE": return "Обслуживание";
+                case "EMERGENCY": return "Авария";
             }
         }
 
@@ -1087,32 +1078,19 @@ public class PhrasebookActivity extends Activity {
 
             switch (category) {
 
-                case "ALL":
-                    return "Hamısı";
-                case "WORK":
-                    return "İş";
-                case "BOSS":
-                    return "Rəhbər";
-                case "MACHINE":
-                    return "Dəzgah";
-                case "CNC":
-                    return "CNC";
-                case "STAMPING":
-                    return "Ştamplama";
-                case "QUALITY":
-                    return "Keyfiyyət";
-                case "SAFETY":
-                    return "Təhlükəsizlik";
-                case "FIRE":
-                    return "Yanğın";
-                case "WELDING":
-                    return "Qaynaq";
-                case "GALVANIC":
-                    return "Qalvanika";
-                case "MAINTENANCE":
-                    return "Texniki xidmət";
-                case "EMERGENCY":
-                    return "Fövqəladə";
+                case "ALL": return "Hamısı";
+                case "WORK": return "İş";
+                case "BOSS": return "Rəhbər";
+                case "MACHINE": return "Dəzgah";
+                case "CNC": return "CNC";
+                case "STAMPING": return "Ştamplama";
+                case "QUALITY": return "Keyfiyyət";
+                case "SAFETY": return "Təhlükəsizlik";
+                case "FIRE": return "Yanğın";
+                case "WELDING": return "Qaynaq";
+                case "GALVANIC": return "Qalvanika";
+                case "MAINTENANCE": return "Texniki xidmət";
+                case "EMERGENCY": return "Fövqəladə";
             }
         }
 
@@ -1120,32 +1098,19 @@ public class PhrasebookActivity extends Activity {
 
             switch (category) {
 
-                case "ALL":
-                    return "Tümü";
-                case "WORK":
-                    return "İş";
-                case "BOSS":
-                    return "Patron";
-                case "MACHINE":
-                    return "Makine";
-                case "CNC":
-                    return "CNC";
-                case "STAMPING":
-                    return "Presleme";
-                case "QUALITY":
-                    return "Kalite";
-                case "SAFETY":
-                    return "Güvenlik";
-                case "FIRE":
-                    return "Yangın";
-                case "WELDING":
-                    return "Kaynak";
-                case "GALVANIC":
-                    return "Galvanik";
-                case "MAINTENANCE":
-                    return "Bakım";
-                case "EMERGENCY":
-                    return "Acil Durum";
+                case "ALL": return "Tümü";
+                case "WORK": return "İş";
+                case "BOSS": return "Patron";
+                case "MACHINE": return "Makine";
+                case "CNC": return "CNC";
+                case "STAMPING": return "Presleme";
+                case "QUALITY": return "Kalite";
+                case "SAFETY": return "Güvenlik";
+                case "FIRE": return "Yangın";
+                case "WELDING": return "Kaynak";
+                case "GALVANIC": return "Galvanik";
+                case "MAINTENANCE": return "Bakım";
+                case "EMERGENCY": return "Acil Durum";
             }
         }
 
@@ -1153,72 +1118,42 @@ public class PhrasebookActivity extends Activity {
 
             switch (category) {
 
-                case "ALL":
-                    return "Alle";
-                case "WORK":
-                    return "Arbeit";
-                case "BOSS":
-                    return "Chef";
-                case "MACHINE":
-                    return "Maschine";
-                case "CNC":
-                    return "CNC";
-                case "STAMPING":
-                    return "Stanzen";
-                case "QUALITY":
-                    return "Qualität";
-                case "SAFETY":
-                    return "Sicherheit";
-                case "FIRE":
-                    return "Feuer";
-                case "WELDING":
-                    return "Schweißen";
-                case "GALVANIC":
-                    return "Galvanik";
-                case "MAINTENANCE":
-                    return "Wartung";
-                case "EMERGENCY":
-                    return "Notfall";
+                case "ALL": return "Alle";
+                case "WORK": return "Arbeit";
+                case "BOSS": return "Chef";
+                case "MACHINE": return "Maschine";
+                case "CNC": return "CNC";
+                case "STAMPING": return "Stanzen";
+                case "QUALITY": return "Qualität";
+                case "SAFETY": return "Sicherheit";
+                case "FIRE": return "Feuer";
+                case "WELDING": return "Schweißen";
+                case "GALVANIC": return "Galvanik";
+                case "MAINTENANCE": return "Wartung";
+                case "EMERGENCY": return "Notfall";
             }
         }
 
         switch (category) {
 
-            case "ALL":
-                return "All";
-            case "WORK":
-                return "Work";
-            case "BOSS":
-                return "Boss";
-            case "MACHINE":
-                return "Machine";
-            case "CNC":
-                return "CNC";
-            case "STAMPING":
-                return "Stamping";
-            case "QUALITY":
-                return "Quality";
-            case "SAFETY":
-                return "Safety";
-            case "FIRE":
-                return "Fire";
-            case "WELDING":
-                return "Welding";
-            case "GALVANIC":
-                return "Galvanic";
-            case "MAINTENANCE":
-                return "Maintenance";
-            case "EMERGENCY":
-                return "Emergency";
+            case "ALL": return "All";
+            case "WORK": return "Work";
+            case "BOSS": return "Boss";
+            case "MACHINE": return "Machine";
+            case "CNC": return "CNC";
+            case "STAMPING": return "Stamping";
+            case "QUALITY": return "Quality";
+            case "SAFETY": return "Safety";
+            case "FIRE": return "Fire";
+            case "WELDING": return "Welding";
+            case "GALVANIC": return "Galvanic";
+            case "MAINTENANCE": return "Maintenance";
+            case "EMERGENCY": return "Emergency";
 
             default:
                 return category;
         }
     }
-
-    // =========================================================
-    // FAVORITES TEXT
-    // =========================================================
 
     private String getFavoriteButtonText() {
 
@@ -1228,12 +1163,16 @@ public class PhrasebookActivity extends Activity {
 
                 case "AZ":
                     return "⭐ Seçilmişlər";
+
                 case "EN":
                     return "⭐ Favorites";
+
                 case "TR":
                     return "⭐ Favoriler";
+
                 case "DE":
                     return "⭐ Favoriten";
+
                 case "RU":
                 default:
                     return "⭐ Избранное";
@@ -1244,21 +1183,21 @@ public class PhrasebookActivity extends Activity {
 
             case "AZ":
                 return "☆ Seçilmişlər";
+
             case "EN":
                 return "☆ Favorites";
+
             case "TR":
                 return "☆ Favoriler";
+
             case "DE":
                 return "☆ Favoriten";
+
             case "RU":
             default:
                 return "☆ Избранное";
         }
     }
-
-    // =========================================================
-    // NO RESULTS
-    // =========================================================
 
     private String getNoResultsText() {
 
@@ -1282,10 +1221,6 @@ public class PhrasebookActivity extends Activity {
         }
     }
 
-    // =========================================================
-    // COPIED
-    // =========================================================
-
     private String getCopiedText() {
 
         switch (language) {
@@ -1307,10 +1242,6 @@ public class PhrasebookActivity extends Activity {
                 return "Скопировано";
         }
     }
-
-    // =========================================================
-    // BACK
-    // =========================================================
 
     private String getBackText() {
 
