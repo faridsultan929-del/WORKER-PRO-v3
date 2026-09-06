@@ -5,7 +5,9 @@
     <application
         android:allowBackup="true"
         android:label="WORKER PRO"
-        android:supportsRtl="true">
+        android:supportsRtl="true"
+        android:icon="@drawable/worker_logo"
+        android:roundIcon="@drawable/worker_logo">
 
         <activity
             android:name=".EnglishActivity"
