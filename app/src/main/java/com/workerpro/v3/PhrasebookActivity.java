@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.speech.tts.TextToSpeech;
 import android.view.Gravity;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
@@ -68,6 +69,36 @@ public class PhrasebookActivity extends Activity {
         buildUI();
     }
 
+    private int dp(float value) {
+        return (int) (value *
+                getResources().getDisplayMetrics().density + 0.5f);
+    }
+
+    private TextView createActionButton(
+            String text,
+            float textSize) {
+
+        TextView button = new TextView(this);
+
+        button.setText(text);
+        button.setTextSize(textSize);
+        button.setTextColor(Color.DKGRAY);
+        button.setGravity(Gravity.CENTER);
+        button.setTypeface(null, Typeface.BOLD);
+        button.setBackgroundColor(Color.rgb(235, 235, 235));
+
+        button.setPadding(
+                dp(4),
+                dp(4),
+                dp(4),
+                dp(4));
+
+        button.setClickable(true);
+        button.setFocusable(true);
+
+        return button;
+    }
+
     private void buildUI() {
 
         LinearLayout root = new LinearLayout(this);
@@ -77,14 +108,21 @@ public class PhrasebookActivity extends Activity {
         // ================= TITLE =================
 
         TextView title = new TextView(this);
+
         title.setText(getTitleText());
         title.setTextSize(24);
         title.setTextColor(Color.rgb(0, 150, 70));
         title.setTypeface(null, Typeface.BOLD);
         title.setGravity(Gravity.CENTER);
-        title.setPadding(10, 15, 10, 10);
 
-        root.addView(title,
+        title.setPadding(
+                dp(10),
+                dp(15),
+                dp(10),
+                dp(10));
+
+        root.addView(
+                title,
                 new LinearLayout.LayoutParams(
                         ViewGroup.LayoutParams.MATCH_PARENT,
                         ViewGroup.LayoutParams.WRAP_CONTENT));
@@ -103,7 +141,8 @@ public class PhrasebookActivity extends Activity {
         languageRow.setOrientation(
                 LinearLayout.HORIZONTAL);
 
-        languageRow.setGravity(Gravity.CENTER_VERTICAL);
+        languageRow.setGravity(
+                Gravity.CENTER_VERTICAL);
 
         String[] languageCodes = {
                 "RU",
@@ -121,10 +160,6 @@ public class PhrasebookActivity extends Activity {
                 "🇩🇪\nDE"
         };
 
-        int density =
-                (int) getResources()
-                        .getDisplayMetrics().density;
-
         for (int i = 0;
              i < languageCodes.length;
              i++) {
@@ -136,7 +171,11 @@ public class PhrasebookActivity extends Activity {
             button.setAllCaps(false);
             button.setGravity(Gravity.CENTER);
 
-            button.setPadding(2, 0, 2, 0);
+            button.setPadding(
+                    dp(2),
+                    0,
+                    dp(2),
+                    0);
 
             if (language.equals(languageCodes[i])) {
 
@@ -163,24 +202,16 @@ public class PhrasebookActivity extends Activity {
                 buildUI();
             });
 
-            int buttonWidth =
-                    (int) (70 * getResources()
-                            .getDisplayMetrics().density);
-
-            int buttonHeight =
-                    (int) (58 * getResources()
-                            .getDisplayMetrics().density);
-
             LinearLayout.LayoutParams params =
                     new LinearLayout.LayoutParams(
-                            buttonWidth,
-                            buttonHeight);
+                            dp(70),
+                            dp(58));
 
             params.setMargins(
-                    4 * density,
-                    2 * density,
-                    4 * density,
-                    5 * density);
+                    dp(4),
+                    dp(2),
+                    dp(4),
+                    dp(5));
 
             languageRow.addView(
                     button,
@@ -207,18 +238,15 @@ public class PhrasebookActivity extends Activity {
                 Gravity.CENTER_VERTICAL);
 
         searchRow.setPadding(
-                10,
-                5,
-                10,
-                5);
+                dp(10),
+                dp(5),
+                dp(10),
+                dp(5));
 
         searchBox = new EditText(this);
 
-        searchBox.setHint(
-                getSearchHint());
-
+        searchBox.setHint(getSearchHint());
         searchBox.setTextSize(16);
-
         searchBox.setSingleLine(true);
 
         searchRow.addView(
@@ -232,16 +260,13 @@ public class PhrasebookActivity extends Activity {
                 new TextView(this);
 
         searchIcon.setText("🔍");
-
         searchIcon.setTextSize(25);
-
-        searchIcon.setGravity(
-                Gravity.CENTER);
+        searchIcon.setGravity(Gravity.CENTER);
 
         searchIcon.setPadding(
-                10,
+                dp(10),
                 0,
-                10,
+                dp(10),
                 0);
 
         searchRow.addView(
@@ -288,22 +313,15 @@ public class PhrasebookActivity extends Activity {
                 getCategoryTitle());
 
         categoryTitle.setTextSize(18);
-
-        categoryTitle.setTextColor(
-                Color.DKGRAY);
-
-        categoryTitle.setTypeface(
-                null,
-                Typeface.BOLD);
-
-        categoryTitle.setGravity(
-                Gravity.CENTER_VERTICAL);
+        categoryTitle.setTextColor(Color.DKGRAY);
+        categoryTitle.setTypeface(null, Typeface.BOLD);
+        categoryTitle.setGravity(Gravity.CENTER_VERTICAL);
 
         categoryTitle.setPadding(
-                12,
-                8,
-                12,
-                8);
+                dp(12),
+                dp(8),
+                dp(12),
+                dp(8));
 
         root.addView(
                 categoryTitle,
@@ -316,8 +334,7 @@ public class PhrasebookActivity extends Activity {
         HorizontalScrollView categoryScroll =
                 new HorizontalScrollView(this);
 
-        categoryScroll.setHorizontalScrollBarEnabled(
-                false);
+        categoryScroll.setHorizontalScrollBarEnabled(false);
 
         LinearLayout categoryRow =
                 new LinearLayout(this);
@@ -330,23 +347,19 @@ public class PhrasebookActivity extends Activity {
 
         for (String category : categories) {
 
-            Button button =
-                    new Button(this);
+            Button button = new Button(this);
 
             button.setText(
                     getCategoryName(category));
 
             button.setTextSize(14);
-
             button.setAllCaps(false);
-
-            button.setGravity(
-                    Gravity.CENTER);
+            button.setGravity(Gravity.CENTER);
 
             button.setPadding(
-                    12,
+                    dp(12),
                     0,
-                    12,
+                    dp(12),
                     0);
 
             if (selectedCategory.equals(category)) {
@@ -354,16 +367,14 @@ public class PhrasebookActivity extends Activity {
                 button.setBackgroundColor(
                         Color.rgb(0, 150, 70));
 
-                button.setTextColor(
-                        Color.WHITE);
+                button.setTextColor(Color.WHITE);
 
             } else {
 
                 button.setBackgroundColor(
                         Color.LTGRAY);
 
-                button.setTextColor(
-                        Color.DKGRAY);
+                button.setTextColor(Color.DKGRAY);
             }
 
             button.setOnClickListener(v -> {
@@ -375,28 +386,23 @@ public class PhrasebookActivity extends Activity {
                 buildUI();
             });
 
-            int categoryHeight =
-                    (int) (52 * getResources()
-                            .getDisplayMetrics().density);
-
             LinearLayout.LayoutParams params =
                     new LinearLayout.LayoutParams(
                             ViewGroup.LayoutParams.WRAP_CONTENT,
-                            categoryHeight);
+                            dp(52));
 
             params.setMargins(
-                    3 * density,
-                    2 * density,
-                    3 * density,
-                    5 * density);
+                    dp(3),
+                    dp(2),
+                    dp(3),
+                    dp(5));
 
             categoryRow.addView(
                     button,
                     params);
         }
 
-        categoryScroll.addView(
-                categoryRow);
+        categoryScroll.addView(categoryRow);
 
         root.addView(
                 categoryScroll,
@@ -413,7 +419,6 @@ public class PhrasebookActivity extends Activity {
                 getFavoriteButtonText());
 
         favoritesButton.setTextSize(14);
-
         favoritesButton.setAllCaps(false);
 
         favoritesButton.setOnClickListener(v -> {
@@ -428,8 +433,7 @@ public class PhrasebookActivity extends Activity {
             favoritesButton.setBackgroundColor(
                     Color.rgb(0, 150, 70));
 
-            favoritesButton.setTextColor(
-                    Color.WHITE);
+            favoritesButton.setTextColor(Color.WHITE);
         }
 
         root.addView(
@@ -450,13 +454,12 @@ public class PhrasebookActivity extends Activity {
                 LinearLayout.VERTICAL);
 
         phrasesContainer.setPadding(
-                10,
-                5,
-                10,
-                10);
+                dp(10),
+                dp(5),
+                dp(10),
+                dp(10));
 
-        scrollView.addView(
-                phrasesContainer);
+        scrollView.addView(phrasesContainer);
 
         root.addView(
                 scrollView,
@@ -470,11 +473,8 @@ public class PhrasebookActivity extends Activity {
         Button backButton =
                 new Button(this);
 
-        backButton.setText(
-                getBackText());
-
+        backButton.setText(getBackText());
         backButton.setTextSize(14);
-
         backButton.setAllCaps(false);
 
         backButton.setOnClickListener(
@@ -492,20 +492,15 @@ public class PhrasebookActivity extends Activity {
                 new TextView(this);
 
         footer.setText("F.S");
-
         footer.setTextSize(14);
-
-        footer.setTextColor(
-                Color.GRAY);
-
-        footer.setGravity(
-                Gravity.CENTER);
+        footer.setTextColor(Color.GRAY);
+        footer.setGravity(Gravity.CENTER);
 
         footer.setPadding(
-                5,
-                5,
-                5,
-                8);
+                dp(5),
+                dp(5),
+                dp(5),
+                dp(8));
 
         root.addView(footer);
 
@@ -515,7 +510,7 @@ public class PhrasebookActivity extends Activity {
     }
 
     // =========================================================
-    // REFRESH PHRASES
+    // REFRESH
     // =========================================================
 
     private void refreshPhrases() {
@@ -550,21 +545,11 @@ public class PhrasebookActivity extends Activity {
 
             boolean searchMatch =
                     search.isEmpty()
-                            || contains(
-                            phrase.english,
-                            search)
-                            || contains(
-                            phrase.russian,
-                            search)
-                            || contains(
-                            phrase.azerbaijani,
-                            search)
-                            || contains(
-                            phrase.turkish,
-                            search)
-                            || contains(
-                            phrase.german,
-                            search);
+                            || contains(phrase.english, search)
+                            || contains(phrase.russian, search)
+                            || contains(phrase.azerbaijani, search)
+                            || contains(phrase.turkish, search)
+                            || contains(phrase.german, search);
 
             boolean favoriteMatch =
                     !favoritesOnly
@@ -588,18 +573,14 @@ public class PhrasebookActivity extends Activity {
                     getNoResultsText());
 
             noResults.setTextSize(18);
-
-            noResults.setTextColor(
-                    Color.GRAY);
-
-            noResults.setGravity(
-                    Gravity.CENTER);
+            noResults.setTextColor(Color.GRAY);
+            noResults.setGravity(Gravity.CENTER);
 
             noResults.setPadding(
-                    10,
-                    40,
-                    10,
-                    40);
+                    dp(10),
+                    dp(40),
+                    dp(10),
+                    dp(40));
 
             phrasesContainer.addView(
                     noResults);
@@ -641,10 +622,10 @@ public class PhrasebookActivity extends Activity {
                 LinearLayout.VERTICAL);
 
         card.setPadding(
-                15,
-                12,
-                15,
-                12);
+                dp(15),
+                dp(12),
+                dp(15),
+                dp(12));
 
         card.setBackgroundColor(
                 Color.rgb(245, 245, 245));
@@ -655,10 +636,12 @@ public class PhrasebookActivity extends Activity {
                         ViewGroup.LayoutParams.WRAP_CONTENT);
 
         cardParams.setMargins(
-                5,
-                5,
-                5,
-                8);
+                dp(5),
+                dp(5),
+                dp(5),
+                dp(8));
+
+        // ================= ENGLISH =================
 
         TextView english =
                 new TextView(this);
@@ -667,7 +650,6 @@ public class PhrasebookActivity extends Activity {
                 "🇬🇧 " + phrase.english);
 
         english.setTextSize(18);
-
         english.setTextColor(
                 Color.rgb(0, 120, 60));
 
@@ -677,11 +659,13 @@ public class PhrasebookActivity extends Activity {
 
         english.setPadding(
                 0,
-                2,
+                dp(2),
                 0,
-                4);
+                dp(4));
 
         card.addView(english);
+
+        // ================= RUSSIAN =================
 
         TextView russian =
                 new TextView(this);
@@ -690,55 +674,52 @@ public class PhrasebookActivity extends Activity {
                 "🇷🇺 " + phrase.russian);
 
         russian.setTextSize(16);
-
-        russian.setTextColor(
-                Color.DKGRAY);
+        russian.setTextColor(Color.DKGRAY);
 
         card.addView(russian);
+
+        // ================= AZERBAIJANI =================
 
         TextView azerbaijani =
                 new TextView(this);
 
         azerbaijani.setText(
-                "🇦🇿 " +
-                        phrase.azerbaijani);
+                "🇦🇿 " + phrase.azerbaijani);
 
         azerbaijani.setTextSize(16);
-
-        azerbaijani.setTextColor(
-                Color.DKGRAY);
+        azerbaijani.setTextColor(Color.DKGRAY);
 
         card.addView(azerbaijani);
+
+        // ================= TURKISH =================
 
         TextView turkish =
                 new TextView(this);
 
         turkish.setText(
-                "🇹🇷 " +
-                        phrase.turkish);
+                "🇹🇷 " + phrase.turkish);
 
         turkish.setTextSize(16);
-
-        turkish.setTextColor(
-                Color.DKGRAY);
+        turkish.setTextColor(Color.DKGRAY);
 
         card.addView(turkish);
+
+        // ================= GERMAN =================
 
         TextView german =
                 new TextView(this);
 
         german.setText(
-                "🇩🇪 " +
-                        phrase.german);
+                "🇩🇪 " + phrase.german);
 
         german.setTextSize(16);
-
-        german.setTextColor(
-                Color.DKGRAY);
+        german.setTextColor(Color.DKGRAY);
 
         card.addView(german);
 
-        // ================= BUTTONS =================
+        // =====================================================
+        // ACTION BUTTONS
+        // =====================================================
 
         LinearLayout buttons =
                 new LinearLayout(this);
@@ -749,16 +730,22 @@ public class PhrasebookActivity extends Activity {
         buttons.setGravity(
                 Gravity.CENTER_VERTICAL);
 
-        // SPEAK
+        buttons.setPadding(
+                0,
+                dp(8),
+                0,
+                0);
 
-        Button speakButton =
-                new Button(this);
+        // ================= SPEAKER =================
 
-        speakButton.setText("🔊");
+        TextView speakButton =
+                createActionButton("🔊", 26);
 
-        speakButton.setTextSize(18);
+        speakButton.setTextColor(
+                Color.rgb(0, 130, 60));
 
-        speakButton.setAllCaps(false);
+        speakButton.setContentDescription(
+                "Speak");
 
         speakButton.setOnClickListener(v -> {
 
@@ -777,22 +764,28 @@ public class PhrasebookActivity extends Activity {
             }
         });
 
+        LinearLayout.LayoutParams speakParams =
+                new LinearLayout.LayoutParams(
+                        dp(70),
+                        dp(58));
+
+        speakParams.setMargins(
+                0,
+                0,
+                dp(8),
+                0);
+
         buttons.addView(
                 speakButton,
-                new LinearLayout.LayoutParams(
-                        65,
-                        55));
+                speakParams);
 
-        // COPY
+        // ================= COPY =================
 
-        Button copyButton =
-                new Button(this);
+        TextView copyButton =
+                createActionButton("📋", 25);
 
-        copyButton.setText("📋");
-
-        copyButton.setTextSize(18);
-
-        copyButton.setAllCaps(false);
+        copyButton.setContentDescription(
+                "Copy");
 
         copyButton.setOnClickListener(v -> {
 
@@ -802,22 +795,15 @@ public class PhrasebookActivity extends Activity {
                                     Context.CLIPBOARD_SERVICE);
 
             android.content.ClipData clip =
-                    android.content.ClipData
-                            .newPlainText(
-                                    "WORKER PRO",
-                                    "🇬🇧 " +
-                                            phrase.english +
-                                            "\n🇷🇺 " +
-                                            phrase.russian +
-                                            "\n🇦🇿 " +
-                                            phrase.azerbaijani +
-                                            "\n🇹🇷 " +
-                                            phrase.turkish +
-                                            "\n🇩🇪 " +
-                                            phrase.german);
+                    android.content.ClipData.newPlainText(
+                            "WORKER PRO",
+                            "🇬🇧 " + phrase.english +
+                                    "\n🇷🇺 " + phrase.russian +
+                                    "\n🇦🇿 " + phrase.azerbaijani +
+                                    "\n🇹🇷 " + phrase.turkish +
+                                    "\n🇩🇪 " + phrase.german);
 
-            clipboard.setPrimaryClip(
-                    clip);
+            clipboard.setPrimaryClip(clip);
 
             Toast.makeText(
                     this,
@@ -826,605 +812,16 @@ public class PhrasebookActivity extends Activity {
                     .show();
         });
 
-        buttons.addView(
-                copyButton,
+        LinearLayout.LayoutParams copyParams =
                 new LinearLayout.LayoutParams(
-                        65,
-                        55));
+                        dp(70),
+                        dp(58));
 
-        // FAVORITE
-
-        Button favoriteButton =
-                new Button(this);
-
-        boolean isFavorite =
-                favorites.contains(
-                        phrase.english);
-
-        favoriteButton.setText(
-                isFavorite ? "⭐" : "☆");
-
-        favoriteButton.setTextSize(20);
-
-        favoriteButton.setAllCaps(false);
-
-        favoriteButton.setOnClickListener(v -> {
-
-            if (favorites.contains(
-                    phrase.english)) {
-
-                favorites.remove(
-                        phrase.english);
-
-            } else {
-
-                favorites.add(
-                        phrase.english);
-            }
-
-            saveFavorites();
-
-            refreshPhrases();
-        });
+        copyParams.setMargins(
+                0,
+                0,
+                dp(8),
+                0);
 
         buttons.addView(
-                favoriteButton,
-                new LinearLayout.LayoutParams(
-                        65,
-                        55));
-
-        card.addView(buttons);
-
-        phrasesContainer.addView(
-                card,
-                cardParams);
-    }
-
-    // =========================================================
-    // SPEECH
-    // =========================================================
-
-    private String getSpeechText(
-            WorkerPhrasebook.Phrase phrase) {
-
-        switch (language) {
-
-            case "RU":
-                return phrase.russian;
-
-            case "AZ":
-                return phrase.azerbaijani;
-
-            case "TR":
-                return phrase.turkish;
-
-            case "DE":
-                return phrase.german;
-
-            case "EN":
-            default:
-                return phrase.english;
-        }
-    }
-
-    private void setSpeechLanguage() {
-
-        if (tts == null) {
-            return;
-        }
-
-        Locale locale;
-
-        switch (language) {
-
-            case "RU":
-                locale =
-                        new Locale("ru");
-                break;
-
-            case "AZ":
-                locale =
-                        new Locale("az");
-                break;
-
-            case "TR":
-                locale =
-                        new Locale("tr");
-                break;
-
-            case "DE":
-                locale =
-                        Locale.GERMAN;
-                break;
-
-            case "EN":
-            default:
-                locale =
-                        Locale.US;
-                break;
-        }
-
-        tts.setLanguage(locale);
-    }
-
-    // =========================================================
-    // FAVORITES
-    // =========================================================
-
-    private void loadFavorites() {
-
-        SharedPreferences preferences =
-                getSharedPreferences(
-                        "WORKER_PRO_FAVORITES",
-                        MODE_PRIVATE);
-
-        favorites.addAll(
-                preferences.getStringSet(
-                        "phrases",
-                        new HashSet<>()));
-    }
-
-    private void saveFavorites() {
-
-        SharedPreferences preferences =
-                getSharedPreferences(
-                        "WORKER_PRO_FAVORITES",
-                        MODE_PRIVATE);
-
-        preferences.edit()
-                .putStringSet(
-                        "phrases",
-                        new HashSet<>(
-                                favorites))
-                .apply();
-    }
-
-    // =========================================================
-    // TITLE
-    // =========================================================
-
-    private String getTitleText() {
-
-        switch (language) {
-
-            case "AZ":
-                return "💬 Danışıq kitabçası";
-
-            case "EN":
-                return "💬 Phrasebook";
-
-            case "TR":
-                return "💬 Konuşma Kitabı";
-
-            case "DE":
-                return "💬 Sprachführer";
-
-            case "RU":
-            default:
-                return "💬 Разговорник";
-        }
-    }
-
-    // =========================================================
-    // SEARCH
-    // =========================================================
-
-    private String getSearchHint() {
-
-        switch (language) {
-
-            case "AZ":
-                return "Axtar...";
-
-            case "EN":
-                return "Search...";
-
-            case "TR":
-                return "Ara...";
-
-            case "DE":
-                return "Suchen...";
-
-            case "RU":
-            default:
-                return "Поиск...";
-        }
-    }
-
-    // =========================================================
-    // CATEGORY TITLE
-    // =========================================================
-
-    private String getCategoryTitle() {
-
-        switch (language) {
-
-            case "AZ":
-                return "Bölmələr";
-
-            case "EN":
-                return "Sections";
-
-            case "TR":
-                return "Bölümler";
-
-            case "DE":
-                return "Bereiche";
-
-            case "RU":
-            default:
-                return "Разделы";
-        }
-    }
-
-    // =========================================================
-    // CATEGORY NAMES
-    // =========================================================
-
-    private String getCategoryName(
-            String category) {
-
-        if (language.equals("RU")) {
-
-            switch (category) {
-
-                case "ALL":
-                    return "Все";
-
-                case "WORK":
-                    return "Работа";
-
-                case "BOSS":
-                    return "Начальник";
-
-                case "MACHINE":
-                    return "Станок";
-
-                case "CNC":
-                    return "CNC";
-
-                case "STAMPING":
-                    return "Штамповка";
-
-                case "QUALITY":
-                    return "Качество";
-
-                case "SAFETY":
-                    return "Безопасность";
-
-                case "FIRE":
-                    return "Пожар";
-
-                case "WELDING":
-                    return "Сварка";
-
-                case "GALVANIC":
-                    return "Гальваника";
-
-                case "MAINTENANCE":
-                    return "Обслуживание";
-
-                case "EMERGENCY":
-                    return "Авария";
-            }
-        }
-
-        if (language.equals("AZ")) {
-
-            switch (category) {
-
-                case "ALL":
-                    return "Hamısı";
-
-                case "WORK":
-                    return "İş";
-
-                case "BOSS":
-                    return "Rəhbər";
-
-                case "MACHINE":
-                    return "Dəzgah";
-
-                case "CNC":
-                    return "CNC";
-
-                case "STAMPING":
-                    return "Ştamplama";
-
-                case "QUALITY":
-                    return "Keyfiyyət";
-
-                case "SAFETY":
-                    return "Təhlükəsizlik";
-
-                case "FIRE":
-                    return "Yanğın";
-
-                case "WELDING":
-                    return "Qaynaq";
-
-                case "GALVANIC":
-                    return "Qalvanika";
-
-                case "MAINTENANCE":
-                    return "Texniki xidmət";
-
-                case "EMERGENCY":
-                    return "Fövqəladə";
-            }
-        }
-
-        if (language.equals("TR")) {
-
-            switch (category) {
-
-                case "ALL":
-                    return "Tümü";
-
-                case "WORK":
-                    return "İş";
-
-                case "BOSS":
-                    return "Patron";
-
-                case "MACHINE":
-                    return "Makine";
-
-                case "CNC":
-                    return "CNC";
-
-                case "STAMPING":
-                    return "Presleme";
-
-                case "QUALITY":
-                    return "Kalite";
-
-                case "SAFETY":
-                    return "Güvenlik";
-
-                case "FIRE":
-                    return "Yangın";
-
-                case "WELDING":
-                    return "Kaynak";
-
-                case "GALVANIC":
-                    return "Galvanik";
-
-                case "MAINTENANCE":
-                    return "Bakım";
-
-                case "EMERGENCY":
-                    return "Acil Durum";
-            }
-        }
-
-        if (language.equals("DE")) {
-
-            switch (category) {
-
-                case "ALL":
-                    return "Alle";
-
-                case "WORK":
-                    return "Arbeit";
-
-                case "BOSS":
-                    return "Chef";
-
-                case "MACHINE":
-                    return "Maschine";
-
-                case "CNC":
-                    return "CNC";
-
-                case "STAMPING":
-                    return "Stanzen";
-
-                case "QUALITY":
-                    return "Qualität";
-
-                case "SAFETY":
-                    return "Sicherheit";
-
-                case "FIRE":
-                    return "Feuer";
-
-                case "WELDING":
-                    return "Schweißen";
-
-                case "GALVANIC":
-                    return "Galvanik";
-
-                case "MAINTENANCE":
-                    return "Wartung";
-
-                case "EMERGENCY":
-                    return "Notfall";
-            }
-        }
-
-        switch (category) {
-
-            case "ALL":
-                return "All";
-
-            case "WORK":
-                return "Work";
-
-            case "BOSS":
-                return "Boss";
-
-            case "MACHINE":
-                return "Machine";
-
-            case "CNC":
-                return "CNC";
-
-            case "STAMPING":
-                return "Stamping";
-
-            case "QUALITY":
-                return "Quality";
-
-            case "SAFETY":
-                return "Safety";
-
-            case "FIRE":
-                return "Fire";
-
-            case "WELDING":
-                return "Welding";
-
-            case "GALVANIC":
-                return "Galvanic";
-
-            case "MAINTENANCE":
-                return "Maintenance";
-
-            case "EMERGENCY":
-                return "Emergency";
-
-            default:
-                return category;
-        }
-    }
-
-    // =========================================================
-    // FAVORITES TEXT
-    // =========================================================
-
-    private String getFavoriteButtonText() {
-
-        if (favoritesOnly) {
-
-            switch (language) {
-
-                case "AZ":
-                    return "⭐ Seçilmişlər";
-
-                case "EN":
-                    return "⭐ Favorites";
-
-                case "TR":
-                    return "⭐ Favoriler";
-
-                case "DE":
-                    return "⭐ Favoriten";
-
-                case "RU":
-                default:
-                    return "⭐ Избранное";
-            }
-        }
-
-        switch (language) {
-
-            case "AZ":
-                return "☆ Seçilmişlər";
-
-            case "EN":
-                return "☆ Favorites";
-
-            case "TR":
-                return "☆ Favoriler";
-
-            case "DE":
-                return "☆ Favoriten";
-
-            case "RU":
-            default:
-                return "☆ Избранное";
-        }
-    }
-
-    // =========================================================
-    // NO RESULTS
-    // =========================================================
-
-    private String getNoResultsText() {
-
-        switch (language) {
-
-            case "AZ":
-                return "Heç nə tapılmadı";
-
-            case "EN":
-                return "Nothing found";
-
-            case "TR":
-                return "Sonuç bulunamadı";
-
-            case "DE":
-                return "Nichts gefunden";
-
-            case "RU":
-            default:
-                return "Ничего не найдено";
-        }
-    }
-
-    // =========================================================
-    // COPIED
-    // =========================================================
-
-    private String getCopiedText() {
-
-        switch (language) {
-
-            case "AZ":
-                return "Kopyalandı";
-
-            case "EN":
-                return "Copied";
-
-            case "TR":
-                return "Kopyalandı";
-
-            case "DE":
-                return "Kopiert";
-
-            case "RU":
-            default:
-                return "Скопировано";
-        }
-    }
-
-    // =========================================================
-    // BACK
-    // =========================================================
-
-    private String getBackText() {
-
-        switch (language) {
-
-            case "AZ":
-                return "← Geri";
-
-            case "EN":
-                return "← Back";
-
-            case "TR":
-                return "← Geri";
-
-            case "DE":
-                return "← Zurück";
-
-            case "RU":
-            default:
-                return "← Назад";
-        }
-    }
-
-    @Override
-    protected void onDestroy() {
-
-        if (tts != null) {
-
-            tts.stop();
-            tts.shutdown();
-        }
-
-        super.onDestroy();
-    }
-}
+                copyButton
