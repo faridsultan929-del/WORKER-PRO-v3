@@ -9,6 +9,8 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.*;
 import android.content.Context;
+import android.content.SharedPreferences;
+
 import java.util.*;
 
 public class LessonOfDayActivity extends Activity {
@@ -50,6 +52,7 @@ public class LessonOfDayActivity extends Activity {
         {"Measure the part.", "Измерь деталь.", "Detalın ölçüsünü yoxla."},
         {"Check the drawing.", "Проверь чертёж.", "Çertyoju yoxla."},
         {"The dimension is correct.", "Размер правильный.", "Ölçü düzgündür."},
+
         {"The dimension is wrong.", "Размер неправильный.", "Ölçü səhvdir."},
         {"There is a problem with the machine.", "Есть проблема со станком.", "Dəzgahla bağlı problem var."},
         {"Call the technician.", "Позови техника.", "Texniki çağır."},
@@ -276,7 +279,10 @@ public class LessonOfDayActivity extends Activity {
         super.onCreate(savedInstanceState);
 
         language = getIntent().getStringExtra("LANGUAGE");
-        if (language == null) language = "RU";
+
+        if (language == null) {
+            language = "RU";
+        }
 
         prefs = getSharedPreferences(
                 "WORKER_PRO_LESSON_PROGRESS",
@@ -287,9 +293,11 @@ public class LessonOfDayActivity extends Activity {
         buildScreen();
 
         tts = new TextToSpeech(this, status -> {
+
             if (status == TextToSpeech.SUCCESS) {
                 tts.setLanguage(Locale.US);
             }
+
         });
     }
 
@@ -302,16 +310,18 @@ public class LessonOfDayActivity extends Activity {
         container.setPadding(24, 24, 24, 40);
 
         scrollView.addView(container);
+
         setContentView(scrollView);
 
         int day = getDay();
 
         TextView title = new TextView(this);
-        title.setText("📚 " + getTitle());
+        title.setText("📚 " + getLessonTitle());
         title.setTextSize(27);
         title.setTypeface(null, Typeface.BOLD);
         title.setGravity(Gravity.CENTER);
         title.setPadding(0, 10, 0, 20);
+
         container.addView(title);
 
         TextView dayText = new TextView(this);
@@ -319,6 +329,7 @@ public class LessonOfDayActivity extends Activity {
         dayText.setTextSize(20);
         dayText.setTypeface(null, Typeface.BOLD);
         dayText.setGravity(Gravity.CENTER);
+
         container.addView(dayText);
 
         TextView streakText = new TextView(this);
@@ -327,25 +338,31 @@ public class LessonOfDayActivity extends Activity {
                 ": " + streak +
                 "   🏆 " + bestStreak
         );
+
         streakText.setTextSize(17);
         streakText.setGravity(Gravity.CENTER);
         streakText.setPadding(0, 12, 0, 12);
+
         container.addView(streakText);
 
         TextView progressText = new TextView(this);
+
         progressText.setText(
                 "⭐ " + learnedToday + " / 5"
         );
+
         progressText.setTextSize(19);
         progressText.setTypeface(null, Typeface.BOLD);
         progressText.setGravity(Gravity.CENTER);
+
         container.addView(progressText);
 
-        int startWord = (day * 5) % phrases.length;
+        int startPhrase = (day * 5) % phrases.length;
 
         for (int i = 0; i < 5; i++) {
 
-            int index = (startWord + i) % phrases.length;
+            int index =
+                    (startPhrase + i) % phrases.length;
 
             addPhrase(
                     index,
@@ -355,10 +372,12 @@ public class LessonOfDayActivity extends Activity {
         }
 
         TextView footer = new TextView(this);
+
         footer.setText("\nF.S");
         footer.setTextSize(15);
         footer.setGravity(Gravity.CENTER);
         footer.setTextColor(Color.GRAY);
+
         container.addView(footer);
     }
 
@@ -369,45 +388,73 @@ public class LessonOfDayActivity extends Activity {
     ) {
 
         LinearLayout box = new LinearLayout(this);
+
         box.setOrientation(LinearLayout.VERTICAL);
         box.setPadding(20, 18, 20, 18);
 
         TextView numberText = new TextView(this);
+
         numberText.setText("💬 " + number);
         numberText.setTextSize(16);
         numberText.setTypeface(null, Typeface.BOLD);
 
         TextView english = new TextView(this);
-        english.setText("🇬🇧 " + phrases[index][0]);
+
+        english.setText(
+                "🇬🇧 " + phrases[index][0]
+        );
+
         english.setTextSize(21);
         english.setTypeface(null, Typeface.BOLD);
         english.setPadding(0, 10, 0, 8);
 
         TextView russian = new TextView(this);
-        russian.setText("🇷🇺 " + phrases[index][1]);
+
+        russian.setText(
+                "🇷🇺 " + phrases[index][1]
+        );
+
         russian.setTextSize(17);
         russian.setPadding(0, 4, 0, 4);
 
         TextView azeri = new TextView(this);
-        azeri.setText("🇦🇿 " + phrases[index][2]);
+
+        azeri.setText(
+                "🇦🇿 " + phrases[index][2]
+        );
+
         azeri.setTextSize(17);
         azeri.setPadding(0, 4, 0, 12);
 
         Button speakButton = new Button(this);
-        speakButton.setText("🔊 " + getSpeakText());
+
+        speakButton.setText(
+                "🔊 " + getSpeakText()
+        );
 
         speakButton.setOnClickListener(v ->
                 speak(phrases[index][0])
         );
 
         Button learnedButton = new Button(this);
-        learnedButton.setText("⭐ " + getLearnText());
 
-        String key = "phrase_" + index + "_day_" + getDay();
+        learnedButton.setText(
+                "⭐ " + getLearnText()
+        );
+
+        String key =
+                "phrase_" +
+                index +
+                "_day_" +
+                getDay();
 
         if (prefs.getBoolean(key, false)) {
+
             learnedButton.setEnabled(false);
-            learnedButton.setText("✅ " + getLearnedText());
+
+            learnedButton.setText(
+                    "✅ " + getLearnedText()
+            );
         }
 
         learnedButton.setOnClickListener(v -> {
@@ -419,16 +466,19 @@ public class LessonOfDayActivity extends Activity {
                         .apply();
 
                 learnedToday++;
-
                 learnedWords++;
 
                 progressText.setText(
-                        "⭐ " + learnedToday + " / 5"
+                        "⭐ " +
+                        learnedToday +
+                        " / 5"
                 );
 
                 learnedButton.setEnabled(false);
+
                 learnedButton.setText(
-                        "✅ " + getLearnedText()
+                        "✅ " +
+                        getLearnedText()
                 );
 
                 if (learnedToday >= 5) {
@@ -447,6 +497,7 @@ public class LessonOfDayActivity extends Activity {
         container.addView(box);
 
         View line = new View(this);
+
         line.setBackgroundColor(Color.LTGRAY);
 
         LinearLayout.LayoutParams lineParams =
@@ -455,14 +506,23 @@ public class LessonOfDayActivity extends Activity {
                         2
                 );
 
-        lineParams.setMargins(0, 18, 0, 18);
+        lineParams.setMargins(
+                0,
+                18,
+                0,
+                18
+        );
 
-        container.addView(line, lineParams);
+        container.addView(
+                line,
+                lineParams
+        );
     }
 
     private void speak(String text) {
 
         if (tts != null) {
+
             tts.speak(
                     text,
                     TextToSpeech.QUEUE_FLUSH,
@@ -474,7 +534,8 @@ public class LessonOfDayActivity extends Activity {
 
     private int getDay() {
 
-        Calendar calendar = Calendar.getInstance();
+        Calendar calendar =
+                Calendar.getInstance();
 
         int dayOfYear =
                 calendar.get(Calendar.DAY_OF_YEAR);
@@ -485,14 +546,20 @@ public class LessonOfDayActivity extends Activity {
     private void loadProgress() {
 
         int savedDay =
-                prefs.getInt("LAST_DAY", -1);
+                prefs.getInt(
+                        "LAST_DAY",
+                        -1
+                );
 
         int today = getDay();
 
         if (savedDay == today) {
 
             learnedToday =
-                    prefs.getInt("LEARNED_TODAY", 0);
+                    prefs.getInt(
+                            "LEARNED_TODAY",
+                            0
+                    );
 
         } else {
 
@@ -500,19 +567,31 @@ public class LessonOfDayActivity extends Activity {
         }
 
         streak =
-                prefs.getInt("STREAK", 0);
+                prefs.getInt(
+                        "STREAK",
+                        0
+                );
 
         bestStreak =
-                prefs.getInt("BEST_STREAK", 0);
+                prefs.getInt(
+                        "BEST_STREAK",
+                        0
+                );
 
         learnedWords =
-                prefs.getInt("LEARNED_WORDS", 0);
+                prefs.getInt(
+                        "LEARNED_WORDS",
+                        0
+                );
     }
 
     private void completeToday() {
 
         int savedDay =
-                prefs.getInt("LAST_DAY", -1);
+                prefs.getInt(
+                        "LAST_DAY",
+                        -1
+                );
 
         int today = getDay();
 
@@ -525,29 +604,51 @@ public class LessonOfDayActivity extends Activity {
             }
 
             prefs.edit()
-                    .putInt("LAST_DAY", today)
-                    .putInt("STREAK", streak)
-                    .putInt("BEST_STREAK", bestStreak)
-                    .putInt("LEARNED_WORDS", learnedWords)
-                    .putInt("LEARNED_TODAY", learnedToday)
+                    .putInt(
+                            "LAST_DAY",
+                            today
+                    )
+                    .putInt(
+                            "STREAK",
+                            streak
+                    )
+                    .putInt(
+                            "BEST_STREAK",
+                            bestStreak
+                    )
+                    .putInt(
+                            "LEARNED_WORDS",
+                            learnedWords
+                    )
+                    .putInt(
+                            "LEARNED_TODAY",
+                            learnedToday
+                    )
                     .apply();
 
             Toast.makeText(
                     this,
-                    "🎉 " + getCompleteText(),
+                    "🎉 " +
+                    getCompleteText(),
                     Toast.LENGTH_LONG
             ).show();
 
         } else {
 
             prefs.edit()
-                    .putInt("LEARNED_WORDS", learnedWords)
-                    .putInt("LEARNED_TODAY", learnedToday)
+                    .putInt(
+                            "LEARNED_WORDS",
+                            learnedWords
+                    )
+                    .putInt(
+                            "LEARNED_TODAY",
+                            learnedToday
+                    )
                     .apply();
         }
     }
 
-    private String getTitle() {
+    private String getLessonTitle() {
 
         switch (language) {
 
