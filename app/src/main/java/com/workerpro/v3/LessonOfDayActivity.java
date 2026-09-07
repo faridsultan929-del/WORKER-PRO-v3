@@ -5,995 +5,518 @@ import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.graphics.drawable.GradientDrawable;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.ScrollView;
-import android.widget.TextView;
-
-import java.util.Calendar;
-import java.util.HashSet;
-import java.util.Locale;
-import java.util.Set;
+import android.widget.*;
+import android.content.Context;
+import java.util.*;
 
 public class LessonOfDayActivity extends Activity {
 
     private TextToSpeech tts;
     private String language = "RU";
 
-    private final Set<String> learnedWords = new HashSet<>();
-
+    private int learnedWords = 0;
     private int learnedToday = 0;
     private int streak = 0;
     private int bestStreak = 0;
 
-    private TextView progressText;
-    private TextView streakText;
+    private LinearLayout container;
+    private SharedPreferences prefs;
 
-    /*
-     * ============================================================
-     * 200 ПРОФЕССИОНАЛЬНЫХ СЛОВ
-     *
-     * English | Russian | Azerbaijani
-     * 5 слов в день = 40 дней
-     * ============================================================
-     */
-
-    private final String[][] words = {
-
-            {"Safety", "Безопасность", "Təhlükəsizlik"},
-            {"Worker", "Рабочий", "İşçi"},
-            {"Machine", "Станок", "Dəzgah"},
-            {"Tool", "Инструмент", "Alət"},
-            {"Quality", "Качество", "Keyfiyyət"},
-            {"Defect", "Дефект", "Qüsur"},
-            {"Sensor", "Датчик", "Sensor"},
-            {"CNC", "Станок с ЧПУ", "CNC dəzgahı"},
-            {"Stamping", "Штамповка", "Ştamplama"},
-            {"Welding", "Сварка", "Qaynaq"},
-
-            {"Maintenance", "Техническое обслуживание", "Texniki xidmət"},
-            {"Repair", "Ремонт", "Təmir"},
-            {"Measurement", "Измерение", "Ölçmə"},
-            {"Tolerance", "Допуск", "Tolerans"},
-            {"Emergency", "Аварийная ситуация", "Fövqəladə vəziyyət"},
-            {"Helmet", "Каска", "Dəbilqə"},
-            {"Gloves", "Перчатки", "Əlcəklər"},
-            {"Fire", "Пожар", "Yanğın"},
-            {"Operator", "Оператор", "Operator"},
-            {"Production", "Производство", "İstehsalat"},
-
-            {"Factory", "Завод", "Zavod"},
-            {"Process", "Процесс", "Proses"},
-            {"Material", "Материал", "Material"},
-            {"Task", "Задание", "Tapşırıq"},
-            {"Workplace", "Рабочее место", "İş yeri"},
-            {"Equipment", "Оборудование", "Avadanlıq"},
-            {"System", "Система", "Sistem"},
-            {"Control", "Контроль", "Nəzarət"},
-            {"Check", "Проверка", "Yoxlama"},
-            {"Inspection", "Инспекция", "Yoxlama"},
-
-            {"Standard", "Стандарт", "Standart"},
-            {"Rule", "Правило", "Qayda"},
-            {"Risk", "Риск", "Risk"},
-            {"Danger", "Опасность", "Təhlükə"},
-            {"Warning", "Предупреждение", "Xəbərdarlıq"},
-            {"Accident", "Несчастный случай", "Qəza"},
-            {"Protection", "Защита", "Mühafizə"},
-            {"Shield", "Защитный экран", "Qoruyucu ekran"},
-            {"Mask", "Маска", "Maska"},
-            {"Goggles", "Защитные очки", "Qoruyucu eynək"},
-
-            {"Boots", "Защитная обувь", "Qoruyucu ayaqqabı"},
-            {"Uniform", "Рабочая форма", "İş forması"},
-            {"Earplugs", "Беруши", "Qulaq tıxacları"},
-            {"Vest", "Жилет", "Jilet"},
-            {"First Aid", "Первая помощь", "İlk yardım"},
-            {"Alarm", "Сигнал тревоги", "Həyəcan siqnalı"},
-            {"Exit", "Выход", "Çıxış"},
-            {"Entrance", "Вход", "Giriş"},
-            {"Evacuation", "Эвакуация", "Təxliyə"},
-            {"Fire Exit", "Пожарный выход", "Yanğın çıxışı"},
-
-            {"Machine Guard", "Защитное ограждение станка", "Dəzgah qoruyucusu"},
-            {"Button", "Кнопка", "Düymə"},
-            {"Switch", "Переключатель", "Açar"},
-            {"Emergency Stop", "Аварийная остановка", "Təcili dayandırma"},
-            {"Start", "Запуск", "Başlatma"},
-            {"Stop", "Остановка", "Dayandırma"},
-            {"Reset", "Сброс", "Sıfırlama"},
-            {"Program", "Программа", "Proqram"},
-            {"Parameter", "Параметр", "Parametr"},
-            {"Setting", "Настройка", "Parametr ayarı"},
-
-            {"Speed", "Скорость", "Sürət"},
-            {"Pressure", "Давление", "Təzyiq"},
-            {"Temperature", "Температура", "Temperatur"},
-            {"Force", "Сила", "Qüvvə"},
-            {"Power", "Мощность", "Güc"},
-            {"Voltage", "Напряжение", "Gərginlik"},
-            {"Current", "Ток", "Cərəyan"},
-            {"Frequency", "Частота", "Tezlik"},
-            {"Motor", "Двигатель", "Mühərrik"},
-            {"Pump", "Насос", "Nasos"},
-
-            {"Valve", "Клапан", "Klapan"},
-            {"Pipe", "Труба", "Boru"},
-            {"Cable", "Кабель", "Kabel"},
-            {"Wire", "Провод", "Tel"},
-            {"Bearing", "Подшипник", "Yastıq"},
-            {"Gear", "Шестерня", "Dişli çarx"},
-            {"Shaft", "Вал", "Val"},
-            {"Bolt", "Болт", "Bolt"},
-            {"Nut", "Гайка", "Qayka"},
-            {"Screw", "Винт", "Vint"},
-
-            {"Washer", "Шайба", "Şayba"},
-            {"Spring", "Пружина", "Yay"},
-            {"Plate", "Пластина", "Lövhə"},
-            {"Sheet", "Лист металла", "Metal təbəqə"},
-            {"Metal", "Металл", "Metal"},
-            {"Steel", "Сталь", "Polad"},
-            {"Aluminum", "Алюминий", "Alüminium"},
-            {"Copper", "Медь", "Mis"},
-            {"Alloy", "Сплав", "Ərinti"},
-            {"Surface", "Поверхность", "Səth"},
-
-            {"Thickness", "Толщина", "Qalınlıq"},
-            {"Length", "Длина", "Uzunluq"},
-            {"Width", "Ширина", "En"},
-            {"Height", "Высота", "Hündürlük"},
-            {"Diameter", "Диаметр", "Diametr"},
-            {"Angle", "Угол", "Bucaq"},
-            {"Weight", "Вес", "Çəki"},
-            {"Size", "Размер", "Ölçü"},
-            {"Dimension", "Размер / габарит", "Ölçü"},
-            {"Accuracy", "Точность", "Dəqiqlik"},
-
-            {"Caliper", "Штангенциркуль", "Ştangensirkul"},
-            {"Micrometer", "Микрометр", "Mikrometr"},
-            {"Ruler", "Линейка", "Xətkeş"},
-            {"Gauge", "Измерительный прибор", "Ölçü cihazı"},
-            {"Scale", "Шкала", "Şkala"},
-            {"Measure", "Измерять", "Ölçmək"},
-            {"Check Dimension", "Проверить размер", "Ölçünü yoxlamaq"},
-            {"Limit", "Предел", "Hədd"},
-            {"Minimum", "Минимум", "Minimum"},
-            {"Maximum", "Максимум", "Maksimum"},
-
-            {"Tolerance Zone", "Поле допуска", "Tolerans sahəsi"},
-            {"Drawing", "Чертёж", "Çertyoj"},
-            {"Technical Drawing", "Технический чертёж", "Texniki çertyoj"},
-            {"Specification", "Спецификация", "Spesifikasiya"},
-            {"Instruction", "Инструкция", "Təlimat"},
-            {"Manual", "Руководство", "Təlimat kitabçası"},
-            {"Document", "Документ", "Sənəd"},
-            {"Report", "Отчёт", "Hesabat"},
-            {"Record", "Запись", "Qeyd"},
-            {"Number", "Номер", "Nömrə"},
-
-            {"Part", "Деталь", "Detal"},
-            {"Component", "Компонент", "Komponent"},
-            {"Product", "Изделие", "Məhsul"},
-            {"Workpiece", "Заготовка", "Pəstah"},
-            {"Blank", "Заготовка", "Hazırlaşdırılmış detal"},
-            {"Finished Part", "Готовая деталь", "Hazır detal"},
-            {"Raw Material", "Сырьё", "Xammal"},
-            {"Batch", "Партия", "Partiya"},
-            {"Order", "Заказ", "Sifariş"},
-            {"Production Line", "Производственная линия", "İstehsal xətti"},
-
-            {"Press", "Пресс", "Pres"},
-            {"Press Tool", "Штамп", "Ştamp"},
-            {"Die", "Матрица", "Matrisa"},
-            {"Punch", "Пуансон", "Puanson"},
-            {"Mold", "Форма", "Forma"},
-            {"Stamping Press", "Штамповочный пресс", "Ştamplama presi"},
-            {"Hot Stamping", "Горячая штамповка", "İsti ştamplama"},
-            {"Cold Stamping", "Холодная штамповка", "Soyuq ştamplama"},
-            {"Heating", "Нагрев", "Qızdırma"},
-            {"Cooling", "Охлаждение", "Soyutma"},
-
-            {"Furnace", "Печь", "Soba"},
-            {"Oven", "Печь / камера нагрева", "Qızdırıcı soba"},
-            {"Burner", "Горелка", "Yandırıcı"},
-            {"Flame", "Пламя", "Alov"},
-            {"Gas", "Газ", "Qaz"},
-            {"Fuel", "Топливо", "Yanacaq"},
-            {"Heat", "Тепло", "İstilik"},
-            {"Hot", "Горячий", "İsti"},
-            {"Cold", "Холодный", "Soyuq"},
-            {"Temperature Sensor", "Датчик температуры", "Temperatur sensoru"},
-
-            {"Welding Machine", "Сварочный аппарат", "Qaynaq aparatı"},
-            {"Welder", "Сварщик", "Qaynaqçı"},
-            {"Welding Helmet", "Сварочная маска", "Qaynaq maskası"},
-            {"Electrode", "Электрод", "Elektrod"},
-            {"Welding Cable", "Сварочный кабель", "Qaynaq kabeli"},
-            {"Arc", "Дуга", "Qövs"},
-            {"Weld", "Сварной шов", "Qaynaq tikişi"},
-            {"Gas Cylinder", "Газовый баллон", "Qaz balonu"},
-            {"Grounding", "Заземление", "Torpaqlama"},
-            {"Spark", "Искра", "Qığılcım"},
-
-            {"Electrical", "Электрический", "Elektrik"},
-            {"Electronics", "Электроника", "Elektronika"},
-            {"Voltage Sensor", "Датчик напряжения", "Gərginlik sensoru"},
-            {"Magnetic Sensor", "Магнитный датчик", "Maqnit sensoru"},
-            {"Proximity Sensor", "Датчик приближения", "Yaxınlıq sensoru"},
-            {"Switch Sensor", "Датчик переключения", "Keçid sensoru"},
-            {"Signal", "Сигнал", "Siqnal"},
-            {"Input", "Вход", "Giriş"},
-            {"Output", "Выход", "Çıxış"},
-            {"Circuit", "Электрическая цепь", "Elektrik dövrəsi"},
-
-            {"Maintenance Schedule", "График обслуживания", "Texniki xidmət cədvəli"},
-            {"Lubrication", "Смазка", "Yağlama"},
-            {"Oil", "Масло", "Yağ"},
-            {"Grease", "Смазка", "Sürtkü yağı"},
-            {"Filter", "Фильтр", "Filtr"},
-            {"Cleaning", "Очистка", "Təmizləmə"},
-            {"Replacement", "Замена", "Dəyişdirmə"},
-            {"Wear", "Износ", "Aşınma"},
-            {"Broken", "Сломанный", "Sınıq"},
-            {"Fault", "Неисправность", "Nasazlıq"},
-
-            {"Troubleshooting", "Поиск неисправности", "Nasazlığın axtarışı"},
-            {"Cause", "Причина", "Səbəb"},
-            {"Solution", "Решение", "Həll"},
-            {"Problem", "Проблема", "Problem"},
-            {"Repair Work", "Ремонтные работы", "Təmir işləri"},
-            {"Technician", "Техник", "Texnik"},
-            {"Engineer", "Инженер", "Mühəndis"},
-            {"Supervisor", "Мастер / руководитель", "Nəzarətçi"},
-            {"Team", "Команда", "Komanda"},
-            {"Shift", "Смена", "Növbə"},
-
-            {"Morning Shift", "Утренняя смена", "Səhər növbəsi"},
-            {"Night Shift", "Ночная смена", "Gecə növbəsi"},
-            {"Break", "Перерыв", "Fasilə"},
-            {"Work Time", "Рабочее время", "İş vaxtı"},
-            {"Overtime", "Сверхурочная работа", "Əlavə iş"},
-            {"Experience", "Опыт", "Təcrübə"},
-            {"Training", "Обучение", "Təlim"},
-            {"Skill", "Навык", "Bacarıq"},
-            {"Certificate", "Сертификат", "Sertifikat"},
-            {"Qualification", "Квалификация", "İxtisas"},
-
-            {"Productivity", "Производительность", "Məhsuldarlıq"},
-            {"Efficiency", "Эффективность", "Səmərəlilik"},
-            {"Waste", "Отходы", "Tullantı"},
-            {"Scrap", "Брак / лом", "Zay məhsul"},
-            {"Rework", "Переделка", "Yenidən işləmə"},
-            {"Process Control", "Контроль процесса", "Prosesə nəzarət"},
-            {"Quality Check", "Проверка качества", "Keyfiyyət yoxlaması"},
-            {"Final Inspection", "Финальная проверка", "Son yoxlama"},
-            {"Approved", "Одобрено", "Təsdiqlənib"},
-            {"Rejected", "Отклонено", "Rədd edilib"}
-
-    };
-
-    /*
-     * ============================================================
-     * РАБОЧИЕ ФРАЗЫ
-     * ============================================================
-     */
+    // =========================================================
+    // 200 РАБОЧИХ ФРАЗ
+    // =========================================================
 
     private final String[][] phrases = {
 
-            {"Safety first.",
-                    "Безопасность прежде всего.",
-                    "Təhlükəsizlik hər şeydən əvvəl."},
+        {"Safety first.", "Безопасность прежде всего.", "Təhlükəsizlik hər şeydən vacibdir."},
+        {"Check the machine.", "Проверь станок.", "Dəzgahı yoxla."},
+        {"I found a defect.", "Я обнаружил дефект.", "Mən qüsur aşkar etdim."},
+        {"Please check my work.", "Пожалуйста, проверьте мою работу.", "Zəhmət olmasa, işimi yoxlayın."},
+        {"The machine stopped.", "Станок остановился.", "Dəzgah dayandı."},
+        {"I need help.", "Мне нужна помощь.", "Mənə kömək lazımdır."},
+        {"Wear your gloves.", "Надень перчатки.", "Əlcəklərini geyin."},
+        {"Check the CNC program.", "Проверь программу CNC.", "CNC proqramını yoxla."},
+        {"Stop the machine.", "Останови станок.", "Dəzgahı dayandır."},
+        {"The quality is good.", "Качество хорошее.", "Keyfiyyət yaxşıdır."},
+        {"The tool is worn.", "Инструмент изношен.", "Alət köhnəlib."},
+        {"The machine needs maintenance.", "Станку требуется обслуживание.", "Dəzgaha texniki xidmət lazımdır."},
+        {"The temperature is too high.", "Температура слишком высокая.", "Temperatur çox yüksəkdir."},
+        {"The pressure is too low.", "Давление слишком низкое.", "Təzyiq çox aşağıdır."},
+        {"Check the sensor.", "Проверь датчик.", "Sensoru yoxla."},
+        {"The sensor is not working.", "Датчик не работает.", "Sensor işləmir."},
+        {"The tool needs replacement.", "Инструмент нужно заменить.", "Aləti dəyişmək lazımdır."},
+        {"Measure the part.", "Измерь деталь.", "Detalın ölçüsünü yoxla."},
+        {"Check the drawing.", "Проверь чертёж.", "Çertyoju yoxla."},
+        {"The dimension is correct.", "Размер правильный.", "Ölçü düzgündür."},
+        {"The dimension is wrong.", "Размер неправильный.", "Ölçü səhvdir."},
+        {"There is a problem with the machine.", "Есть проблема со станком.", "Dəzgahla bağlı problem var."},
+        {"Call the technician.", "Позови техника.", "Texniki çağır."},
+        {"Call the supervisor.", "Позови мастера.", "Nəzarətçini çağır."},
+        {"The machine is ready.", "Станок готов.", "Dəzgah hazırdır."},
+        {"The material is ready.", "Материал готов.", "Material hazırdır."},
+        {"The work is finished.", "Работа закончена.", "İş bitib."},
+        {"Start the machine.", "Запусти станок.", "Dəzgahı işə sal."},
+        {"Turn off the machine.", "Выключи станок.", "Dəzgahı söndür."},
+        {"Press the emergency stop button.", "Нажми кнопку аварийной остановки.", "Təcili dayandırma düyməsinə bas."},
 
-            {"Check the machine.",
-                    "Проверь станок.",
-                    "Dəzgahı yoxla."},
+        {"Check the oil level.", "Проверь уровень масла.", "Yağ səviyyəsini yoxla."},
+        {"Check the pressure.", "Проверь давление.", "Təzyiqi yoxla."},
+        {"Check the temperature.", "Проверь температуру.", "Temperaturu yoxla."},
+        {"The motor is running.", "Двигатель работает.", "Mühərrik işləyir."},
+        {"The motor is hot.", "Двигатель горячий.", "Mühərrik istidir."},
+        {"The pump is running.", "Насос работает.", "Nasos işləyir."},
+        {"The valve is closed.", "Клапан закрыт.", "Klapan bağlıdır."},
+        {"Open the valve.", "Открой клапан.", "Klapanı aç."},
+        {"Close the valve.", "Закрой клапан.", "Klapanı bağla."},
+        {"Check the cable.", "Проверь кабель.", "Kabeli yoxla."},
 
-            {"I found a defect.",
-                    "Я нашёл дефект.",
-                    "Qüsur tapdım."},
+        {"Check the wire.", "Проверь провод.", "Teli yoxla."},
+        {"The bearing is worn.", "Подшипник изношен.", "Yastıq köhnəlib."},
+        {"The gear is damaged.", "Шестерня повреждена.", "Dişli çarx zədələnib."},
+        {"Check the shaft.", "Проверь вал.", "Valı yoxla."},
+        {"Tighten the bolt.", "Затяни болт.", "Boltu bərkid."},
+        {"Tighten the nut.", "Затяни гайку.", "Qaykanı bərkid."},
+        {"Remove the screw.", "Сними винт.", "Vinti çıxart."},
+        {"Check the washer.", "Проверь шайбу.", "Şaybanı yoxla."},
+        {"The spring is broken.", "Пружина сломана.", "Yay sınıb."},
+        {"Check the plate.", "Проверь пластину.", "Lövhəni yoxla."},
 
-            {"Please check my work.",
-                    "Пожалуйста, проверьте мою работу.",
-                    "Zəhmət olmasa işimi yoxlayın."},
+        {"Check the sheet.", "Проверь лист металла.", "Metal təbəqəni yoxla."},
+        {"The metal is hot.", "Металл горячий.", "Metal istidir."},
+        {"The steel is strong.", "Сталь прочная.", "Polad möhkəmdir."},
+        {"Check the aluminum part.", "Проверь алюминиевую деталь.", "Alüminium detalı yoxla."},
+        {"The copper wire is damaged.", "Медный провод повреждён.", "Mis tel zədələnib."},
+        {"Check the alloy.", "Проверь сплав.", "Ərintini yoxla."},
+        {"Clean the surface.", "Очисти поверхность.", "Səthi təmizlə."},
+        {"Check the thickness.", "Проверь толщину.", "Qalınlığı yoxla."},
+        {"Check the length.", "Проверь длину.", "Uzunluğu yoxla."},
+        {"Check the width.", "Проверь ширину.", "Eni yoxla."},
 
-            {"The machine stopped.",
-                    "Станок остановился.",
-                    "Dəzgah dayandı."},
+        {"Check the height.", "Проверь высоту.", "Hündürlüyü yoxla."},
+        {"Check the diameter.", "Проверь диаметр.", "Diametri yoxla."},
+        {"Check the angle.", "Проверь угол.", "Bucağı yoxla."},
+        {"Check the weight.", "Проверь вес.", "Çəkini yoxla."},
+        {"Check the size.", "Проверь размер.", "Ölçünü yoxla."},
+        {"We need high accuracy.", "Нам нужна высокая точность.", "Bizə yüksək dəqiqlik lazımdır."},
+        {"Use the caliper.", "Используй штангенциркуль.", "Ştangensirkuldan istifadə et."},
+        {"Use the micrometer.", "Используй микрометр.", "Mikrometrdən istifadə et."},
+        {"Measure it again.", "Измерь это ещё раз.", "Bir daha ölç."},
+        {"The measurement is correct.", "Измерение правильное.", "Ölçmə düzgündür."},
 
-            {"I need help.",
-                    "Мне нужна помощь.",
-                    "Mənə kömək lazımdır."},
+        {"Check the tolerance.", "Проверь допуск.", "Toleransı yoxla."},
+        {"It is within tolerance.", "Это в пределах допуска.", "Bu, tolerans daxilindədir."},
+        {"It is outside tolerance.", "Это вне допуска.", "Bu, toleransdan kənardadır."},
+        {"Check the technical drawing.", "Проверь технический чертёж.", "Texniki çertyoju yoxla."},
+        {"Read the instruction.", "Прочитай инструкцию.", "Təlimatı oxu."},
+        {"Follow the instruction.", "Следуй инструкции.", "Təlimata əməl et."},
+        {"Check the document.", "Проверь документ.", "Sənədi yoxla."},
+        {"Write a report.", "Напиши отчёт.", "Hesabat yaz."},
+        {"Record the result.", "Запиши результат.", "Nəticəni qeyd et."},
+        {"Check the part number.", "Проверь номер детали.", "Detal nömrəsini yoxla."},
 
-            {"Wear your gloves.",
-                    "Надень перчатки.",
-                    "Əlcəklərini tax."},
+        {"This part is damaged.", "Эта деталь повреждена.", "Bu detal zədələnib."},
+        {"The component is good.", "Компонент исправен.", "Komponent yaxşıdır."},
+        {"The product is ready.", "Изделие готово.", "Məhsul hazırdır."},
+        {"Check the workpiece.", "Проверь заготовку.", "Pəstahı yoxla."},
+        {"Prepare the material.", "Подготовь материал.", "Materialı hazırla."},
+        {"Check the batch.", "Проверь партию.", "Partiyanı yoxla."},
+        {"Check the order.", "Проверь заказ.", "Sifarişi yoxla."},
+        {"The production line is running.", "Производственная линия работает.", "İstehsal xətti işləyir."},
+        {"The press is ready.", "Пресс готов.", "Pres hazırdır."},
+        {"Check the press tool.", "Проверь штамп.", "Ştampı yoxla."},
 
-            {"Check the CNC program.",
-                    "Проверь программу CNC.",
-                    "CNC proqramını yoxla."},
+        {"Check the die.", "Проверь матрицу.", "Matrisanı yoxla."},
+        {"Check the punch.", "Проверь пуансон.", "Puansonu yoxla."},
+        {"The mold is clean.", "Форма чистая.", "Forma təmizdir."},
+        {"The stamping press is working.", "Штамповочный пресс работает.", "Ştamplama presi işləyir."},
+        {"Hot stamping is dangerous.", "Горячая штамповка опасна.", "İsti ştamplama təhlükəlidir."},
+        {"Cold stamping is different.", "Холодная штамповка отличается.", "Soyuq ştamplama fərqlidir."},
+        {"Check the heating system.", "Проверь систему нагрева.", "Qızdırma sistemini yoxla."},
+        {"Check the cooling system.", "Проверь систему охлаждения.", "Soyutma sistemini yoxla."},
+        {"The furnace is hot.", "Печь горячая.", "Soba istidir."},
+        {"Check the burner.", "Проверь горелку.", "Yandırıcını yoxla."},
 
-            {"Stop the machine.",
-                    "Останови станок.",
-                    "Dəzgahı dayandır."},
+        {"The flame is stable.", "Пламя стабильное.", "Alov sabitdir."},
+        {"Check the gas.", "Проверь газ.", "Qazı yoxla."},
+        {"Check the fuel.", "Проверь топливо.", "Yanacağı yoxla."},
+        {"The heat is too high.", "Жар слишком сильный.", "İstilik çox yüksəkdir."},
+        {"The part is hot.", "Деталь горячая.", "Detal istidir."},
+        {"Let the part cool.", "Дай детали остыть.", "Detalın soyumasını gözlə."},
+        {"Check the temperature sensor.", "Проверь датчик температуры.", "Temperatur sensorunu yoxla."},
+        {"Wear a welding helmet.", "Надень сварочную маску.", "Qaynaq maskasını geyin."},
+        {"Check the welding machine.", "Проверь сварочный аппарат.", "Qaynaq aparatını yoxla."},
+        {"The welder is ready.", "Сварщик готов.", "Qaynaqçı hazırdır."},
 
-            {"The quality is good.",
-                    "Качество хорошее.",
-                    "Keyfiyyət yaxşıdır."},
+        {"Check the electrode.", "Проверь электрод.", "Elektrodu yoxla."},
+        {"Check the welding cable.", "Проверь сварочный кабель.", "Qaynaq kabelini yoxla."},
+        {"The arc is stable.", "Дуга стабильная.", "Qövs sabitdir."},
+        {"Check the weld.", "Проверь сварной шов.", "Qaynaq tikişini yoxla."},
+        {"The gas cylinder is full.", "Газовый баллон полный.", "Qaz balonu doludur."},
+        {"Check the grounding.", "Проверь заземление.", "Torpaqlamanı yoxla."},
+        {"Be careful with sparks.", "Будь осторожен с искрами.", "Qığılcımlardan ehtiyatlı ol."},
+        {"Check the electrical system.", "Проверь электрическую систему.", "Elektrik sistemini yoxla."},
+        {"Check the electronics.", "Проверь электронику.", "Elektronikanı yoxla."},
+        {"Check the voltage sensor.", "Проверь датчик напряжения.", "Gərginlik sensorunu yoxla."},
 
-            {"The tool is worn.",
-                    "Инструмент изношен.",
-                    "Alət aşınıb."},
+        {"Check the magnetic sensor.", "Проверь магнитный датчик.", "Maqnit sensorunu yoxla."},
+        {"Check the proximity sensor.", "Проверь датчик приближения.", "Yaxınlıq sensorunu yoxla."},
+        {"The sensor gives a signal.", "Датчик даёт сигнал.", "Sensor siqnal verir."},
+        {"Check the input signal.", "Проверь входной сигнал.", "Giriş siqnalını yoxla."},
+        {"Check the output signal.", "Проверь выходной сигнал.", "Çıxış siqnalını yoxla."},
+        {"Check the electrical circuit.", "Проверь электрическую цепь.", "Elektrik dövrəsini yoxla."},
+        {"Follow the maintenance schedule.", "Следуй графику обслуживания.", "Texniki xidmət cədvəlinə əməl et."},
+        {"Lubricate the machine.", "Смажь станок.", "Dəzgahı yağla."},
+        {"Check the oil.", "Проверь масло.", "Yağı yoxla."},
+        {"Add grease.", "Добавь смазку.", "Sürtkü yağı əlavə et."},
 
-            {"The machine needs maintenance.",
-                    "Станку нужно обслуживание.",
-                    "Dəzgaha texniki xidmət lazımdır."},
+        {"Replace the filter.", "Замени фильтр.", "Filtri dəyiş."},
+        {"Clean the machine.", "Очисти станок.", "Dəzgahı təmizlə."},
+        {"Replace the damaged part.", "Замени повреждённую деталь.", "Zədələnmiş detalı dəyiş."},
+        {"The part is worn.", "Деталь изношена.", "Detal köhnəlib."},
+        {"The part is broken.", "Деталь сломана.", "Detal sınıb."},
+        {"Find the fault.", "Найди неисправность.", "Nasazlığı tap."},
+        {"Find the cause.", "Найди причину.", "Səbəbi tap."},
+        {"Find a solution.", "Найди решение.", "Həll tap."},
+        {"There is a problem.", "Есть проблема.", "Problem var."},
+        {"Start the repair.", "Начни ремонт.", "Təmirə başla."},
 
-            {"The temperature is too high.",
-                    "Температура слишком высокая.",
-                    "Temperatur çox yüksəkdir."},
+        {"The technician is coming.", "Техник идёт.", "Texnik gəlir."},
+        {"Call the engineer.", "Позови инженера.", "Mühəndisi çağır."},
+        {"Tell the supervisor.", "Сообщи мастеру.", "Nəzarətçiyə xəbər ver."},
+        {"Work as a team.", "Работайте командой.", "Komanda ilə işləyin."},
+        {"The shift starts at nine.", "Смена начинается в девять.", "Növbə saat doqquzda başlayır."},
+        {"The morning shift is ready.", "Утренняя смена готова.", "Səhər növbəsi hazırdır."},
+        {"The night shift is finished.", "Ночная смена закончена.", "Gecə növbəsi bitib."},
+        {"Take a short break.", "Сделай короткий перерыв.", "Qısa fasilə et."},
+        {"Work time is finished.", "Рабочее время закончено.", "İş vaxtı bitib."},
+        {"I worked overtime.", "Я работал сверхурочно.", "Mən əlavə işləmişəm."},
 
-            {"The pressure is too low.",
-                    "Давление слишком низкое.",
-                    "Təzyiq çox aşağıdır."},
+        {"I have experience.", "У меня есть опыт.", "Mənim təcrübəm var."},
+        {"I need training.", "Мне нужно обучение.", "Mənə təlim lazımdır."},
+        {"I have this skill.", "У меня есть этот навык.", "Məndə bu bacarıq var."},
+        {"I have a certificate.", "У меня есть сертификат.", "Mənim sertifikatım var."},
+        {"I have the qualification.", "У меня есть квалификация.", "Mənim ixtisasım var."},
+        {"Please repeat.", "Пожалуйста, повторите.", "Zəhmət olmasa, təkrar edin."},
+        {"Please speak slowly.", "Пожалуйста, говорите медленно.", "Zəhmət olmasa, yavaş danışın."},
+        {"I understand.", "Я понимаю.", "Mən başa düşürəm."},
+        {"I do not understand.", "Я не понимаю.", "Mən başa düşmürəm."},
+        {"Please explain.", "Пожалуйста, объясните.", "Zəhmət olmasa, izah edin."},
 
-            {"Check the sensor.",
-                    "Проверь датчик.",
-                    "Sensoru yoxla."},
+        {"What is the problem?", "В чём проблема?", "Problem nədir?"},
+        {"What should I do?", "Что мне делать?", "Mən nə etməliyəm?"},
+        {"Is the machine safe?", "Станок безопасен?", "Dəzgah təhlükəsizdir?"},
+        {"Can I start the machine?", "Я могу запустить станок?", "Dəzgahı işə sala bilərəm?"},
+        {"Can I stop the machine?", "Я могу остановить станок?", "Dəzgahı dayandıra bilərəm?"},
+        {"Is the material ready?", "Материал готов?", "Material hazırdır?"},
+        {"Is the drawing correct?", "Чертёж правильный?", "Çertyoj düzgündür?"},
+        {"Is this dimension correct?", "Этот размер правильный?", "Bu ölçü düzgündür?"},
+        {"Where is the tool?", "Где инструмент?", "Alət haradadır?"},
+        {"Where is the supervisor?", "Где мастер?", "Nəzarətçi haradadır?"},
 
-            {"The sensor is not working.",
-                    "Датчик не работает.",
-                    "Sensor işləmir."},
+        {"Be careful.", "Будь осторожен.", "Ehtiyatlı ol."},
+        {"Do not touch the machine.", "Не трогай станок.", "Dəzgaha toxunma."},
+        {"Do not remove the guard.", "Не снимай защиту.", "Qoruyucunu çıxarma."},
+        {"Keep the workplace clean.", "Держи рабочее место чистым.", "İş yerini təmiz saxla."},
+        {"Keep the tools organized.", "Держи инструменты в порядке.", "Alətləri qaydasında saxla."},
+        {"Wear your safety glasses.", "Носи защитные очки.", "Qoruyucu eynək tax."},
+        {"Wear your safety shoes.", "Носи защитную обувь.", "Qoruyucu ayaqqabı geyin."},
+        {"Use hearing protection.", "Используй защиту слуха.", "Qulaq qoruyucusundan istifadə et."},
+        {"Follow the safety rules.", "Соблюдай правила безопасности.", "Təhlükəsizlik qaydalarına əməl et."},
+        {"Report the accident.", "Сообщи о несчастном случае.", "Qəza barədə məlumat ver."},
 
-            {"The tool needs replacement.",
-                    "Инструмент нужно заменить.",
-                    "Aləti dəyişmək lazımdır."},
+        {"Press the alarm button.", "Нажми кнопку тревоги.", "Həyəcan düyməsinə bas."},
+        {"Go to the exit.", "Иди к выходу.", "Çıxışa get."},
+        {"Use the emergency exit.", "Используй аварийный выход.", "Təcili çıxışdan istifadə et."},
+        {"Start the evacuation.", "Начни эвакуацию.", "Təxliyəyə başla."},
+        {"Do not run.", "Не беги.", "Qaçma."},
+        {"Stay calm.", "Сохраняй спокойствие.", "Sakit qal."},
+        {"Call first aid.", "Вызови первую помощь.", "İlk yardımı çağır."},
+        {"There is a fire.", "Есть пожар.", "Yanğın var."},
+        {"Use the fire extinguisher.", "Используй огнетушитель.", "Yanğınsöndürəndən istifadə et."},
+        {"Move away from the fire.", "Отойди от огня.", "Yanğından uzaqlaş."},
 
-            {"Measure the part.",
-                    "Измерь деталь.",
-                    "Detalın ölçüsünü yoxla."},
+        {"Check the production plan.", "Проверь план производства.", "İstehsal planını yoxla."},
+        {"The production is on time.", "Производство идёт по плану.", "İstehsal plana uyğun gedir."},
+        {"We need more material.", "Нам нужно больше материала.", "Bizə daha çox material lazımdır."},
+        {"We need another tool.", "Нам нужен другой инструмент.", "Bizə başqa alət lazımdır."},
+        {"The machine is too slow.", "Станок работает слишком медленно.", "Dəzgah çox yavaş işləyir."},
+        {"The machine is too fast.", "Станок работает слишком быстро.", "Dəzgah çox sürətli işləyir."},
+        {"Reduce the speed.", "Уменьши скорость.", "Sürəti azalt."},
+        {"Increase the speed.", "Увеличь скорость.", "Sürəti artır."},
+        {"Reduce the pressure.", "Уменьши давление.", "Təzyiqi azalt."},
+        {"Increase the pressure.", "Увеличь давление.", "Təzyiqi artır."},
 
-            {"Check the drawing.",
-                    "Проверь чертёж.",
-                    "Çertyoju yoxla."},
+        {"The process is stable.", "Процесс стабильный.", "Proses sabitdir."},
+        {"The process has changed.", "Процесс изменился.", "Proses dəyişib."},
+        {"Check the process control.", "Проверь контроль процесса.", "Proses nəzarətini yoxla."},
+        {"Perform a quality check.", "Проведи проверку качества.", "Keyfiyyət yoxlaması apar."},
+        {"Perform the final inspection.", "Проведи финальную проверку.", "Son yoxlamanı apar."},
+        {"The part is approved.", "Деталь одобрена.", "Detal təsdiqlənib."},
+        {"The part is rejected.", "Деталь забракована.", "Detal rədd edilib."},
+        {"Separate the defective parts.", "Отдели дефектные детали.", "Qüsurlu detalları ayır."},
+        {"Do the work again.", "Переделай работу.", "İşi yenidən gör."},
+        {"Reduce waste.", "Уменьши отходы.", "Tullantıları azalt."},
 
-            {"The dimension is correct.",
-                    "Размер правильный.",
-                    "Ölçü düzgündür."},
-
-            {"The dimension is wrong.",
-                    "Размер неправильный.",
-                    "Ölçü yanlışdır."},
-
-            {"There is a problem with the machine.",
-                    "Есть проблема со станком.",
-                    "Dəzgahda problem var."},
-
-            {"Call the technician.",
-                    "Позови техника.",
-                    "Texniki işçini çağır."},
-
-            {"Call the supervisor.",
-                    "Позови мастера.",
-                    "Nəzarətçini çağır."},
-
-            {"The machine is ready.",
-                    "Станок готов.",
-                    "Dəzgah hazırdır."},
-
-            {"The material is ready.",
-                    "Материал готов.",
-                    "Material hazırdır."},
-
-            {"The work is finished.",
-                    "Работа закончена.",
-                    "İş bitib."},
-
-            {"Start the machine.",
-                    "Запусти станок.",
-                    "Dəzgahı işə sal."},
-
-            {"Turn off the machine.",
-                    "Выключи станок.",
-                    "Dəzgahı söndür."},
-
-            {"Press the emergency stop button.",
-                    "Нажми кнопку аварийной остановки.",
-                    "Təcili dayandırma düyməsinə bas."}
+        {"Check the scrap.", "Проверь брак.", "Zay məhsulu yoxla."},
+        {"Improve productivity.", "Повышай производительность.", "Məhsuldarlığı artır."},
+        {"Improve efficiency.", "Повышай эффективность.", "Səmərəliliyi artır."},
+        {"The work is complete.", "Работа выполнена.", "İş tamamlanıb."},
+        {"Everything is ready.", "Всё готово.", "Hər şey hazırdır."},
+        {"The machine is safe.", "Станок безопасен.", "Dəzgah təhlükəsizdir."},
+        {"The machine is not safe.", "Станок небезопасен.", "Dəzgah təhlükəsiz deyil."},
+        {"Do not start the machine.", "Не запускай станок.", "Dəzgahı işə salma."},
+        {"Wait for the technician.", "Подожди техника.", "Texniki gözlə."},
+        {"Wait for the supervisor.", "Подожди мастера.", "Nəzarətçini gözlə."}
     };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        String savedLanguage =
-                getIntent().getStringExtra("LANGUAGE");
+        language = getIntent().getStringExtra("LANGUAGE");
+        if (language == null) language = "RU";
 
-        if (savedLanguage != null) {
-            language = savedLanguage;
-        }
+        prefs = getSharedPreferences(
+                "WORKER_PRO_LESSON_PROGRESS",
+                Context.MODE_PRIVATE
+        );
 
         loadProgress();
-        createScreen();
+        buildScreen();
 
-        tts = new TextToSpeech(
-                this,
-                new TextToSpeech.OnInitListener() {
-                    @Override
-                    public void onInit(int status) {
-
-                        if (status == TextToSpeech.SUCCESS) {
-                            tts.setLanguage(Locale.US);
-                        }
-                    }
-                }
-        );
+        tts = new TextToSpeech(this, status -> {
+            if (status == TextToSpeech.SUCCESS) {
+                tts.setLanguage(Locale.US);
+            }
+        });
     }
 
-    private void createScreen() {
+    private void buildScreen() {
 
-        ScrollView scrollView =
-                new ScrollView(this);
+        ScrollView scrollView = new ScrollView(this);
 
-        LinearLayout root =
-                new LinearLayout(this);
+        container = new LinearLayout(this);
+        container.setOrientation(LinearLayout.VERTICAL);
+        container.setPadding(24, 24, 24, 40);
 
-        root.setOrientation(
-                LinearLayout.VERTICAL
+        scrollView.addView(container);
+        setContentView(scrollView);
+
+        int day = getDay();
+
+        TextView title = new TextView(this);
+        title.setText("📚 " + getTitle());
+        title.setTextSize(27);
+        title.setTypeface(null, Typeface.BOLD);
+        title.setGravity(Gravity.CENTER);
+        title.setPadding(0, 10, 0, 20);
+        container.addView(title);
+
+        TextView dayText = new TextView(this);
+        dayText.setText(getDayText(day));
+        dayText.setTextSize(20);
+        dayText.setTypeface(null, Typeface.BOLD);
+        dayText.setGravity(Gravity.CENTER);
+        container.addView(dayText);
+
+        TextView streakText = new TextView(this);
+        streakText.setText(
+                "🔥 " + getStreakText() +
+                ": " + streak +
+                "   🏆 " + bestStreak
         );
+        streakText.setTextSize(17);
+        streakText.setGravity(Gravity.CENTER);
+        streakText.setPadding(0, 12, 0, 12);
+        container.addView(streakText);
 
-        root.setPadding(
-                20, 20, 20, 20
+        TextView progressText = new TextView(this);
+        progressText.setText(
+                "⭐ " + learnedToday + " / 5"
         );
+        progressText.setTextSize(19);
+        progressText.setTypeface(null, Typeface.BOLD);
+        progressText.setGravity(Gravity.CENTER);
+        container.addView(progressText);
 
-        root.setBackgroundColor(
-                Color.WHITE
-        );
-
-        // TITLE
-
-        TextView title =
-                new TextView(this);
-
-        title.setText(
-                "📚 " + getTitleText()
-        );
-
-        title.setTextSize(28);
-
-        title.setTypeface(
-                null,
-                Typeface.BOLD
-        );
-
-        title.setTextColor(
-                Color.rgb(0, 130, 70)
-        );
-
-        title.setGravity(
-                Gravity.CENTER
-        );
-
-        title.setPadding(
-                0, 10, 0, 20
-        );
-
-        root.addView(title);
-
-        // DAY
-
-        Calendar calendar =
-                Calendar.getInstance();
-
-        int day =
-                calendar.get(Calendar.DAY_OF_YEAR);
-
-        TextView dayText =
-                new TextView(this);
-
-        dayText.setText(
-                getDayText() +
-                        " #" +
-                        day +
-                        "\n📚 " +
-                        getCourseText()
-        );
-
-        dayText.setTextSize(18);
-
-        dayText.setGravity(
-                Gravity.CENTER
-        );
-
-        dayText.setTextColor(
-                Color.DKGRAY
-        );
-
-        dayText.setPadding(
-                0, 0, 0, 15
-        );
-
-        root.addView(dayText);
-
-        // STREAK
-
-        streakText =
-                new TextView(this);
-
-        streakText.setTextSize(20);
-
-        streakText.setTypeface(
-                null,
-                Typeface.BOLD
-        );
-
-        streakText.setGravity(
-                Gravity.CENTER
-        );
-
-        streakText.setTextColor(
-                Color.rgb(220, 120, 0)
-        );
-
-        streakText.setPadding(
-                0, 5, 0, 8
-        );
-
-        root.addView(streakText);
-
-        updateStreak();
-
-        // PROGRESS
-
-        progressText =
-                new TextView(this);
-
-        progressText.setTextSize(20);
-
-        progressText.setTypeface(
-                null,
-                Typeface.BOLD
-        );
-
-        progressText.setGravity(
-                Gravity.CENTER
-        );
-
-        progressText.setTextColor(
-                Color.rgb(0, 120, 60)
-        );
-
-        progressText.setPadding(
-                0, 5, 0, 20
-        );
-
-        root.addView(progressText);
-
-        updateProgress();
-
-        // WORDS TITLE
-
-        TextView wordsTitle =
-                new TextView(this);
-
-        wordsTitle.setText(
-                "📖 " +
-                        getWordsTitle()
-        );
-
-        wordsTitle.setTextSize(23);
-
-        wordsTitle.setTypeface(
-                null,
-                Typeface.BOLD
-        );
-
-        wordsTitle.setTextColor(
-                Color.rgb(0, 120, 60)
-        );
-
-        wordsTitle.setPadding(
-                0, 10, 0, 15
-        );
-
-        root.addView(wordsTitle);
-
-        /*
-         * 5 СЛОВ В ДЕНЬ
-         */
-
-        int startWord =
-                (day * 5) % words.length;
+        int startWord = (day * 5) % phrases.length;
 
         for (int i = 0; i < 5; i++) {
 
-            int index =
-                    (startWord + i)
-                            % words.length;
+            int index = (startWord + i) % phrases.length;
 
-            addWordCard(
-                    root,
-                    words[index]
+            addPhrase(
+                    index,
+                    i + 1,
+                    progressText
             );
         }
 
-        // PHRASES TITLE
-
-        TextView phrasesTitle =
-                new TextView(this);
-
-        phrasesTitle.setText(
-                "💬 " +
-                        getPhrasesTitle()
-        );
-
-        phrasesTitle.setTextSize(23);
-
-        phrasesTitle.setTypeface(
-                null,
-                Typeface.BOLD
-        );
-
-        phrasesTitle.setTextColor(
-                Color.rgb(0, 120, 60)
-        );
-
-        phrasesTitle.setPadding(
-                0, 25, 0, 15
-        );
-
-        root.addView(phrasesTitle);
-
-        /*
-         * 3 ФРАЗЫ В ДЕНЬ
-         */
-
-        int startPhrase =
-                (day * 3) % phrases.length;
-
-        for (int i = 0; i < 3; i++) {
-
-            int index =
-                    (startPhrase + i)
-                            % phrases.length;
-
-            addPhraseCard(
-                    root,
-                    phrases[index]
-            );
-        }
-
-        // FOOTER
-
-        TextView footer =
-                new TextView(this);
-
-        footer.setText(
-                "\nF.S"
-        );
-
+        TextView footer = new TextView(this);
+        footer.setText("\nF.S");
         footer.setTextSize(15);
-
-        footer.setGravity(
-                Gravity.CENTER
-        );
-
-        footer.setTextColor(
-                Color.GRAY
-        );
-
-        footer.setPadding(
-                0, 20, 0, 10
-        );
-
-        root.addView(footer);
-
-        scrollView.addView(root);
-
-        setContentView(scrollView);
+        footer.setGravity(Gravity.CENTER);
+        footer.setTextColor(Color.GRAY);
+        container.addView(footer);
     }
 
-    private void addWordCard(
-            LinearLayout root,
-            String[] word) {
+    private void addPhrase(
+            int index,
+            int number,
+            TextView progressText
+    ) {
 
-        LinearLayout card =
-                new LinearLayout(this);
+        LinearLayout box = new LinearLayout(this);
+        box.setOrientation(LinearLayout.VERTICAL);
+        box.setPadding(20, 18, 20, 18);
 
-        card.setOrientation(
-                LinearLayout.VERTICAL
+        TextView numberText = new TextView(this);
+        numberText.setText("💬 " + number);
+        numberText.setTextSize(16);
+        numberText.setTypeface(null, Typeface.BOLD);
+
+        TextView english = new TextView(this);
+        english.setText("🇬🇧 " + phrases[index][0]);
+        english.setTextSize(21);
+        english.setTypeface(null, Typeface.BOLD);
+        english.setPadding(0, 10, 0, 8);
+
+        TextView russian = new TextView(this);
+        russian.setText("🇷🇺 " + phrases[index][1]);
+        russian.setTextSize(17);
+        russian.setPadding(0, 4, 0, 4);
+
+        TextView azeri = new TextView(this);
+        azeri.setText("🇦🇿 " + phrases[index][2]);
+        azeri.setTextSize(17);
+        azeri.setPadding(0, 4, 0, 12);
+
+        Button speakButton = new Button(this);
+        speakButton.setText("🔊 " + getSpeakText());
+
+        speakButton.setOnClickListener(v ->
+                speak(phrases[index][0])
         );
 
-        card.setPadding(
-                20, 15, 20, 15
-        );
+        Button learnedButton = new Button(this);
+        learnedButton.setText("⭐ " + getLearnText());
 
-        GradientDrawable background =
-                new GradientDrawable();
+        String key = "phrase_" + index + "_day_" + getDay();
 
-        background.setColor(
-                Color.rgb(
-                        242, 248, 244
-                )
-        );
-
-        background.setCornerRadius(
-                18
-        );
-
-        background.setStroke(
-                2,
-                Color.rgb(
-                        0, 130, 70
-                )
-        );
-
-        card.setBackground(background);
-
-        TextView english =
-                new TextView(this);
-
-        english.setText(
-                "🇬🇧 " +
-                        word[0]
-        );
-
-        english.setTextSize(22);
-
-        english.setTypeface(
-                null,
-                Typeface.BOLD
-        );
-
-        english.setTextColor(
-                Color.BLACK
-        );
-
-        card.addView(english);
-
-        TextView translation =
-                new TextView(this);
-
-        if (language.equals("AZ")) {
-
-            translation.setText(
-                    "🇦🇿 " +
-                            word[2]
-            );
-
-        } else if (language.equals("EN")) {
-
-            translation.setText(
-                    "🇷🇺 " +
-                            word[1] +
-                            "\n🇦🇿 " +
-                            word[2]
-            );
-
-        } else {
-
-            translation.setText(
-                    "🇷🇺 " +
-                            word[1] +
-                            "\n🇦🇿 " +
-                            word[2]
-            );
+        if (prefs.getBoolean(key, false)) {
+            learnedButton.setEnabled(false);
+            learnedButton.setText("✅ " + getLearnedText());
         }
 
-        translation.setTextSize(18);
+        learnedButton.setOnClickListener(v -> {
 
-        translation.setTextColor(
-                Color.DKGRAY
-        );
+            if (!prefs.getBoolean(key, false)) {
 
-        translation.setPadding(
-                0, 8, 0, 8
-        );
+                prefs.edit()
+                        .putBoolean(key, true)
+                        .apply();
 
-        card.addView(translation);
+                learnedToday++;
 
-        // LISTEN
+                learnedWords++;
 
-        Button listen =
-                new Button(this);
-
-        listen.setText(
-                "🔊 " +
-                        getListenText()
-        );
-
-        listen.setOnClickListener(
-                v -> speak(word[0])
-        );
-
-        card.addView(listen);
-
-        // LEARNED
-
-        Button learned =
-                new Button(this);
-
-        boolean isLearned =
-                learnedWords.contains(
-                        wordKey(word)
+                progressText.setText(
+                        "⭐ " + learnedToday + " / 5"
                 );
 
-        if (isLearned) {
+                learnedButton.setEnabled(false);
+                learnedButton.setText(
+                        "✅ " + getLearnedText()
+                );
 
-            learned.setText(
-                    "✅ " +
-                            getLearnedText()
-            );
-
-        } else {
-
-            learned.setText(
-                    "⭐ " +
-                            getLearnText()
-            );
-        }
-
-        learned.setOnClickListener(
-                v -> {
-
-                    String key =
-                            wordKey(word);
-
-                    if (!learnedWords.contains(key)) {
-
-                        learnedWords.add(key);
-
-                        learnedToday++;
-
-                        if (learnedToday > 5) {
-                            learnedToday = 5;
-                        }
-
-                        saveProgress();
-
-                        learned.setText(
-                                "✅ " +
-                                        getLearnedText()
-                        );
-
-                        updateProgress();
-
-                        if (learnedToday == 5) {
-                            completeToday();
-                        }
-                    }
+                if (learnedToday >= 5) {
+                    completeToday();
                 }
-        );
+            }
+        });
 
-        card.addView(learned);
+        box.addView(numberText);
+        box.addView(english);
+        box.addView(russian);
+        box.addView(azeri);
+        box.addView(speakButton);
+        box.addView(learnedButton);
 
-        LinearLayout.LayoutParams params =
+        container.addView(box);
+
+        View line = new View(this);
+        line.setBackgroundColor(Color.LTGRAY);
+
+        LinearLayout.LayoutParams lineParams =
                 new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.MATCH_PARENT,
-                        LinearLayout.LayoutParams.WRAP_CONTENT
+                        -1,
+                        2
                 );
 
-        params.setMargins(
-                0, 0, 0, 12
-        );
+        lineParams.setMargins(0, 18, 0, 18);
 
-        root.addView(
-                card,
-                params
-        );
+        container.addView(line, lineParams);
     }
 
-    private void addPhraseCard(
-            LinearLayout root,
-            String[] phrase) {
+    private void speak(String text) {
 
-        LinearLayout card =
-                new LinearLayout(this);
+        if (tts != null) {
+            tts.speak(
+                    text,
+                    TextToSpeech.QUEUE_FLUSH,
+                    null,
+                    "worker_phrase"
+            );
+        }
+    }
 
-        card.setOrientation(
-                LinearLayout.VERTICAL
-        );
+    private int getDay() {
 
-        card.setPadding(
-                20, 15, 20, 15
-        );
+        Calendar calendar = Calendar.getInstance();
 
-        GradientDrawable background =
-                new GradientDrawable();
+        int dayOfYear =
+                calendar.get(Calendar.DAY_OF_YEAR);
 
-        background.setColor(
-                Color.rgb(
-                        248, 250, 248
-                )
-        );
+        return dayOfYear % 40;
+    }
 
-        background.setCornerRadius(
-                18
-        );
+    private void loadProgress() {
 
-        background.setStroke(
-                2,
-                Color.rgb(
-                        0, 130, 70
-                )
-        );
+        int savedDay =
+                prefs.getInt("LAST_DAY", -1);
 
-        card.setBackground(background);
+        int today = getDay();
 
-        TextView text =
-                new TextView(this);
+        if (savedDay == today) {
 
-        text.setText(
-                "🇬🇧 " +
-                        phrase[0] +
-                        "\n\n🇷🇺 " +
-                        phrase[1] +
-                        "\n🇦🇿 " +
-                        phrase[2]
-        );
+            learnedToday =
+                    prefs.getInt("LEARNED_TODAY", 0);
 
-        text.setTextSize(18);
+        } else {
 
-        text.setTextColor(
-                Color.BLACK
-        );
+            learnedToday = 0;
+        }
 
-        card.addView(text);
+        streak =
+                prefs.getInt("STREAK", 0);
 
-        Button listen =
-                new Button(this);
+        bestStreak =
+                prefs.getInt("BEST_STREAK", 0);
 
-        listen.setText(
-                "🔊 " +
-                        getListenText()
-        );
-
-        listen.setOnClickListener(
-                v -> speak(phrase[0])
-        );
-
-        card.addView(listen);
-
-        LinearLayout.LayoutParams params =
-                new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.MATCH_PARENT,
-                        LinearLayout.LayoutParams.WRAP_CONTENT
-                );
-
-        params.setMargins(
-                0, 0, 0, 12
-        );
-
-        root.addView(
-                card,
-                params
-        );
+        learnedWords =
+                prefs.getInt("LEARNED_WORDS", 0);
     }
 
     private void completeToday() {
 
-        Calendar calendar =
-                Calendar.getInstance();
+        int savedDay =
+                prefs.getInt("LAST_DAY", -1);
 
-        int today =
-                calendar.get(Calendar.DAY_OF_YEAR);
+        int today = getDay();
 
-        android.content.SharedPreferences prefs =
-                getSharedPreferences(
-                        "WORKER_PRO_LESSON_PROGRESS",
-                        MODE_PRIVATE
-                );
-
-        int completedDay =
-                prefs.getInt(
-                        "completedDay",
-                        -1
-                );
-
-        if (completedDay != today) {
+        if (savedDay != today) {
 
             streak++;
 
@@ -1002,432 +525,173 @@ public class LessonOfDayActivity extends Activity {
             }
 
             prefs.edit()
-                    .putInt(
-                            "completedDay",
-                            today
-                    )
-                    .putInt(
-                            "streak",
-                            streak
-                    )
-                    .putInt(
-                            "bestStreak",
-                            bestStreak
-                    )
+                    .putInt("LAST_DAY", today)
+                    .putInt("STREAK", streak)
+                    .putInt("BEST_STREAK", bestStreak)
+                    .putInt("LEARNED_WORDS", learnedWords)
+                    .putInt("LEARNED_TODAY", learnedToday)
                     .apply();
 
-            updateStreak();
-        }
-    }
-
-    private void loadProgress() {
-
-        android.content.SharedPreferences prefs =
-                getSharedPreferences(
-                        "WORKER_PRO_LESSON_PROGRESS",
-                        MODE_PRIVATE
-                );
-
-        Calendar calendar =
-                Calendar.getInstance();
-
-        int today =
-                calendar.get(
-                        Calendar.DAY_OF_YEAR
-                );
-
-        int savedDay =
-                prefs.getInt(
-                        "day",
-                        -1
-                );
-
-        streak =
-                prefs.getInt(
-                        "streak",
-                        0
-                );
-
-        bestStreak =
-                prefs.getInt(
-                        "bestStreak",
-                        0
-                );
-
-        if (savedDay == today) {
-
-            learnedToday =
-                    prefs.getInt(
-                            "learnedToday",
-                            0
-                    );
-
-            String savedWords =
-                    prefs.getString(
-                            "learnedWords",
-                            ""
-                    );
-
-            if (!savedWords.isEmpty()) {
-
-                String[] list =
-                        savedWords.split("\\|");
-
-                for (String item : list) {
-
-                    if (!item.isEmpty()) {
-                        learnedWords.add(item);
-                    }
-                }
-            }
+            Toast.makeText(
+                    this,
+                    "🎉 " + getCompleteText(),
+                    Toast.LENGTH_LONG
+            ).show();
 
         } else {
 
-            learnedToday = 0;
-
-            learnedWords.clear();
-
             prefs.edit()
-                    .putInt(
-                            "day",
-                            today
-                    )
-                    .putInt(
-                            "learnedToday",
-                            0
-                    )
-                    .putString(
-                            "learnedWords",
-                            ""
-                    )
+                    .putInt("LEARNED_WORDS", learnedWords)
+                    .putInt("LEARNED_TODAY", learnedToday)
                     .apply();
         }
     }
 
-    private void saveProgress() {
+    private String getTitle() {
 
-        StringBuilder builder =
-                new StringBuilder();
+        switch (language) {
 
-        for (String word :
-                learnedWords) {
+            case "AZ":
+                return "Günün dərsi";
 
-            builder.append(word)
-                    .append("|");
-        }
+            case "EN":
+                return "Lesson of the Day";
 
-        Calendar calendar =
-                Calendar.getInstance();
+            case "TR":
+                return "Günün dersi";
 
-        int today =
-                calendar.get(
-                        Calendar.DAY_OF_YEAR
-                );
+            case "DE":
+                return "Lektion des Tages";
 
-        getSharedPreferences(
-                "WORKER_PRO_LESSON_PROGRESS",
-                MODE_PRIVATE
-        )
-                .edit()
-                .putInt(
-                        "day",
-                        today
-                )
-                .putInt(
-                        "learnedToday",
-                        learnedToday
-                )
-                .putString(
-                        "learnedWords",
-                        builder.toString()
-                )
-                .apply();
-    }
-
-    private void updateProgress() {
-
-        if (progressText != null) {
-
-            progressText.setText(
-                    "📊 " +
-                            getProgressText() +
-                            ": " +
-                            learnedToday +
-                            " / 5"
-            );
+            default:
+                return "Урок дня";
         }
     }
 
-    private void updateStreak() {
+    private String getDayText(int day) {
 
-        if (streakText != null) {
+        switch (language) {
 
-            streakText.setText(
-                    "🔥 " +
-                            getStreakText() +
-                            ": " +
-                            streak +
-                            "\n🏆 " +
-                            getBestText() +
-                            ": " +
-                            bestStreak
-            );
+            case "AZ":
+                return "Gün " + (day + 1);
+
+            case "EN":
+                return "Day " + (day + 1);
+
+            case "TR":
+                return "Gün " + (day + 1);
+
+            case "DE":
+                return "Tag " + (day + 1);
+
+            default:
+                return "День " + (day + 1);
         }
-    }
-
-    private String wordKey(
-            String[] word) {
-
-        return word[0];
-    }
-
-    private void speak(
-            String text) {
-
-        if (tts != null) {
-
-            tts.setLanguage(
-                    Locale.US
-            );
-
-            tts.speak(
-                    text,
-                    TextToSpeech.QUEUE_FLUSH,
-                    null,
-                    "worker_pro_lesson"
-            );
-        }
-    }
-
-    private String getTitleText() {
-
-        if (language.equals("AZ")) {
-            return "Günün dərsi";
-        }
-
-        if (language.equals("EN")) {
-            return "Lesson of the Day";
-        }
-
-        if (language.equals("TR")) {
-            return "Günün Dersi";
-        }
-
-        if (language.equals("DE")) {
-            return "Lektion des Tages";
-        }
-
-        return "Урок дня";
-    }
-
-    private String getDayText() {
-
-        if (language.equals("AZ")) {
-            return "Gündəlik dərs";
-        }
-
-        if (language.equals("EN")) {
-            return "Daily lesson";
-        }
-
-        if (language.equals("TR")) {
-            return "Gündəlik dərs";
-        }
-
-        if (language.equals("DE")) {
-            return "Tägliche Lektion";
-        }
-
-        return "Ежедневный урок";
-    }
-
-    private String getCourseText() {
-
-        if (language.equals("AZ")) {
-            return "200 peşəkar söz";
-        }
-
-        if (language.equals("EN")) {
-            return "200 professional words";
-        }
-
-        if (language.equals("TR")) {
-            return "200 profesyonel kelime";
-        }
-
-        if (language.equals("DE")) {
-            return "200 Fachwörter";
-        }
-
-        return "200 профессиональных слов";
-    }
-
-    private String getWordsTitle() {
-
-        if (language.equals("AZ")) {
-            return "5 yeni söz";
-        }
-
-        if (language.equals("EN")) {
-            return "5 New Words";
-        }
-
-        if (language.equals("TR")) {
-            return "5 Yeni Kelime";
-        }
-
-        if (language.equals("DE")) {
-            return "5 neue Wörter";
-        }
-
-        return "5 новых слов";
-    }
-
-    private String getPhrasesTitle() {
-
-        if (language.equals("AZ")) {
-            return "3 işçi ifadəsi";
-        }
-
-        if (language.equals("EN")) {
-            return "3 Worker Phrases";
-        }
-
-        if (language.equals("TR")) {
-            return "3 İşçi İfadesi";
-        }
-
-        if (language.equals("DE")) {
-            return "3 Arbeitsphrasen";
-        }
-
-        return "3 рабочие фразы";
-    }
-
-    private String getListenText() {
-
-        if (language.equals("AZ")) {
-            return "Dinlə";
-        }
-
-        if (language.equals("EN")) {
-            return "Listen";
-        }
-
-        if (language.equals("TR")) {
-            return "Dinle";
-        }
-
-        if (language.equals("DE")) {
-            return "Anhören";
-        }
-
-        return "Послушать";
-    }
-
-    private String getLearnText() {
-
-        if (language.equals("AZ")) {
-            return "Öyrəndim";
-        }
-
-        if (language.equals("EN")) {
-            return "I learned it";
-        }
-
-        if (language.equals("TR")) {
-            return "Öğrendim";
-        }
-
-        if (language.equals("DE")) {
-            return "Gelernt";
-        }
-
-        return "Я выучил";
-    }
-
-    private String getLearnedText() {
-
-        if (language.equals("AZ")) {
-            return "Öyrənildi";
-        }
-
-        if (language.equals("EN")) {
-            return "Learned";
-        }
-
-        if (language.equals("TR")) {
-            return "Öyrənildi";
-        }
-
-        if (language.equals("DE")) {
-            return "Gelernt";
-        }
-
-        return "Выучено";
-    }
-
-    private String getProgressText() {
-
-        if (language.equals("AZ")) {
-            return "Bugünkü irəliləyiş";
-        }
-
-        if (language.equals("EN")) {
-            return "Today's progress";
-        }
-
-        if (language.equals("TR")) {
-            return "Bugünkü ilerleme";
-        }
-
-        if (language.equals("DE")) {
-            return "Fortschritt heute";
-        }
-
-        return "Прогресс сегодня";
     }
 
     private String getStreakText() {
 
-        if (language.equals("AZ")) {
-            return "Ardıcıl günlər";
-        }
+        switch (language) {
 
-        if (language.equals("EN")) {
-            return "Day streak";
-        }
+            case "AZ":
+                return "Ardıcıl günlər";
 
-        if (language.equals("TR")) {
-            return "Ardışık günler";
-        }
+            case "EN":
+                return "Streak";
 
-        if (language.equals("DE")) {
-            return "Tagesserie";
-        }
+            case "TR":
+                return "Ardıcıl günlər";
 
-        return "Дней подряд";
+            case "DE":
+                return "Serie";
+
+            default:
+                return "Серия дней";
+        }
     }
 
-    private String getBestText() {
+    private String getSpeakText() {
 
-        if (language.equals("AZ")) {
-            return "Ən yaxşı nəticə";
+        switch (language) {
+
+            case "AZ":
+                return "Dinlə";
+
+            case "EN":
+                return "Listen";
+
+            case "TR":
+                return "Dinle";
+
+            case "DE":
+                return "Anhören";
+
+            default:
+                return "Слушать";
         }
+    }
 
-        if (language.equals("EN")) {
-            return "Best streak";
+    private String getLearnText() {
+
+        switch (language) {
+
+            case "AZ":
+                return "Öyrəndim";
+
+            case "EN":
+                return "I learned it";
+
+            case "TR":
+                return "Öğrendim";
+
+            case "DE":
+                return "Gelernt";
+
+            default:
+                return "Я выучил";
         }
+    }
 
-        if (language.equals("TR")) {
-            return "Ən yaxşı nəticə";
+    private String getLearnedText() {
+
+        switch (language) {
+
+            case "AZ":
+                return "Öyrənildi";
+
+            case "EN":
+                return "Learned";
+
+            case "TR":
+                return "Öyrənildi";
+
+            case "DE":
+                return "Gelernt";
+
+            default:
+                return "Выучено";
         }
+    }
 
-        if (language.equals("DE")) {
-            return "Beste Serie";
+    private String getCompleteText() {
+
+        switch (language) {
+
+            case "AZ":
+                return "Bugünkü dərs tamamlandı!";
+
+            case "EN":
+                return "Today's lesson is complete!";
+
+            case "TR":
+                return "Bugünkü ders tamamlandı!";
+
+            case "DE":
+                return "Die heutige Lektion ist abgeschlossen!";
+
+            default:
+                return "Урок на сегодня завершён!";
         }
-
-        return "Лучший результат";
     }
 
     @Override
