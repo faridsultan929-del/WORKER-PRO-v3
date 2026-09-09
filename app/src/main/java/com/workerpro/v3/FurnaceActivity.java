@@ -128,6 +128,14 @@ public class FurnaceActivity extends Activity {
             return "Furnaces & Heating";
         }
 
+        if (language.equals("TR")) {
+            return "Fırınlar ve Isıtma";
+        }
+
+        if (language.equals("DE")) {
+            return "Öfen und Erwärmung";
+        }
+
         return "Печи и нагрев";
     }
 
@@ -157,6 +165,32 @@ public class FurnaceActivity extends Activity {
                     "📋 Process Control",
                     "⚠️ Main Hazards",
                     "🦺 Safety Rules"
+            };
+
+        } else if (language.equals("TR")) {
+
+            return new String[]{
+                    "🔥 İndüksiyon Fırınları",
+                    "🌡️ Metal Isıtma",
+                    "🌡️ Sıcaklık Kontrolü",
+                    "⚙️ Fırın Yapısı",
+                    "🔩 Malzeme Hazırlama",
+                    "📋 Proses Kontrolü",
+                    "⚠️ Başlıca Tehlikeler",
+                    "🦺 Güvenlik Kuralları"
+            };
+
+        } else if (language.equals("DE")) {
+
+            return new String[]{
+                    "🔥 Induktionsöfen",
+                    "🌡️ Metallerwärmung",
+                    "🌡️ Temperaturkontrolle",
+                    "⚙️ Ofenaufbau",
+                    "🔩 Materialvorbereitung",
+                    "📋 Prozesskontrolle",
+                    "⚠️ Hauptgefahren",
+                    "🦺 Sicherheitsregeln"
             };
 
         } else {
@@ -202,6 +236,10 @@ public class FurnaceActivity extends Activity {
             back.setText("← Geri");
         } else if (language.equals("EN")) {
             back.setText("← Back");
+        } else if (language.equals("TR")) {
+            back.setText("← Geri");
+        } else if (language.equals("DE")) {
+            back.setText("← Zurück");
         } else {
             back.setText("← Назад");
         }
@@ -224,49 +262,65 @@ public class FurnaceActivity extends Activity {
                 {
                         "Индукционные печи",
                         "İnduksiya sobaları",
-                        "Induction Furnaces"
+                        "Induction Furnaces",
+                        "İndüksiyon Fırınları",
+                        "Induktionsöfen"
                 },
 
                 {
                         "Нагрев металла",
                         "Metalın qızdırılması",
-                        "Metal Heating"
+                        "Metal Heating",
+                        "Metal Isıtma",
+                        "Metallerwärmung"
                 },
 
                 {
                         "Контроль температуры",
                         "Temperatur nəzarəti",
-                        "Temperature Control"
+                        "Temperature Control",
+                        "Sıcaklık Kontrolü",
+                        "Temperaturkontrolle"
                 },
 
                 {
                         "Устройство печи",
                         "Soba quruluşu",
-                        "Furnace Structure"
+                        "Furnace Structure",
+                        "Fırın Yapısı",
+                        "Ofenaufbau"
                 },
 
                 {
                         "Подготовка материала",
                         "Materialın hazırlanması",
-                        "Material Preparation"
+                        "Material Preparation",
+                        "Malzeme Hazırlama",
+                        "Materialvorbereitung"
                 },
 
                 {
                         "Контроль процесса",
                         "Prosesə nəzarət",
-                        "Process Control"
+                        "Process Control",
+                        "Proses Kontrolü",
+                        "Prozesskontrolle"
                 },
 
                 {
                         "Основные опасности",
                         "Əsas təhlükələr",
-                        "Main Hazards"
+                        "Main Hazards",
+                        "Başlıca Tehlikeler",
+                        "Hauptgefahren"
                 },
 
                 {
                         "Правила безопасности",
                         "Təhlükəsizlik qaydaları",
-                        "Safety Rules"
+                        "Safety Rules",
+                        "Güvenlik Kuralları",
+                        "Sicherheitsregeln"
                 }
         };
 
@@ -282,7 +336,11 @@ public class FurnaceActivity extends Activity {
 
                         "İnduksiya sobası elektromaqnit sahəsindən istifadə edərək metalı qızdırır. Operator avadanlığa, temperatura və sistemin vəziyyətinə nəzarət etməlidir.",
 
-                        "An induction furnace heats metal using an electromagnetic field. The operator must monitor the equipment, temperature and system condition."
+                        "An induction furnace heats metal using an electromagnetic field. The operator must monitor the equipment, temperature and system condition.",
+
+                        "İndüksiyon fırını, elektromanyetik alan kullanarak metali ısıtır. Operatör ekipmanı, sıcaklığı ve sistemin durumunu kontrol etmelidir.",
+
+                        "Ein Induktionsofen erwärmt Metall mithilfe eines elektromagnetischen Feldes. Der Bediener muss Anlage, Temperatur und Systemzustand überwachen."
                 },
 
                 {
@@ -290,7 +348,11 @@ public class FurnaceActivity extends Activity {
 
                         "Qızdırma zamanı metal yüksək temperatura çatır. Uyğun fərdi mühafizə vasitələrindən istifadə edin və isti metaldan təhlükəsiz məsafə saxlayın.",
 
-                        "During heating, metal reaches a high temperature. Use appropriate PPE and keep a safe distance from hot metal."
+                        "During heating, metal reaches a high temperature. Use appropriate PPE and keep a safe distance from hot metal.",
+
+                        "Isıtma sırasında metal yüksek sıcaklığa ulaşır. Uygun KKD kullanın ve sıcak metalden güvenli bir mesafede durun.",
+
+                        "Beim Erwärmen erreicht das Metall eine hohe Temperatur. Verwenden Sie geeignete PSA und halten Sie einen sicheren Abstand zum heißen Metall ein."
                 },
 
                 {
@@ -298,7 +360,11 @@ public class FurnaceActivity extends Activity {
 
                         "Temperatur sensorların və cihazların göstəricilərinə əsasən nəzarətdə saxlanılmalıdır. Parametrlər normadan kənara çıxarsa, təlimata uyğun olaraq prosesi dayandırın.",
 
-                        "Temperature must be monitored using sensors and instruments. If parameters become abnormal, stop the process according to the instructions."
+                        "Temperature must be monitored using sensors and instruments. If parameters become abnormal, stop the process according to the instructions.",
+
+                        "Sıcaklık, sensörler ve ölçüm cihazları kullanılarak kontrol edilmelidir. Parametreler normalden saparsa işlemi talimatlara göre durdurun.",
+
+                        "Die Temperatur muss anhand von Sensoren und Messgeräten überwacht werden. Bei Abweichungen der Parameter muss der Prozess gemäß den Anweisungen gestoppt werden."
                 },
 
                 {
@@ -306,7 +372,11 @@ public class FurnaceActivity extends Activity {
 
                         "Soba əsasən qızdırma sistemi, futerovka, sensorlar, idarəetmə sistemi və qoruyucu qurğulardan ibarətdir.",
 
-                        "The main furnace components include the heating system, lining, sensors, control system and safety devices."
+                        "The main furnace components include the heating system, lining, sensors, control system and safety devices.",
+
+                        "Fırının ana bileşenleri ısıtma sistemi, astar, sensörler, kontrol sistemi ve güvenlik cihazlarını içerir.",
+
+                        "Zu den Hauptkomponenten des Ofens gehören Heizsystem, Auskleidung, Sensoren, Steuerungssystem und Schutzeinrichtungen."
                 },
 
                 {
@@ -314,7 +384,11 @@ public class FurnaceActivity extends Activity {
 
                         "Materialı sobaya yerləşdirməzdən əvvəl onun vəziyyətini, ölçüsünü və texnoloji tapşırığa uyğunluğunu yoxlayın. Uyğun olmayan materialı yükləməyin.",
 
-                        "Before loading material, check its condition, size and compliance with the process requirements. Do not load unsuitable material."
+                        "Before loading material, check its condition, size and compliance with the process requirements. Do not load unsuitable material.",
+
+                        "Malzemeyi fırına yüklemeden önce durumunu, ölçüsünü ve proses gerekliliklerine uygunluğunu kontrol edin. Uygun olmayan malzemeyi yüklemeyin.",
+
+                        "Prüfen Sie vor dem Beladen des Ofens Zustand, Größe und Übereinstimmung des Materials mit den Prozessanforderungen. Laden Sie kein ungeeignetes Material ein."
                 },
 
                 {
@@ -322,7 +396,11 @@ public class FurnaceActivity extends Activity {
 
                         "Temperaturu, qızdırma müddətini və prosesin digər parametrlərini nəzarətdə saxlayın. Bütün kənarlaşmalar vaxtında aşkar edilməli və məsul şəxsə bildirilməlidir.",
 
-                        "Monitor temperature, heating time and other process parameters. Any deviations must be identified promptly and reported to the responsible person."
+                        "Monitor temperature, heating time and other process parameters. Any deviations must be identified promptly and reported to the responsible person.",
+
+                        "Sıcaklığı, ısıtma süresini ve diğer proses parametrelerini takip edin. Tüm sapmalar zamanında tespit edilmeli ve sorumlu kişiye bildirilmelidir.",
+
+                        "Überwachen Sie Temperatur, Erwärmungszeit und andere Prozessparameter. Abweichungen müssen rechtzeitig erkannt und der zuständigen Person gemeldet werden."
                 },
 
                 {
@@ -330,7 +408,11 @@ public class FurnaceActivity extends Activity {
 
                         "Əsas təhlükələr: yüksək temperatur, isti metal, elektrik enerjisi, elektromaqnit sahəsi və isti materialın mümkün sıçramalarıdır.",
 
-                        "Main hazards include high temperature, hot metal, electrical energy, electromagnetic fields and possible hot material splashes."
+                        "Main hazards include high temperature, hot metal, electrical energy, electromagnetic fields and possible hot material splashes.",
+
+                        "Başlıca tehlikeler yüksek sıcaklık, sıcak metal, elektrik enerjisi, elektromanyetik alanlar ve sıcak malzeme sıçramalarıdır.",
+
+                        "Zu den Hauptgefahren gehören hohe Temperaturen, heißes Metall, elektrische Energie, elektromagnetische Felder und mögliche Spritzer heißen Materials."
                 },
 
                 {
@@ -338,7 +420,11 @@ public class FurnaceActivity extends Activity {
 
                         "Lazımi fərdi mühafizə vasitələrindən istifadə edin, icazəsiz təhlükəli zonaya yaxınlaşmayın və nasaz soba ilə işləməyin. Texniki xidmətdən əvvəl prosedura uyğun olaraq enerjini ayırın.",
 
-                        "Use the required PPE, do not enter the danger zone without authorization and do not operate a faulty furnace. Isolate the energy according to the procedure before maintenance."
+                        "Use the required PPE, do not enter the danger zone without authorization and do not operate a faulty furnace. Isolate the energy according to the procedure before maintenance.",
+
+                        "Gerekli KKD'leri kullanın, izin olmadan tehlikeli bölgeye yaklaşmayın ve arızalı fırını çalıştırmayın. Bakımdan önce prosedüre uygun olarak enerjiyi izole edin.",
+
+                        "Verwenden Sie die erforderliche PSA, betreten Sie den Gefahrenbereich nicht ohne Genehmigung und betreiben Sie keinen defekten Ofen. Vor Wartungsarbeiten muss die Energie gemäß dem Verfahren abgeschaltet und gesichert werden."
                 }
         };
 
@@ -353,6 +439,14 @@ public class FurnaceActivity extends Activity {
 
         if (language.equals("EN")) {
             return 2;
+        }
+
+        if (language.equals("TR")) {
+            return 3;
+        }
+
+        if (language.equals("DE")) {
+            return 4;
         }
 
         return 0;
