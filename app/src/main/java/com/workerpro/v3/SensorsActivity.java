@@ -128,6 +128,14 @@ public class SensorsActivity extends Activity {
             return "Sensors";
         }
 
+        if (language.equals("TR")) {
+            return "Sensörler";
+        }
+
+        if (language.equals("DE")) {
+            return "Sensoren";
+        }
+
         return "Датчики";
     }
 
@@ -141,7 +149,7 @@ public class SensorsActivity extends Activity {
                     "🌡️ Temperatur sensorları",
                     "📍 Mövqe sensorları",
                     "💧 Hidravlik sensorlar",
-                    " pressure Təzyiq sensorları",
+                    "💨 Təzyiq sensorları",
                     "🔍 Sensorların yoxlanılması",
                     "⚠️ Sensor nasazlıqları",
                     "🦺 Təhlükəsizlik"
@@ -155,10 +163,38 @@ public class SensorsActivity extends Activity {
                     "🌡️ Temperature Sensors",
                     "📍 Position Sensors",
                     "💧 Hydraulic Sensors",
-                    " pressure Pressure Sensors",
+                    "💨 Pressure Sensors",
                     "🔍 Sensor Testing",
                     "⚠️ Sensor Failures",
                     "🦺 Safety"
+            };
+
+        } else if (language.equals("TR")) {
+
+            return new String[]{
+                    "🔌 Elektronik Sensörler",
+                    "🧲 Manyetik Sensörler",
+                    "🌡️ Sıcaklık Sensörleri",
+                    "📍 Konum Sensörleri",
+                    "💧 Hidrolik Sensörler",
+                    "💨 Basınç Sensörleri",
+                    "🔍 Sensör Kontrolü",
+                    "⚠️ Sensör Arızaları",
+                    "🦺 Güvenlik"
+            };
+
+        } else if (language.equals("DE")) {
+
+            return new String[]{
+                    "🔌 Elektronische Sensoren",
+                    "🧲 Magnetsensoren",
+                    "🌡️ Temperatursensoren",
+                    "📍 Positionssensoren",
+                    "💧 Hydrauliksensoren",
+                    "💨 Drucksensoren",
+                    "🔍 Sensorprüfung",
+                    "⚠️ Sensorfehler",
+                    "🦺 Sicherheit"
             };
 
         } else {
@@ -169,7 +205,7 @@ public class SensorsActivity extends Activity {
                     "🌡️ Датчики температуры",
                     "📍 Датчики положения",
                     "💧 Гидравлические датчики",
-                    " pressure Датчики давления",
+                    "💨 Датчики давления",
                     "🔍 Проверка датчиков",
                     "⚠️ Неисправности датчиков",
                     "🦺 Безопасность"
@@ -205,6 +241,10 @@ public class SensorsActivity extends Activity {
             back.setText("← Geri");
         } else if (language.equals("EN")) {
             back.setText("← Back");
+        } else if (language.equals("TR")) {
+            back.setText("← Geri");
+        } else if (language.equals("DE")) {
+            back.setText("← Zurück");
         } else {
             back.setText("← Назад");
         }
@@ -227,55 +267,73 @@ public class SensorsActivity extends Activity {
                 {
                         "Электронные датчики",
                         "Elektron sensorlar",
-                        "Electronic Sensors"
+                        "Electronic Sensors",
+                        "Elektronik Sensörler",
+                        "Elektronische Sensoren"
                 },
 
                 {
                         "Магнитные датчики",
                         "Maqnit sensorlar",
-                        "Magnetic Sensors"
+                        "Magnetic Sensors",
+                        "Manyetik Sensörler",
+                        "Magnetsensoren"
                 },
 
                 {
                         "Датчики температуры",
                         "Temperatur sensorları",
-                        "Temperature Sensors"
+                        "Temperature Sensors",
+                        "Sıcaklık Sensörleri",
+                        "Temperatursensoren"
                 },
 
                 {
                         "Датчики положения",
                         "Mövqe sensorları",
-                        "Position Sensors"
+                        "Position Sensors",
+                        "Konum Sensörleri",
+                        "Positionssensoren"
                 },
 
                 {
                         "Гидравлические датчики",
                         "Hidravlik sensorlar",
-                        "Hydraulic Sensors"
+                        "Hydraulic Sensors",
+                        "Hidrolik Sensörler",
+                        "Hydrauliksensoren"
                 },
 
                 {
                         "Датчики давления",
                         "Təzyiq sensorları",
-                        "Pressure Sensors"
+                        "Pressure Sensors",
+                        "Basınç Sensörleri",
+                        "Drucksensoren"
                 },
 
                 {
                         "Проверка датчиков",
                         "Sensorların yoxlanılması",
-                        "Sensor Testing"
+                        "Sensor Testing",
+                        "Sensör Kontrolü",
+                        "Sensorprüfung"
                 },
 
                 {
                         "Неисправности датчиков",
                         "Sensor nasazlıqları",
-                        "Sensor Failures"
+                        "Sensor Failures",
+                        "Sensör Arızaları",
+                        "Sensorfehler"
                 },
 
                 {
                         "Безопасность",
                         "Təhlükəsizlik",
-                        "Safety"
+                        "Safety",
+                        "Güvenlik",
+                        "Sicherheit"
                 }
         };
 
@@ -291,7 +349,11 @@ public class SensorsActivity extends Activity {
 
                         "Elektron sensorlar fiziki parametrləri elektrik siqnalına çevirir. Onlar temperatur, mövqe, təzyiq və avadanlığın digər parametrlərinə nəzarət etmək üçün istifadə olunur.",
 
-                        "Electronic sensors convert physical parameters into electrical signals. They are used to monitor temperature, position, pressure and other equipment parameters."
+                        "Electronic sensors convert physical parameters into electrical signals. They are used to monitor temperature, position, pressure and other equipment parameters.",
+
+                        "Elektronik sensörler fiziksel parametreleri elektrik sinyaline dönüştürür. Sıcaklık, konum, basınç ve diğer ekipman parametrelerini izlemek için kullanılır.",
+
+                        "Elektronische Sensoren wandeln physikalische Größen in elektrische Signale um. Sie werden zur Überwachung von Temperatur, Position, Druck und anderen Anlagenparametern eingesetzt."
                 },
 
                 {
@@ -299,7 +361,11 @@ public class SensorsActivity extends Activity {
 
                         "Maqnit sensorlar mövqeyi, hərəkəti və ya metal obyektin mövcudluğunu müəyyən etmək üçün maqnit sahəsindən istifadə edir. Onlar avtomatlaşdırmada geniş tətbiq olunur.",
 
-                        "Magnetic sensors use a magnetic field to detect position, movement or the presence of a metal object. They are widely used in automation."
+                        "Magnetic sensors use a magnetic field to detect position, movement or the presence of a metal object. They are widely used in automation.",
+
+                        "Manyetik sensörler konumu, hareketi veya metal bir nesnenin varlığını algılamak için manyetik alan kullanır. Otomasyonda yaygın olarak kullanılır.",
+
+                        "Magnetsensoren verwenden ein Magnetfeld, um Position, Bewegung oder das Vorhandensein eines Metallobjekts zu erkennen. Sie werden häufig in der Automatisierung eingesetzt."
                 },
 
                 {
@@ -307,7 +373,11 @@ public class SensorsActivity extends Activity {
 
                         "Temperatur sensorları avadanlığın, metalın və ya iş mühitinin temperaturunu ölçür. Sensor göstəriciləri müntəzəm olaraq yoxlanılmalıdır.",
 
-                        "Temperature sensors measure the temperature of equipment, metal or the working environment. Sensor readings should be monitored regularly."
+                        "Temperature sensors measure the temperature of equipment, metal or the working environment. Sensor readings should be monitored regularly.",
+
+                        "Sıcaklık sensörleri ekipmanın, metalin veya çalışma ortamının sıcaklığını ölçer. Sensör değerleri düzenli olarak kontrol edilmelidir.",
+
+                        "Temperatursensoren messen die Temperatur von Anlagen, Metall oder der Arbeitsumgebung. Die Messwerte sollten regelmäßig kontrolliert werden."
                 },
 
                 {
@@ -315,7 +385,11 @@ public class SensorsActivity extends Activity {
 
                         "Mövqe sensorları mexanizmin hissələrinin vəziyyətini və ya hərəkətini müəyyən edir. Onlar idarəetmə sisteminə avadanlığın hərəkətini düzgün izləməyə kömək edir.",
 
-                        "Position sensors detect the position or movement of machine components. They help the control system monitor equipment movement."
+                        "Position sensors detect the position or movement of machine components. They help the control system monitor equipment movement.",
+
+                        "Konum sensörleri makine parçalarının konumunu veya hareketini algılar. Kontrol sisteminin ekipman hareketini izlemesine yardımcı olur.",
+
+                        "Positionssensoren erkennen die Position oder Bewegung von Maschinenteilen. Sie helfen der Steuerung, die Bewegung der Anlage zu überwachen."
                 },
 
                 {
@@ -323,7 +397,11 @@ public class SensorsActivity extends Activity {
 
                         "Hidravlik sensorlar hidravlik sistemlərdə təzyiq, mövqe və digər parametrlərə nəzarət etmək üçün istifadə olunur. Şlanqların və birləşmələrin vəziyyəti də yoxlanılmalıdır.",
 
-                        "Hydraulic sensors are used to monitor pressure, position and other parameters in hydraulic systems. Check hoses and connections as well."
+                        "Hydraulic sensors are used to monitor pressure, position and other parameters in hydraulic systems. Check hoses and connections as well.",
+
+                        "Hidrolik sensörler hidrolik sistemlerde basınç, konum ve diğer parametreleri izlemek için kullanılır. Hortumları ve bağlantıları da kontrol edin.",
+
+                        "Hydrauliksensoren überwachen Druck, Position und andere Parameter in Hydrauliksystemen. Prüfen Sie auch Schläuche und Verbindungen."
                 },
 
                 {
@@ -331,7 +409,11 @@ public class SensorsActivity extends Activity {
 
                         "Təzyiq sensorları hidravlik, pnevmatik və digər sistemlərdə təzyiqi ölçür. Qeyri-adi göstəricilər olduqda sistemi təlimata uyğun yoxlamaq lazımdır.",
 
-                        "Pressure sensors measure pressure in hydraulic, pneumatic and other systems. If readings are abnormal, check the system according to the instructions."
+                        "Pressure sensors measure pressure in hydraulic, pneumatic and other systems. If readings are abnormal, check the system according to the instructions.",
+
+                        "Basınç sensörleri hidrolik, pnömatik ve diğer sistemlerde basıncı ölçer. Değerler normal değilse sistemi talimatlara göre kontrol edin.",
+
+                        "Drucksensoren messen den Druck in hydraulischen, pneumatischen und anderen Systemen. Bei ungewöhnlichen Messwerten muss die Anlage gemäß Anleitung überprüft werden."
                 },
 
                 {
@@ -339,7 +421,11 @@ public class SensorsActivity extends Activity {
 
                         "Sensoru yoxlayarkən korpusu, kabeli, konnektoru və bərkidilməsini yoxlayın. Göstəriciləri normal qiymətlərlə müqayisə edin.",
 
-                        "When testing a sensor, inspect its housing, cable, connector and mounting. Compare the readings with normal values."
+                        "When testing a sensor, inspect its housing, cable, connector and mounting. Compare the readings with normal values.",
+
+                        "Sensörü kontrol ederken gövdesini, kablosunu, bağlantısını ve montajını inceleyin. Değerleri normal değerlerle karşılaştırın.",
+
+                        "Bei der Sensorprüfung Gehäuse, Kabel, Stecker und Befestigung kontrollieren. Vergleichen Sie die Messwerte mit den normalen Werten."
                 },
 
                 {
@@ -347,7 +433,11 @@ public class SensorsActivity extends Activity {
 
                         "Sensorun nasazlığı avadanlığın düzgün işləməməsinə səbəb ola bilər. Mümkün səbəblər: kabelin zədələnməsi, zəif kontakt, çirklənmə və ya sensorun özünün sıradan çıxması.",
 
-                        "A sensor failure can cause incorrect equipment operation. Possible causes include cable damage, poor contact, contamination or sensor failure."
+                        "A sensor failure can cause incorrect equipment operation. Possible causes include cable damage, poor contact, contamination or sensor failure.",
+
+                        "Sensör arızası ekipmanın yanlış çalışmasına neden olabilir. Olası nedenler arasında kablo hasarı, kötü bağlantı, kirlenme veya sensörün arızalanması bulunur.",
+
+                        "Ein Sensorfehler kann zu einer fehlerhaften Funktion der Anlage führen. Mögliche Ursachen sind Kabelschäden, schlechter Kontakt, Verschmutzung oder ein Sensordefekt."
                 },
 
                 {
@@ -355,7 +445,11 @@ public class SensorsActivity extends Activity {
 
                         "Sensoru yoxlamadan və ya dəyişdirmədən əvvəl təhlükəsizlik qaydalarına əməl edin. Lazım olduqda enerjini ayırın və işi yalnız təlimata uyğun yerinə yetirin.",
 
-                        "Before checking or replacing a sensor, follow safety rules. Isolate the energy when required and perform the work according to the instructions."
+                        "Before checking or replacing a sensor, follow safety rules. Isolate the energy when required and perform the work according to the instructions.",
+
+                        "Sensörü kontrol etmeden veya değiştirmeden önce güvenlik kurallarına uyun. Gerektiğinde enerjiyi izole edin ve çalışmayı talimatlara uygun yapın.",
+
+                        "Vor der Prüfung oder dem Austausch eines Sensors die Sicherheitsregeln beachten. Falls erforderlich, die Energieversorgung sicher trennen und nur gemäß Anleitung arbeiten."
                 }
         };
 
@@ -370,6 +464,14 @@ public class SensorsActivity extends Activity {
 
         if (language.equals("EN")) {
             return 2;
+        }
+
+        if (language.equals("TR")) {
+            return 3;
+        }
+
+        if (language.equals("DE")) {
+            return 4;
         }
 
         return 0;
