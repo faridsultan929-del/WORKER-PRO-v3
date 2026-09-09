@@ -128,6 +128,14 @@ public class WeldingActivity extends Activity {
             return "Welding";
         }
 
+        if (language.equals("TR")) {
+            return "Kaynak";
+        }
+
+        if (language.equals("DE")) {
+            return "Schweißen";
+        }
+
         return "Сварка";
     }
 
@@ -157,6 +165,32 @@ public class WeldingActivity extends Activity {
                     "🔩 Metal Preparation",
                     "❌ Welding Defects",
                     "🦺 Welding Safety"
+            };
+
+        } else if (language.equals("TR")) {
+
+            return new String[]{
+                    "⚡ Kaynak Türleri",
+                    "🔧 Manuel Ark Kaynağı",
+                    "⚙️ Yarı Otomatik Kaynak",
+                    "🔥 TIG Kaynağı",
+                    "🛠️ Kaynak Ekipmanları",
+                    "🔩 Metal Hazırlama",
+                    "❌ Kaynak Hataları",
+                    "🦺 Kaynak Güvenliği"
+            };
+
+        } else if (language.equals("DE")) {
+
+            return new String[]{
+                    "⚡ Schweißarten",
+                    "🔧 Lichtbogenhandschweißen",
+                    "⚙️ Halbautomatisches Schweißen",
+                    "🔥 WIG-Schweißen",
+                    "🛠️ Schweißausrüstung",
+                    "🔩 Metallvorbereitung",
+                    "❌ Schweißfehler",
+                    "🦺 Schweißsicherheit"
             };
 
         } else {
@@ -202,6 +236,10 @@ public class WeldingActivity extends Activity {
             back.setText("← Geri");
         } else if (language.equals("EN")) {
             back.setText("← Back");
+        } else if (language.equals("TR")) {
+            back.setText("← Geri");
+        } else if (language.equals("DE")) {
+            back.setText("← Zurück");
         } else {
             back.setText("← Назад");
         }
@@ -224,49 +262,65 @@ public class WeldingActivity extends Activity {
                 {
                         "Виды сварки",
                         "Qaynaq növləri",
-                        "Types of Welding"
+                        "Types of Welding",
+                        "Kaynak Türleri",
+                        "Schweißarten"
                 },
 
                 {
                         "Ручная дуговая сварка",
                         "Əl ilə qövs qaynağı",
-                        "Manual Arc Welding"
+                        "Manual Arc Welding",
+                        "Manuel Ark Kaynağı",
+                        "Lichtbogenhandschweißen"
                 },
 
                 {
                         "Полуавтоматическая сварка",
                         "Yarımavtomatik qaynaq",
-                        "Semi-Automatic Welding"
+                        "Semi-Automatic Welding",
+                        "Yarı Otomatik Kaynak",
+                        "Halbautomatisches Schweißen"
                 },
 
                 {
                         "Аргонная сварка",
                         "Arqon qaynağı",
-                        "TIG Welding"
+                        "TIG Welding",
+                        "TIG Kaynağı",
+                        "WIG-Schweißen"
                 },
 
                 {
                         "Сварочное оборудование",
                         "Qaynaq avadanlığı",
-                        "Welding Equipment"
+                        "Welding Equipment",
+                        "Kaynak Ekipmanları",
+                        "Schweißausrüstung"
                 },
 
                 {
                         "Подготовка металла",
                         "Metalın hazırlanması",
-                        "Metal Preparation"
+                        "Metal Preparation",
+                        "Metal Hazırlama",
+                        "Metallvorbereitung"
                 },
 
                 {
                         "Дефекты сварки",
                         "Qaynaq qüsurları",
-                        "Welding Defects"
+                        "Welding Defects",
+                        "Kaynak Hataları",
+                        "Schweißfehler"
                 },
 
                 {
                         "Безопасность при сварке",
                         "Qaynaq zamanı təhlükəsizlik",
-                        "Welding Safety"
+                        "Welding Safety",
+                        "Kaynak Güvenliği",
+                        "Schweißsicherheit"
                 }
         };
 
@@ -282,7 +336,11 @@ public class WeldingActivity extends Activity {
 
                         "Əsas qaynaq növlərinə əl ilə qövs, yarımavtomatik və arqon-qövs qaynağı daxildir. Metodun seçimi materialdan, qalınlıqdan və birləşməyə olan tələblərdən asılıdır.",
 
-                        "Main welding types include manual arc, semi-automatic and TIG welding. The method depends on the material, thickness and joint requirements."
+                        "Main welding types include manual arc, semi-automatic and TIG welding. The method depends on the material, thickness and joint requirements.",
+
+                        "Başlıca kaynak türleri manuel ark, yarı otomatik ve TIG kaynağıdır. Yöntem; malzemeye, kalınlığa ve bağlantı gereksinimlerine bağlıdır.",
+
+                        "Zu den wichtigsten Schweißarten gehören Lichtbogenhandschweißen, halbautomatisches Schweißen und WIG-Schweißen. Die Wahl hängt von Material, Dicke und Anforderungen an die Verbindung ab."
                 },
 
                 {
@@ -290,7 +348,11 @@ public class WeldingActivity extends Activity {
 
                         "Əl ilə qövs qaynağında elektrod ilə metal arasında elektrik qövsü yaradılır. Operator cərəyanı, elektrodun vəziyyətini və tikişin keyfiyyətini nəzarətdə saxlamalıdır.",
 
-                        "Manual arc welding uses an electric arc between the electrode and the metal. The operator must control the current, electrode position and weld quality."
+                        "Manual arc welding uses an electric arc between the electrode and the metal. The operator must control the current, electrode position and weld quality.",
+
+                        "Manuel ark kaynağında elektrot ile metal arasında elektrik arkı oluşur. Operatör akımı, elektrot konumunu ve kaynak dikişinin kalitesini kontrol etmelidir.",
+
+                        "Beim Lichtbogenhandschweißen entsteht ein Lichtbogen zwischen Elektrode und Metall. Der Bediener muss Stromstärke, Elektrodenposition und Schweißnahtqualität kontrollieren."
                 },
 
                 {
@@ -298,7 +360,11 @@ public class WeldingActivity extends Activity {
 
                         "Yarımavtomatik qaynaqda qaynaq teli fasiləsiz şəkildə verilir. İşdən əvvəl aparatı, teli, qazı və birləşmələri yoxlayın.",
 
-                        "Semi-automatic welding uses continuous wire feeding. Before work, check the welding machine, wire, gas and connections."
+                        "Semi-automatic welding uses continuous wire feeding. Before work, check the welding machine, wire, gas and connections.",
+
+                        "Yarı otomatik kaynakta kaynak teli sürekli olarak beslenir. Çalışmadan önce makineyi, teli, gazı ve bağlantıları kontrol edin.",
+
+                        "Beim halbautomatischen Schweißen wird der Schweißdraht kontinuierlich zugeführt. Prüfen Sie vor der Arbeit Gerät, Draht, Gas und Anschlüsse."
                 },
 
                 {
@@ -306,7 +372,11 @@ public class WeldingActivity extends Activity {
 
                         "TIG qaynağında əriməyən volfram elektrodu və qoruyucu qaz, adətən arqon istifadə olunur. Bu üsul dəqiq və keyfiyyətli qaynaq birləşmələri almağa imkan verir.",
 
-                        "TIG welding uses a non-consumable tungsten electrode and shielding gas, usually argon. It provides precise and high-quality welded joints."
+                        "TIG welding uses a non-consumable tungsten electrode and shielding gas, usually argon. It provides precise and high-quality welded joints.",
+
+                        "TIG kaynağında erimeyen tungsten elektrot ve genellikle argon olmak üzere koruyucu gaz kullanılır. Bu yöntem hassas ve kaliteli kaynak bağlantıları sağlar.",
+
+                        "Beim WIG-Schweißen wird eine nicht abschmelzende Wolframelektrode und meist Argon als Schutzgas verwendet. Das Verfahren ermöglicht präzise und hochwertige Schweißverbindungen."
                 },
 
                 {
@@ -314,7 +384,11 @@ public class WeldingActivity extends Activity {
 
                         "Qaynaq avadanlığına enerji mənbəyi, məşəl və ya elektrod tutacağı, kabellər, qaz təchizatı sistemi və digər komponentlər daxildir. İşdən əvvəl avadanlığı yoxlayın.",
 
-                        "Welding equipment includes a power source, torch or electrode holder, cables, gas supply system and other components. Check the equipment before work."
+                        "Welding equipment includes a power source, torch or electrode holder, cables, gas supply system and other components. Check the equipment before work.",
+
+                        "Kaynak ekipmanları güç kaynağı, torç veya elektrot pensesi, kablolar, gaz besleme sistemi ve diğer parçalardan oluşur. Çalışmadan önce ekipmanı kontrol edin.",
+
+                        "Zur Schweißausrüstung gehören Stromquelle, Brenner oder Elektrodenhalter, Kabel, Gasversorgung und weitere Komponenten. Prüfen Sie die Ausrüstung vor der Arbeit."
                 },
 
                 {
@@ -322,7 +396,11 @@ public class WeldingActivity extends Activity {
 
                         "Qaynaqdan əvvəl metalı çirkdən, yağdan, pasdan və digər çirklərdən təmizləyin. Düzgün hazırlıq keyfiyyətli qaynaq tikişi əldə etməyə kömək edir.",
 
-                        "Before welding, clean the metal from dirt, oil, rust and other contamination. Proper preparation helps produce a quality weld."
+                        "Before welding, clean the metal from dirt, oil, rust and other contamination. Proper preparation helps produce a quality weld.",
+
+                        "Kaynak öncesinde metali kir, yağ, pas ve diğer kirleticilerden temizleyin. Doğru hazırlık kaliteli bir kaynak dikişi elde etmeye yardımcı olur.",
+
+                        "Reinigen Sie das Metall vor dem Schweißen von Schmutz, Öl, Rost und anderen Verunreinigungen. Eine gute Vorbereitung hilft, eine hochwertige Schweißnaht zu erzeugen."
                 },
 
                 {
@@ -330,7 +408,11 @@ public class WeldingActivity extends Activity {
 
                         "Yayılmış qaynaq qüsurlarına məsamələr, çatlar, natamam qaynama, altkəsmələr və şlak daxilolmaları daxildir. Qüsurun səbəbi müəyyən edilməli və texnologiyaya uyğun aradan qaldırılmalıdır.",
 
-                        "Common welding defects include porosity, cracks, lack of fusion, undercut and slag inclusions. The cause should be identified and corrected according to the procedure."
+                        "Common welding defects include porosity, cracks, lack of fusion, undercut and slag inclusions. The cause should be identified and corrected according to the procedure.",
+
+                        "Yaygın kaynak hataları arasında gözeneklilik, çatlaklar, yetersiz ergime, yanma oluğu ve cüruf kalıntıları bulunur. Hatanın nedeni belirlenmeli ve prosedüre göre giderilmelidir.",
+
+                        "Häufige Schweißfehler sind Poren, Risse, Bindefehler, Einbrandkerben und Schlackeneinschlüsse. Die Ursache muss ermittelt und gemäß dem Verfahren behoben werden."
                 },
 
                 {
@@ -338,7 +420,11 @@ public class WeldingActivity extends Activity {
 
                         "Qaynaq maskası, qoruyucu əlcəklər, xüsusi geyim və digər lazımi mühafizə vasitələrindən istifadə edin. Havalandırmanı təmin edin və yanıcı materialları iş zonasından uzaqlaşdırın.",
 
-                        "Use a welding helmet, protective gloves, protective clothing and other required PPE. Ensure ventilation and remove combustible materials from the work area."
+                        "Use a welding helmet, protective gloves, protective clothing and other required PPE. Ensure ventilation and remove combustible materials from the work area.",
+
+                        "Kaynak maskesi, koruyucu eldiven, koruyucu giysi ve gerekli diğer KKD'leri kullanın. Havalandırmayı sağlayın ve yanıcı malzemeleri çalışma alanından uzaklaştırın.",
+
+                        "Verwenden Sie einen Schweißhelm, Schutzhandschuhe, Schutzkleidung und die erforderliche persönliche Schutzausrüstung. Sorgen Sie für ausreichende Belüftung und entfernen Sie brennbare Materialien aus dem Arbeitsbereich."
                 }
         };
 
@@ -353,6 +439,14 @@ public class WeldingActivity extends Activity {
 
         if (language.equals("EN")) {
             return 2;
+        }
+
+        if (language.equals("TR")) {
+            return 3;
+        }
+
+        if (language.equals("DE")) {
+            return 4;
         }
 
         return 0;
