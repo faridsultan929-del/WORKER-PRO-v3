@@ -12,157 +12,224 @@ import android.widget.TextView;
 
 public class SafetyActivity extends Activity {
 
-private String language = "RU";
-private LinearLayout content;
+    private String language = "RU";
+    private LinearLayout content;
 
-@Override
-protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-    String receivedLanguage = getIntent().getStringExtra("LANGUAGE");
+        String receivedLanguage =
+                getIntent().getStringExtra("LANGUAGE");
 
-    if (receivedLanguage != null) {
-        language = receivedLanguage;
+        if (receivedLanguage != null) {
+            language = receivedLanguage;
+        }
+
+        createScreen();
     }
 
-    createScreen();
-}
+    private void createScreen() {
 
-private void createScreen() {
+        LinearLayout root = new LinearLayout(this);
+        root.setOrientation(LinearLayout.VERTICAL);
+        root.setBackgroundColor(Color.WHITE);
+        root.setPadding(18, 12, 18, 10);
 
-    LinearLayout root = new LinearLayout(this);
-    root.setOrientation(LinearLayout.VERTICAL);
-    root.setBackgroundColor(Color.WHITE);
-    root.setPadding(18, 12, 18, 10);
+        // HEADER
+        TextView title = new TextView(this);
 
-    // HEADER
-    TextView title = new TextView(this);
-    title.setText("🦺  " + getSafetyTitle());
-    title.setTextSize(27);
-    title.setTypeface(null, Typeface.BOLD);
-    title.setTextColor(Color.rgb(0, 130, 70));
-    title.setGravity(Gravity.CENTER);
-    title.setPadding(0, 8, 0, 15);
+        title.setText("🦺  " + getSafetyTitle());
+        title.setTextSize(27);
+        title.setTypeface(null, Typeface.BOLD);
+        title.setTextColor(Color.rgb(0, 130, 70));
+        title.setGravity(Gravity.CENTER);
+        title.setPadding(0, 8, 0, 15);
 
-    root.addView(title);
+        root.addView(title);
 
-    // CONTENT
-    ScrollView scrollView = new ScrollView(this);
+        // CONTENT
+        ScrollView scrollView = new ScrollView(this);
 
-    content = new LinearLayout(this);
-    content.setOrientation(LinearLayout.VERTICAL);
-    content.setPadding(0, 5, 0, 10);
+        content = new LinearLayout(this);
+        content.setOrientation(LinearLayout.VERTICAL);
+        content.setPadding(0, 5, 0, 10);
 
-    String[] cards = getCards();
+        String[] cards = getCards();
 
-    for (int i = 0; i < cards.length; i++) {
+        for (int i = 0; i < cards.length; i++) {
 
-        final int number = i;
+            final int number = i;
 
-        TextView card = createCard(cards[i]);
+            TextView card = createCard(cards[i]);
 
-        card.setOnClickListener(v -> showInfo(number));
-
-        content.addView(card);
-    }
-
-    scrollView.addView(content);
-
-    root.addView(
-            scrollView,
-            new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT,
-                    0,
-                    1
-            )
-    );
-
-    // DEVELOPER
-    TextView developer = new TextView(this);
-    developer.setText("F.S");
-    developer.setTextSize(16);
-    developer.setTextColor(Color.GRAY);
-    developer.setGravity(Gravity.CENTER);
-    developer.setPadding(0, 5, 0, 5);
-
-    root.addView(developer);
-
-    setContentView(root);
-}
-
-private TextView createCard(String text) {
-
-    TextView card = new TextView(this);
-
-    card.setText(text);
-    card.setTextSize(18);
-    card.setTypeface(null, Typeface.BOLD);
-    card.setTextColor(Color.rgb(0, 105, 60));
-    card.setGravity(Gravity.CENTER_VERTICAL);
-    card.setPadding(22, 0, 22, 0);
-
-    GradientDrawable background = new GradientDrawable();
-    background.setColor(Color.rgb(242, 248, 244));
-    background.setCornerRadius(18);
-    background.setStroke(2, Color.rgb(0, 130, 70));
-
-    card.setBackground(background);
-
-    LinearLayout.LayoutParams params =
-            new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT,
-                    82
+            card.setOnClickListener(
+                    v -> showInfo(number)
             );
 
-    params.setMargins(0, 0, 0, 12);
+            content.addView(card);
+        }
 
-    card.setLayoutParams(params);
+        scrollView.addView(content);
 
-    return card;
-}
+        root.addView(
+                scrollView,
+                new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        0,
+                        1
+                )
+        );
 
-private String getSafetyTitle() {
+        // DEVELOPER
+        TextView developer = new TextView(this);
 
-    if (language.equals("AZ")) {
-        return "Təhlükəsizlik";
+        developer.setText("F.S");
+        developer.setTextSize(16);
+        developer.setTextColor(Color.GRAY);
+        developer.setGravity(Gravity.CENTER);
+        developer.setPadding(0, 5, 0, 5);
+
+        root.addView(developer);
+
+        setContentView(root);
     }
 
-    if (language.equals("EN")) {
-        return "Safety";
+    private TextView createCard(String text) {
+
+        TextView card = new TextView(this);
+
+        card.setText(text);
+        card.setTextSize(18);
+        card.setTypeface(null, Typeface.BOLD);
+        card.setTextColor(Color.rgb(0, 105, 60));
+        card.setGravity(Gravity.CENTER_VERTICAL);
+        card.setPadding(22, 0, 22, 0);
+
+        GradientDrawable background =
+                new GradientDrawable();
+
+        background.setColor(
+                Color.rgb(242, 248, 244)
+        );
+
+        background.setCornerRadius(18);
+
+        background.setStroke(
+                2,
+                Color.rgb(0, 130, 70)
+        );
+
+        card.setBackground(background);
+
+        LinearLayout.LayoutParams params =
+                new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        82
+                );
+
+        params.setMargins(
+                0,
+                0,
+                0,
+                12
+        );
+
+        card.setLayoutParams(params);
+
+        return card;
     }
 
-    return "Безопасность";
-}
+    // =========================
+    // TITLE
+    // =========================
 
-private String[] getCards() {
+    private String getSafetyTitle() {
 
-    if (language.equals("AZ")) {
+        if (language.equals("AZ")) {
+            return "Təhlükəsizlik";
+        }
 
-        return new String[]{
-                "🦺 İş yerində təhlükəsizlik",
-                "⚠️ Təhlükələr və risklər",
-                "🛡️ Fərdi mühafizə vasitələri",
-                "🔥 Yanğın təhlükəsizliyi",
-                "⚡ Elektrik təhlükəsizliyi",
-                "🚨 Fövqəladə hallar",
-                "🩹 İlk yardım",
-                "📋 Təhlükəsizlik təlimatları"
-        };
+        if (language.equals("EN")) {
+            return "Safety";
+        }
 
-    } else if (language.equals("EN")) {
+        if (language.equals("TR")) {
+            return "İş Güvenliği";
+        }
 
-        return new String[]{
-                "🦺 Workplace Safety",
-                "⚠️ Hazards and Risks",
-                "🛡️ Personal Protective Equipment",
-                "🔥 Fire Safety",
-                "⚡ Electrical Safety",
-                "🚨 Emergency Situations",
-                "🩹 First Aid",
-                "📋 Safety Instructions"
-        };
+        if (language.equals("DE")) {
+            return "Arbeitssicherheit";
+        }
 
-    } else {
+        return "Безопасность";
+    }
+
+    // =========================
+    // CARDS
+    // =========================
+
+    private String[] getCards() {
+
+        if (language.equals("AZ")) {
+
+            return new String[]{
+                    "🦺 İş yerində təhlükəsizlik",
+                    "⚠️ Təhlükələr və risklər",
+                    "🛡️ Fərdi mühafizə vasitələri",
+                    "🔥 Yanğın təhlükəsizliyi",
+                    "⚡ Elektrik təhlükəsizliyi",
+                    "🚨 Fövqəladə hallar",
+                    "🩹 İlk yardım",
+                    "📋 Təhlükəsizlik təlimatları"
+            };
+
+        }
+
+        if (language.equals("EN")) {
+
+            return new String[]{
+                    "🦺 Workplace Safety",
+                    "⚠️ Hazards and Risks",
+                    "🛡️ Personal Protective Equipment",
+                    "🔥 Fire Safety",
+                    "⚡ Electrical Safety",
+                    "🚨 Emergency Situations",
+                    "🩹 First Aid",
+                    "📋 Safety Instructions"
+            };
+
+        }
+
+        if (language.equals("TR")) {
+
+            return new String[]{
+                    "🦺 İş Yerinde Güvenlik",
+                    "⚠️ Tehlikeler ve Riskler",
+                    "🛡️ Kişisel Koruyucu Donanımlar",
+                    "🔥 Yangın Güvenliği",
+                    "⚡ Elektrik Güvenliği",
+                    "🚨 Acil Durumlar",
+                    "🩹 İlk Yardım",
+                    "📋 Güvenlik Talimatları"
+            };
+
+        }
+
+        if (language.equals("DE")) {
+
+            return new String[]{
+                    "🦺 Arbeitssicherheit am Arbeitsplatz",
+                    "⚠️ Gefahren und Risiken",
+                    "🛡️ Persönliche Schutzausrüstung",
+                    "🔥 Brandschutz",
+                    "⚡ Elektrische Sicherheit",
+                    "🚨 Notfälle",
+                    "🩹 Erste Hilfe",
+                    "📋 Sicherheitsanweisungen"
+            };
+
+        }
 
         return new String[]{
                 "🦺 Безопасность на рабочем месте",
@@ -175,174 +242,283 @@ private String[] getCards() {
                 "📋 Инструкции по безопасности"
         };
     }
-}
 
-private void showInfo(int number) {
+    // =========================
+    // INFO SCREEN
+    // =========================
 
-    content.removeAllViews();
+    private void showInfo(int number) {
 
-    TextView title = new TextView(this);
-    title.setText(getInfoTitle(number));
-    title.setTextSize(23);
-    title.setTypeface(null, Typeface.BOLD);
-    title.setTextColor(Color.rgb(0, 130, 70));
-    title.setGravity(Gravity.CENTER);
-    title.setPadding(10, 20, 10, 20);
+        content.removeAllViews();
 
-    content.addView(title);
+        TextView title = new TextView(this);
 
-    TextView info = new TextView(this);
-    info.setText(getInfoText(number));
-    info.setTextSize(18);
-    info.setTextColor(Color.DKGRAY);
-    info.setPadding(20, 10, 20, 30);
+        title.setText(
+                getInfoTitle(number)
+        );
 
-    content.addView(info);
+        title.setTextSize(23);
+        title.setTypeface(null, Typeface.BOLD);
+        title.setTextColor(Color.rgb(0, 130, 70));
+        title.setGravity(Gravity.CENTER);
+        title.setPadding(10, 20, 10, 20);
 
-    TextView back = new TextView(this);
+        content.addView(title);
 
-    if (language.equals("AZ")) {
-        back.setText("← Geri");
-    } else if (language.equals("EN")) {
-        back.setText("← Back");
-    } else {
-        back.setText("← Назад");
+        TextView info = new TextView(this);
+
+        info.setText(
+                getInfoText(number)
+        );
+
+        info.setTextSize(18);
+        info.setTextColor(Color.DKGRAY);
+        info.setPadding(20, 10, 20, 30);
+
+        content.addView(info);
+
+        TextView back = new TextView(this);
+
+        if (language.equals("AZ")) {
+            back.setText("← Geri");
+        }
+        else if (language.equals("EN")) {
+            back.setText("← Back");
+        }
+        else if (language.equals("TR")) {
+            back.setText("← Geri");
+        }
+        else if (language.equals("DE")) {
+            back.setText("← Zurück");
+        }
+        else {
+            back.setText("← Назад");
+        }
+
+        back.setTextSize(18);
+        back.setTypeface(null, Typeface.BOLD);
+        back.setTextColor(Color.rgb(0, 130, 70));
+        back.setGravity(Gravity.CENTER);
+        back.setPadding(20, 20, 20, 20);
+
+        back.setOnClickListener(
+                v -> createScreen()
+        );
+
+        content.addView(back);
     }
 
-    back.setTextSize(18);
-    back.setTypeface(null, Typeface.BOLD);
-    back.setTextColor(Color.rgb(0, 130, 70));
-    back.setGravity(Gravity.CENTER);
-    back.setPadding(20, 20, 20, 20);
+    // =========================
+    // INFO TITLES
+    // =========================
 
-    back.setOnClickListener(v -> createScreen());
+    private String getInfoTitle(int number) {
 
-    content.addView(back);
-}
+        String[][] titles = {
 
-private String getInfoTitle(int number) {
+                {
+                        "Безопасность на рабочем месте",
+                        "İş yerində təhlükəsizlik",
+                        "Workplace Safety",
+                        "İş Yerinde Güvenlik",
+                        "Arbeitssicherheit am Arbeitsplatz"
+                },
 
-    String[][] titles = {
+                {
+                        "Опасности и риски",
+                        "Təhlükələr və risklər",
+                        "Hazards and Risks",
+                        "Tehlikeler ve Riskler",
+                        "Gefahren und Risiken"
+                },
 
-            {
-                    "Безопасность на рабочем месте",
-                    "İş yerində təhlükəsizlik",
-                    "Workplace Safety"
-            },
+                {
+                        "Средства индивидуальной защиты",
+                        "Fərdi mühafizə vasitələri",
+                        "Personal Protective Equipment",
+                        "Kişisel Koruyucu Donanımlar",
+                        "Persönliche Schutzausrüstung"
+                },
 
-            {
-                    "Опасности и риски",
-                    "Təhlükələr və risklər",
-                    "Hazards and Risks"
-            },
+                {
+                        "Пожарная безопасность",
+                        "Yanğın təhlükəsizliyi",
+                        "Fire Safety",
+                        "Yangın Güvenliği",
+                        "Brandschutz"
+                },
 
-            {
-                    "Средства индивидуальной защиты",
-                    "Fərdi mühafizə vasitələri",
-                    "Personal Protective Equipment"
-            },
+                {
+                        "Электробезопасность",
+                        "Elektrik təhlükəsizliyi",
+                        "Electrical Safety",
+                        "Elektrik Güvenliği",
+                        "Elektrische Sicherheit"
+                },
 
-            {
-                    "Пожарная безопасность",
-                    "Yanğın təhlükəsizliyi",
-                    "Fire Safety"
-            },
+                {
+                        "Чрезвычайные ситуации",
+                        "Fövqəladə hallar",
+                        "Emergency Situations",
+                        "Acil Durumlar",
+                        "Notfälle"
+                },
 
-            {
-                    "Электробезопасность",
-                    "Elektrik təhlükəsizliyi",
-                    "Electrical Safety"
-            },
+                {
+                        "Первая помощь",
+                        "İlk yardım",
+                        "First Aid",
+                        "İlk Yardım",
+                        "Erste Hilfe"
+                },
 
-            {
-                    "Чрезвычайные ситуации",
-                    "Fövqəladə hallar",
-                    "Emergency Situations"
-            },
+                {
+                        "Инструкции по безопасности",
+                        "Təhlükəsizlik təlimatları",
+                        "Safety Instructions",
+                        "Güvenlik Talimatları",
+                        "Sicherheitsanweisungen"
+                }
+        };
 
-            {
-                    "Первая помощь",
-                    "İlk yardım",
-                    "First Aid"
-            },
-
-            {
-                    "Инструкции по безопасности",
-                    "Təhlükəsizlik təlimatları",
-                    "Safety Instructions"
-            }
-    };
-
-    return titles[number][getLanguageIndex()];
-}
-
-private String getInfoText(int number) {
-
-    String[][] texts = {
-
-            {
-                    "Рабочее место должно быть чистым и безопасным. Перед началом работы проверьте станок, инструмент и защитные устройства.",
-                    "İş yeri təmiz və təhlükəsiz olmalıdır. İşə başlamazdan əvvəl dəzgahı, alətləri və qoruyucu qurğuları yoxlayın.",
-                    "The workplace must be clean and safe. Before starting work, check the machine, tools and safety guards."
-            },
-
-            {
-                    "Перед началом работы определите возможные опасности и оцените риски. Не начинайте работу, если ситуация небезопасна.",
-                    "İşə başlamazdan əvvəl mümkün təhlükələri müəyyən edin və riskləri qiymətləndirin. Vəziyyət təhlükəlidirsə, işə başlamayın.",
-                    "Identify possible hazards and assess the risks before starting work. Do not start work if the situation is unsafe."
-            },
-
-            {
-                    "Используйте каску, защитные очки, перчатки, защитную обувь и другие необходимые СИЗ в соответствии с работой.",
-                    "İşə uyğun olaraq dəbilqə, qoruyucu eynək, əlcək, qoruyucu ayaqqabı və digər fərdi mühafizə vasitələrindən istifadə edin.",
-                    "Use a helmet, safety glasses, gloves, safety shoes and other required PPE according to the job."
-            },
-
-            {
-                    "Знайте расположение огнетушителей и пожарных выходов. При пожаре немедленно сообщите об опасности и покиньте опасную зону.",
-                    "Yanğınsöndürənlərin və yanğın çıxışlarının yerini bilin. Yanğın zamanı dərhal təhlükə barədə məlumat verin və təhlükəli ərazini tərk edin.",
-                    "Know the location of fire extinguishers and fire exits. In case of fire, report the danger immediately and leave the hazardous area."
-            },
-
-            {
-                    "Не работайте с электрическим оборудованием с повреждёнными кабелями. Перед обслуживанием отключите питание.",
-                    "Zədələnmiş kabelləri olan elektrik avadanlığı ilə işləməyin. Texniki xidmətdən əvvəl enerjini söndürün.",
-                    "Do not work with electrical equipment that has damaged cables. Turn off the power before maintenance."
-            },
-
-            {
-                    "При аварии остановите работу, если это безопасно, сообщите руководителю и следуйте плану эвакуации.",
-                    "Qəza zamanı təhlükəsizdirsə işi dayandırın, rəhbərə məlumat verin və təxliyə planına əməl edin.",
-                    "In an emergency, stop work if it is safe to do so, inform the supervisor and follow the evacuation plan."
-            },
-
-            {
-                    "При травме окажите первую помощь в пределах своей подготовки и вызовите медицинскую помощь.",
-                    "Xəsarət zamanı hazırlığınıza uyğun ilk yardım göstərin və tibbi yardım çağırın.",
-                    "In case of injury, provide first aid within your training and call for medical assistance."
-            },
-
-            {
-                    "Всегда соблюдайте инструкции по безопасности. Если вы не уверены в правильности действия, остановитесь и спросите руководителя.",
-                    "Həmişə təhlükəsizlik təlimatlarına əməl edin. Əmin deyilsinizsə, işi dayandırın və rəhbərdən soruşun.",
-                    "Always follow safety instructions. If you are unsure about an action, stop and ask your supervisor."
-            }
-    };
-
-    return texts[number][getLanguageIndex()];
-}
-
-private int getLanguageIndex() {
-
-    if (language.equals("AZ")) {
-        return 1;
+        return titles[number][getLanguageIndex()];
     }
 
-    if (language.equals("EN")) {
-        return 2;
+    // =========================
+    // INFO TEXT
+    // =========================
+
+    private String getInfoText(int number) {
+
+        String[][] texts = {
+
+                {
+                        "Рабочее место должно быть чистым и безопасным. Перед началом работы проверьте станок, инструмент и защитные устройства.",
+
+                        "İş yeri təmiz və təhlükəsiz olmalıdır. İşə başlamazdan əvvəl dəzgahı, alətləri və qoruyucu qurğuları yoxlayın.",
+
+                        "The workplace must be clean and safe. Before starting work, check the machine, tools and safety guards.",
+
+                        "İş yeri təmiz və təhlükəsiz olmalıdır. İşə başlamazdan əvvəl dəzgahı, alətləri və qoruyucu qurğuları yoxlayın.",
+
+                        "Der Arbeitsplatz muss sauber und sicher sein. Überprüfen Sie vor Arbeitsbeginn die Maschine, Werkzeuge und Schutzeinrichtungen."
+                },
+
+                {
+                        "Перед началом работы определите возможные опасности и оцените риски. Не начинайте работу, если ситуация небезопасна.",
+
+                        "İşə başlamazdan əvvəl mümkün təhlükələri müəyyən edin və riskləri qiymətləndirin. Vəziyyət təhlükəlidirsə, işə başlamayın.",
+
+                        "Identify possible hazards and assess the risks before starting work. Do not start work if the situation is unsafe.",
+
+                        "İşe başlamadan əvvəl olası tehlikeleri belirleyin ve riskleri değerlendirin. Durum güvenli değilse işe başlamayın.",
+
+                        "Ermitteln Sie vor Arbeitsbeginn mögliche Gefahren und bewerten Sie die Risiken. Beginnen Sie nicht mit der Arbeit, wenn die Situation unsicher ist."
+                },
+
+                {
+                        "Используйте каску, защитные очки, перчатки, защитную обувь и другие необходимые СИЗ в соответствии с работой.",
+
+                        "İşə uyğun olaraq dəbilqə, qoruyucu eynək, əlcək, qoruyucu ayaqqabı və digər fərdi mühafizə vasitələrindən istifadə edin.",
+
+                        "Use a helmet, safety glasses, gloves, safety shoes and other required PPE according to the job.",
+
+                        "İşe uygun olarak baret, koruyucu gözlük, eldiven, güvenlik ayakkabısı ve gerekli diğer KKD'leri kullanın.",
+
+                        "Tragen Sie je nach Arbeit einen Schutzhelm, eine Schutzbrille, Handschuhe, Sicherheitsschuhe und andere erforderliche PSA."
+                },
+
+                {
+                        "Знайте расположение огнетушителей и пожарных выходов. При пожаре немедленно сообщите об опасности и покиньте опасную зону.",
+
+                        "Yanğınsöndürənlərin və yanğın çıxışlarının yerini bilin. Yanğın zamanı dərhal təhlükə barədə məlumat verin və təhlükəli ərazini tərk edin.",
+
+                        "Know the location of fire extinguishers and fire exits. In case of fire, report the danger immediately and leave the hazardous area.",
+
+                        "Yangın söndürücülerin ve yangın çıkışlarının yerini bilin. Yangın durumunda tehlikeyi hemen bildirin ve tehlikeli bölgeyi terk edin.",
+
+                        "Kennen Sie den Standort der Feuerlöscher und Notausgänge. Melden Sie bei einem Brand sofort die Gefahr und verlassen Sie den Gefahrenbereich."
+                },
+
+                {
+                        "Не работайте с электрическим оборудованием с повреждёнными кабелями. Перед обслуживанием отключите питание.",
+
+                        "Zədələnmiş kabelləri olan elektrik avadanlığı ilə işləməyin. Texniki xidmətdən əvvəl enerjini söndürün.",
+
+                        "Do not work with electrical equipment that has damaged cables. Turn off the power before maintenance.",
+
+                        "Hasarlı kablolara sahip elektrikli ekipmanlarla çalışmayın. Bakımdan önce elektriği kapatın.",
+
+                        "Arbeiten Sie nicht mit elektrischen Geräten mit beschädigten Kabeln. Schalten Sie vor Wartungsarbeiten die Stromversorgung aus."
+                },
+
+                {
+                        "При аварии остановите работу, если это безопасно, сообщите руководителю и следуйте плану эвакуации.",
+
+                        "Qəza zamanı təhlükəsizdirsə işi dayandırın, rəhbərə məlumat verin və təxliyə planına əməl edin.",
+
+                        "In an emergency, stop work if it is safe to do so, inform the supervisor and follow the evacuation plan.",
+
+                        "Acil durumda, güvenliyse işi durdurun, amirinize haber verin ve tahliye planını takip edin.",
+
+                        "Halten Sie im Notfall die Arbeit an, wenn dies sicher möglich ist, informieren Sie den Vorgesetzten und befolgen Sie den Evakuierungsplan."
+                },
+
+                {
+                        "При травме окажите первую помощь в пределах своей подготовки и вызовите медицинскую помощь.",
+
+                        "Xəsarət zamanı hazırlığınıza uyğun ilk yardım göstərin və tibbi yardım çağırın.",
+
+                        "In case of injury, provide first aid within your training and call for medical assistance.",
+
+                        "Yaralanma durumunda eğitiminiz dahilinde ilk yardım yapın ve tıbbi yardım çağırın.",
+
+                        "Leisten Sie bei einer Verletzung im Rahmen Ihrer Ausbildung Erste Hilfe und rufen Sie medizinische Hilfe."
+                },
+
+                {
+                        "Всегда соблюдайте инструкции по безопасности. Если вы не уверены в правильности действия, остановитесь и спросите руководителя.",
+
+                        "Həmişə təhlükəsizlik təlimatlarına əməl edin. Əmin deyilsinizsə, işi dayandırın və rəhbərdən soruşun.",
+
+                        "Always follow safety instructions. If you are unsure about an action, stop and ask your supervisor.",
+
+                        "Güvenlik talimatlarına her zaman uyun. Bir işlemden emin değilseniz işi durdurun ve amirinize sorun.",
+
+                        "Befolgen Sie immer die Sicherheitsanweisungen. Wenn Sie bei einer Handlung unsicher sind, halten Sie an und fragen Sie Ihren Vorgesetzten."
+                }
+        };
+
+        return texts[number][getLanguageIndex()];
     }
 
-    return 0;
-}
+    // =========================
+    // LANGUAGE INDEX
+    // RU = 0
+    // AZ = 1
+    // EN = 2
+    // TR = 3
+    // DE = 4
+    // =========================
 
+    private int getLanguageIndex() {
+
+        if (language.equals("AZ")) {
+            return 1;
+        }
+
+        if (language.equals("EN")) {
+            return 2;
+        }
+
+        if (language.equals("TR")) {
+            return 3;
+        }
+
+        if (language.equals("DE")) {
+            return 4;
+        }
+
+        return 0;
+    }
 }
