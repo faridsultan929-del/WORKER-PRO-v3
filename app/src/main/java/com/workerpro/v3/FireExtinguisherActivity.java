@@ -128,6 +128,14 @@ public class FireExtinguisherActivity extends Activity {
             return "Fire Extinguishers";
         }
 
+        if (language.equals("TR")) {
+            return "Yangın Söndürücüler";
+        }
+
+        if (language.equals("DE")) {
+            return "Feuerlöscher";
+        }
+
         return "Огнетушители";
     }
 
@@ -157,6 +165,32 @@ public class FireExtinguisherActivity extends Activity {
                     "✅ Choosing the Right Extinguisher",
                     "🚨 How to Use",
                     "🦺 Safety Rules"
+            };
+
+        } else if (language.equals("TR")) {
+
+            return new String[]{
+                    "🧯 Yangın Söndürücü Nedir?",
+                    "⬜ Kuru Kimyevi Tozlu Söndürücü",
+                    "❄️ Karbondioksitli Söndürücü",
+                    "💧 Su Bazlı Söndürücü",
+                    "🔥 Yangın Sınıfları",
+                    "✅ Doğru Söndürücüyü Seçme",
+                    "🚨 Kullanım Şekli",
+                    "🦺 Güvenlik Kuralları"
+            };
+
+        } else if (language.equals("DE")) {
+
+            return new String[]{
+                    "🧯 Was ist ein Feuerlöscher?",
+                    "⬜ Pulverfeuerlöscher",
+                    "❄️ Kohlendioxid-Feuerlöscher",
+                    "💧 Wasserlöscher",
+                    "🔥 Brandklassen",
+                    "✅ Den richtigen Feuerlöscher wählen",
+                    "🚨 Anwendung",
+                    "🦺 Sicherheitsregeln"
             };
 
         } else {
@@ -202,6 +236,10 @@ public class FireExtinguisherActivity extends Activity {
             back.setText("← Geri");
         } else if (language.equals("EN")) {
             back.setText("← Back");
+        } else if (language.equals("TR")) {
+            back.setText("← Geri");
+        } else if (language.equals("DE")) {
+            back.setText("← Zurück");
         } else {
             back.setText("← Назад");
         }
@@ -224,49 +262,65 @@ public class FireExtinguisherActivity extends Activity {
                 {
                         "Что такое огнетушитель?",
                         "Yanğınsöndürən nədir?",
-                        "What is a Fire Extinguisher?"
+                        "What is a Fire Extinguisher?",
+                        "Yangın Söndürücü Nedir?",
+                        "Was ist ein Feuerlöscher?"
                 },
 
                 {
                         "Порошковый огнетушитель",
                         "Tozlu yanğınsöndürən",
-                        "Dry Powder Extinguisher"
+                        "Dry Powder Extinguisher",
+                        "Kuru Kimyevi Tozlu Söndürücü",
+                        "Pulverfeuerlöscher"
                 },
 
                 {
                         "Углекислотный огнетушитель",
                         "Karbon qazlı yanğınsöndürən",
-                        "Carbon Dioxide Extinguisher"
+                        "Carbon Dioxide Extinguisher",
+                        "Karbondioksitli Söndürücü",
+                        "Kohlendioxid-Feuerlöscher"
                 },
 
                 {
                         "Водный огнетушитель",
                         "Su əsaslı yanğınsöndürən",
-                        "Water-Based Extinguisher"
+                        "Water-Based Extinguisher",
+                        "Su Bazlı Söndürücü",
+                        "Wasserlöscher"
                 },
 
                 {
                         "Классы пожаров",
                         "Yanğın sinifləri",
-                        "Fire Classes"
+                        "Fire Classes",
+                        "Yangın Sınıfları",
+                        "Brandklassen"
                 },
 
                 {
                         "Правильный выбор",
                         "Düzgün seçim",
-                        "Choosing the Right Extinguisher"
+                        "Choosing the Right Extinguisher",
+                        "Doğru Söndürücüyü Seçme",
+                        "Den richtigen Feuerlöscher wählen"
                 },
 
                 {
                         "Как пользоваться",
                         "İstifadə qaydası",
-                        "How to Use"
+                        "How to Use",
+                        "Kullanım Şekli",
+                        "Anwendung"
                 },
 
                 {
                         "Правила безопасности",
                         "Təhlükəsizlik qaydaları",
-                        "Safety Rules"
+                        "Safety Rules",
+                        "Güvenlik Kuralları",
+                        "Sicherheitsregeln"
                 }
         };
 
@@ -282,7 +336,11 @@ public class FireExtinguisherActivity extends Activity {
 
                         "Yanğınsöndürən kiçik yanğın ocaqlarını söndürmək üçün istifadə olunan daşınan və ya hərəkətli qurğudur. İstehsalatda yanğınsöndürənlərin yerini və istifadə qaydalarını bilmək vacibdir.",
 
-                        "A fire extinguisher is a portable or mobile device used to put out small fires. At work, it is important to know where extinguishers are located and how to use them."
+                        "A fire extinguisher is a portable or mobile device used to put out small fires. At work, it is important to know where extinguishers are located and how to use them.",
+
+                        "Yangın söndürücü, küçük yangınları söndürmek için kullanılan taşınabilir veya hareketli bir cihazdır. İş yerinde söndürücülerin nerede olduğunu ve nasıl kullanılacağını bilmek önemlidir.",
+
+                        "Ein Feuerlöscher ist ein tragbares oder fahrbares Gerät zum Löschen kleiner Brände. Am Arbeitsplatz ist es wichtig, den Standort der Feuerlöscher und ihre Anwendung zu kennen."
                 },
 
                 {
@@ -290,7 +348,11 @@ public class FireExtinguisherActivity extends Activity {
 
                         "Tozlu yanğınsöndürənlər müxtəlif yanğın növləri üçün istifadə olunur. İstifadədən əvvəl markalanmanı yoxlayın və yanğınsöndürənin həmin yanğın üçün uyğun olduğuna əmin olun.",
 
-                        "Dry powder extinguishers are used for different types of fires. Check the label before use and make sure the extinguisher is suitable for the specific fire."
+                        "Dry powder extinguishers are used for different types of fires. Check the label before use and make sure the extinguisher is suitable for the specific fire.",
+
+                        "Kuru kimyevi tozlu söndürücüler farklı yangın türlerinde kullanılır. Kullanmadan önce etiketi kontrol edin ve söndürücünün yangına uygun olduğundan emin olun.",
+
+                        "Pulverfeuerlöscher werden für verschiedene Brandarten eingesetzt. Prüfen Sie vor der Anwendung die Kennzeichnung und stellen Sie sicher, dass der Feuerlöscher für den jeweiligen Brand geeignet ist."
                 },
 
                 {
@@ -298,7 +360,11 @@ public class FireExtinguisherActivity extends Activity {
 
                         "Karbon qazlı yanğınsöndürənlər CO₂ istifadə edir. Onlar tez-tez elektrik avadanlıqları və uyğun digər yanğınlar üçün tətbiq olunur. İstifadə zamanı çox soyuyan hissələrə çılpaq əllə toxunmayın.",
 
-                        "Carbon dioxide extinguishers use CO₂. They are often used for electrical equipment and other suitable fires. Do not touch extremely cold parts with bare hands during use."
+                        "Carbon dioxide extinguishers use CO₂. They are often used for electrical equipment and other suitable fires. Do not touch extremely cold parts with bare hands during use.",
+
+                        "Karbondioksitli söndürücüler CO₂ kullanır. Elektrikli ekipmanlarda ve uygun diğer yangınlarda sıklıkla kullanılır. Kullanım sırasında çok soğuyan parçalara çıplak elle dokunmayın.",
+
+                        "Kohlendioxid-Feuerlöscher verwenden CO₂. Sie werden häufig bei elektrischen Anlagen und anderen geeigneten Bränden eingesetzt. Berühren Sie stark abgekühlte Teile während der Anwendung nicht mit bloßen Händen."
                 },
 
                 {
@@ -306,7 +372,11 @@ public class FireExtinguisherActivity extends Activity {
 
                         "Su əsaslı yanğınsöndürənlər yalnız nəzərdə tutulduqları yanğın sinifləri üçün istifadə olunur. Gərginlik altında olan elektrik avadanlığında sudan istifadə etməyin.",
 
-                        "Water-based extinguishers should only be used for the fire classes they are designed for. Do not use water on energized electrical equipment."
+                        "Water-based extinguishers should only be used for the fire classes they are designed for. Do not use water on energized electrical equipment.",
+
+                        "Su bazlı söndürücüler yalnız tasarlandıkları yangın sınıflarında kullanılmalıdır. Enerji altında olan elektrik ekipmanlarında su kullanmayın.",
+
+                        "Wasserlöscher dürfen nur bei den Brandklassen eingesetzt werden, für die sie vorgesehen sind. Verwenden Sie kein Wasser an unter Spannung stehenden elektrischen Anlagen."
                 },
 
                 {
@@ -314,7 +384,11 @@ public class FireExtinguisherActivity extends Activity {
 
                         "Yanğın sinfi yanan materialın növünü müəyyən edir. Söndürmədən əvvəl həmin yanğın sinfinə uyğun yanğınsöndürən seçilməlidir.",
 
-                        "The fire class identifies the type of burning material. Before fighting a fire, choose an extinguisher suitable for that fire class."
+                        "The fire class identifies the type of burning material. Before fighting a fire, choose an extinguisher suitable for that fire class.",
+
+                        "Yangın sınıfı yanan malzemenin türünü belirler. Yangına müdahale etmeden önce o yangın sınıfına uygun bir söndürücü seçin.",
+
+                        "Die Brandklasse beschreibt die Art des brennenden Materials. Wählen Sie vor dem Löschen einen für diese Brandklasse geeigneten Feuerlöscher."
                 },
 
                 {
@@ -322,7 +396,11 @@ public class FireExtinguisherActivity extends Activity {
 
                         "Həmişə yanğınsöndürənin markalanmasına baxın. Seçim yanğının növündən, ətraf mühitdən və müəssisənin tələblərindən asılıdır. Əmin deyilsinizsə, risk etməyin və təhlükəli ərazini tərk edin.",
 
-                        "Always check the extinguisher label. The choice depends on the type of fire, the surroundings and workplace requirements. If you are unsure, do not take risks and leave the danger area."
+                        "Always check the extinguisher label. The choice depends on the type of fire, the surroundings and workplace requirements. If you are unsure, do not take risks and leave the danger area.",
+
+                        "Her zaman söndürücünün etiketini kontrol edin. Seçim yangının türüne, çevre koşullarına ve iş yeri gerekliliklerine bağlıdır. Emin değilseniz risk almayın ve tehlikeli bölgeden uzaklaşın.",
+
+                        "Beachten Sie immer die Kennzeichnung des Feuerlöschers. Die Auswahl hängt von der Brandart, der Umgebung und den betrieblichen Anforderungen ab. Wenn Sie unsicher sind, gehen Sie kein Risiko ein und verlassen Sie den Gefahrenbereich."
                 },
 
                 {
@@ -330,7 +408,11 @@ public class FireExtinguisherActivity extends Activity {
 
                         "İstifadədən əvvəl konkret yanğınsöndürənin təlimatını bildiyinizə əmin olun. Təhlükəsizdirsə, tövsiyə olunan məsafəni saxlayın, söndürücü maddəni alovun əsasına yönəldin və gövdədəki təlimata əməl edin.",
 
-                        "Before use, make sure you know the instructions for the specific extinguisher. If it is safe, keep the recommended distance, aim at the base of the flames and follow the instructions on the extinguisher."
+                        "Before use, make sure you know the instructions for the specific extinguisher. If it is safe, keep the recommended distance, aim at the base of the flames and follow the instructions on the extinguisher.",
+
+                        "Kullanmadan önce belirli söndürücünün talimatlarını bildiğinizden emin olun. Güvenliyse önerilen mesafeyi koruyun, söndürücü maddeyi alevlerin tabanına yöneltin ve cihaz üzerindeki talimatları izleyin.",
+
+                        "Vergewissern Sie sich vor der Anwendung, dass Sie die Anleitung für den jeweiligen Feuerlöscher kennen. Wenn es sicher ist, halten Sie den empfohlenen Abstand ein, richten Sie das Löschmittel auf den Brandherd und befolgen Sie die Anleitung auf dem Gerät."
                 },
 
                 {
@@ -338,7 +420,11 @@ public class FireExtinguisherActivity extends Activity {
 
                         "Böyük və ya sürətlə yayılan yanğına yaxınlaşmayın. Dərhal təhlükə barədə məlumat verin, yanğın siqnalizasiyasını aktivləşdirin və təxliyə planına uyğun olaraq ərazini tərk edin. Özünüzü heç vaxt təhlükəyə atmayın.",
 
-                        "Do not approach a large or rapidly spreading fire. Report the danger immediately, activate the fire alarm and leave the area according to the evacuation plan. Never put yourself at risk."
+                        "Do not approach a large or rapidly spreading fire. Report the danger immediately, activate the fire alarm and leave the area according to the evacuation plan. Never put yourself at risk.",
+
+                        "Büyük veya hızla yayılan bir yangına yaklaşmayın. Tehlikeyi hemen bildirin, yangın alarmını etkinleştirin ve tahliye planına göre bölgeden ayrılın. Kendinizi asla tehlikeye atmayın.",
+
+                        "Nähern Sie sich keinem großen oder sich schnell ausbreitenden Brand. Melden Sie die Gefahr sofort, lösen Sie den Feueralarm aus und verlassen Sie den Bereich gemäß dem Evakuierungsplan. Bringen Sie sich niemals selbst in Gefahr."
                 }
         };
 
@@ -353,6 +439,14 @@ public class FireExtinguisherActivity extends Activity {
 
         if (language.equals("EN")) {
             return 2;
+        }
+
+        if (language.equals("TR")) {
+            return 3;
+        }
+
+        if (language.equals("DE")) {
+            return 4;
         }
 
         return 0;
