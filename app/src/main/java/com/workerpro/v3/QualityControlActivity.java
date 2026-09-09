@@ -98,6 +98,14 @@ public class QualityControlActivity extends Activity {
             return "Quality Control";
         }
 
+        if (language.equals("TR")) {
+            return "Kalite Kontrol";
+        }
+
+        if (language.equals("DE")) {
+            return "Qualitätskontrolle";
+        }
+
         return "Контроль качества";
     }
 
@@ -215,6 +223,66 @@ public class QualityControlActivity extends Activity {
             }
         }
 
+        if (language.equals("TR")) {
+
+            switch (number) {
+
+                case 1:
+                    return "Kalite Kontrolün Temelleri";
+
+                case 2:
+                    return "Ölçü Kontrolü";
+
+                case 3:
+                    return "Görsel Kontrol";
+
+                case 4:
+                    return "Parça Kontrolü";
+
+                case 5:
+                    return "Tahribatsız Muayene";
+
+                case 6:
+                    return "Parça Kusurları";
+
+                case 7:
+                    return "Dokümantasyon ve Ölçümler";
+
+                case 8:
+                    return "Kontrol Sırasında Güvenlik";
+            }
+        }
+
+        if (language.equals("DE")) {
+
+            switch (number) {
+
+                case 1:
+                    return "Grundlagen der Qualitätskontrolle";
+
+                case 2:
+                    return "Maßprüfung";
+
+                case 3:
+                    return "Sichtprüfung";
+
+                case 4:
+                    return "Teileprüfung";
+
+                case 5:
+                    return "Zerstörungsfreie Prüfung";
+
+                case 6:
+                    return "Teilefehler";
+
+                case 7:
+                    return "Dokumentation und Messungen";
+
+                case 8:
+                    return "Sicherheit bei der Prüfung";
+            }
+        }
+
         switch (number) {
 
             case 1:
@@ -300,6 +368,10 @@ public class QualityControlActivity extends Activity {
             back.setText("← Geri");
         } else if (language.equals("EN")) {
             back.setText("← Back");
+        } else if (language.equals("TR")) {
+            back.setText("← Geri");
+        } else if (language.equals("DE")) {
+            back.setText("← Zurück");
         } else {
             back.setText("← Назад");
         }
@@ -398,6 +470,66 @@ public class QualityControlActivity extends Activity {
             }
         }
 
+        if (language.equals("TR")) {
+
+            switch (number) {
+
+                case 1:
+                    return "Kalite kontrol, ürünün veya parçanın teknik gerekliliklere uygun olup olmadığını kontrol eder.\n\nÖlçüler, malzeme, görünüş ve diğer parametreler incelenir.";
+
+                case 2:
+                    return "Parça ölçüleri kumpas, mikrometre ve diğer ölçüm aletleri ile kontrol edilir.\n\nÖlçümden önce aletin durumunu kontrol edin.";
+
+                case 3:
+                    return "Görsel kontrolde parçanın yüzeyi dikkatlice incelenir.\n\nÇatlaklar, çizikler, deformasyonlar ve diğer görünür kusurlar tespit edilir.";
+
+                case 4:
+                    return "Parçanın ölçüleri, şekli ve teknik durumu teknik resim ve teknik dokümanlarla karşılaştırılır.";
+
+                case 5:
+                    return "Tahribatsız muayene, parçaya zarar vermeden kusurların tespit edilmesini sağlar.\n\nÖrneğin manyetik ve ultrasonik muayene.";
+
+                case 6:
+                    return "Yaygın kusurlar arasında çatlaklar, deformasyon, yanlış ölçüler, yüzey kusurları ve malzeme problemleri bulunur.";
+
+                case 7:
+                    return "Ölçüm sonuçları ve kontrol bilgileri doğru şekilde kaydedilmelidir.\n\nBelgeler şirket gerekliliklerine göre saklanmalıdır.";
+
+                case 8:
+                    return "Kontrol sırasında kişisel koruyucu donanım kullanın.\n\nÖlçüm aletlerini doğru kullanın ve tehlikeli ekipmana yaklaşmayın.";
+            }
+        }
+
+        if (language.equals("DE")) {
+
+            switch (number) {
+
+                case 1:
+                    return "Die Qualitätskontrolle prüft, ob ein Produkt oder Bauteil die technischen Anforderungen erfüllt.\n\nMaße, Material, Aussehen und andere Parameter werden geprüft.";
+
+                case 2:
+                    return "Die Maße von Bauteilen werden mit Messschieber, Mikrometer und anderen Messgeräten geprüft.\n\nPrüfen Sie vor der Messung den Zustand des Messgeräts.";
+
+                case 3:
+                    return "Bei der Sichtprüfung wird die Oberfläche des Bauteils sorgfältig kontrolliert.\n\nRisse, Kratzer, Verformungen und andere sichtbare Fehler werden erkannt.";
+
+                case 4:
+                    return "Maße, Form und technischer Zustand des Bauteils werden mit der Zeichnung und der technischen Dokumentation verglichen.";
+
+                case 5:
+                    return "Die zerstörungsfreie Prüfung ermöglicht die Erkennung von Fehlern, ohne das Bauteil zu beschädigen.\n\nBeispiele sind die Magnetprüfung und Ultraschallprüfung.";
+
+                case 6:
+                    return "Zu den häufigen Fehlern gehören Risse, Verformungen, falsche Maße, Oberflächenfehler und Materialprobleme.";
+
+                case 7:
+                    return "Messergebnisse und Prüfdaten müssen korrekt dokumentiert werden.\n\nDokumente sind gemäß den betrieblichen Anforderungen aufzubewahren.";
+
+                case 8:
+                    return "Verwenden Sie bei der Prüfung die persönliche Schutzausrüstung.\n\nBenutzen Sie Messgeräte richtig und nähern Sie sich keiner gefährlichen Anlage.";
+            }
+        }
+
         switch (number) {
 
             case 1:
@@ -449,6 +581,10 @@ public class QualityControlActivity extends Activity {
             back.setText("← Əsas menyu");
         } else if (language.equals("EN")) {
             back.setText("← Main Menu");
+        } else if (language.equals("TR")) {
+            back.setText("← Ana Menü");
+        } else if (language.equals("DE")) {
+            back.setText("← Hauptmenü");
         } else {
             back.setText("← Главное меню");
         }
